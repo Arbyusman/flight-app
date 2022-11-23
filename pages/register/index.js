@@ -41,7 +41,7 @@ export default function Home() {
                 <div className="w-1/2 mr-1">
                   <label
                     className="block text-grey-darker text-sm font-bold mb-2"
-                    for="first_name"
+                    htmlFor="first_name"
                   >
                     First Name
                   </label>
@@ -55,7 +55,7 @@ export default function Home() {
                 <div className="w-1/2 ml-1">
                   <label
                     className="block text-grey-darker text-sm font-bold mb-2"
-                    for="last_name"
+                    htmlFor="last_name"
                   >
                     Last Name
                   </label>
@@ -70,7 +70,7 @@ export default function Home() {
               <div className="mb-4">
                 <label
                   className="block text-grey-darker text-sm font-bold mb-2"
-                  for="email"
+                  htmlFor="email"
                 >
                   Email Address
                 </label>
@@ -84,7 +84,7 @@ export default function Home() {
               <div className="mb-4">
                 <label
                   className="block text-grey-darker text-sm font-bold mb-2"
-                  for="password"
+                  htmlFor="password"
                 >
                   Password
                 </label>
