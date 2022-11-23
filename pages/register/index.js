@@ -3,7 +3,7 @@ import React from "react";
 export default function Home() {
   return (
     <div className="font-sans antialiased bg-grey">
-      <div className="w-full bg-green-700  fixed shadow z-1">
+      <div className="w-full bg-green-700 fixed shadow z-1">
         <div className="container mx-auto">
           <div className="w-full flex justify-between items-center py-4 px-8">
             <div className="text-center text-white font-bold">Your Company</div>
@@ -30,7 +30,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full bg-grey-lightest" style={{paddingTop: "4rem"}}>
+      <div className="w-full bg-grey-lightest" style={{ paddingTop: "4rem" }}>
         <div className="container mx-auto py-8">
           <div className="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
             <div className="py-4 px-8 text-black text-xl border-b border-grey-lighter">
@@ -41,7 +41,7 @@ export default function Home() {
                 <div className="w-1/2 mr-1">
                   <label
                     className="block text-grey-darker text-sm font-bold mb-2"
-                    for="first_name"
+                    htmlFor="first_name"
                   >
                     First Name
                   </label>
@@ -55,7 +55,7 @@ export default function Home() {
                 <div className="w-1/2 ml-1">
                   <label
                     className="block text-grey-darker text-sm font-bold mb-2"
-                    for="last_name"
+                    htmlFor="last_name"
                   >
                     Last Name
                   </label>
@@ -70,7 +70,7 @@ export default function Home() {
               <div className="mb-4">
                 <label
                   className="block text-grey-darker text-sm font-bold mb-2"
-                  for="email"
+                  htmlFor="email"
                 >
                   Email Address
                 </label>
@@ -84,7 +84,7 @@ export default function Home() {
               <div className="mb-4">
                 <label
                   className="block text-grey-darker text-sm font-bold mb-2"
-                  for="password"
+                  htmlFor="password"
                 >
                   Password
                 </label>
