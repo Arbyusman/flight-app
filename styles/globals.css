@@ -1,4 +1,16 @@
+<<<<<<< Updated upstream
 html,
+=======
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+/* html,
+>>>>>>> Stashed changes
 body {
   padding: 0;
   margin: 0;
