@@ -1,47 +1,59 @@
+import Image from "next/image";
+import goglePlayImage from "../public/images/google-play-badge.png"
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-100 sm:justify-center">
+    <footer className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-100 sm:justify-center ">
       <div className="container lg:flex lg:flex-wrap  justify-between mx-auto sm:grid sm:grid-cols-2 sm:grid-rows-1">
         <div className="mb-6 md:mb-0 sm:mb-2">
           <a href="#" className="flex items-center">
             <img
               src="#docs/images/logo.svg"
               className="mr-3 h-8"
-              alt="FlowBite Logo"
+              alt="TakeOff Flight Logo"
             />
           </a>
         </div>
         <div className="mt-2 ">
-          <h2 className=" text-gray-600 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:bg-gray-700 md:p-0 dark:text-gray-600 md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent dark:border-gray-700 ">
+          <h2 className=" text-gray-700 font-semibold rounded ">
             Take OFF Flight
           </h2>
           <ul className="text-gray-600 dark:text-gray-400">
             <li className="">
-              <a href="#" className="hover:underline">
+              <a href="#" className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700">
                 Home
               </a>
             </li>
             <li>
-              <a href="" className="hover:underline">
+              <a href="" className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700">
                 About Us
               </a>
             </li>
             <li>
-              <a href="" className="hover:underline">
+              <a href="" className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700">
                 Promo
               </a>
             </li>
           </ul>
         </div>
+        <div className="mt-2 ">
+          <h2 className=" text-gray-700 font-semibold rounded">
+            Account
+          </h2>
+          <ul className="text-gray-600 dark:text-gray-400">
+            <li className="">
+              <a href="#" className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700">
+                Register
+              </a>
+            </li>
+            
+          </ul>
+        </div>
         <div className=" mt-2">
-          <h2 className=" text-gray-600 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:bg-gray-700 md:p-0 dark:text-gray-600 md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent dark:border-gray-700 ">
+          <h2 className=" text-gray-700 font-semibold rounded">
             Follow us
           </h2>
           <div className="flex mt-1 space-x-4 sm:justify-start ">
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" className="text-blue-700 hover:text-blue-800">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -56,10 +68,7 @@ export default function Footer() {
               </svg>
               <span className="sr-only">Facebook page</span>
             </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" className="text-red-600 hover:text-red-700">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -74,10 +83,7 @@ export default function Footer() {
               </svg>
               <span className="sr-only">Instagram page</span>
             </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" className="text-blue-600 hover:text-blue-700">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -88,10 +94,7 @@ export default function Footer() {
               </svg>
               <span className="sr-only">Twitter page</span>
             </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" className="text-gray-700 hover:text-black">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -106,10 +109,7 @@ export default function Footer() {
               </svg>
               <span className="sr-only">GitHub account</span>
             </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-            >
+            <a href="#" className="text-gray-700  hover:text-black">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -127,13 +127,13 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-3">
-          <h2 className=" text-gray-600 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:bg-gray-700 md:p-0 dark:text-gray-600 md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent dark:border-gray-700 ">
+          <h2 className=" text-gray-900 ml-1 font-semibold rounded ">
             Our App
           </h2>
           <ul className="text-gray-600 dark:text-gray-400">
             <li className="">
-              <a href="#" className="hover:underline">
-                Play Store
+              <a href="#" className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700">
+                <Image src={goglePlayImage} alt="get on gogle play logo" width={100}/>
               </a>
             </li>
           </ul>
@@ -142,11 +142,7 @@ export default function Footer() {
       <hr className="my-6 sm:mx-auto dark:border-gray-500 border-gray-600 lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-center">
         <span className=" text-gray-600 flex justify-center font-medium rounded text-sm">
-          Copyright 2022{" "}
-          <a href="#" className="hover:underline">
-            Take Off{" "}
-          </a>
-          All rights reserved.
+          Copyright 2022 All rights reserved.
         </span>
       </div>
     </footer>

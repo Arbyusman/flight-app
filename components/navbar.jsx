@@ -2,8 +2,7 @@ import { useState } from "react";
 
 export default function Navbar() {
   return (
-    <div>
-      <nav className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-100">
+      <nav className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-100 ">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           <div
             className="items-center  hidden w-full md:flex md:w-auto md:order-1"
@@ -21,7 +20,7 @@ export default function Navbar() {
               <li>
                 <a
                   href="#"
-                  className="block py-2 pl-3 pr-4 text-gray-600 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:bg-gray-700 md:p-0 dark:text-gray-600 md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pl-3 text-base pr-4 hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
                   aria-current="page"
                 >
                   Flights
@@ -31,7 +30,7 @@ export default function Navbar() {
               <li>
                 <a
                   href="#"
-                  className="block py-2 pl-3 pr-4 text-gray-600 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:bg-gray-700 md:p-0 dark:text-gray-600 md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pl-3 pr-4 text-base hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
                 >
                   Promo
                 </a>
@@ -39,7 +38,7 @@ export default function Navbar() {
               <li>
                 <a
                   href="#"
-                  className="block py-2 pl-3 pr-4 text-gray-600 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:bg-gray-700 md:p-0 dark:text-gray-600 md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pl-3 pr-4 text-base hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
                 >
                   Our App
                 </a>
@@ -47,7 +46,7 @@ export default function Navbar() {
               <li>
                 <a
                   href="#"
-                  className="block py-2 pl-3 pr-4 text-gray-600 font-semibold rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:bg-gray-700 md:p-0 dark:text-gray-600 md:dark:hover:text-gray-900 dark:hover:bg-gray-700 dark:hover:text-gray-900 md:dark:hover:bg-transparent dark:border-gray-700"
+                  className="block py-2 pl-3 pr-4 text-base hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
                 >
                   Why Us
                 </a>
@@ -75,10 +74,10 @@ export default function Navbar() {
               id="user-dropdown"
             >
               <div className="px-4 py-3">
-                <span className="block text-sm text-gray-600 dark:text-white">
+                <span className="block text-sm text-gray-700 dark:text-white">
                   Bonnie Green
                 </span>
-                <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-600">
+                <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-700">
                   name@flowbite.com
                 </span>
               </div>
@@ -86,7 +85,7 @@ export default function Navbar() {
                 <li>
                   <a
                     href="#"
-                    className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                   >
                     Dashboard
                   </a>
@@ -94,7 +93,7 @@ export default function Navbar() {
                 <li>
                   <a
                     href="#"
-                    className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                   >
                     Settings
                   </a>
@@ -102,7 +101,7 @@ export default function Navbar() {
                 <li>
                   <a
                     href="#"
-                    className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                   >
                     Earnings
                   </a>
@@ -110,7 +109,7 @@ export default function Navbar() {
                 <li>
                   <a
                     href="#"
-                    className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                   >
                     Sign out
                   </a>
@@ -144,6 +143,5 @@ export default function Navbar() {
           
         </div>
       </nav>
-    </div>
   );
 }
