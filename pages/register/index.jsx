@@ -20,6 +20,10 @@ export default function Register() {
               </h1>
               <form className="space-y-4 md:space-y-6" action="#">
                   <div>
+                      <label for="username" className="block mb-2 text-sm font-medium text-gray-900 ">Your username</label>
+                      <input type="username" name="username" id="username" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="nandaJulian" required=""/>
+                  </div>
+                  <div>
                       <label for="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
                       <input type="email" name="email" id="email" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="name@company.com" required=""/>
                   </div>
