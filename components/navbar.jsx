@@ -47,7 +47,7 @@ export default function Navbar() {
             </li>
             <li>
               <a
-                href="#"
+                href="#whyus"
                 className="block py-2 pl-3 pr-4 text-base hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
               >
                 Why Us

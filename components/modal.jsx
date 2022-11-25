@@ -4,7 +4,7 @@ const Modal = ({ openModalLogin, closeModalLogin }) => {
     <div
       id="authentication-modal"
       tabindex="-1"
-      className="flex justify-center items-center backdrop-brightness-50  fixed p-4 w-full  md:inset-0 h-modal md:h-full"
+      className="flex justify-center items-center backdrop-brightness-50  fixed p-4 w-full  inset-0 h-modal md:h-full"
     >
       <div className="relative w-full max-w-md h-full md:h-auto">
         <div className="relative bg-gray-200 rounded-lg shadow">
