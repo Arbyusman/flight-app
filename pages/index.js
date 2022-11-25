@@ -1,11 +1,11 @@
-import Navbar from "../components";
-import Footer from "../components/footer";
-import WhyUs from "../components/whyus";
+import {Navbar,WhyUs,Footer,Banner} from "../components";
+
 export default function Home() {
   return (
     <div>
       <Navbar />
       <WhyUs/>
+      <Banner/>
       <Footer />
     </div>
   );
