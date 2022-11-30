@@ -9,7 +9,7 @@ import {
 } from "flowbite-react";
 import { useState } from "react";
 import Image from "next/image";
-import LogoImage from "../images/TakeOff.png";
+import LogoImage from "../public/images/TakeOff.png";
 
 export default function NavbarComponent() {
   const [openModal, setOpenModal] = useState(false);
