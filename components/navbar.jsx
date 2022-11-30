@@ -7,17 +7,12 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import LogoImage from "../images/TakeOff.png";
 
 export default function NavbarComponent() {
-  const [openModal, setOpenModal] = useState(false);
-import React, { useState } from "react";
-import Modal from "./modal";
-export default function Navbar() {
-  const [modalLogin, setModalLogin] = useState(false);
-
+const [openModal, setOpenModal] = useState(false);
 
   return (
     <Navbar fluid={true} rounded={true}>
