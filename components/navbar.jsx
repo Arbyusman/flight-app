@@ -1,160 +1,112 @@
-import React, { useState } from "react";
-import Modal from "./modal";
-export default function Navbar() {
-  const [modalLogin, setModalLogin] = useState(false);
+import {
+  Navbar,
+  Dropdown,
+  Avatar,
+  Button,
+  Modal,
+  Label,
+  TextInput,
+} from "flowbite-react";
+import { useState } from "react";
+import Image from "next/image";
+import LogoImage from "../images/TakeOff.png";
 
+export default function NavbarComponent() {
+  const [openModal, setOpenModal] = useState(false);
   return (
-    <nav className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-100 ">
-      <div className="container flex flex-wrap items-center justify-between mx-auto">
-        <div
-          className="items-center  hidden w-full md:flex md:w-auto md:order-1"
-          id="mobile-menu-2"
-        >
-          <ul className="flex flex-col items-center py-2 mt-4 border md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 ">
-            <a href="https://flowbite.com/" className="flex items-center">
-              <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-6 mr-3 sm:h-9"
-                alt="Flowbite Logo"
+    <Navbar fluid={true} rounded={true}>
+      <Navbar.Brand href="/">
+        <Image src={LogoImage} className="mr-3 h-16 w-20" alt="Flowbite Logo" />
+        {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+          TakeOff
+        </span> */}
+      </Navbar.Brand>
+      <div className="flex md:order-2">
+        <div>
+          <Button className="" onClick={() => setOpenModal(true)}>
+            Login
+          </Button>
+          <Modal
+            show={openModal}
+            size="md"
+            popup={true}
+            onClose={() => setOpenModal(false)}
+          >
+            <Modal.Header />
+            <Modal.Body>
+              <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
+                <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                  Sign in to our platform
+                </h3>
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="email" value="Your email" />
+                  </div>
+                  <TextInput
+                    id="email"
+                    placeholder="name@company.com"
+                    required={true}
+                  />
+                </div>
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="password" value="Your password" />
+                  </div>
+                  <TextInput id="password" type="password" required={true} />
+                </div>
+                <div className="w-full">
+                  <Button>Log in to your account</Button>
+                </div>
+                <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                  Not registered?{" "}
+                  <a
+                    href="/modal"
+                    className="text-blue-700 hover:underline dark:text-blue-500"
+                  >
+                    Create account
+                  </a>
+                </div>
+              </div>
+            </Modal.Body>
+          </Modal>
+        </div>
+        <div id="already-login" className="hidden">
+          <Dropdown
+            arrowIcon={false}
+            inline={true}
+            label={
+              <Avatar
+                alt="User settings"
+                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                rounded={true}
               />
-            </a>
-
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 text-base pr-4 hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
-                aria-current="page"
-              >
-                Flights
-              </a>
-            </li>
-
-            <li>
-              <a
-                href="promo"
-                className="block py-2 pl-3 pr-4 text-base hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
-              >
-                Promo
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-base hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
-              >
-                Our App
-              </a>
-            </li>
-            <li>
-              <a
-                href="#whyus"
-                className="block py-2 pl-3 pr-4 text-base hover:underline text-gray-600 font-semibold rounded  md:p-0 dark:text-gray-700   dark:hover:text-gray-900  "
-              >
-                Why Us
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div className="flex items-center md:order-2">
-          {/* modal */}
-          <button
-            className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            type="button"
-            data-modal-toggle="authentication-modal"
-            onClick={() => setModalLogin(true)}
+            }
           >
-            Toggle modal
-          </button>
-          <Modal openModalLogin={modalLogin} closeModalLogin={() => setModalLogin(false)}/>
-          {/* End Modal */}
-
-          <button
-            type="button"
-            className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom"
-          >
-            <span className="sr-only">Open user menu</span>
-            <img
-              className="w-8 h-8 rounded-full"
-              src="/docs/images/people/profile-picture-3.jpg"
-              alt="user photo"
-            />
-          </button>
-          <div
-            className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
-            id="user-dropdown"
-          >
-            <div className="px-4 py-3">
-              <span className="block text-sm text-gray-700 dark:text-white">
-                Bonnie Green
+            <Dropdown.Header>
+              <span className="block text-sm">Arbiansyah</span>
+              <span className="block truncate text-sm font-medium">
+                arby@mail.com
               </span>
-              <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-700">
-                name@flowbite.com
-              </span>
-            </div>
-            <ul className="py-1" aria-labelledby="user-menu-button">
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Dashboard
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Settings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Earnings
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Sign out
-                </a>
-              </li>
-            </ul>
-          </div>
-          <button
-            data-collapse-toggle="mobile-menu-2"
-            type="button"
-            className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-900"
-            aria-controls="mobile-menu-2"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
+            </Dropdown.Header>
+            <Dropdown.Item>Profile</Dropdown.Item>
+            <Dropdown.Item>Settings</Dropdown.Item>
+            <Dropdown.Item>History</Dropdown.Item>
+            <Dropdown.Item>Wishlist</Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item>Sign out</Dropdown.Item>
+          </Dropdown>
         </div>
+        <Navbar.Toggle />
       </div>
-    </nav>
+      <Navbar.Collapse>
+        <Navbar.Link href="/" active={true}>
+          Home
+        </Navbar.Link>
+        <Navbar.Link href="/">About Us</Navbar.Link>
+        <Navbar.Link href="/">Airline</Navbar.Link>
+        <Navbar.Link href="/">Flight</Navbar.Link>
+        <Navbar.Link href="/">Contact Us</Navbar.Link>
+      </Navbar.Collapse>
+    </Navbar>
   );
 }
