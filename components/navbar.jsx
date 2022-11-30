@@ -7,9 +7,10 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../images/TakeOff.png";
+
 
 export default function NavbarComponent() {
 const [openModal, setOpenModal] = useState(false);
