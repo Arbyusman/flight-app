@@ -3,6 +3,7 @@ import Modal from "./modal";
 export default function Navbar() {
   const [modalLogin, setModalLogin] = useState(false);
 
+
   return (
     <nav className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-100 ">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -59,14 +60,17 @@ export default function Navbar() {
         <div className="flex items-center md:order-2">
           {/* modal */}
           <button
-            className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="block bg-gray-100 border-gray-300 hover:bg-gray-200  shadow-md font-medium  text-sm px-5 py-2.5 text-center"
             type="button"
             data-modal-toggle="authentication-modal"
             onClick={() => setModalLogin(true)}
           >
-            Toggle modal
+            Login
           </button>
-          <Modal openModalLogin={modalLogin} closeModalLogin={() => setModalLogin(false)}/>
+          <Modal
+            openModalLogin={modalLogin}
+            closeModalLogin={() => setModalLogin(false)}
+          />
           {/* End Modal */}
 
           <button
@@ -84,6 +88,8 @@ export default function Navbar() {
               alt="user photo"
             />
           </button>
+
+       
           <div
             className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
             id="user-dropdown"
@@ -147,9 +153,9 @@ export default function Navbar() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
           </button>

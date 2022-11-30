@@ -1,4 +1,7 @@
+
 const Modal = ({ openModalLogin, closeModalLogin }) => {
+
+
   if (!openModalLogin) return null;
   return (
     <div
@@ -22,9 +25,9 @@ const Modal = ({ openModalLogin, closeModalLogin }) => {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
             <span className="sr-only">Close modal</span>
@@ -40,30 +43,30 @@ const Modal = ({ openModalLogin, closeModalLogin }) => {
               </h4>
             </div>
             <form className="" action="#">
-              <div class="relative my-2">
+              <div className="relative my-2">
                 <input
                   type="Email"
                   id="floating_filled_email"
-                  class="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-white  border-1 border-b-2 border-gray-400 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-white  border-1 border-b-2 border-gray-400 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                 />
                 <label
                   for="floating_filled_email"
-                  class="absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                  className="absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                 >
                   Email
                 </label>
               </div>
-              <div class="relative mt-4">
+              <div className="relative mt-4">
                 <input
                   type="password"
                   id="floating_filled_password"
-                  class="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-white  border-1 border-b-2 border-gray-400 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-white  border-1 border-b-2 border-gray-400 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
                 />
                 <label
                   for="floating_filled_password"
-                  class="absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                  className="absolute text-md text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                 >
                   Password
                 </label>
@@ -103,10 +106,7 @@ const Modal = ({ openModalLogin, closeModalLogin }) => {
               <div className="text-md font-medium text-center text-gray-700 ">
                 Not registered?{" "}
                 <div className="text-sm">
-                  <a
-                    href="register"
-                    className="text-blue-600 hover:underline "
-                  >
+                  <a href="register" className="text-blue-600 hover:underline ">
                     Create account
                   </a>
                 </div>
