@@ -60,7 +60,7 @@ export default function NavbarComponent() {
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                   Not registered?{" "}
                   <a
-                    href="/modal"
+                    href="register"
                     className="text-blue-700 hover:underline dark:text-blue-500"
                   >
                     Create account
@@ -105,6 +105,7 @@ export default function NavbarComponent() {
         <Navbar.Link href="/">About Us</Navbar.Link>
         <Navbar.Link href="/">Airline</Navbar.Link>
         <Navbar.Link href="/">Flight</Navbar.Link>
+        <Navbar.Link href="promo">Promo</Navbar.Link>
         <Navbar.Link href="/">Contact Us</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
