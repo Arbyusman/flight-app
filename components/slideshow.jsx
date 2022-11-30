@@ -9,8 +9,8 @@ const SlideShow = () => {
 	const images = [
 		"images/image1.jpeg",
 		"images/image2.png",
-		"images/Image3.jpg",
-		"images/Image4.jpg",
+		"images/image3.png",
+		"images/image4.png",
 		"images/Image5.jpg",
 	];
 
