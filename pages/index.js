@@ -1,9 +1,9 @@
-import {Navbar,WhyUs,Footer,Banner} from "../components";
+import {NavbarComponent,WhyUs,Footer,Banner} from "../components";
 
 export default function Home() {
   return (
     <div>
-      <Navbar />
+      <NavbarComponent />
       <WhyUs/>
       <Banner/>
       <Footer />
