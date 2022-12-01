@@ -9,7 +9,7 @@ import {
 } from "flowbite-react";
 import React, { useState } from "react";
 import Image from "next/image";
-import LogoImage from "../images/TakeOff.png";
+import LogoImage from "../public/images/TakeOff.png";
 
 async function dologin({ email, password }) {
   const response = await fetch(
