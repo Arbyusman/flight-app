@@ -7,40 +7,35 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
-
-async function dologin({ email, password }) {
-  const response = await fetch(
-    "https://beckend-takeoff-production.up.railway.app/api/v1/login",
-    {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-  const data = await response.json();
-  return data.token;
-}
 
 export default function NavbarComponent() {
   const [openModal, setOpenModal] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const emailRef = useRef("");
+  const passwordRef = useRef("");
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handelLogin = async () => {
-    dologin({ email, password })
-      .then((token) => localStorage.setItem("token", token))
-      .catch((err) => console.log(err.message));
-
-  };
+  async function handelLogin() {
+    const response = await fetch(
+      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailRef.value,
+          password: passwordRef.value
+        }),
+      }
+    );
+    console.log(response);
+    const data = await response.json();
+    console.log (data)
+    return data;
+  }
 
   return (
     <Navbar fluid={true} rounded={true}>
@@ -75,7 +70,7 @@ export default function NavbarComponent() {
                     id="email"
                     placeholder="name@company.com"
                     required={true}
-                    onChange={(e) => setEmail(e.target.value)}
+                    ref={emailRef}
                   />
                 </div>
                 <div>
@@ -86,7 +81,7 @@ export default function NavbarComponent() {
                     id="password"
                     type="password"
                     required={true}
-                    onChange={(e) => setPassword(e.target.value)}
+                    ref={passwordRef}
                   />
                 </div>
                 <div className="w-full">
