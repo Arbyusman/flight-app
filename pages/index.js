@@ -1,4 +1,4 @@
-import Navbar from "../components";
+import { Navbar, WhyUs, Footer, Banner } from "../components";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -46,6 +46,9 @@ export default function Home() {
           ))}
         </Swiper>
       </div>
+      <WhyUs />
+      <Banner />
+      <Footer />
     </div>
   );
 }
