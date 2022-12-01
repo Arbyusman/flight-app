@@ -15,8 +15,6 @@ import "swiper/css/effect-coverflow";
 import { EffectCoverflow, Pagination, Navigation } from "swiper";
 
 export default function Home() {
-  const arrayOfImages = [promoImages];
-
   return (
     <div>
       <Navbar />
