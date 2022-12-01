@@ -16,7 +16,7 @@ export default function NavbarComponent() {
   return (
     <Navbar fluid={true} rounded={true}>
       <Navbar.Brand href="/">
-        <Image src={LogoImage} className="mr-3 h-16 w-20" alt="Flowbite Logo" />
+        <Image src={LogoImage} className="mr-3 h-16 w-20" alt="TakeOff Logo" />
         {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           TakeOff
         </span> */}
