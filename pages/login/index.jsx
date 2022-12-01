@@ -1,27 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React from "react";
 
 export default function Login() {
-  const [email,setEmail]= useState ("")
-  const [password,setPassword]= useState ("")
-
-  const handelLogin = async () => {
-    const response = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/register",
-      {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log(email, password);
-
-    const data = await response.json();
-
-    console.log(data);
-  };
   return (
     <section className="h-screen">
       <div className="px-6 h-full text-gray-800">
@@ -45,7 +25,6 @@ export default function Login() {
                   className="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                   id="exampleFormControlInput2"
                   placeholder="Email address"
-                  required
                 />
               </div>
 
@@ -60,7 +39,6 @@ export default function Login() {
 
               <div className="text-center lg:text-left">
                 <button
-                onClick={handelLogin}
                   type="button"
                   className="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                 >

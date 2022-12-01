@@ -1,30 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 
-import React, { useState } from "react";
 import { Footer, NavbarComponent } from "../../components";
 
 export default function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handelSubmit = async () => {
-    const response = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/register",
-      {
-        method: "POST",
-        body: JSON.stringify({ name, email, password }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log(name, email, password);
-
-    const data = await response.json();
-
-    console.log(data);
-  };
+  //beckend-takeoff-production.up.railway.app/
   return (
     <div>
       <NavbarComponent />
@@ -43,7 +22,7 @@ export default function Register() {
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                   Create and account
                 </h1>
-                <form className="space-y-4 md:space-y-6" method="POST">
+                <form action="https://beckend-takeoff-production.up.railway.app/register" className="space-y-4 md:space-y-6"  method="POST">
                   <div>
                     <label
                       htmlFor="username"
@@ -58,8 +37,6 @@ export default function Register() {
                       className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
                       placeholder="John Doe"
                       required=""
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
                   <div>
@@ -75,18 +52,32 @@ export default function Register() {
                       id="email"
                       className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
                       placeholder="name@company.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
+                      required=""
                     />
                   </div>
 
-                  <div className="relative z-0 mb-6 w-full group">
+                  <div class="relative z-0 mb-6 w-full group">
                     <label
-                      htmlFor="floating_repeat_password"
-                      className="block mb-2 text-sm font-medium text-gray-900"
+                      for="floating_password"
+                      class="block mb-2 text-sm font-medium text-gray-900"
                     >
-                      password
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      name="floating_password"
+                      id="floating_password"
+                      className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
+                      placeholder="••••••••"
+                      required
+                    />
+                  </div>
+                  <div class="relative z-0 mb-6 w-full group">
+                    <label
+                      for="floating_repeat_password"
+                      class="block mb-2 text-sm font-medium text-gray-900"
+                    >
+                      Confirm password
                     </label>
                     <input
                       type="password"
@@ -95,8 +86,6 @@ export default function Register() {
                       className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
                       placeholder="••••••••"
                       required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   <div className="flex items-start">
@@ -126,7 +115,6 @@ export default function Register() {
                   </div>
                   <center>
                     <button
-                      onClick={handelSubmit}
                       type="submit"
                       className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "
                     >
