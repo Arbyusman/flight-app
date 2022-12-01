@@ -7,13 +7,40 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import LogoImage from "../images/TakeOff.png";
 
+async function dologin({ email, password }) {
+  const response = await fetch(
+    "https://beckend-takeoff-production.up.railway.app/api/v1/login",
+    {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  const data = await response.json();
+  return data.token;
+}
 
 export default function NavbarComponent() {
-const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handelLogin = async () => {
+    dologin({ email, password })
+      .then((token) => localStorage.setItem("token", token))
+      .catch((err) => console.log(err.message));
+
+  };
 
   return (
     <Navbar fluid={true} rounded={true}>
@@ -48,16 +75,22 @@ const [openModal, setOpenModal] = useState(false);
                     id="email"
                     placeholder="name@company.com"
                     required={true}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
                   <div className="mb-2 block">
                     <Label htmlFor="password" value="Your password" />
                   </div>
-                  <TextInput id="password" type="password" required={true} />
+                  <TextInput
+                    id="password"
+                    type="password"
+                    required={true}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </div>
                 <div className="w-full">
-                  <Button>Log in to your account</Button>
+                  <Button onClick={handelLogin}>Log in to your account</Button>
                 </div>
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                   Not registered?{" "}
