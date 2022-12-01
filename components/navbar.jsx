@@ -9,7 +9,7 @@ import {
 } from "flowbite-react";
 import { useState } from "react";
 import Image from "next/image";
-import LogoImage from "../images/TakeOff.png";
+import LogoImage from "../public/images/TakeOff.png";
 
 export default function NavbarComponent() {
   const [openModal, setOpenModal] = useState(false);
@@ -23,7 +23,7 @@ export default function NavbarComponent() {
       </Navbar.Brand>
       <div className="flex md:order-2">
         <div>
-          <Button className="" onClick={() => setOpenModal(true)}>
+          <Button className="mr-4 md:mr-0" onClick={() => setOpenModal(true)}>
             Login
           </Button>
           <Modal
