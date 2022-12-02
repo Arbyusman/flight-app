@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-
+import { NavbarComponent,Footer } from "../../components";
 export default function Register() {
   const [field, setField] = useState({});
 
@@ -36,22 +36,24 @@ export default function Register() {
   }
 
   return (
-    <section className="h-screen">
-      <div className="px-6 h-full text-gray-800">
-        <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
-          <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-              className="w-full"
-              alt="Sample image"
-            />
-
+    <div>
+      <NavbarComponent />
+      <section className="h-screen">
+        <div className="px-6 h-full text-gray-800">
+          <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
+            <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
+              <img
+                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                className="w-full"
+                alt="Sample image"
+              />
+  
           </div>
-    
+      
             
           <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-         
+              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+           
               
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                   Create and account
@@ -85,15 +87,21 @@ export default function Register() {
                   </div>
                   <center><button type="submit" name="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Create an account</button></center>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Already have an account? <a href=" /" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                    Already have an account?{" "}
+                    <a
+                      href=" /"
+                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                    >
+                      Login here
+                    </a>
                   </p>
-              </form>
+                </form>
+              </div>
+            </div>
           </div>
-      </div>
-         
         </div>
-      </div>
-      
-    </section>
+      </section>
+      <Footer />
+    </div>
   );
 }

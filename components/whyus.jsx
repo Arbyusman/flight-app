@@ -12,6 +12,7 @@ export default function WhyUs() {
           <img
             className=""
             src="https://cdn.airpaz.com/images/illustrations/simplifyBooking.svg"
+            alt="img why us"
           />
           <h5 className="mb-2 text-center sm:text-2xl font-bold tracking-tight text-gray-800 ">
             Simplify Your Booking Experience
