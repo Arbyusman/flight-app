@@ -11,11 +11,17 @@ import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 
-export default function NavbarComponent() {
-  const [openModal, setOpenModal] = useState(false);
+import { useRouter } from "next/router";
 
-  const emailRef = useRef("");
-  const passwordRef = useRef("");
+export default function NavbarComponent() {
+  const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const [user, setUser] = useState({});
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   async function handelLogin() {
     const response = await fetch(
@@ -26,16 +32,39 @@ export default function NavbarComponent() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: emailRef.value,
-          password: passwordRef.value
+          email,
+          password,
         }),
       }
-    );
-    console.log(response);
+    ).catch((err) => {
+      throw err;
+    });
+
     const data = await response.json();
-    console.log (data)
-    return data;
+    console.log("status", data.status);
+    console.log("status", data.data.token);
+    if (data.status === "OK") {
+      localStorage.setItem("token", data.data.token);
+      setOpenModal(false);
+      setIsLoggedIn(true);
+      router.push("/");
+    }
+
+    const userdata = data.data;
+    setUser(userdata);
+
+
+
+    console.log("data user", data.data);
+
+    console.log(email, password);
   }
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+  }
+
 
   return (
     <Navbar fluid={true} rounded={true}>
@@ -47,9 +76,38 @@ export default function NavbarComponent() {
       </Navbar.Brand>
       <div className="flex md:order-2">
         <div>
-          <Button className="" onClick={() => setOpenModal(true)}>
-            Login
-          </Button>
+          {!isLoggedIn ? (
+            <Button className="" onClick={() => setOpenModal(true)}>
+              Login
+            </Button>
+          ) : (
+            <div id="already-login">
+              <Dropdown
+                arrowIcon={false}
+                inline={true}
+                label={
+                  <Avatar
+                    alt="User settings"
+                    img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                    rounded={true}
+                  />
+                }
+              >
+                <Dropdown.Header>
+                  <span className="block text-sm">{user.username}</span>
+                  <span className="block truncate text-sm font-medium">
+                    {user.email}
+                  </span>
+                </Dropdown.Header>
+                <Dropdown.Item>Profile</Dropdown.Item>
+                <Dropdown.Item>Settings</Dropdown.Item>
+                <Dropdown.Item>History</Dropdown.Item>
+                <Dropdown.Item>Wishlist</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+              </Dropdown>
+            </div>
+          )}
           <Modal
             show={openModal}
             size="md"
@@ -70,7 +128,8 @@ export default function NavbarComponent() {
                     id="email"
                     placeholder="name@company.com"
                     required={true}
-                    ref={emailRef}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
@@ -81,7 +140,8 @@ export default function NavbarComponent() {
                     id="password"
                     type="password"
                     required={true}
-                    ref={passwordRef}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
                 <div className="w-full">
@@ -99,32 +159,6 @@ export default function NavbarComponent() {
               </div>
             </Modal.Body>
           </Modal>
-        </div>
-        <div id="already-login" className="hidden">
-          <Dropdown
-            arrowIcon={false}
-            inline={true}
-            label={
-              <Avatar
-                alt="User settings"
-                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                rounded={true}
-              />
-            }
-          >
-            <Dropdown.Header>
-              <span className="block text-sm">Arbiansyah</span>
-              <span className="block truncate text-sm font-medium">
-                arby@mail.com
-              </span>
-            </Dropdown.Header>
-            <Dropdown.Item>Profile</Dropdown.Item>
-            <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item>History</Dropdown.Item>
-            <Dropdown.Item>Wishlist</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>Sign out</Dropdown.Item>
-          </Dropdown>
         </div>
         <Navbar.Toggle />
       </div>
