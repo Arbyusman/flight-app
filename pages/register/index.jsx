@@ -63,7 +63,7 @@ export default function Register() {
                 
                   <div>
                       <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 ">Your username</label>
-                      <input type="username" name="username" id="username" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="nandaJulian"  onChange={setValue}/>
+                      <input type="username" name="username" id="username" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="Your Name"  onChange={setValue}/>
                   </div>
                   <div>
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>

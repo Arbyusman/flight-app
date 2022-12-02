@@ -7,21 +7,29 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
-import React, { useRef, useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
+import Script from 'next/script'
 
-import { useRouter } from "next/router";
+
+
 
 export default function NavbarComponent() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const [user, setUser] = useState({});
-
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [user, setUser] = useState({});
+  const [err, setErr] = useState("");
+  const [loginSucces, setLoginSucces] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
 
   async function handelLogin() {
     const response = await fetch(
@@ -41,30 +49,30 @@ export default function NavbarComponent() {
     });
 
     const data = await response.json();
-    console.log("status", data.status);
-    console.log("status", data.data.token);
+
     if (data.status === "OK") {
       localStorage.setItem("token", data.data.token);
       setOpenModal(false);
       setIsLoggedIn(true);
+      alert(setLoginSucces);
       router.push("/");
+    } else {
+      const errStatus = data.status;
+      const errMessage = data.message;
+      setErr(`${errStatus} ${errMessage}`);
     }
+
+    console.log(data.data, "data here");
 
     const userdata = data.data;
     setUser(userdata);
-
-
-
-    console.log("data user", data.data);
-
-    console.log(email, password);
   }
 
   function handleLogout() {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    setOpenModal(true);
   }
-
 
   return (
     <Navbar fluid={true} rounded={true} className="sticky top-0 z-10">
@@ -96,7 +104,9 @@ export default function NavbarComponent() {
                     {user.email}
                   </span>
                 </Dropdown.Header>
-                <Dropdown.Item>Profile</Dropdown.Item>
+                <Dropdown.Item>
+                  <a href={"profile/" + user.id}>Profile</a>
+                </Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
                 <Dropdown.Item>History</Dropdown.Item>
                 <Dropdown.Item>Wishlist</Dropdown.Item>
@@ -123,7 +133,8 @@ export default function NavbarComponent() {
                   </div>
                   <TextInput
                     id="email"
-                    placeholder="name@company.com"
+                    type="email"
+                    placeholder="JohnDoe@company.com"
                     required={true}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -138,12 +149,22 @@ export default function NavbarComponent() {
                     type="password"
                     required={true}
                     value={password}
+                    placeholder="••••••••"
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div className="w-full">
-                  <Button onClick={handelLogin}>Log in to your account</Button>
+                <div className="w-full  items-center justify-center ">
+                  <div
+                    className=" text-sm  text-center text-red-700 rounded-lg "
+                    role="alert"
+                  >
+                    <span className="font-medium">{err}</span>
+                  </div>
+                  <Button className="w-full" onClick={handelLogin}>
+                    Log in to your account
+                  </Button>
                 </div>
+
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                   Not registered?{" "}
                   <a
@@ -169,6 +190,9 @@ export default function NavbarComponent() {
         <Navbar.Link href="promo">Promo</Navbar.Link>
         <Navbar.Link href="/">Contact Us</Navbar.Link>
       </Navbar.Collapse>
+
+     
+      <Script src="../public/js/validate.js"></Script>
     </Navbar>
   );
 }
