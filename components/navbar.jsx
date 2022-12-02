@@ -1,74 +1,17 @@
-import {
-  Navbar,
-  Dropdown,
-  Avatar,
-  Button,
-  Modal,
-  Label,
-  TextInput,
-} from "flowbite-react";
-import { useState } from "react";
+import { Navbar, Dropdown, Avatar } from "flowbite-react";
+import ModalComponent from "./modal";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 
 export default function NavbarComponent() {
-  const [openModal, setOpenModal] = useState(false);
   return (
-    <Navbar fluid={true} rounded={true}>
+    <Navbar fluid={true} rounded={true} className="sticky top-0 z-10">
       <Navbar.Brand href="/">
-        <Image src={LogoImage} className="mr-3 h-16 w-20" alt="TakeOff Logo" />
-        {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          TakeOff
-        </span> */}
+        <Image src={LogoImage} className="mr-3 h-12 w-16" alt="TakeOff Logo" />
       </Navbar.Brand>
       <div className="flex md:order-2">
         <div>
-          <Button className="mr-4 md:mr-0" onClick={() => setOpenModal(true)}>
-            Login
-          </Button>
-          <Modal
-            show={openModal}
-            size="md"
-            popup={true}
-            onClose={() => setOpenModal(false)}
-          >
-            <Modal.Header />
-            <Modal.Body>
-              <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
-                <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                  Sign in to our platform
-                </h3>
-                <div>
-                  <div className="mb-2 block">
-                    <Label htmlFor="email" value="Your email" />
-                  </div>
-                  <TextInput
-                    id="email"
-                    placeholder="name@company.com"
-                    required={true}
-                  />
-                </div>
-                <div>
-                  <div className="mb-2 block">
-                    <Label htmlFor="password" value="Your password" />
-                  </div>
-                  <TextInput id="password" type="password" required={true} />
-                </div>
-                <div className="w-full">
-                  <Button>Log in to your account</Button>
-                </div>
-                <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-                  Not registered?{" "}
-                  <a
-                    href="register"
-                    className="text-blue-700 hover:underline dark:text-blue-500"
-                  >
-                    Create account
-                  </a>
-                </div>
-              </div>
-            </Modal.Body>
-          </Modal>
+          <ModalComponent />
         </div>
         <div id="already-login" className="hidden">
           <Dropdown

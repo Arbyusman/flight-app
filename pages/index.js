@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div>
       <Navbar />
-      <div className="max-w-full mx-auto" id="promo-carousel-home">
+      <div className="max-w-full mx-auto mt-6" id="promo-carousel-home">
         <Swiper
           effect={"coverflow"}
           grabCursor={true}

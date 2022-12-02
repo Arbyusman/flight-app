@@ -4,7 +4,7 @@ import LogoImage from "../public/images/TakeOff.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-100 sm:justify-center ">
+    <footer className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded sm:justify-center mt-12 mb-7">
       <div className="container lg:flex lg:flex-wrap  justify-between mx-auto sm:grid sm:grid-cols-2 sm:grid-rows-1">
         <div className="mb-6 md:mb-0 sm:mb-2">
           <a href="#" className="flex items-center">
@@ -19,28 +19,19 @@ export default function Footer() {
           <h2 className=" text-gray-700 font-semibold rounded ">
             Take OFF Flight
           </h2>
-          <ul className="text-gray-600 dark:text-gray-400">
+          <ul className="text-gray-600">
             <li className="">
-              <a
-                href="#"
-                className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700"
-              >
+              <a href="#" className=" text-gray-600 md:p-0 ">
                 Home
               </a>
             </li>
             <li>
-              <a
-                href=""
-                className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700"
-              >
+              <a href="" className=" text-gray-600 md:p-0 ">
                 About Us
               </a>
             </li>
             <li>
-              <a
-                href=""
-                className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700"
-              >
+              <a href="" className=" text-gray-600 md:p-0">
                 Promo
               </a>
             </li>
@@ -48,12 +39,9 @@ export default function Footer() {
         </div>
         <div className="mt-2 ">
           <h2 className=" text-gray-700 font-semibold rounded">Account</h2>
-          <ul className="text-gray-600 dark:text-gray-400">
+          <ul className="text-gray-600 ">
             <li className="">
-              <a
-                href="#"
-                className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700"
-              >
+              <a href="#" className=" text-gray-600 md:p-0">
                 Register
               </a>
             </li>
@@ -139,12 +127,9 @@ export default function Footer() {
           <h2 className=" text-gray-900 ml-1 font-semibold rounded ">
             Our App
           </h2>
-          <ul className="text-gray-600 dark:text-gray-400">
+          <ul className="text-gray-600">
             <li className="">
-              <a
-                href="#"
-                className=" text-gray-600  md:p-0 dark:text-gray-600   dark:hover:text-gray-900  dark:border-gray-700"
-              >
+              <a href="#" className=" text-gray-600 md:p-0">
                 <Image
                   src={googlePlayImage}
                   alt="Get on Google Play logo"
@@ -155,7 +140,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <hr className="my-6 sm:mx-auto dark:border-gray-500 border-gray-600 lg:my-8" />
+      <hr className="my-6 sm:mx-auto border-gray-600 lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-center">
         <span className=" text-gray-600 flex justify-center font-medium rounded text-sm">
           Copyright 2022 All rights reserved.
