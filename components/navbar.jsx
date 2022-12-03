@@ -11,10 +11,6 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
-import Script from 'next/script'
-
-
-
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -149,7 +145,10 @@ export default function NavbarComponent() {
                     type="password"
                     required={true}
                     value={password}
+                    minLength="5"
                     placeholder="••••••••"
+                    pattern="[a-z0-9]{1,15}"
+                    title="Password should be digits (0 to 9) or alphabets (a to z)."
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
@@ -190,9 +189,6 @@ export default function NavbarComponent() {
         <Navbar.Link href="promo">Promo</Navbar.Link>
         <Navbar.Link href="/">Contact Us</Navbar.Link>
       </Navbar.Collapse>
-
-     
-      <Script src="../public/js/validate.js"></Script>
     </Navbar>
   );
 }
