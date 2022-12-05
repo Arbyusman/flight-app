@@ -23,42 +23,43 @@ export default function NavbarComponent() {
 
   async function handelLogin() {
     const response = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+        "https://beckend-takeoff-production.up.railway.app/api/v1/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }
+        ).catch((err) => {
+        throw err;
+      });
+
+      const data = await response.json();
+
+      if (data.status === "OK") {
+        localStorage.setItem("token", data.data.token);
+        setOpenModal(false);
+        setIsLoggedIn(true);
+        setUser(data.data)
+        router.push("/");
+      } else {
+        const errStatus = data.status;
+        const errMessage = data.message;
+        setErr(`${errStatus} ${errMessage}`);
       }
-    ).catch((err) => {
-      throw err;
-    });
-
-    const data = await response.json();
-
-    if (data.status === "OK") {
-      localStorage.setItem("token", data.data.token);
-      setOpenModal(false);
-      setIsLoggedIn(true);
-      router.push("/");
-    } else {
-      const errStatus = data.status;
-      const errMessage = data.message;
-      setErr(`${errStatus} ${errMessage}`);
     }
-  }
 
-  function handleLogout() {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    setOpenModal(true);
-  }
-
-  useEffect(() => {
+    function handleLogout() {
+      localStorage.removeItem("token");
+      setIsLoggedIn(false);
+      setOpenModal(true);
+    }
+    useEffect(() => {
+    
     const token = localStorage.getItem("token");
     fetch("https://beckend-takeoff-production.up.railway.app/api/v1/user", {
       method: "POST",
