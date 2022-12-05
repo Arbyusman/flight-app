@@ -20,7 +20,6 @@ export default function NavbarComponent() {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState({});
   const [err, setErr] = useState("");
-  const [loginSucces, setLoginSucces] = useState("");
 
   async function handelLogin() {
     const response = await fetch(
