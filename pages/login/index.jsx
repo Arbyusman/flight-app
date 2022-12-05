@@ -1,14 +1,31 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
+import {
+
+  Dropdown,
+  Avatar,
+  Button,
+ 
+} from "flowbite-react";
 import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 import { useRouter } from "next/router";
 
 
 export default function login() {
   const [field, setField] = useState({});
-  const [progress, setProgress] = useState(false);
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  
   
   function setValue(e){
     const target = e.target;
@@ -23,12 +40,12 @@ export default function login() {
     });
   }
 
+  
   async function doLogin(e) {
     e.preventDefault();
 
-    setProgress(true);
 
-    const req = await fetch('https://beckend-takeoff-production.up.railway.app/api/v1/login', {
+    const response = await fetch('https://beckend-takeoff-production.up.railway.app/api/v1/login', {
       method : 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -36,18 +53,34 @@ export default function login() {
       body: JSON.stringify(field)
     });
 
-    const res = await req.json();
-    console.log(res)
+    const data = await response.json();
+    if (data.status === "OK") {
+      localStorage.setItem("token", data.data.token);
+      setIsLoggedIn(true);
+      alert("Kamu Berhasil Login");
+
+      router.push("/");
+    } else {
+      const errStatus = data.status;
+      const errMessage = data.message;
+      setErr(`${errStatus} ${errMessage}`);
+    }
+
+    console.log(data.data, "data here");
+
+    const userdata = data.data;
+    setUser(userdata);
+    console.log(data)
 
     setField({});
     e.target.reset();
-    setProgress(false);
 
     
   }
 
-  function handleClick (){
-    router.push("/")
+  function handleLogout() {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
   }
 
   return (
@@ -65,7 +98,7 @@ export default function login() {
           <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-                  Create and account
+                  Login Account
               </h1>
               <form onSubmit={ doLogin } className="space-y-4 md:space-y-6" action="#">
                  
@@ -81,14 +114,42 @@ export default function login() {
                       <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-dark">Confirm password</label>
                       <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " required=""/>
                   </div> */}
-                  <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                        <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required=""/>
-                      </div>
-                      
+                  <div>
+                  {!isLoggedIn ? (
+            <Button className="" type="submit" name="submit">
+              Login
+            </Button>
+          ) : (
+            <div id="already-login">
+              <Dropdown
+                arrowIcon={false}
+                inline={true}
+                // label={
+                //   <Avatar
+                //     alt="User settings"
+                //     img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                //     rounded={true}
+                //   />
+                // }
+              >
+                <Dropdown.Header>
+                  <span className="block text-sm">{user.username}</span>
+                  <span className="block truncate text-sm font-medium">
+                    {user.email}
+                  </span>
+                </Dropdown.Header>
+                <Dropdown.Item>
+                  <a href={"profile/" + user.id}>Profile</a>
+                </Dropdown.Item>
+                <Dropdown.Item>Settings</Dropdown.Item>
+                <Dropdown.Item>History</Dropdown.Item>
+                <Dropdown.Item>Wishlist</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+              </Dropdown>
+            </div>
+          )}
                   </div>
-                  <center><button onClick={handleClick} type="submit" name="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Login</button></center>
-                  
               </form>
           </div>
       </div>

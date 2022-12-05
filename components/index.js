@@ -5,4 +5,5 @@ import Banner from "./banner";
 import SlideShow from "./slideshow";
 import UserProfile from "./userProfile";
 
-export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile };
+
+export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,};

@@ -7,6 +7,7 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
+
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
@@ -20,7 +21,7 @@ export default function NavbarComponent() {
   const [email, setEmail] = useState("");
   const [user, setUser] = useState({});
   const [err, setErr] = useState("");
-  const [loginSucces, setLoginSucces] = useState("");
+ // const [loginSucces, setLoginSucces] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -50,7 +51,8 @@ export default function NavbarComponent() {
       localStorage.setItem("token", data.data.token);
       setOpenModal(false);
       setIsLoggedIn(true);
-      alert(setLoginSucces);
+      alert("Kamu Berhasil Login");
+
       router.push("/");
     } else {
       const errStatus = data.status;
@@ -62,6 +64,7 @@ export default function NavbarComponent() {
 
     const userdata = data.data;
     setUser(userdata);
+    
   }
 
   function handleLogout() {
