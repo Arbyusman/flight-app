@@ -16,16 +16,10 @@ export default function NavbarComponent() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [user, setUser] = useState({});
   const [err, setErr] = useState("");
-  const [loginSucces, setLoginSucces] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
 
   async function handelLogin() {
     const response = await fetch(
@@ -50,18 +44,12 @@ export default function NavbarComponent() {
       localStorage.setItem("token", data.data.token);
       setOpenModal(false);
       setIsLoggedIn(true);
-      alert(setLoginSucces);
       router.push("/");
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
     }
-
-    console.log(data.data, "data here");
-
-    const userdata = data.data;
-    setUser(userdata);
   }
 
   function handleLogout() {
@@ -69,6 +57,24 @@ export default function NavbarComponent() {
     setIsLoggedIn(false);
     setOpenModal(true);
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    fetch("https://beckend-takeoff-production.up.railway.app/api/v1/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("here token", token);
+        console.log("data test", data.data);
+        setUser(data.data);
+      });
+    setIsLoggedIn(!!token);
+  }, []);
 
   return (
     <Navbar fluid={true} rounded={true} className="sticky top-0 z-10">

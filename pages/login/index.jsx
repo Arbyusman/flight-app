@@ -1,53 +1,38 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
-import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-
 export default function login() {
-  const [field, setField] = useState({});
-  const [progress, setProgress] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
-  
-  function setValue(e){
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
 
-    console.log({name,value});
-
-    setField({
-      ... field,
-      [name]: value
-    });
-  }
-
-  async function doLogin(e) {
-    e.preventDefault();
-
-    setProgress(true);
-
-    const req = await fetch('https://beckend-takeoff-production.up.railway.app/api/v1/login', {
-      method : 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(field)
+  async function handelLogin() {
+    const response = await fetch(
+      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    ).catch((err) => {
+      throw err;
     });
 
-    const res = await req.json();
-    console.log(res)
+    const data = await response.json();
 
-    setField({});
-    e.target.reset();
-    setProgress(false);
-
-    
-  }
-
-  function handleClick (){
-    router.push("/")
+    if (data.status === "OK") {
+      localStorage.setItem("token", data.data.token);
+      router.push("/");
+    } else {
+      
+    }
   }
 
   return (
@@ -60,42 +45,77 @@ export default function login() {
               className="w-full"
               alt="Sample image"
             />
-
           </div>
           <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-                  Create and account
+                Create and account
               </h1>
-              <form onSubmit={ doLogin } className="space-y-4 md:space-y-6" action="#">
-                 
-                  <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
-                      <input type="email" name="email" id="email" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="name@company.com"  onChange={setValue} />
-                  </div>
-                  <div>
-                      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••"  className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "  onChange={setValue}/>
-                  </div>
-                  {/* <div>
+              <form className="space-y-4 md:space-y-6" action="#">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block mb-2 text-sm font-medium text-gray-900 "
+                  >
+                    Your email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
+                    placeholder="name@company.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block mb-2 text-sm font-medium text-gray-900 "
+                  >
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="••••••••"
+                    className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                {/* <div>
                       <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-dark">Confirm password</label>
                       <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " required=""/>
                   </div> */}
-                  <div className="flex items-start">
-                      <div className="flex items-center h-5">
-                        <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required=""/>
-                      </div>
-                      
+                <div className="flex items-start">
+                  <div className="flex items-center h-5">
+                    <input
+                      id="terms"
+                      aria-describedby="terms"
+                      type="checkbox"
+                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                      required=""
+                    />
                   </div>
-                  <center><button onClick={handleClick} type="submit" name="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Login</button></center>
-                  
+                </div>
+                <center>
+                  <button
+                    onClick={handelLogin}
+                    type="submit"
+                    name="submit"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "
+                  >
+                    Login
+                  </button>
+                </center>
               </form>
+            </div>
           </div>
-      </div>
-         
         </div>
       </div>
-      
     </section>
   );
 }
