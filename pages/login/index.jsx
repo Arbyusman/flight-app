@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { Button, Label, TextInput } from "flowbite-react";
 
 export default function login() {
   const [email, setEmail] = useState("");
@@ -29,9 +30,9 @@ export default function login() {
 
     if (data.status === "OK") {
       localStorage.setItem("token", data.data.token);
+      alert("berhasil");
       router.push("/");
     } else {
-      
     }
   }
 
@@ -47,71 +48,58 @@ export default function login() {
             />
           </div>
           <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
-            <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-                Create and account
-              </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900 "
-                  >
-                    Your email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
-                    placeholder="name@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+            <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
+              <h3 className="text-xl text-center  font-medium text-gray-900 dark:text-white">
+                Sign in to our platform
+              </h3>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="email" value="Your email" />
                 </div>
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block mb-2 text-sm font-medium text-gray-900 "
-                  >
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                <TextInput
+                  id="email"
+                  type="email"
+                  placeholder="JohnDoe@company.com"
+                  required={true}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="password" value="Your password" />
                 </div>
-                {/* <div>
-                      <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-dark">Confirm password</label>
-                      <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " required=""/>
-                  </div> */}
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="terms"
-                      aria-describedby="terms"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                      required=""
-                    />
-                  </div>
-                </div>
-                <center>
-                  <button
-                    onClick={handelLogin}
-                    type="submit"
-                    name="submit"
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "
-                  >
-                    Login
-                  </button>
-                </center>
-              </form>
+                <TextInput
+                  id="password"
+                  type="password"
+                  required={true}
+                  value={password}
+                  minLength="5"
+                  placeholder="••••••••"
+                  pattern="[a-z0-9]{1,15}"
+                  title="Password should be digits (0 to 9) or alphabets (a to z)."
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="w-full  items-center justify-center ">
+                <div
+                  className=" text-sm  text-center text-red-700 rounded-lg "
+                  role="alert"
+                ></div>
+                <Button className="w-full" onClick={handelLogin}>
+                  Log in to your account
+                </Button>
+              </div>
+
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                Not registered?{" "}
+                <a
+                  href="register"
+                  className="text-blue-700 hover:underline dark:text-blue-500"
+                >
+                  Create account
+                </a>
+              </div>
             </div>
           </div>
         </div>
