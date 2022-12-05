@@ -7,25 +7,110 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 
 export default function NavbarComponent() {
+  const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [user, setUser] = useState({});
+  const [err, setErr] = useState("");
+  const [loginSucces, setLoginSucces] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  async function handelLogin() {
+    const response = await fetch(
+      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    ).catch((err) => {
+      throw err;
+    });
+
+    const data = await response.json();
+
+    if (data.status === "OK") {
+      localStorage.setItem("token", data.data.token);
+      setOpenModal(false);
+      setIsLoggedIn(true);
+      alert(setLoginSucces);
+      router.push("/");
+    } else {
+      const errStatus = data.status;
+      const errMessage = data.message;
+      setErr(`${errStatus} ${errMessage}`);
+    }
+
+    console.log(data.data, "data here");
+
+    const userdata = data.data;
+    setUser(userdata);
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setOpenModal(true);
+  }
+
   return (
-    <Navbar fluid={true} rounded={true}>
+    <Navbar fluid={true} rounded={true} className="sticky top-0 z-10">
       <Navbar.Brand href="/">
-        <Image src={LogoImage} className="mr-3 h-16 w-20" alt="Flowbite Logo" />
-        {/* <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          TakeOff
-        </span> */}
+        <Image src={LogoImage} className="mr-3 h-12 w-16" alt="TakeOff Logo" />
       </Navbar.Brand>
       <div className="flex md:order-2">
         <div>
-          <Button className="" onClick={() => setOpenModal(true)}>
-            Login
-          </Button>
+          {!isLoggedIn ? (
+            <Button className="" onClick={() => setOpenModal(true)}>
+              Login
+            </Button>
+          ) : (
+            <div id="already-login">
+              <Dropdown
+                arrowIcon={false}
+                inline={true}
+                label={
+                  <Avatar
+                    alt="User settings"
+                    img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                    rounded={true}
+                  />
+                }
+              >
+                <Dropdown.Header>
+                  <span className="block text-sm">{user.username}</span>
+                  <span className="block truncate text-sm font-medium">
+                    {user.email}
+                  </span>
+                </Dropdown.Header>
+                <Dropdown.Item>
+                  <a href={"profile/" + user.id}>Profile</a>
+                </Dropdown.Item>
+                <Dropdown.Item>Settings</Dropdown.Item>
+                <Dropdown.Item>History</Dropdown.Item>
+                <Dropdown.Item>Wishlist</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+              </Dropdown>
+            </div>
+          )}
           <Modal
             show={openModal}
             size="md"
@@ -44,19 +129,41 @@ export default function NavbarComponent() {
                   </div>
                   <TextInput
                     id="email"
-                    placeholder="name@company.com"
+                    type="email"
+                    placeholder="JohnDoe@company.com"
                     required={true}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
                 <div>
                   <div className="mb-2 block">
                     <Label htmlFor="password" value="Your password" />
                   </div>
-                  <TextInput id="password" type="password" required={true} />
+                  <TextInput
+                    id="password"
+                    type="password"
+                    required={true}
+                    value={password}
+                    minLength="5"
+                    placeholder="••••••••"
+                    pattern="[a-z0-9]{1,15}"
+                    title="Password should be digits (0 to 9) or alphabets (a to z)."
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </div>
-                <div className="w-full">
-                  <Button>Log in to your account</Button>
+                <div className="w-full  items-center justify-center ">
+                  <div
+                    className=" text-sm  text-center text-red-700 rounded-lg "
+                    role="alert"
+                  >
+                    <span className="font-medium">{err}</span>
+                  </div>
+                  <Button className="w-full" onClick={handelLogin}>
+                    Log in to your account
+                  </Button>
                 </div>
+
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                   Not registered?{" "}
                   <a
@@ -69,32 +176,6 @@ export default function NavbarComponent() {
               </div>
             </Modal.Body>
           </Modal>
-        </div>
-        <div id="already-login" className="hidden">
-          <Dropdown
-            arrowIcon={false}
-            inline={true}
-            label={
-              <Avatar
-                alt="User settings"
-                img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                rounded={true}
-              />
-            }
-          >
-            <Dropdown.Header>
-              <span className="block text-sm">Arbiansyah</span>
-              <span className="block truncate text-sm font-medium">
-                arby@mail.com
-              </span>
-            </Dropdown.Header>
-            <Dropdown.Item>Profile</Dropdown.Item>
-            <Dropdown.Item>Settings</Dropdown.Item>
-            <Dropdown.Item>History</Dropdown.Item>
-            <Dropdown.Item>Wishlist</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item>Sign out</Dropdown.Item>
-          </Dropdown>
         </div>
         <Navbar.Toggle />
       </div>
