@@ -1,9 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
-import { NavbarComponent,Footer } from "../../components";
+
 export default function Register() {
   const [field, setField] = useState({});
-
+  const [success, setSuccess] = useState(false);
+  const router = useRouter();
+  
+  
   function setValue(e){
     const target = e.target;
     const name = target.name;
@@ -20,6 +23,7 @@ export default function Register() {
   async function doRegister(e) {
     e.preventDefault();
 
+
     const req = await fetch('https://beckend-takeoff-production.up.railway.app/api/v1/register', {
       method : 'POST',
       headers: {
@@ -28,11 +32,19 @@ export default function Register() {
       body: JSON.stringify(field)
     });
 
+     setField({});
+      setSuccess(true);
+      e.target.reset();
+
     const res = await req.json();
     console.log(res)
 
-    e.target.reset();
+  }
 
+  function handleClick (){
+    
+      router.push("login")
+    
   }
 
   return (
@@ -49,24 +61,31 @@ export default function Register() {
               />
   
           </div>
-      
+    
             
           <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
-              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-           
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+         
               
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                   Create and account
               </h1>
-
+              {success && (
+              <div class="bg-indigo-900 text-center py-4 lg:px-4">
+              <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">Congratulation</span>
+                <span class="font-semibold mr-2 text-left flex-auto">Your account has been registered</span>
+                <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+              </div>
+            </div>
+          )}
               <form onSubmit={doRegister} className="space-y-4 md:space-y-6" action="#">
-                
                   <div>
                       <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 ">Your username</label>
-                      <input type="username" name="username" id="username" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="Your Name"  onChange={setValue}/>
+                      <input type="username" name="username" id="username" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="nandaJulian"  onChange={setValue}/>
                   </div>
                   <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
+                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 "> Email</label>
                       <input type="email" name="email" id="email" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="name@company.com"  onChange={setValue} />
                   </div>
                   <div>
@@ -85,15 +104,9 @@ export default function Register() {
                         <label htmlFor="terms" className="font-light text-gray-500 dark:text-gray-300">I accept the <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Terms and Conditions</a></label>
                       </div>
                   </div>
-                  <center><button type="submit" name="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Create an account</button></center>
+                  <center><button onClick={handleClick} type="submit" name="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Create an account</button></center>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                    Already have an account?{" "}
-                    <a
-                      href=" /"
-                      className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                    >
-                      Login here
-                    </a>
+                      Already have an account? <a href=" /" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
                   </p>
                 </form>
               </div>
