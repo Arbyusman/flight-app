@@ -7,6 +7,7 @@ import { Button, Label, TextInput } from "flowbite-react";
 export default function login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [err, setErr] = useState("");
   const router = useRouter();
 
   async function handelLogin() {
@@ -28,11 +29,20 @@ export default function login() {
 
     const data = await response.json();
 
-    if (data.status === "OK") {
+    if (data.status === "OK" && data.data.role === "admin") {
       localStorage.setItem("token", data.data.token);
-      alert("berhasil");
+      localStorage.setItem("id", data.data.id);
+      alert("anda berhasil login sebagaian admin");
+      router.push("/admin");
+    } else if (data.status === "OK" && data.data.role === "buyer") {
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
+      alert("anda berhasil login");
       router.push("/");
     } else {
+      const errStatus = data.status;
+      const errMessage = data.message;
+      setErr(`${errStatus} ${errMessage}`);
     }
   }
 
@@ -85,7 +95,10 @@ export default function login() {
                 <div
                   className=" text-sm  text-center text-red-700 rounded-lg "
                   role="alert"
-                ></div>
+                >
+                  <span className="font-medium">{err}</span>
+                </div>
+                
                 <Button className="w-full" onClick={handelLogin}>
                   Log in to your account
                 </Button>
