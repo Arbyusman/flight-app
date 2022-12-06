@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function Register() {
   const [field, setField] = useState({});
   const router = useRouter();
-  
+  const [err, setErr] = useState("");
   
   function setValue(e){
     const target = e.target;
@@ -128,3 +128,4 @@ export default function Register() {
       </section>
     </div>
   )};
+

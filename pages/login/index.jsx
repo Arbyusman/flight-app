@@ -114,10 +114,10 @@ export default function login() {
                       <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-dark">Confirm password</label>
                       <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " required=""/>
                   </div> */}
-                  <div>
+                  
                   {!isLoggedIn ? (
-            <Button className="" type="submit" name="submit">
-              Login
+             <Button className="center" type="submit" name="submit">
+              Login to your account
             </Button>
           ) : (
             <div id="already-login">
@@ -149,7 +149,7 @@ export default function login() {
               </Dropdown>
             </div>
           )}
-                  </div>
+                  
               </form>
           </div>
       </div>
