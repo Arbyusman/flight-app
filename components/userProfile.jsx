@@ -343,20 +343,25 @@ export default function UserProfile() {
                   </div>
                   <div className="my-1 w-full">
                     <label
-                      for="photo"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      for="file_input"
                     >
-                      photo
+                      Upload photo
                     </label>
                     <input
+                      class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                      aria-describedby="file_input_help"
+                      id="file_input"
                       type="file"
-                      id="photo"
-                      className="bg-gray-50 border w-full border-gray-300 text-sm rounded-lg   p-2.5"
-                      placeholder="John@mail.com"
-                      disabled
                       onChange={(e) => setPhoto(e.target.value)}
                       value={photo}
                     />
+                    <p
+                      class="mt-1 text-sm text-gray-500 dark:text-gray-300"
+                      id="file_input_help"
+                    >
+                      PNG or JPG
+                    </p>
                   </div>
                 </div>
                 <div className="flex w-full px-4 ">
