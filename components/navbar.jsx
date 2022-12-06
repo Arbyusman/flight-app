@@ -62,7 +62,7 @@ export default function NavbarComponent() {
     console.log("data", data);
 
     if (data.status === "OK" && data.data.role === "admin") {
-      setUser=(data.data);
+      setUser(data.data);
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("id", data.data.id);
       setOpenModal(false);
@@ -70,7 +70,7 @@ export default function NavbarComponent() {
       setIsLoggedIn(true);
       router.push("/admin");
     } else if (data.status === "OK" && data.data.role === "buyer") {
-      setUser=(data.data);
+      setUser(data.data);
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("id", data.data.id);
       setOpenModal(false);
