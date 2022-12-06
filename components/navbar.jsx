@@ -21,61 +21,72 @@ export default function NavbarComponent() {
   const [user, setUser] = useState({});
   const [err, setErr] = useState("");
 
-  async function handelLogin() {
-    const response = await fetch(
-        "https://beckend-takeoff-production.up.railway.app/api/v1/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-        }
-        ).catch((err) => {
-        throw err;
-      });
-
-      const data = await response.json();
-
-      if (data.status === "OK") {
-        localStorage.setItem("token", data.data.token);
-        setOpenModal(false);
-        setIsLoggedIn(true);
-        setUser(data.data)
-        router.push("/");
-      } else {
-        const errStatus = data.status;
-        const errMessage = data.message;
-        setErr(`${errStatus} ${errMessage}`);
-      }
-    }
-
-    function handleLogout() {
-      localStorage.removeItem("token");
-      setIsLoggedIn(false);
-      setOpenModal(true);
-    }
-    useEffect(() => {
-    
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch("https://beckend-takeoff-production.up.railway.app/api/v1/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    const id = localStorage.getItem("id");
+    fetch(
+      `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        console.log("here token", token);
-        console.log("data test", data.data);
         setUser(data.data);
       });
     setIsLoggedIn(!!token);
   }, []);
+
+  async function handelLogin() {
+    const response = await fetch(
+      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    ).catch((err) => {
+      throw err;
+    });
+
+    const data = await response.json();
+    console.log("data", data);
+
+    if (data.status === "OK" && data.data.role === "admin") {
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
+      setOpenModal(false);
+      alert("anda berhasil login sebagaian admin");
+      setIsLoggedIn(true);
+      router.push("/admin");
+    } else if (data.status === "OK" && data.data.role === "buyer") {
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
+      setOpenModal(false);
+      alert("anda berhasil login");
+      setIsLoggedIn(true);
+    } else {
+      const errStatus = data.status;
+      const errMessage = data.message;
+      setErr(`${errStatus} ${errMessage}`);
+    }
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+    setIsLoggedIn(false);
+    setOpenModal(true);
+  }
 
   return (
     <Navbar fluid={true} rounded={true} className="sticky top-0 z-10">

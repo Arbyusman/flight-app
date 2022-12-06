@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 export default function Register() {
-
   const [field, setField] = useState({});
   const [success, setSuccess] = useState(false);
   const router = useRouter();
@@ -21,7 +20,7 @@ export default function Register() {
   }
 
   async function doRegister(e) {
-    e.preventDefault();
+    // e.preventDefault();
 
     const req = await fetch(
       "https://beckend-takeoff-production.up.railway.app/api/v1/register",
@@ -39,11 +38,15 @@ export default function Register() {
     e.target.reset();
 
     const res = await req.json();
+
+    if (res.status === "OK") {
+      router.push("/login");
+    }
     console.log(res);
   }
 
   function handleClick() {
-    router.push("/login");
+    doRegister();
   }
 
   return (
@@ -140,8 +143,7 @@ export default function Register() {
                       onChange={setValue}
                     />
                   </div>
-               
-                  
+
                   <center>
                     <button
                       onClick={handleClick}
