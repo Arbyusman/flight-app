@@ -7,10 +7,12 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
+
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
+import Link from 'next/link'
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -124,7 +126,7 @@ export default function NavbarComponent() {
                   <a href={"profile/" + user.id}>Profile</a>
                 </Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>History</Dropdown.Item>
+                <Dropdown.Item ><Link href="history">History</Link></Dropdown.Item>
                 <Dropdown.Item>Wishlist</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
