@@ -1,86 +1,50 @@
 /* eslint-disable react/jsx-no-undef */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
-import {
-
-  Dropdown,
-  Avatar,
-  Button,
- 
-} from "flowbite-react";
-import React, { useState,useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
+import { Button, Label, TextInput } from "flowbite-react";
 
 export default function login() {
-  const [field, setField] = useState({});
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({});
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
-
-  
-  
-  function setValue(e){
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-
-    console.log({name,value});
-
-    setField({
-      ... field,
-      [name]: value
-    });
-  }
-
-  
-  async function doLogin(e) {
-    e.preventDefault();
-
-
-    const response = await fetch('https://beckend-takeoff-production.up.railway.app/api/v1/login', {
-      method : 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(field)
+  async function handelLogin() {
+    const response = await fetch(
+      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    ).catch((err) => {
+      throw err;
     });
 
     const data = await response.json();
-    if (data.status === "OK") {
-      localStorage.setItem("token", data.data.token);
-      setIsLoggedIn(true);
-      alert("Kamu Berhasil Login");
 
+    if (data.status === "OK" && data.data.role === "admin") {
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
+      alert("anda berhasil login sebagaian admin");
+      router.push("/admin");
+    } else if (data.status === "OK" && data.data.role === "buyer") {
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
+      alert("anda berhasil login");
       router.push("/");
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
     }
-
-    console.log(data.data, "data here");
-
-    const userdata = data.data;
-    setUser(userdata);
-    console.log(data)
-
-    setField({});
-    e.target.reset();
-
-    
-  }
-
-  function handleLogout() {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
   }
 
   return (
@@ -93,70 +57,67 @@ export default function login() {
               className="w-full"
               alt="Sample image"
             />
-
           </div>
           <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-                  Login Account
-              </h1>
-              <form onSubmit={ doLogin } className="space-y-4 md:space-y-6" action="#">
-                 
-                  <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
-                      <input type="email" name="email" id="email" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="name@company.com"  onChange={setValue} />
-                  </div>
-                  <div>
-                      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••"  className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "  onChange={setValue}/>
-                  </div>
-                  {/* <div>
-                      <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-dark">Confirm password</label>
-                      <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " required=""/>
-                  </div> */}
-                  
-                  {!isLoggedIn ? (
-             <Button className="center" type="submit" name="submit">
-              Login to your account
-            </Button>
-          ) : (
-            <div id="already-login">
-              <Dropdown
-                arrowIcon={false}
-                inline={true}
-                // label={
-                //   <Avatar
-                //     alt="User settings"
-                //     img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                //     rounded={true}
-                //   />
-                // }
-              >
-                <Dropdown.Header>
-                  <span className="block text-sm">{user.username}</span>
-                  <span className="block truncate text-sm font-medium">
-                    {user.email}
-                  </span>
-                </Dropdown.Header>
-                <Dropdown.Item>
-                  <a href={"profile/" + user.id}>Profile</a>
-                </Dropdown.Item>
-                <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>History</Dropdown.Item>
-                <Dropdown.Item>Wishlist</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
-              </Dropdown>
+            <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
+              <h3 className="text-xl text-center  font-medium text-gray-900 dark:text-white">
+                Sign in to our platform
+              </h3>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="email" value="Your email" />
+                </div>
+                <TextInput
+                  id="email"
+                  type="email"
+                  placeholder="JohnDoe@company.com"
+                  required={true}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="password" value="Your password" />
+                </div>
+                <TextInput
+                  id="password"
+                  type="password"
+                  required={true}
+                  value={password}
+                  minLength="5"
+                  placeholder="••••••••"
+                  pattern="[a-z0-9]{1,15}"
+                  title="Password should be digits (0 to 9) or alphabets (a to z)."
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="w-full  items-center justify-center ">
+                <div
+                  className=" text-sm  text-center text-red-700 rounded-lg "
+                  role="alert"
+                >
+                  <span className="font-medium">{err}</span>
+                </div>
+                
+                <Button className="w-full" onClick={handelLogin}>
+                  Log in to your account
+                </Button>
+              </div>
+
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+                Not registered?{" "}
+                <a
+                  href="register"
+                  className="text-blue-700 hover:underline dark:text-blue-500"
+                >
+                  Create account
+                </a>
+              </div>
             </div>
-          )}
-                  
-              </form>
           </div>
-      </div>
-         
         </div>
       </div>
-      
     </section>
   );
 }

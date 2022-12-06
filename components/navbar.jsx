@@ -18,14 +18,28 @@ export default function NavbarComponent() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [user, setUser] = useState({});
   const [err, setErr] = useState("");
- // const [loginSucces, setLoginSucces] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    fetch(
+      `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data.data);
+      });
     setIsLoggedIn(!!token);
   }, []);
 
@@ -47,29 +61,33 @@ export default function NavbarComponent() {
     });
 
     const data = await response.json();
+    console.log("data", data);
 
-    if (data.status === "OK") {
+    if (data.status === "OK" && data.data.role === "admin") {
+      setUser(data.data);
       localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
       setOpenModal(false);
+      alert("anda berhasil login sebagaian admin");
       setIsLoggedIn(true);
-      alert("Kamu Berhasil Login");
-
-      router.push("/");
+      router.push("/admin");
+    } else if (data.status === "OK" && data.data.role === "buyer") {
+      setUser(data.data);
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
+      setOpenModal(false);
+      alert("anda berhasil login");
+      setIsLoggedIn(true);
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
     }
-
-    console.log(data.data, "data here");
-
-    const userdata = data.data;
-    setUser(userdata);
-    
   }
 
   function handleLogout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
     setIsLoggedIn(false);
     setOpenModal(true);
   }

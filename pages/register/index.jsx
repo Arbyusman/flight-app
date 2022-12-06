@@ -13,16 +13,16 @@ export default function Register() {
     const name = target.name;
     const value = target.value;
 
-    console.log({name,value});
+    console.log({ name, value });
 
     setField({
-      ... field,
-      [name]: value
+      ...field,
+      [name]: value,
     });
   }
 
   async function doRegister(e) {
-    e.preventDefault();
+    // e.preventDefault();
 
 
     const req = await fetch('https://beckend-takeoff-production.up.railway.app/api/v1/register',
@@ -56,6 +56,7 @@ export default function Register() {
     
   }
   
+
 
   return (
     <div>
@@ -91,12 +92,37 @@ export default function Register() {
               <form onSubmit={doRegister} className="space-y-4 md:space-y-6" action="#">
             
                   <div>
-                      <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 ">Your username</label>
-                      <input type="username" name="username" id="username" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="nandaJulian"  onChange={setValue}/>
+                    <label
+                      htmlFor="username"
+                      className="block mb-2 text-sm font-medium text-gray-900 "
+                    >
+                      Your username
+                    </label>
+                    <input
+                      type="username"
+                      name="username"
+                      id="username"
+                      className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
+                      placeholder="Mega Watt"
+                      onChange={setValue}
+                    />
                   </div>
                   <div>
-                      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 "> Email</label>
-                      <input type="email" name="email" id="email" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " placeholder="name@company.com"  onChange={setValue} />
+                    <label
+                      htmlFor="email"
+                      className="block mb-2 text-sm font-medium text-gray-900 "
+                    >
+                      {" "}
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      id="email"
+                      className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
+                      placeholder="name@company.com"
+                      onChange={setValue}
+                    />
                   </div>
                   <div>
                       <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
