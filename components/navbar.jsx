@@ -116,12 +116,7 @@ export default function NavbarComponent() {
                   />
                 }
               >
-                <Dropdown.Header>
-                  <span className="block text-sm">{user.username}</span>
-                  <span className="block truncate text-sm font-medium">
-                    {user.email}
-                  </span>
-                </Dropdown.Header>
+                
                 <Dropdown.Item>
                   <a href={"profile/" + user.id}>Profile</a>
                 </Dropdown.Item>

@@ -57,6 +57,7 @@ export default function Register() {
   }
   
 
+
   return (
     <div>
       <section className="h-screen">
@@ -68,11 +69,15 @@ export default function Register() {
                 className="w-full"
                 alt="Sample image"
               />
-            </div>
-
-            <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
-              <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 className="text-xl font-bold leading-tight text-center tracking-tight text-gray-900 md:text-2xl ">
+  
+          </div>
+    
+            
+          <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+         
+              
+              <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                   Create and account
               </h1>
               {/* {success && (
@@ -120,20 +125,8 @@ export default function Register() {
                     />
                   </div>
                   <div>
-                    <label
-                      htmlFor="password"
-                      className="block mb-2 text-sm font-medium text-gray-900 "
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      name="password"
-                      id="password"
-                      placeholder="••••••••"
-                      className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
-                      onChange={setValue}
-                    />
+                      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                      <input type="password" name="password" id="password" placeholder="••••••••"  className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "  onChange={setValue}/>
                   </div>
                   {/* <div>
                       <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-dark">Confirm password</label>

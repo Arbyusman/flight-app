@@ -6,4 +6,4 @@ import SlideShow from "./slideshow";
 import UserProfile from "./userProfile";
 import History from "../pages/history";
 
-export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,History };
+export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,History};
