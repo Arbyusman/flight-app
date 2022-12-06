@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import Navbar from "../../components/navbar";
-import SlideShow from "../../components/slideshow";
-import Footer from "../../components/footer";
+import { NavbarComponent, SlideShow, Footer } from "../../components";
 
 class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />,
+        <NavbarComponent />,
         <SlideShow />,
         <Footer />
       </div>
