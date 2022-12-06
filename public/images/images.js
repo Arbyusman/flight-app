@@ -5,6 +5,7 @@ import ocbcPromo2 from "../images/promo-ocbc-2.jpg";
 import ocbcPromo3 from "../images/promo-ocbc-3.jpg";
 import downloadApss from "../images/download-apps.jpg";
 
+
 export default [
   maybankPromo,
   maybankPromo2,
@@ -12,4 +13,5 @@ export default [
   ocbcPromo2,
   ocbcPromo3,
   downloadApss,
+
 ];
