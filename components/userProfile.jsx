@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import imageProfil from "../public/images/mega.jpg";
 import { FaUserEdit } from "react-icons/fa";
-import { RiUser3Line } from "react-icons/ri";
-import {BsTrash} from "react-icons/bs"
+import { AiOutlineUser } from "react-icons/ri";
+import { BsTrash } from "react-icons/bs";
 import { BiSave } from "react-icons/bi";
 
 export default function UserProfile() {
@@ -88,7 +88,7 @@ export default function UserProfile() {
           </div>
           <hr></hr>
 
-          <div className="mt-5 md:mx-5">
+          <div className="mt-5 md:mx-5 ">
             <div className="justify-center items-start flex gap-4 my-6">
               <div className="w-2/3 shadow-md ">
                 <div className="flex flex-col justify-center py-5 items-center">
@@ -102,8 +102,8 @@ export default function UserProfile() {
                   <p className="text-xs">{user.email}</p>
                 </div>
               </div>
-              <div className="w-full">
-                <div className="flex w-full">
+              <div className="w-full shadow-md">
+                <div className="flex w-full px-4 ">
                   <div className="my-1 w-full">
                     <label
                       for="username"
@@ -121,10 +121,7 @@ export default function UserProfile() {
                     />
                   </div>
                 </div>
-
-                <div className="flex w-full"></div>
-
-                <div className="flex w-full">
+                <div className="flex w-full px-4 ">
                   <div className="my-1 w-full">
                     <label
                       for="first_name"
@@ -142,7 +139,7 @@ export default function UserProfile() {
                     />
                   </div>
                 </div>
-                <div className="flex w-full gap-4">
+                <div className="flex w-full px-4  gap-4">
                   <div className="my-1 w-full">
                     <label
                       for="first_name"
@@ -177,7 +174,7 @@ export default function UserProfile() {
                   </div>
                 </div>
 
-                <div className="flex w-full gap-4">
+                <div className="flex w-full px-4  gap-4">
                   <div className="my-1 w-full">
                     <label
                       for="phone"
@@ -211,7 +208,7 @@ export default function UserProfile() {
                     />
                   </div>
                 </div>
-                <div className="flex w-full">
+                <div className="flex w-full px-4 ">
                   <div className="my-1 w-full">
                     <label
                       for="message"
@@ -260,7 +257,7 @@ export default function UserProfile() {
 
           <div className="mt-5 md:mx-5">
             <div className="justify-center items-start flex gap-4 my-6">
-              <div className="w-2/3 shadow-md ">
+              {/* <div className="w-2/3 shadow-md ">
                 <div className="flex flex-col justify-center py-5 items-center">
                   <Image
                     class="h-32 w-32 rounded-full shadow-sm "
@@ -271,9 +268,9 @@ export default function UserProfile() {
                   <p className="text-xs">username</p>
                   <p className="text-xs">johndoe@mail.com</p>
                 </div>
-              </div>
+              </div> */}
               <div className="w-full">
-                <div className="flex w-full">
+                <div className="flex w-full px-4 ">
                   <div class="my-1 w-full">
                     <label
                       for="username"
@@ -292,7 +289,7 @@ export default function UserProfile() {
                   </div>
                 </div>
 
-                <div className="flex w-full gap-4">
+                <div className="flex w-full px-4  gap-4">
                   <div className="my-1 w-full">
                     <label
                       for="first_name"
@@ -327,7 +324,7 @@ export default function UserProfile() {
                   </div>
                 </div>
 
-                <div className="flex w-full gap-4">
+                <div className="flex w-full px-4  gap-4">
                   <div className="my-1 w-full">
                     <label
                       for="phone"
@@ -346,23 +343,23 @@ export default function UserProfile() {
                   </div>
                   <div className="my-1 w-full">
                     <label
-                      for="email"
+                      for="photo"
                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      Email
+                      photo
                     </label>
                     <input
-                      type="Email"
-                      id="email"
-                      className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="file"
+                      id="photo"
+                      className="bg-gray-50 border w-full border-gray-300 text-sm rounded-lg   p-2.5"
                       placeholder="John@mail.com"
                       disabled
-                      onChange={(e) => setEmail(e.target.value)}
-                      value={email}
+                      onChange={(e) => setPhoto(e.target.value)}
+                      value={photo}
                     />
                   </div>
                 </div>
-                <div className="flex w-full">
+                <div className="flex w-full px-4 ">
                   <div className="my-1 w-full">
                     <label
                       for="message"
@@ -381,7 +378,7 @@ export default function UserProfile() {
                   </div>
                 </div>
                 <div className=" justify-center items-center flex gap-10">
-                <button
+                  <button
                     className=" rounded-md my-3 bg-red-500 "
                     onClick={(e) => setEditProfile(false)}
                   >
