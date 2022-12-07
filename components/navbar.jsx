@@ -7,21 +7,41 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
-import React, { useRef, useState, useEffect } from "react";
-import Image from "next/image";
-import LogoImage from "../public/images/TakeOff.png";
 
 import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import LogoImage from "../public/images/TakeOff.png";
+import Link from "next/link";
 
 export default function NavbarComponent() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const [user, setUser] = useState({});
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState({});
+  const [err, setErr] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    fetch(
+      `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data.data);
+      });
+    setIsLoggedIn(!!token);
+  }, []);
 
   async function handelLogin() {
     const response = await fetch(
@@ -41,26 +61,35 @@ export default function NavbarComponent() {
     });
 
     const data = await response.json();
-    console.log("status", data.status);
-    console.log("status", data.data.token);
-    if (data.status === "OK") {
+    console.log("data", data);
+
+    if (data.status === "OK" && data.data.role === "admin") {
+      setUser(data.data);
       localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
       setOpenModal(false);
+      alert("anda berhasil login sebagaian admin");
       setIsLoggedIn(true);
-      router.push("/");
+      router.push("/admin");
+    } else if (data.status === "OK" && data.data.role === "buyer") {
+      setUser(data.data);
+      localStorage.setItem("token", data.data.token);
+      localStorage.setItem("id", data.data.id);
+      setOpenModal(false);
+      alert("anda berhasil login");
+      setIsLoggedIn(true);
+    } else {
+      const errStatus = data.status;
+      const errMessage = data.message;
+      setErr(`${errStatus} ${errMessage}`);
     }
-
-    const userdata = data.data;
-    setUser(userdata);
-
-    console.log("data user", data.data);
-
-    console.log(email, password);
   }
 
   function handleLogout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
     setIsLoggedIn(false);
+    setOpenModal(true);
   }
 
   return (
@@ -87,15 +116,13 @@ export default function NavbarComponent() {
                   />
                 }
               >
-                <Dropdown.Header>
-                  <span className="block text-sm">{user.username}</span>
-                  <span className="block truncate text-sm font-medium">
-                    {user.email}
-                  </span>
-                </Dropdown.Header>
-                <Dropdown.Item>Profile</Dropdown.Item>
+                <Dropdown.Item>
+                  <a href={"profile/" + user.id}>Profile</a>
+                </Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>History</Dropdown.Item>
+                <Dropdown.Item>
+                  <Link href="history">History</Link>
+                </Dropdown.Item>
                 <Dropdown.Item>Wishlist</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
@@ -120,7 +147,8 @@ export default function NavbarComponent() {
                   </div>
                   <TextInput
                     id="email"
-                    placeholder="name@company.com"
+                    type="email"
+                    placeholder="JohnDoe@company.com"
                     required={true}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -135,12 +163,25 @@ export default function NavbarComponent() {
                     type="password"
                     required={true}
                     value={password}
+                    minLength="5"
+                    placeholder="••••••••"
+                    pattern="[a-z0-9]{1,15}"
+                    title="Password should be digits (0 to 9) or alphabets (a to z)."
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <div className="w-full">
-                  <Button onClick={handelLogin}>Log in to your account</Button>
+                <div className="w-full  items-center justify-center ">
+                  <div
+                    className=" text-sm  text-center text-red-700 rounded-lg "
+                    role="alert"
+                  >
+                    <span className="font-medium">{err}</span>
+                  </div>
+                  <Button className="w-full" onClick={handelLogin}>
+                    Log in to your account
+                  </Button>
                 </div>
+
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                   Not registered?{" "}
                   <a

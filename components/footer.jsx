@@ -4,7 +4,7 @@ import LogoImage from "../public/images/TakeOff.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 border-gray-200 px-2 sm:px-4 py-2.5 rounded sm:justify-center mt-12 mb-7">
+    <footer className="bg-white px-2 sm:px-4 py-2.5 rounded sm:justify-center mt-12 mb-7">
       <div className="container lg:flex lg:flex-wrap  justify-between mx-auto sm:grid sm:grid-cols-2 sm:grid-rows-1">
         <div className="mb-6 md:mb-0 sm:mb-2">
           <a href="#" className="flex items-center">

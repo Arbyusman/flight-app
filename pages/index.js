@@ -1,4 +1,4 @@
-import { Navbar, WhyUs, Footer, Banner } from "../components";
+import { NavbarComponent, WhyUs, Footer, Banner } from "../components";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -17,7 +17,7 @@ import { EffectCoverflow, Pagination, Navigation } from "swiper";
 export default function Home() {
   return (
     <div>
-      <Navbar />
+      <NavbarComponent />
       <div className="max-w-full mx-auto mt-6" id="promo-carousel-home">
         <Swiper
           effect={"coverflow"}
