@@ -92,9 +92,9 @@ export default function UserProfile() {
             <div className="justify-center items-start flex gap-4 my-6">
               <div className="w-2/3 shadow-md ">
                 <div className="flex flex-col justify-center py-5 items-center">
-                  <Image
+                  <img
                     class="h-32 w-32 rounded-full shadow-sm "
-                    src={imageProfil}
+                    src={user.photo}
                     alt="image profil"
                   />
                   <p className="font-medium text-lg ">{`${user.firstName}  ${user.lastName}`}</p>
