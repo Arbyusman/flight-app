@@ -13,6 +13,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 
+import { useRouter } from "next/router";
+
 export default function NavbarComponent() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
