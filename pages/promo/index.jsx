@@ -17,7 +17,7 @@ import { EffectCoverflow, Pagination, Navigation } from "swiper";
 
 // import images
 import promoImages from "../../public/images/images";
-import { loadGetInitialProps } from "next/dist/shared/lib/utils";
+
 
 
 
@@ -76,7 +76,7 @@ const Promo = () => {
 
       <div className="grid grid-cols-3 gap-3 my-5 mx-20 ">
         
-      {posts.map((post) =>(
+      {posts.map(post =>(
         // <div key={post.id}>
         //   {post.name}
         // </div>
@@ -102,14 +102,8 @@ const Promo = () => {
               </div>
           </div>
         </div>
-
       ))}
-        
-
-          
-   
       </div>
-
         <Footer />
       </div>
     );
