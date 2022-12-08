@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -22,6 +22,26 @@ export default function NavbarComponent() {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState({});
   const [err, setErr] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    fetch(
+      `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setUser(data.data);
+      });
+    setIsLoggedIn(!!token);
+  }, []);
 
   async function handelLogin() {
     const response = await fetch(
@@ -65,58 +85,6 @@ export default function NavbarComponent() {
     }
   }
 
-  async function getUsers() {
-    const id = localStorage.getItem("id");
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ).catch((err) => {
-      throw err;
-    });
-
-    const user = await response.json();
-  }
-
-  useEffect(() => {
-    getUsers();
-    const token = localStorage.getItem("token");
-
-    // fetch(
-    //   `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
-    //   {
-    //     method: "GET",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   }
-    // )
-    //   .then((res) => res.json())
-
-    //   .then((data) => {
-    //     if (data.data.token !== token) {
-    //       console.log("token", data.data.token);
-    //       router.push("/");
-    //     }
-    //     setUser(data.data);
-    //   });
-
-    if (token === undefined) {
-      setIsLoggedIn(false);
-      router.push("/");
-    }
-
-    setIsLoggedIn(!!token);
-  }, []);
-
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
@@ -148,13 +116,12 @@ export default function NavbarComponent() {
                   />
                 }
               >
+                
                 <Dropdown.Item>
-                  <a href="">Profile</a>
+                  <a href={"profile/" + user.id}>Profile</a>
                 </Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>
-                  <Link href="history">History</Link>
-                </Dropdown.Item>
+                <Dropdown.Item ><Link href="history">History</Link></Dropdown.Item>
                 <Dropdown.Item>Wishlist</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
