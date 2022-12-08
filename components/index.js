@@ -5,5 +5,8 @@ import Banner from "./banner";
 import SlideShow from "./slideshow";
 import UserProfile from "./userProfile";
 import History from "../pages/history";
+import SideBar from "./admin/SideBar";
+import TopBar from "./admin/TopBar";
+import Layout from "./admin/Layout";
 
-export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,History};
+export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,History,TopBar,Layout,SideBar};
