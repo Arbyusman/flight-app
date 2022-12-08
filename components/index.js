@@ -4,6 +4,6 @@ import WhyUs from "./whyus";
 import Banner from "./banner";
 import SlideShow from "./slideshow";
 import UserProfile from "./userProfile";
-import History from "../pages/history";
-
-export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,History};
+import HistoryBooking from "./historyBooking";
+import SearcResult from "./searchResult";
+export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,HistoryBooking,SearcResult};

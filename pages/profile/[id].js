@@ -1,6 +1,6 @@
 import {Footer, NavbarComponent,UserProfile} from "../../components";
 
-export default function Home() {
+export default function profil() {
   return (
     <div>
       <NavbarComponent/>
