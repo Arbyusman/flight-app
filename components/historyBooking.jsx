@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { Button, Dropdown, Select } from "flowbite-react";
-import {
-  IoMdArrowRoundForward,
-  IoIosArrowDropdown,
-  IoIosTimer,
-} from "react-icons/io";
+import { Dropdown } from "flowbite-react";
+import { IoIosArrowDropdown } from "react-icons/io";
 
 import { GrUserManager } from "react-icons/gr";
 import Image from "next/image";
@@ -90,7 +86,7 @@ export default function HistoryBooking() {
                     <p className="text-sm">Haluoleo Airport</p>
                   </div>
                 </div>
-               
+
                 <div className="flex gap-7 items-center">
                   <div>
                     <p className="font-bold text-xl">11 :30</p>

@@ -6,4 +6,5 @@ import SlideShow from "./slideshow";
 import UserProfile from "./userProfile";
 import HistoryBooking from "./historyBooking";
 import SearcResult from "./searchResult";
-export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,HistoryBooking,SearcResult};
+import ConfirmBooking from "./confirmBooking";
+export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,HistoryBooking,SearcResult,ConfirmBooking};
