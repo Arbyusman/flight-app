@@ -4,21 +4,25 @@ import {
   BiPencil,
   BiChevronDown,
   BiCreditCard,
+  BiBarChartAlt,
   BiCoffeeTogo,
 } from "react-icons/bi";
+import Image from "next/image";
+import Profile from "../../public/images/profile.jpg";
 import { BiBell, BiCheck } from "react-icons/bi";
+import { FaBars} from "react-icons/fa";
 import { Menu, Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
 
 export default function TopBar({ showNav, setShowNav }) {
   return (
     <div
-      className={`fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
+      className={`shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
         showNav ? "pl-56" : ""
       }`}
     >
       <div className="pl-4 md:pl-16">
-        <BiLeftArrowAlt
+        <FaBars
           className="h-8 w-8 text-gray-700 cursor-pointer"
           onClick={() => setShowNav(!showNav)}
         />
@@ -107,11 +111,7 @@ export default function TopBar({ showNav, setShowNav }) {
           <div>
             <Menu.Button className="inline-flex w-full justify-center items-center">
               <picture>
-                <img
-                  src="/man-smiling.jpg"
-                  className="rounded-full h-8 md:mr-4 border-2 border-white shadow-sm"
-                  alt="profile picture"
-                />
+                <Image src={Profile} className="w-10 h-10 rounded-full mr-5"/>
               </picture>
               <span className="hidden md:block font-medium text-gray-700">
                 Rettson
