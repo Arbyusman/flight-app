@@ -2,19 +2,16 @@ import { forwardRef } from "react";
 import Link from "next/link";
 import { BiHomeAlt, BiCard, BiUser } from "react-icons/bi";
 import { useRouter } from "next/router";
-
+import Image from "next/image";
+import LogoImage from "../../public/images/TakeOff.png";
 const SideBar = forwardRef(({ showNav }, ref) => {
   const router = useRouter();
 
   return (
-    <div ref={ref} className="fixed w-56 h-full bg-white shadow-sm">
-      <div className="flex justify-center mt-6 mb-14">
+    <div ref={ref} className=" fixed w-56 h-full bg-white shadow-xl">
+      <div className="flex justify-center  mb-5">
         <picture>
-          <img
-            className="w-32 h-auto"
-            src="/ferox-transparent.png"
-            alt="company logo"
-          />
+          <Image src={LogoImage} className="w-20 h-20"/>
         </picture>
       </div>
 
@@ -22,9 +19,9 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         <Link href="/">
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
-              router.pathname == "/"
+              router.pathname == "admin"
                 ? "bg-orange-100 text-orange-500"
-                : "text-gray-400 hover:bg-orange-100 hover:text-orange-500"
+                : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
             }`}
           >
             <div className="mr-2">
@@ -35,28 +32,28 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             </div>
           </div>
         </Link>
-        <Link href="/account">
+        <Link href="account">
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
-              router.pathname == "/account"
+              router.pathname == "account"
                 ? "bg-orange-100 text-orange-500"
-                : "text-gray-400 hover:bg-orange-100 hover:text-orange-500"
+                : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
             }`}
           >
             <div className="mr-2">
               <BiUser className="h-5 w-5" />
             </div>
             <div>
-              <p>Account</p>
+              <p>User</p>
             </div>
           </div>
         </Link>
-        <Link href="/billing">
+        <Link href="billing">
           <div
             className={`pl-6 py-3 mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
-              router.pathname == "/billing"
+              router.pathname === "/billing"
                 ? "bg-orange-100 text-orange-500"
-                : "text-gray-400 hover:bg-orange-100 hover:text-orange-500"
+                : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
             }`}
           >
             <div className="mr-2">
