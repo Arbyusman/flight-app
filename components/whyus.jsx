@@ -4,13 +4,13 @@ export default function WhyUs() {
       <h5 className="flex my-6 sm:text-2xl items-center  justify-center font-semibold tracking-tight text-gray-800 ">
         Why Take Off ?
       </h5>
-      <div className="container justify-center grid-cols-2 text-sm p-0 grid  gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="container justify-center md:grid-cols-2 text-sm p-0 grid  gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div
           href="#"
-          className="block p-6 md:px-10 md:py-5 h-100 max-w-md  border justify-center items-center rounded-md shadow-md "
+          className="flex-row  p-6 md:px-10 md:py-5 h-100 max-w-md  border justify-center items-center rounded-md shadow-md "
         >
           <img
-            className=""
+            className="w-24 md:w-36"
             src="https://cdn.airpaz.com/images/illustrations/simplifyBooking.svg"
             alt="img why us"
           />
@@ -26,7 +26,7 @@ export default function WhyUs() {
           className="block p-6 md:px-10 md:py-5 h-100 max-w-md  border justify-center items-center rounded-md shadow-md "
         >
           <img
-            className=""
+            className="w-24 md:w-36"
             src="https://cdn.airpaz.com/images/illustrations/simplifyBooking.svg"
           />
           <h5 className="mb-2 text-center sm:text-2xl font-bold tracking-tight text-gray-800 ">
@@ -42,7 +42,7 @@ export default function WhyUs() {
           className="block p-6 md:px-10 md:py-5 h-100 max-w-md  border justify-center items-center rounded-md shadow-md "
         >
           <img
-            className=""
+            className="w-24 md:w-36"
             src="https://cdn.airpaz.com/images/illustrations/simplifyBooking.svg"
           />
           <h5 className="mb-2 text-center sm:text-2xl font-bold tracking-tight text-gray-800 ">
@@ -57,7 +57,7 @@ export default function WhyUs() {
           className="block p-6 md:px-10 md:py-5 h-100 max-w-md  border justify-center items-center rounded-md shadow-md "
         >
           <img
-            className=""
+            className="w-24 md:w-36"
             src="https://cdn.airpaz.com/images/illustrations/simplifyBooking.svg"
           />
           <h5 className="mb-2 text-center sm:text-2xl font-bold tracking-tight text-gray-800 ">
