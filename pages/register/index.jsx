@@ -38,7 +38,7 @@ export default function Register() {
     
     const data = await req.json();
     if (data.status === "OK") {
-      alert("Congratulation!! , Your accounnt has been Registered")
+      alert("Congratulation!! , Your accounnt has been Regitered")
       router.push("login");
       
     } else {
@@ -119,10 +119,6 @@ export default function Register() {
                       <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
                       <input type="password" name="password" id="password" placeholder="••••••••"  className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "  onChange={setValue}/>
                   </div>
-                  {/* <div>
-                      <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-dark">Confirm password</label>
-                      <input type="confirm-password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  " required=""/>
-                  </div> */}
                   <div className="flex items-start">
                       <div className="flex items-center h-5">
                         <input id="terms" aria-describedby="terms" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required=""/>
