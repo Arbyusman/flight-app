@@ -10,6 +10,7 @@ import Layout from "./admin/Layout";
 import HistoryBooking from "./historyBooking";
 import SearcResult from "./searchResult";
 import ConfirmBooking from "./confirmBooking";
+import Wishlist from "./wishlist";
 
 export {
   NavbarComponent,
@@ -24,4 +25,5 @@ export {
   HistoryBooking,
   SearcResult,
   ConfirmBooking,
+  Wishlist,
 };

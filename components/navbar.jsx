@@ -119,11 +119,12 @@ export default function NavbarComponent() {
                 <Dropdown.Item>
                   <a href={`/profile/${id}`}>Profile</a>
                 </Dropdown.Item>
-                <Dropdown.Item>Settings</Dropdown.Item>
+                <Dropdown.Item>
+                  <a href={`/wishlist/${id}`}>Wishlist</a>
+                </Dropdown.Item>
                 <Dropdown.Item>
                   <a href={`/history/${id}`}>History</a>
                 </Dropdown.Item>
-                <Dropdown.Item>Wishlist</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
               </Dropdown>
