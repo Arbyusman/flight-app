@@ -17,6 +17,8 @@ export default function NavbarComponent() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState({});
@@ -24,19 +26,18 @@ export default function NavbarComponent() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/user`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setUser(data.data);
+        setId(data.data.id);
+        setUsername(data.data.username);
       });
     setIsLoggedIn(!!token);
   }, []);
@@ -59,24 +60,23 @@ export default function NavbarComponent() {
     });
 
     const data = await response.json();
-    console.log("data", data);
 
     if (data.status === "OK" && data.data.role === "admin") {
-      setUser(data.data);
       localStorage.setItem("token", data.data.token);
-      // localStorage.setItem("id", data.data.id);
       setOpenModal(false);
       alert("anda berhasil login sebagaian admin");
       setIsLoggedIn(true);
       router.push("/admin");
+      setId(data.data.id);
+      setUsername(data.data.username);
     } else if (data.status === "OK" && data.data.role === "buyer") {
-      setUser(data.data);
       localStorage.setItem("token", data.data.token);
-      // localStorage.setItem("id", data.data.id);
       setOpenModal(false);
       alert("anda berhasil login");
       setIsLoggedIn(true);
       router.push("/");
+      setId(data.data.id);
+      setUsername(data.data.username);
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
@@ -116,13 +116,15 @@ export default function NavbarComponent() {
                   />
                 }
               >
-                
                 <Dropdown.Item>
-                  <a href={`/profile/${user.id}`}>Profile</a>
+                  <a href={`/profile/${id}`}>Profile</a>
                 </Dropdown.Item>
-                <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item ><a href={`/history/${user.id}`}>History</a></Dropdown.Item>
-                <Dropdown.Item>Wishlist</Dropdown.Item>
+                <Dropdown.Item>
+                  <a href={`/wishlist/${id}`}>Wishlist</a>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <a href={`/history/${id}`}>History</a>
+                </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
               </Dropdown>
@@ -203,7 +205,7 @@ export default function NavbarComponent() {
         <Navbar.Link href="/">About Us</Navbar.Link>
         <Navbar.Link href="/">Airline</Navbar.Link>
         <Navbar.Link href="/">Flight</Navbar.Link>
-        <Navbar.Link href="promo">Promo</Navbar.Link>
+        <Navbar.Link href="/promo">Promo</Navbar.Link>
         <Navbar.Link href="/">Contact Us</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>

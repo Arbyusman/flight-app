@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
+import { useRouter } from "next/router";
 import { Dropdown } from "flowbite-react";
 import {
   IoMdArrowRoundForward,
   IoIosArrowDropdown,
   IoIosTimer,
 } from "react-icons/io";
-
 import { MdOutlineLuggage } from "react-icons/md";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { BiJoystick } from "react-icons/bi";
@@ -13,42 +13,55 @@ import { GiBackpack } from "react-icons/gi";
 import Image from "next/image";
 import logoMaskapai from "../public/images/lion_air.png";
 
-export default function SearcResult() {
+export default function Wishlist() {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
+
+  const [user, setUser] = useState({});
+  
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) router.push("/login");
+
+    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setUser(data.data);
+      });
+    setLoading(false);
+  }, []);
 
   return (
     <div className="justify-center items-center flex-row">
       {/* title */}
-      <div className="flex justify-center items-center ">
-        <div className="lg:w-2/3 w-full flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
+      <div className="flex justify-center items-center">
+        <div className="md:w-2/3 flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
           <div className="text-gray-700">
             <h1 className="font-semibold tracking-wide antialiased text-lg">
-              Penerbangan keberangkatan ke bandara makassar
+              Wishlist
             </h1>
-            <div className="flex gap-2 text-sm">
-              <p>kam, 8 Des 2022</p>
-              <p>|</p>
-              <p>1 Traveler</p>
-            </div>
+            <p className="text-sm">jumlah Wishlist</p>
           </div>
-          <div className="gap-2 flex justify-end lg:items-center lg:justify-center ">
-            <Dropdown
-              id="filter_tiket"
-              label="Filter"
-              color="gray"
-              className="md:py-2.5 md:px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 "
-            >
-              <Dropdown.Item>Harga Terendah</Dropdown.Item>
-              <Dropdown.Item>Harga Tertinggi</Dropdown.Item>
-            </Dropdown>
+          <div className="gap-2 flex items-center justify-center ">
+          
           </div>
         </div>
       </div>
       {/* end title */}
-      {/* ticket */}
-      <div className="flex justify-center ">
-        <div className="lg:w-2/3 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-7">
+     {/* ticket */}
+     <div className="flex justify-center ">
+        <div className="lg:w-2/3 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-7">
           <div className="flex-row mx-4 md:mx-0 md:flex items-center  justify-between ">
             <Image className="w-16 flex " src={logoMaskapai} />
             <div className="flex items-center gap-4 lg:gap-16 my-1  lg:my-0">
