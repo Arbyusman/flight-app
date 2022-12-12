@@ -1,46 +1,24 @@
 import { Fragment } from "react";
-import {
-  BiLeftArrowAlt,
-  BiPencil,
-  BiChevronDown,
-  BiCreditCard,
-  BiBarChartAlt,
-  BiCoffeeTogo,
-} from "react-icons/bi";
+import { BiLeftArrowAlt, BiPencil, BiChevronDown, BiCreditCard, BiBarChartAlt, BiCoffeeTogo } from "react-icons/bi";
 import Image from "next/image";
 import Profile from "../../public/images/profile.jpg";
 import { BiBell, BiCheck } from "react-icons/bi";
-import { FaBars} from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import { Menu, Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
 
 export default function TopBar({ showNav, setShowNav }) {
   return (
-    <div
-      className={`z-40 bg-blue-700 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
-        showNav ? "pl-56" : ""
-      }`}
-    >
+    <div className={`z-40 bg-blue-700 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-56" : ""}`}>
       <div className="pl-4 md:pl-16">
-        <FaBars
-          className="h-8 w-8 text-white cursor-pointer"
-          onClick={() => setShowNav(!showNav)}
-        />
+        <FaBars className="h-8 w-8 text-white cursor-pointer" onClick={() => setShowNav(!showNav)} />
       </div>
       <div className="flex items-center text-white pr-4 md:pr-16">
         <Popover className="relative">
           <Popover.Button className="outline-none mr-5 md:mr-8 cursor-pointer text-gray-700">
             <BiBell className="h-6 w-6" />
           </Popover.Button>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform scale-95"
-            enterTo="transform scale-100"
-            leave="transition ease-in duration=75"
-            leaveFrom="transform scale-100"
-            leaveTo="transform scale-95"
-          >
+          <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="transform scale-95" enterTo="transform scale-100" leave="transition ease-in duration=75" leaveFrom="transform scale-100" leaveTo="transform scale-95">
             <Popover.Panel className="absolute -right-16 sm:right-4 z-50 mt-2 bg-white shadow-sm rounded max-w-xs sm:max-w-sm w-screen">
               <div className="relative p-3">
                 <div className="flex justify-between items-center w-full">
@@ -55,12 +33,8 @@ export default function TopBar({ showNav, setShowNav }) {
                       <BiCheck className="h-4 w-4 text-green-600" />
                     </div>
                     <div className="ml-4">
-                      <p className="font-medium text-gray-700">
-                        Notification Title
-                      </p>
-                      <p className="text-sm text-gray-500 truncate">
-                        Test Notification text for design
-                      </p>
+                      <p className="font-medium text-gray-700">Notification Title</p>
+                      <p className="text-sm text-gray-500 truncate">Test Notification text for design</p>
                     </div>
                   </div>
                   <div className="flex">
@@ -68,12 +42,8 @@ export default function TopBar({ showNav, setShowNav }) {
                       <BiCheck className="h-4 w-4 text-green-600" />
                     </div>
                     <div className="ml-4">
-                      <p className="font-medium text-gray-700">
-                        Notification Title
-                      </p>
-                      <p className="text-sm text-gray-500 truncate">
-                        Test Notification text for design
-                      </p>
+                      <p className="font-medium text-gray-700">Notification Title</p>
+                      <p className="text-sm text-gray-500 truncate">Test Notification text for design</p>
                     </div>
                   </div>
                   <div className="flex">
@@ -81,12 +51,8 @@ export default function TopBar({ showNav, setShowNav }) {
                       <BiCheck className="h-4 w-4 text-green-600" />
                     </div>
                     <div className="ml-4">
-                      <p className="font-medium text-gray-700">
-                        Notification Title
-                      </p>
-                      <p className="text-sm text-gray-500 truncate">
-                        Test Notification text for design
-                      </p>
+                      <p className="font-medium text-gray-700">Notification Title</p>
+                      <p className="text-sm text-gray-500 truncate">Test Notification text for design</p>
                     </div>
                   </div>
                   <div className="flex">
@@ -94,12 +60,8 @@ export default function TopBar({ showNav, setShowNav }) {
                       <BiCheck className="h-4 w-4 text-green-600" />
                     </div>
                     <div className="ml-4">
-                      <p className="font-medium text-gray-700">
-                        Notification Title
-                      </p>
-                      <p className="text-sm text-gray-500 truncate">
-                        Test Notification text for design
-                      </p>
+                      <p className="font-medium text-gray-700">Notification Title</p>
+                      <p className="text-sm text-gray-500 truncate">Test Notification text for design</p>
                     </div>
                   </div>
                 </div>
@@ -111,48 +73,29 @@ export default function TopBar({ showNav, setShowNav }) {
           <div>
             <Menu.Button className="inline-flex w-full justify-center items-center">
               <picture>
-                <Image src={Profile} className="w-10 h-10 rounded-full mr-5"/>
+                <Image src={Profile} className="w-10 h-10 rounded-full mr-5" />
               </picture>
-              <span className="hidden md:block font-medium text-gray-700">
-                Rettson
-              </span>
+              <span className="hidden md:block font-medium text-gray-700">Rettson</span>
               <BiChevronDown className="ml-2 h-4 w-4 text-gray-700" />
             </Menu.Button>
           </div>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform scale-95"
-            enterTo="transform scale-100"
-            leave="transition ease-in duration=75"
-            leaveFrom="transform scale-100"
-            leaveTo="transform scale-95"
-          >
+          <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="transform scale-95" enterTo="transform scale-100" leave="transition ease-in duration=75" leaveFrom="transform scale-100" leaveTo="transform scale-95">
             <Menu.Items className="absolute right-0 w-56 z-50 mt-2 origin-top-right bg-white rounded shadow-sm">
               <div className="p-1">
                 <Menu.Item>
-                  <Link
-                    href="#"
-                    className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
-                  >
+                  <Link href="#" className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center">
                     <BiPencil className="h-4 w-4 mr-2" />
                     Edit
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link
-                    href="#"
-                    className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
-                  >
+                  <Link href="#" className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center">
                     <BiCreditCard className="h-4 w-4 mr-2" />
                     Billing
                   </Link>
                 </Menu.Item>
                 <Menu.Item>
-                  <Link
-                    href="#"
-                    className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center"
-                  >
+                  <Link href="#" className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center">
                     <BiChevronDown className="h-4 w-4 mr-2" />
                     Settings
                   </Link>
