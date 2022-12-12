@@ -11,5 +11,17 @@ import HistoryBooking from "./historyBooking";
 import SearcResult from "./searchResult";
 import ConfirmBooking from "./confirmBooking";
 
-export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,TopBar,Layout,SideBar,HistoryBooking,SearcResult,C
+export {
+  NavbarComponent,
+  Footer,
+  WhyUs,
+  Banner,
+  SlideShow,
+  UserProfile,
+  TopBar,
+  Layout,
+  SideBar,
+  HistoryBooking,
+  SearcResult,
+  ConfirmBooking,
 };
