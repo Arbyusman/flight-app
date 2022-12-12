@@ -1,8 +1,8 @@
-import { Footer, NavbarComponent, UserProfile } from "../../components";
+import { NavbarComponent, Footer, UserProfile } from "../../components";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function profile() {
+export default function Profile() {
   const [token, setToken] = useState("");
 
   const router = useRouter();
