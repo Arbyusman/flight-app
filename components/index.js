@@ -9,5 +9,7 @@ import TopBar from "./admin/TopBar";
 import Layout from "./admin/Layout";
 import HistoryBooking from "./historyBooking";
 import SearcResult from "./searchResult";
+import ConfirmBooking from "./confirmBooking";
 
-export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,TopBar,Layout,SideBar,HistoryBooking,SearcResult};
+export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,TopBar,Layout,SideBar,HistoryBooking,SearcResult,C
+};
