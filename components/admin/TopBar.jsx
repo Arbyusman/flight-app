@@ -17,17 +17,17 @@ import Link from "next/link";
 export default function TopBar({ showNav, setShowNav }) {
   return (
     <div
-      className={`shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
+      className={`z-40 bg-blue-700 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
         showNav ? "pl-56" : ""
       }`}
     >
       <div className="pl-4 md:pl-16">
         <FaBars
-          className="h-8 w-8 text-gray-700 cursor-pointer"
+          className="h-8 w-8 text-white cursor-pointer"
           onClick={() => setShowNav(!showNav)}
         />
       </div>
-      <div className="flex items-center pr-4 md:pr-16">
+      <div className="flex items-center text-white pr-4 md:pr-16">
         <Popover className="relative">
           <Popover.Button className="outline-none mr-5 md:mr-8 cursor-pointer text-gray-700">
             <BiBell className="h-6 w-6" />

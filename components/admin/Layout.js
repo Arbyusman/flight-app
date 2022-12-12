@@ -30,6 +30,8 @@ export default function Layout({ children }) {
   return (
     <>
       <TopBar showNav={showNav} setShowNav={setShowNav} />
+      
+      
       <Transition
         as={Fragment}
         show={showNav}
@@ -41,6 +43,7 @@ export default function Layout({ children }) {
         leaveTo="-translate-x-full"
       >
         <SideBar showNav={showNav} />
+        
       </Transition>
       <main
         className={`pt-16 transition-all duration-[400ms] ${
