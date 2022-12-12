@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
+import { useRouter } from "next/router";
 import { Dropdown } from "flowbite-react";
 import { IoIosArrowDropdown } from "react-icons/io";
-
 import { GrUserManager } from "react-icons/gr";
 import Image from "next/image";
 import logoMaskapai from "../public/images/lion_air.png";
 
 export default function HistoryBooking() {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState({});
+  
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) router.push("/login");
+
+    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setUser(data.data);
+      });
+    setLoading(false);
+  }, []);
 
   return (
     <div className="justify-center items-center flex-row">

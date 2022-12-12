@@ -1,11 +1,28 @@
-import {Footer, NavbarComponent,UserProfile} from "../../components";
+import { Footer, NavbarComponent, UserProfile } from "../../components";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-export default function profil() {
-  return (
-    <div>
-      <NavbarComponent/>
-      <UserProfile/>
-      <Footer />
-    </div>
-  );
+export default function profile() {
+  const [token, setToken] = useState("");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const tokenprofile = localStorage.getItem("token");
+    if (!tokenprofile) router.push("/login");
+
+    setToken(tokenprofile);
+  }, []);
+
+  if (!token) {
+    return;
+  } else {
+    return (
+      <div>
+        <NavbarComponent />
+        <UserProfile />
+        <Footer />
+      </div>
+    );
+  }
 }

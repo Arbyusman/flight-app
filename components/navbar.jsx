@@ -25,9 +25,8 @@ export default function NavbarComponent() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
     fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
+      `https://beckend-takeoff-production.up.railway.app/api/v1/user`,
       {
         method: "GET",
         headers: {
@@ -66,7 +65,7 @@ export default function NavbarComponent() {
     if (data.status === "OK" && data.data.role === "admin") {
       setUser(data.data);
       localStorage.setItem("token", data.data.token);
-      localStorage.setItem("id", data.data.id);
+      // localStorage.setItem("id", data.data.id);
       setOpenModal(false);
       alert("anda berhasil login sebagaian admin");
       setIsLoggedIn(true);
@@ -74,10 +73,11 @@ export default function NavbarComponent() {
     } else if (data.status === "OK" && data.data.role === "buyer") {
       setUser(data.data);
       localStorage.setItem("token", data.data.token);
-      localStorage.setItem("id", data.data.id);
+      // localStorage.setItem("id", data.data.id);
       setOpenModal(false);
       alert("anda berhasil login");
       setIsLoggedIn(true);
+      router.push("/");
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
@@ -88,8 +88,9 @@ export default function NavbarComponent() {
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("id");
+
     setIsLoggedIn(false);
-    setOpenModal(true);
+    router.push("/login");
   }
 
   return (
@@ -118,10 +119,10 @@ export default function NavbarComponent() {
               >
                 
                 <Dropdown.Item>
-                  <a href={"profile/" + user.id}>Profile</a>
+                  <a href={`/profile/${user.id}`}>Profile</a>
                 </Dropdown.Item>
                 <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item ><Link href="history">History</Link></Dropdown.Item>
+                <Dropdown.Item ><a href={`/history/${user.id}`}>History</a></Dropdown.Item>
                 <Dropdown.Item>Wishlist</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
