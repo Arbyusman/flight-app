@@ -14,4 +14,18 @@ import SearcResult from "./searchResult";
 import ConfirmBooking from "./confirmBooking";
 import Wishlist from "./wishlist";
 
-export { NavbarComponent, Footer, WhyUs, Banner, SlideShow, UserProfile, TopBar, Layout, SideBar, HistoryBooking, SearcResult, ConfirmBooking,Wishlist };
+export {
+  NavbarComponent,
+  Footer,
+  WhyUs,
+  Banner,
+  SlideShow,
+  UserProfile,
+  TopBar,
+  Layout,
+  SideBar,
+  HistoryBooking,
+  SearcResult,
+  ConfirmBooking,
+  Wishlist,
+};
