@@ -1,8 +1,8 @@
-import { NavbarComponent, Footer, UserProfile } from "../../components";
+import { NavbarComponent, Footer, HistoryBooking } from "../../components";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function Profile() {
+export default function History() {
   const [token, setToken] = useState("");
 
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function Profile() {
     return (
       <div>
         <NavbarComponent />
-        <UserProfile />
+        <HistoryBooking />
         <Footer />
       </div>
     );

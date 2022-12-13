@@ -1,60 +1,42 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/navbar";
-import CarouselPromo from "../../components/carouselPromo";
-import Footer from "../../components/footer";
-import Image from "next/image";
+import { NavbarComponent, Carousel, Footer } from "../../components";
+import { Button } from "flowbite-react";
 
 const Promo = () => {
-  const [posts, setPosts] = useState([]);
+  const [promos, setPromos] = useState([]);
 
   useEffect(() => {
-    fetchPosts();
+    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/promo`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setPromos(data.data);
+        console.log("datahere", data);
+      });
   }, []);
-
-  async function fetchPosts() {
-    const req = await fetch(
-      "https://github.com/nandajl/Beckend-takeoff/api/v1/promo",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    const res = await req.json();
-
-    console.log(res, "data here");
-    const data = res.data;
-    console.log(data);
-    setPosts(res);
-  }
 
   return (
     <div>
-      <Navbar />
-      <CarouselPromo />
-      <div className="grid grid-cols-3 gap-3 my-5 mx-20 ">
-        {posts.map((post) => (
-          // <div key={post.id}>
-          //   {post.name}
+      <NavbarComponent />
+      <Carousel />
+      <div className=" md:grid md:grid-cols-2 mgap-3 my-5 md:mx-20  lg:grid lg:grid-cols-3 lg:gap-5 my-5 lg:mx-20 ">
+        {promos.map((promos) => (
+          // <div key={promos.id}>
+          //   {promos.name}
           // </div>
           <div
-            key={post.id}
-            class="w-full max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 "
+            key={promos.id}
+            class="container flex-row  justify-center items-center mt-10 transition duration-300 hover:scale-105 bg-white rounded-lg drop-shadow-xl  dark:bg-gray-800 dark:border-gray-700 "
           >
-            <a href="#">
-              <Image
-                className="p-8 rounded-t-lg"
-                src={post.photo}
-                alt="Promo Pictures"
-                height={200}
-                width={200}
-              />
-            </a>
+            <div href="#" style={{ width: "300px", height: "200" }}>
+              <img class="p-8 rounded-t-lg" src={promos.photo} />
+            </div>
             <div class="px-5 pb-5">
               <a className="font-bold " name="name" id="name">
-                {post.name}
+                {promos.name}
               </a>
               <a href="#">
                 <h5
@@ -62,7 +44,7 @@ const Promo = () => {
                   name="descriptio"
                   id="description"
                 >
-                  {post.description}
+                  {promos.description}
                 </h5>
               </a>
               <div class="flex items-center mt-2.5 mb-5">
@@ -120,15 +102,18 @@ const Promo = () => {
                   5.0
                 </span>
               </div>
-              <div class="flex items-center justify-between">
-                <span
-                  class="text-3xl font-bold text-gray-900 dark:text-white  ml-auto"
-                  name="discount"
-                  id="discount"
-                >
-                  {post.discount}
-                </span>
-              </div>
+              {/* <div class="flex items-center justify-between">
+                  <span class="text-3xl font-bold text-gray-900 dark:text-white  ml-auto" name="discount" id="discount" >{promos.discount}</span>
+              </div> */}
+            </div>
+            <div className="flex py-2 items-baseline ">
+              <Button
+                color="failure"
+                pill={true}
+                className="w-full rounded-md m-2"
+              >
+                Ambil Voucher
+              </Button>
             </div>
           </div>
         ))}
