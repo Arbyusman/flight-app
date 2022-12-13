@@ -1,11 +1,11 @@
 
-import { NavbarComponent, Footer, SearcResult } from "../../components";
+import { NavbarComponent, Footer, ResultFlight } from "../../components";
 
-export default function login() {
+export default function Search() {
   return (
     <div>
       <NavbarComponent />
-      <SearcResult/>
+      <ResultFlight/>
       <Footer />
     </div>
   );

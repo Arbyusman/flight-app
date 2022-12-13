@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown } from "flowbite-react";
+
 import {
   IoMdArrowRoundForward,
   IoIosArrowDropdown,
@@ -7,13 +8,14 @@ import {
 } from "react-icons/io";
 
 import { MdOutlineLuggage } from "react-icons/md";
+import { BsHeartFill } from "react-icons/bs";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
 import Image from "next/image";
 import logoMaskapai from "../public/images/lion_air.png";
 
-export default function SearcResult() {
+export default function ResultFlight() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
 
@@ -50,32 +52,40 @@ export default function SearcResult() {
       <div className="flex justify-center ">
         <div className="lg:w-2/3 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-7">
           <div className="flex-row mx-4 md:mx-0 md:flex items-center  justify-between ">
-            <Image className="w-16 flex " src={logoMaskapai} />
-            <div className="flex items-center gap-4 lg:gap-16 my-1  lg:my-0">
+            <Image
+              className=" flex "
+              src={logoMaskapai}
+              alt="logo-maskapai"
+              width={100}
+              height={100}
+            />
+            <div className="flex items-center gap-4 lg:gap-6 my-1  lg:my-0">
               <p>9 :30</p>
               <IoMdArrowRoundForward />
               <p>11 :30</p>
-              <p className="flex items-center gap-1">
+              <div className="flex items-center gap-1">
                 <AiOutlineFieldTime className="text-red-700 text-lg" />
                 <p>2h 0m</p>
-              </p>
+              </div>
             </div>
             <p className="flex gap-1 items-center my-1 lg:my-0">
               <MdOutlineLuggage className="text-lg text-blue-700" />
               20 KG
             </p>
-            <div className="flex gap-1 items-center my-1 lg:my-0">
+            <div className="flex gap-1 items-center my-1  lg:my-0">
               <p>RP/ </p>
               <p>678.000</p>
               <p>/Pax</p>
             </div>
             <div className="flex lg:gap-10 md:gap-3 justify-between">
-              <button
-                type="button"
-                className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
-              >
-                Choose Flight
-              </button>
+              <a href="search/confirm">
+                <button
+                  type="button"
+                  className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
+                >
+                  Choose Flight
+                </button>
+              </a>
 
               <button
                 type="button"
@@ -107,14 +117,20 @@ export default function SearcResult() {
       >
         <div className="lg:w-2/3 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7">
           <div className=" md:flex items-start  justify-between lg:justify-around ">
-            <Image className="w-16 lg:w-24 flex " src={logoMaskapai} />
+            <Image
+              className="flex "
+              src={logoMaskapai}
+              alt="logo-maskapai"
+              width={100}
+              height={100}
+            />
             <div className=" items-center gap-7 text-gray-600 tracking-wide antialiased my-2">
-              <div className="flex lg:gap-20   gap-7 items-center">
+              <div className="flex lg:gap-10   gap-7 items-center">
                 <div>
                   <p className="font-bold text-xl">10 : 30</p>
                   <p>9 Dec 2022</p>
                 </div>
-                <div className="w-36 lg:w-auto ">
+                <div className="w-40  lg:w-auto ">
                   <p className="text-md">Kendari ( KDI )</p>
                   <p className="text-sm">Haluoleo Airport</p>
                 </div>
@@ -123,12 +139,12 @@ export default function SearcResult() {
                 <IoIosTimer className="" />
                 <p> 1h:0m</p>
               </div>
-              <div className="flex lg:gap-20 gap-5  items-center">
+              <div className="flex lg:gap-10 gap-5  items-center">
                 <div>
                   <p className="font-bold text-xl">11 :30</p>
                   <p>9 Dec 2022</p>
                 </div>
-                <div className=" w-36 lg:w-auto ">
+                <div className=" w-40 lg:w-auto ">
                   <p className="text-md">Makassar ( UPG )</p>
                   <p className="text-sm">
                     Sultan Hasanuddin International Airport
@@ -149,6 +165,12 @@ export default function SearcResult() {
                 <BiJoystick className="text-xl text-red-500" />
                 <p>Entertainment</p>
               </div>
+            </div>
+            <div className="lg:mt-2 justify-end flex">
+              <button className=" flex justify-center border-2  border-red-600 items-center gap-2 px-1 py-1 antialiased transition duration-300 tracking-normal bg-red-600 rounded-md text-white text-base font-medium hover:bg-white   hover:text-red-600">
+                <BsHeartFill className="" />
+                <p> add to wishlist</p>
+              </button>
             </div>
           </div>
         </div>

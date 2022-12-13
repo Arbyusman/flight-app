@@ -15,7 +15,6 @@ import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
 import { data } from "autoprefixer";
 
-import { useRouter } from "next/router";
 
 export default function NavbarComponent() {
   const router = useRouter();
