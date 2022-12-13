@@ -15,7 +15,6 @@ import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
 import { data } from "autoprefixer";
 
-
 export default function NavbarComponent() {
   const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
@@ -191,7 +190,9 @@ export default function NavbarComponent() {
                   {user.email}
                 </span>
               </Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
+              <Dropdown.Item>
+                <Link href={`profile/${id}`} >Profile</Link>
+              </Dropdown.Item>
               <Dropdown.Item>
                 <Link href="history">History</Link>
               </Dropdown.Item>

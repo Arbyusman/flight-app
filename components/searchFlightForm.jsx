@@ -86,7 +86,7 @@ const SearchFlightForm = () => {
               <path
                 fillRule="evenodd"
                 d="M5 9a7 7 0 1114 0c0 5.25-7 13-7 13S5 14.25 5 9zm4.5 0a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
           </svg>
@@ -118,7 +118,7 @@ const SearchFlightForm = () => {
               <path
                 fillRule="evenodd"
                 d="M5 9a7 7 0 1114 0c0 5.25-7 13-7 13S5 14.25 5 9zm4.5 0a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
           </svg>
@@ -139,7 +139,7 @@ const SearchFlightForm = () => {
               <path
                 fillRule="evenodd"
                 d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 00-1.99 2L3 19a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm0 5v11H5V8h14zm-7 2H7v5h5v-5z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
           </svg>
@@ -160,7 +160,7 @@ const SearchFlightForm = () => {
               <path
                 fillRule="evenodd"
                 d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 00-1.99 2L3 19a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm0 5v11H5V8h14zm-7 2H7v5h5v-5z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
           </svg>

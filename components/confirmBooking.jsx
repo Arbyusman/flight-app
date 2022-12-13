@@ -15,7 +15,7 @@ export default function ConfirmBooking() {
       <div className="lg:flex mt-5 gap-3 w-full md:w-11/12 lg:w-9/12 flex-row ">
         {/* ticket */}
         <div className=" w-full lg:w-8/12">
-          <div className="w-full  bg-white rounded-t-md flex-row md:flex justify-between shadow-md p-7">
+          <div className="w-full  bg-white rounded-t-md flex-row md:flex justify-between shadow-md px-7 py-5">
             <div className=" items-center text-gray-600  text-md justify-between ">
               <div className="flex items-center gap-2">
                 <p>Kendari (KDI)</p>
@@ -37,10 +37,11 @@ export default function ConfirmBooking() {
               Change Flight
             </button>
           </div>
+          <hr />
 
           {/* ticket desc */}
-          <div className="flex justify-center duration-700 ease-in-out ">
-            <div className="w-full  bg-white border-t-2   shadow-md p-7">
+          <div className="flex justify-center  ">
+            <div className="w-full  bg-white   shadow-md p-7">
               <div className="flex-row md:flex items-start gap-8 md:gap-5 lg:gap-5  justify-between ">
                 <Image
                   className="flex-row mb-2 md:mb-0 md:flex"
@@ -91,12 +92,7 @@ export default function ConfirmBooking() {
                     <p>Entertainment</p>
                   </div>
                 </div>
-                <div className="lg:mt-2 justify-end flex">
-                  <button className=" flex justify-center border-2  border-red-600 items-center gap-2 px-1 py-1 antialiased transition duration-300 tracking-normal bg-red-600 rounded-md text-white text-base font-medium hover:bg-white   hover:text-red-600">
-                    <BsHeartFill className="" />
-                    <p> add to wishlist</p>
-                  </button>
-                </div>
+               
               </div>
             </div>
           </div>
@@ -104,27 +100,32 @@ export default function ConfirmBooking() {
         {/* Price Detail */}
         <div className="w-full  md:w-full lg:w-4/12">
           <div className="w-full md:justify-between ">
-            <div className="w-full items-center justify-between flex-row shadow-md p-7 bg-white rounded-md text-gray-600 tracking-wide antialiased">
-              <h1 className="font-semibold tracking-wider mb-5 text-lg">
-                Price Detail
-              </h1>
-              <div className="font-semibold gap-5 my-2 text-base flex justify-between">
-                <div className="flex items-center gap-2 ">
-                  <p>Depart</p>
-                  <p>KDI</p>
-                  <IoAirplaneOutline />
-                  <p>UPG</p>
+          <div className=" items-center justify-between flex-row shadow-md lg:pb-8 pt-4 bg-white rounded-sm text-gray-600 tracking-wide antialiased mb-2">
+              <div className="w-full   flex-row md:flex justify-between items-center px-7 py-2 lg:py-6">
+                <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700 ">
+                  Price Detail
+                </h1>
+              </div>
+              <hr />
+              <div className="p-6 lg:p-8">
+                <div className="font-semibold gap-5 my-2 text-base flex justify-between">
+                  <div className="flex items-center gap-2 ">
+                    <p>Depart</p>
+                    <p>KDI</p>
+                    <IoAirplaneOutline />
+                    <p>UPG</p>
+                  </div>
+                  <p>RP 678.000</p>
                 </div>
-                <p>RP 678.000</p>
-              </div>
-              <div className="flex justify-between text-sm font-thin my-1">
-                <p>Adult x 1</p>
-                <p>RP 678.000</p>
-              </div>
-              <hr className="border-2"></hr>
-              <div className="flex justify-between text-lg font-bold tracking-wider my-2">
-                <p>total Price</p>
-                <p>RP 678.000</p>
+                <div className="flex justify-between text-sm font-thin my-1">
+                  <p>Adult x 1</p>
+                  <p>RP 678.000</p>
+                </div>
+                <hr />
+                <div className="flex justify-between text-lg font-bold tracking-wider my-2">
+                  <p>total Price</p>
+                  <p>RP 678.000</p>
+                </div>
               </div>
             </div>
             <a href="confirm/book" className="flex justify-center items-center">

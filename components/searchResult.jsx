@@ -23,7 +23,7 @@ export default function ResultFlight() {
     <div className="justify-center items-center flex-row">
       {/* title */}
       <div className="flex justify-center items-center ">
-        <div className="lg:w-2/3 w-full flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
+        <div className="lg:w-9/12 w-full flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
           <div className="text-gray-700">
             <h1 className="font-semibold tracking-wide antialiased text-lg">
               Penerbangan keberangkatan ke bandara makassar
@@ -50,7 +50,7 @@ export default function ResultFlight() {
       {/* end title */}
       {/* ticket */}
       <div className="flex justify-center ">
-        <div className="lg:w-2/3 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-7">
+        <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-7">
           <div className="flex-row mx-4 md:mx-0 md:flex items-center  justify-between ">
             <Image
               className=" flex "
@@ -115,7 +115,7 @@ export default function ResultFlight() {
           isOpen && currentIndex === 1 ? "max-h-auto lg:max-h-56" : "max-h-0"
         } `}
       >
-        <div className="lg:w-2/3 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7">
+        <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7">
           <div className=" md:flex items-start  justify-between lg:justify-around ">
             <Image
               className="flex "
