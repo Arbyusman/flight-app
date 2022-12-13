@@ -5,12 +5,14 @@ import Banner from "./banner";
 import SlideShow from "./slideshow";
 import UserProfile from "./userProfile";
 
+import Carousel from "./carouselPromo";
+import SearchForm from "./searchFlightForm";
 import SideBar from "./admin/SideBar";
 import TopBar from "./admin/TopBar";
 import Layout from "./admin/Layout";
 
 import HistoryBooking from "./historyBooking";
-import SearcResult from "./searchResult";
+import SearchResult from "./searchResult";
 import ConfirmBooking from "./confirmBooking";
 import Wishlist from "./wishlist";
 
@@ -25,7 +27,9 @@ export {
   Layout,
   SideBar,
   HistoryBooking,
-  SearcResult,
+  SearchResult,
   ConfirmBooking,
   Wishlist,
+  Carousel,
+  SearchForm,
 };

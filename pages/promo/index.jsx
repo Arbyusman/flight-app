@@ -1,22 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/navbar";
+import { NavbarComponent, Carousel, Footer } from "../../components";
 import { Button } from "flowbite-react";
-import Footer from "../../components/footer";
-import { Swiper, SwiperSlide } from "swiper/react";
-import Image from "next/image";
-
-// import swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-coverflow";
-
-// import swiper modules
-import { EffectCoverflow, Pagination, Navigation } from "swiper";
-
-// import images
-import promoImages from "../../public/images/images";
 
 const Promo = () => {
   const [promos, setPromos] = useState([]);
@@ -35,33 +20,8 @@ const Promo = () => {
 
   return (
     <div>
-      <Navbar />,
-      <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        slidesPerView={"auto"}
-        loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        coverflowEffect={{
-          rotate: 0,
-          stretch: 0,
-          depth: 200,
-          modifier: 2.5,
-          slideShadows: false,
-        }}
-        modules={[EffectCoverflow, Pagination, Navigation]}
-        className="mySwiper"
-      >
-        {promoImages.map((promoImage, index) => (
-          <SwiperSlide key={index} className="max-w-lg">
-            <Image src={promoImage} alt="promo-images" className="w-auto" />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <NavbarComponent />
+      <Carousel />
       <div className=" md:grid md:grid-cols-2 mgap-3 my-5 md:mx-20  lg:grid lg:grid-cols-3 lg:gap-5 my-5 lg:mx-20 ">
         {promos.map((promos) => (
           // <div key={promos.id}>
@@ -71,7 +31,7 @@ const Promo = () => {
             key={promos.id}
             class="container flex-row  justify-center items-center mt-10 transition duration-300 hover:scale-105 bg-white rounded-lg drop-shadow-xl  dark:bg-gray-800 dark:border-gray-700 "
           >
-            <div href="#"  style={{width:"300px",height:"200"}}>
+            <div href="#" style={{ width: "300px", height: "200" }}>
               <img class="p-8 rounded-t-lg" src={promos.photo} />
             </div>
             <div class="px-5 pb-5">
