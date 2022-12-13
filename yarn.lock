@@ -141,7 +141,7 @@
 
 "@headlessui/react@^1.7.5":
   version "1.7.5"
-  resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.5.tgz#c8864b0731d95dbb34aa6b3a60d0ee9ae6f8a7ca"
+  resolved "https://registry.npmjs.org/@headlessui/react/-/react-1.7.5.tgz"
   integrity sha512-UZSxOfA0CYKO7QDT5OGlFvesvlR1SKkawwSjwQJwt7XQItpzRKdE3ZUQxHcg4LEz3C0Wler2s9psdb872ynwrQ==
   dependencies:
     client-only "^0.0.1"
@@ -1401,10 +1401,10 @@ flatted@^3.1.0:
   resolved "https://registry.npmjs.org/flatted/-/flatted-3.2.7.tgz"
   integrity sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==
 
-flowbite-react@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.npmjs.org/flowbite-react/-/flowbite-react-0.3.5.tgz"
-  integrity sha512-X2unmmXmS7DZbGTk+C7jf0qrtpPu4i/yo8OeHHd1XO5V5TAUjhAyYIcy3RwKjKS+WC+Fj/rMHe5QKBF7E0ryoA==
+flowbite-react@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.npmjs.org/flowbite-react/-/flowbite-react-0.3.7.tgz"
+  integrity sha512-vnDlbuJubo66O5U4Fj9pkAhsaO+uWjR4qShlbIK+6qS+VbfZX5xaDNKHg98WkEhfyXsL8/03eSQZcuE073SvwA==
   dependencies:
     "@floating-ui/react-dom" "^1.0.0"
     "@floating-ui/react-dom-interactions" "^0.9.1"
@@ -2466,6 +2466,11 @@ react-dom@18.2.0:
 react-icons@^4.6.0:
   version "4.7.1"
   resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.7.1.tgz"
+  integrity sha512-yHd3oKGMgm7zxo3EA7H2n7vxSoiGmHk5t6Ou4bXsfcgWyhfDKMpyKfhHR6Bjnn63c+YXBLBPUql9H4wPJM6sXw==
+
+react-icons@^4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.7.1.tgz#0f4b25a5694e6972677cb189d2a72eabea7a8345"
   integrity sha512-yHd3oKGMgm7zxo3EA7H2n7vxSoiGmHk5t6Ou4bXsfcgWyhfDKMpyKfhHR6Bjnn63c+YXBLBPUql9H4wPJM6sXw==
 
 react-indiana-drag-scroll@^2.2.0:
