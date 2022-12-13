@@ -1,21 +1,71 @@
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Layout from "../../../../components/admin/Layout";
-import Label from "flowbite-react";
+import { Button } from "flowbite-react";
 
 export default function CreatePromo() {
+  const [field, setField] = useState({});
+  const router = useRouter();
+  const [err, setErr] = useState("");
+
+  function setValue(e) {
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+
+    console.log({ name, value });
+
+    setField({
+      ...field,
+      [name]: value,
+    });
+  }
+
+  async function doCreate(e) {
+    e.preventDefault();
+
+    const req = await fetch("https://beckend-takeoff-production.up.railway.app/api/v1/promo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(field),
+    }).catch((err) => {
+      throw err;
+    });
+
+    const data = await req.json();
+    if (data.status === "Ok") {
+      console.log(data.status, "ini diaaaaa");
+      router.push("/admin/promo");
+    } else {
+      const errStatus = data.status;
+      const errMessage = data.message;
+      setErr(`${errStatus} ${errMessage}`);
+    }
+    console.log(data.data, "data here");
+
+    setField({});
+    e.target.reset();
+
+    console.log(data);
+  }
   return (
     <Layout>
       <div className="mt-10 block p-6 rounded-lg shadow-lg bg-white w-5/6 mx-auto">
-        <form className="w-100">
+        <form onSubmit={doCreate} className="w-100">
           <div className="font-bold ">
-            <h5 className="text-2xl text-center">Form Input Promo</h5>
+            <h5 className="text-2xl text-center">Form Create Promo</h5>
           </div>
           <div className="mt-10">
             <div className="relative">
               <input
                 type="text"
                 id="floating_outlined"
+                name="name"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                onChange={setValue}
               />
               <label
                 for="floating_outlined"
@@ -27,8 +77,10 @@ export default function CreatePromo() {
               <input
                 type="text"
                 id="floating_outlined"
+                name="description"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                onChange={setValue}
               />
               <label
                 for="floating_outlined"
@@ -40,8 +92,10 @@ export default function CreatePromo() {
               <input
                 type="text"
                 id="floating_outlined"
+                name="discount"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                onChange={setValue}
               />
               <label
                 for="floating_outlined"
@@ -56,10 +110,12 @@ export default function CreatePromo() {
               id="multiple_files"
               type="file"
               multiple
+              name="photo"
+              onChange={setValue}
             />
           </div>
 
-          <button
+          {/* <button
             type="submit"
             className="
             mt-2
@@ -81,7 +137,16 @@ export default function CreatePromo() {
                     duration-150
                     ease-in-out">
             Create
-          </button>
+          </button> */}
+          <div className="flex justify-end ">
+            <div className="flex justify-between mt-5 gap-5">
+              <Button color="success">Back</Button>
+
+              <Button type="submit" name="submit" color="info">
+                Create
+              </Button>
+            </div>
+          </div>
         </form>
       </div>
     </Layout>

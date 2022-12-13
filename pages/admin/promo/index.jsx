@@ -39,39 +39,39 @@ export default function Promo() {
             </Link>
           </div>
         </div>
-        <div className="mt-10">
-          {promo.map((promo) => (
-            <Table key={promo.id} hoverable={true}>
-              <Table.Head>
-                <Table.HeadCell>Image</Table.HeadCell>
-                <Table.HeadCell>Name</Table.HeadCell>
-                <Table.HeadCell>Description</Table.HeadCell>
-                <Table.HeadCell>Discount</Table.HeadCell>
-                <Table.HeadCell>
-                  Action
-                  <span className="sr-only">Edit</span>
-                </Table.HeadCell>
-              </Table.Head>
-              <Table.Body className="divide-y">
-                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+        <div className="mt-10 border-spacing-2">
+          <Table hoverable={true}>
+            <Table.Head>
+              <Table.HeadCell className="w-3/5">Image</Table.HeadCell>
+              <Table.HeadCell>Name</Table.HeadCell>
+              <Table.HeadCell>Description</Table.HeadCell>
+              <Table.HeadCell>Discount</Table.HeadCell>
+              <Table.HeadCell>
+                Action
+                <span className="sr-only">Edit</span>
+              </Table.HeadCell>
+            </Table.Head>
+            <Table.Body className="divide-y">
+              {promo.map((promo) => (
+                <Table.Row key={promo.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                   <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{promo.photo}</Table.Cell>
                   <Table.Cell>{promo.name}</Table.Cell>
                   <Table.Cell>{promo.description}</Table.Cell>
                   <Table.Cell>{promo.discount}</Table.Cell>
                   <Table.Cell>
-                    <div>
-                      <a href="/admin/createPromo" className="w-5 h-5 mx-5 font-medium text-green-600 hover:underline ">
+                    <div className="flex justify-between">
+                      <a href="/admin/createPromo" className="w-5 h-5  font-medium text-green-600 hover:underline ">
                         <FaEdit />
                       </a>
-                      <a href="/tables" className="mx-5 font-medium text-red-600 hover:underline ">
+                      <a href="/tables" className="font-medium text-red-600 hover:underline ">
                         <FaTrashAlt />
                       </a>
                     </div>
                   </Table.Cell>
                 </Table.Row>
-              </Table.Body>
-            </Table>
-          ))}
+              ))}
+            </Table.Body>
+          </Table>
         </div>
       </div>
     </Layout>

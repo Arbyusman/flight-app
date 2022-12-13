@@ -37,8 +37,7 @@ export default function Home() {
             slideShadows: false,
           }}
           modules={[EffectCoverflow, Pagination, Navigation]}
-          className="mySwiper"
-        >
+          className="mySwiper">
           {promoImages.map((promoImage, index) => (
             <SwiperSlide key={index} className="max-w-lg">
               <Image src={promoImage} alt="promo-images" className="w-auto" />
