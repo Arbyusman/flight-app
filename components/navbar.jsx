@@ -13,6 +13,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
+import { data } from "autoprefixer";
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -99,36 +100,12 @@ export default function NavbarComponent() {
       </Navbar.Brand>
       <div className="flex md:order-2">
         <div>
-          {!isLoggedIn ? (
-            <Button className="" onClick={() => setOpenModal(true)}>
-              Login
-            </Button>
-          ) : (
-            <div id="already-login">
-              <Dropdown
-                arrowIcon={false}
-                inline={true}
-                label={
-                  <Avatar
-                    alt="User settings"
-                    img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    rounded={true}
-                  />
-                }
-              >
-                <Dropdown.Item>
-                  <a href={"profile/" + user.id}>Profile</a>
-                </Dropdown.Item>
-                <Dropdown.Item>Settings</Dropdown.Item>
-                <Dropdown.Item>
-                  <Link href="history">History</Link>
-                </Dropdown.Item>
-                <Dropdown.Item>Wishlist</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
-              </Dropdown>
-            </div>
-          )}
+          <Button
+            className={isLoggedIn ? "hidden" : ""}
+            onClick={() => setOpenModal(true)}
+          >
+            Login
+          </Button>
           <Modal
             show={openModal}
             size="md"
@@ -194,6 +171,33 @@ export default function NavbarComponent() {
               </div>
             </Modal.Body>
           </Modal>
+          <div id="already-login" className={isLoggedIn ? "" : "hidden"}>
+            <Dropdown
+              arrowIcon={false}
+              inline={true}
+              label={
+                <Avatar
+                  alt="User settings"
+                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  rounded={true}
+                />
+              }
+            >
+              <Dropdown.Item>
+                {/* <a href={"profile/" + user.id}>Profile</a> */}
+                <span className="block truncate text-sm font-medium">
+                  {user.email}
+                </span>
+              </Dropdown.Item>
+              <Dropdown.Item>Settings</Dropdown.Item>
+              <Dropdown.Item>
+                <Link href="history">History</Link>
+              </Dropdown.Item>
+              <Dropdown.Item>Wishlist</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+            </Dropdown>
+          </div>
         </div>
         <Navbar.Toggle />
       </div>

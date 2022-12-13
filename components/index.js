@@ -5,5 +5,17 @@ import Banner from "./banner";
 import SlideShow from "./slideshow";
 import UserProfile from "./userProfile";
 import History from "../pages/history";
+import Carousel from "./carouselPromo";
+import SearchForm from "./searchFlightForm";
 
-export { NavbarComponent,Footer,WhyUs,Banner,SlideShow,UserProfile,History};
+export {
+  NavbarComponent,
+  Footer,
+  WhyUs,
+  Banner,
+  SlideShow,
+  UserProfile,
+  History,
+  Carousel,
+  SearchForm,
+};
