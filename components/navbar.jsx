@@ -1,12 +1,4 @@
-import {
-  Navbar,
-  Dropdown,
-  Avatar,
-  Button,
-  Modal,
-  Label,
-  TextInput,
-} from "flowbite-react";
+import { Navbar, Dropdown, Avatar, Button, Modal, Label, TextInput } from "flowbite-react";
 
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
@@ -44,19 +36,16 @@ export default function NavbarComponent() {
   }, []);
 
   async function handelLogin() {
-    const response = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      }
-    ).catch((err) => {
+    const response = await fetch("https://beckend-takeoff-production.up.railway.app/api/v1/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    }).catch((err) => {
       throw err;
     });
 
@@ -100,36 +89,19 @@ export default function NavbarComponent() {
       </Navbar.Brand>
       <div className="flex md:order-2">
         <div>
-          <Button
-            className={isLoggedIn ? "hidden" : ""}
-            onClick={() => setOpenModal(true)}
-          >
+          <Button className={isLoggedIn ? "hidden" : ""} onClick={() => setOpenModal(true)}>
             Login
           </Button>
-          <Modal
-            show={openModal}
-            size="md"
-            popup={true}
-            onClose={() => setOpenModal(false)}
-          >
+          <Modal show={openModal} size="md" popup={true} onClose={() => setOpenModal(false)}>
             <Modal.Header />
             <Modal.Body>
               <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
-                <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-                  Sign in to our platform
-                </h3>
+                <h3 className="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h3>
                 <div>
                   <div className="mb-2 block">
                     <Label htmlFor="email" value="Your email" />
                   </div>
-                  <TextInput
-                    id="email"
-                    type="email"
-                    placeholder="JohnDoe@company.com"
-                    required={true}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <TextInput id="email" type="email" placeholder="JohnDoe@company.com" required={true} value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
                 <div>
                   <div className="mb-2 block">
@@ -148,10 +120,7 @@ export default function NavbarComponent() {
                   />
                 </div>
                 <div className="w-full  items-center justify-center ">
-                  <div
-                    className=" text-sm  text-center text-red-700 rounded-lg "
-                    role="alert"
-                  >
+                  <div className=" text-sm  text-center text-red-700 rounded-lg " role="alert">
                     <span className="font-medium">{err}</span>
                   </div>
                   <Button className="w-full" onClick={handelLogin}>
@@ -161,10 +130,7 @@ export default function NavbarComponent() {
 
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                   Not registered?{" "}
-                  <a
-                    href="register"
-                    className="text-blue-700 hover:underline dark:text-blue-500"
-                  >
+                  <a href="register" className="text-blue-700 hover:underline dark:text-blue-500">
                     Create account
                   </a>
                 </div>
@@ -172,25 +138,13 @@ export default function NavbarComponent() {
             </Modal.Body>
           </Modal>
           <div id="already-login" className={isLoggedIn ? "" : "hidden"}>
-            <Dropdown
-              arrowIcon={false}
-              inline={true}
-              label={
-                <Avatar
-                  alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                  rounded={true}
-                />
-              }
-            >
+            <Dropdown arrowIcon={false} inline={true} label={<Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded={true} />}>
               <Dropdown.Item>
                 {/* <a href={"profile/" + user.id}>Profile</a> */}
-                <span className="block truncate text-sm font-medium">
-                  {/* {user.email} */}
-                </span>
+                <span className="block truncate text-sm font-medium">{user.email}</span>
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link href={`profile/${id}`} >Profile</Link>
+                <Link href={`profile/${id}`}>Profile</Link>
               </Dropdown.Item>
               <Dropdown.Item>
                 <Link href="history">History</Link>

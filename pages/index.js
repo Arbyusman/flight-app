@@ -1,11 +1,4 @@
-import {
-  NavbarComponent,
-  WhyUs,
-  Footer,
-  Banner,
-  Carousel,
-  SearchForm,
-} from "../components";
+import { NavbarComponent, WhyUs, Footer, Banner, Carousel, SearchForm } from "../components";
 
 export default function Home() {
   return (

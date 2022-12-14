@@ -9,14 +9,14 @@ import Link from "next/link";
 
 export default function TopBar({ showNav, setShowNav }) {
   return (
-    <div className={`z-40 bg-blue-700 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-56" : ""}`}>
+    <div className={`z-40 bg-blue-900 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-56" : ""}`}>
       <div className="pl-4 md:pl-16">
         <FaBars className="h-8 w-8 text-white cursor-pointer" onClick={() => setShowNav(!showNav)} />
       </div>
       <div className="flex items-center text-white pr-4 md:pr-16">
         <Popover className="relative">
           <Popover.Button className="outline-none mr-5 md:mr-8 cursor-pointer text-gray-700">
-            <BiBell className="h-6 w-6" />
+            <BiBell className="h-6 w-6 text-white" />
           </Popover.Button>
           <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="transform scale-95" enterTo="transform scale-100" leave="transition ease-in duration=75" leaveFrom="transform scale-100" leaveTo="transform scale-95">
             <Popover.Panel className="absolute -right-16 sm:right-4 z-50 mt-2 bg-white shadow-sm rounded max-w-xs sm:max-w-sm w-screen">
@@ -75,8 +75,8 @@ export default function TopBar({ showNav, setShowNav }) {
               <picture>
                 <Image src={Profile} className="w-10 h-10 rounded-full mr-5" />
               </picture>
-              <span className="hidden md:block font-medium text-gray-700">Rettson</span>
-              <BiChevronDown className="ml-2 h-4 w-4 text-gray-700" />
+              <span className="hidden md:block font-medium text-white">Rettson</span>
+              <BiChevronDown className="ml-2 h-4 w-4 text-white" />
             </Menu.Button>
           </div>
           <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="transform scale-95" enterTo="transform scale-100" leave="transition ease-in duration=75" leaveFrom="transform scale-100" leaveTo="transform scale-95">
