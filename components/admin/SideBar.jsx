@@ -9,7 +9,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
   const router = useRouter();
 
   return (
-    <div ref={ref} className=" z-40 fixed w-56  h-full bg-blue-700  shadow-xl">
+    <div ref={ref} className=" z-40 fixed w-56  h-full bg-blue-900  shadow-xl">
       <div className="flex justify-center  mb-5">
         <picture>
           <Image src={LogoImage} className="w-20 h-20" />
@@ -32,7 +32,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
         </Link>
         <Link href="/admin/user">
           <div
-            className={`pl-6 py-3 text-white mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
+            className={`pl-6 py-3  text-white mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors ${
               router.pathname == "user" ? "bg-orange-100 text-orange-500" : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
             }`}>
             <div className="mr-2">

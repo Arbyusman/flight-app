@@ -60,7 +60,7 @@ export default function Promo() {
                   <Table.Cell>{promo.discount}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a href="/admin/createPromo" className="w-5 h-5  font-medium text-green-600 hover:underline ">
+                      <a href={`/admin/promo/edit/${promo.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
                         <FaEdit />
                       </a>
                       <a href="/tables" className="font-medium text-red-600 hover:underline ">
