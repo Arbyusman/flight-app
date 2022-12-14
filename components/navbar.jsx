@@ -13,7 +13,6 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
-import { data } from "autoprefixer";
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -187,7 +186,7 @@ export default function NavbarComponent() {
               <Dropdown.Item>
                 {/* <a href={"profile/" + user.id}>Profile</a> */}
                 <span className="block truncate text-sm font-medium">
-                  {user.email}
+                  {/* {user.email} */}
                 </span>
               </Dropdown.Item>
               <Dropdown.Item>
