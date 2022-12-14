@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
-import { data } from "autoprefixer";
 
 export default function NavbarComponent() {
   const router = useRouter();

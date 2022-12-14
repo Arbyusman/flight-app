@@ -43,6 +43,16 @@ export default function UserProfile() {
   }, []);
 
   async function handelUpdate() {
+
+    const body = new FormData();
+
+    body.append("firstName",firstName);
+    body.append("lastName",lastName);
+    body.append("phone",phone);
+    body.append("photo",photo);
+    body.append("address",address);
+
+
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
     const response = await fetch(
@@ -50,18 +60,10 @@ export default function UserProfile() {
       {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
+          // "Content-Type": "multipart/form-data",
         },
-        body: JSON.stringify({
-          email,
-          username,
-          firstName,
-          lastName,
-          address,
-          photo,
-          phone,
-        }),
+        body: body,
       }
     ).catch((err) => {
       throw err;
@@ -377,8 +379,8 @@ export default function UserProfile() {
                         aria-describedby="file_input_help"
                         id="file_input"
                         type="file"
-                        onChange={(e) => setPhoto(e.target.value)}
-                        value={photo}
+                        onChange={(e) => setPhoto(e.target.files[0])}
+                        // value={photo}
                       />
                       <p
                         className="mt-1 text-sm text-gray-500 dark:text-gray-300"
