@@ -1,61 +1,50 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../../../components/admin/Layout";
 import { Button } from "flowbite-react";
 
-export default function CreatePromo() {
-  const [field, setField] = useState({});
+const editPromo = () => {
   const router = useRouter();
-  const [err, setErr] = useState("");
+  const [editPromo, setEditPromo] = useState([]);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [photo, setPhoto] = useState("");
 
-  function setValue(e) {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-
-    console.log({ name, value });
-
-    setField({
-      ...field,
-      [name]: value,
-    });
-  }
-
-  async function doCreate(e) {
-    e.preventDefault();
-
-    const req = await fetch("https://beckend-takeoff-production.up.railway.app/api/v1/promo", {
-      method: "POST",
+  async function handleUpdate() {
+    const response = await fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/promo/${id}`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(field),
+      body: JSON.stringify({
+        name,
+        description,
+        discount,
+        photo,
+      }),
     }).catch((err) => {
       throw err;
     });
 
-    const data = await req.json();
-    if (data.status === "Ok") {
-      console.log(data.status, "ini diaaaaa");
+    const data = await response.json();
+
+    if (data.status === "OK") {
+      alert("data berhasil di ubah");
       router.push("/admin/promo");
-    } else {
-      const errStatus = data.status;
-      const errMessage = data.message;
-      setErr(`${errStatus} ${errMessage}`);
+      setEditPromo(false);
     }
-    console.log(data.data, "data here");
 
-    setField({});
-    e.target.reset();
-
-    console.log(data);
+    console.log("status", data);
   }
+
   return (
     <Layout>
       <div className="mt-10 block p-6 rounded-lg shadow-lg bg-white w-5/6 mx-auto">
-        <form onSubmit={doCreate} className="w-100">
+        <form onSubmit={handleUpdate} className="w-100">
           <div className="font-bold ">
-            <h5 className="text-2xl text-center">Form Create Promo</h5>
+            <h5 className="text-2xl text-center">Form Edit Promo</h5>
           </div>
           <div className="mt-10">
             <div className="relative">
@@ -65,7 +54,8 @@ export default function CreatePromo() {
                 name="name"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                onChange={setValue}
+                onChange={(e) => setName(e.target.value)}
+                value={name}
               />
               <label
                 for="floating_outlined"
@@ -80,7 +70,8 @@ export default function CreatePromo() {
                 name="description"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                onChange={setValue}
+                onChange={(e) => setDescription(e.target.value)}
+                value={description}
               />
               <label
                 for="floating_outlined"
@@ -95,7 +86,8 @@ export default function CreatePromo() {
                 name="discount"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
-                onChange={setValue}
+                onChange={(e) => setDiscount(e.target.value)}
+                value={discount}
               />
               <label
                 for="floating_outlined"
@@ -111,33 +103,11 @@ export default function CreatePromo() {
               type="file"
               multiple
               name="photo"
-              onChange={setValue}
+              onChange={(e) => setPhoto(e.target.value)}
+              value={photo}
             />
           </div>
 
-          {/* <button
-            type="submit"
-            className="
-            mt-2
-                    w-full
-                    px-6
-                    py-2.5
-                    bg-blue-600
-                    text-white
-                    font-medium
-                    text-xs
-                    leading-tight
-                    uppercase
-                    rounded
-                    shadow-md
-                    hover:bg-blue-700 hover:shadow-lg
-                    focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0
-                    active:bg-blue-800 active:shadow-lg
-                    transition
-                    duration-150
-                    ease-in-out">
-            Create
-          </button> */}
           <div className="flex justify-end ">
             <div className="flex justify-between mt-5 gap-5">
               <Button href="/admin/promo" color="success">
@@ -145,7 +115,7 @@ export default function CreatePromo() {
               </Button>
 
               <Button type="submit" name="submit" color="info">
-                Create
+                Save
               </Button>
             </div>
           </div>
@@ -153,4 +123,5 @@ export default function CreatePromo() {
       </div>
     </Layout>
   );
-}
+};
+export default editPromo;

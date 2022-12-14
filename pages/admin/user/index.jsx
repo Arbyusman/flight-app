@@ -1,6 +1,7 @@
 import Layout from "../../../components/admin/Layout";
 import { Table } from "flowbite-react";
 import React, { useState, useEffect } from "react";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 //import ListUser from "../../../components/admin/user/listUser"
 
 export default function User() {
@@ -52,12 +53,12 @@ export default function User() {
                   <Table.Cell>{users.photo}</Table.Cell>
                   <Table.Cell>{users.phone}</Table.Cell>
                   <Table.Cell>
-                    <div>
-                      <a href="/tables" className="font-medium text-blue-600 hover:underline dark:text-blue-500">
-                        Edit
+                    <div className="flex justify-between">
+                      <a href="/admin/createPromo" className="w-5 h-5  font-medium text-green-600 hover:underline ">
+                        <FaEdit />
                       </a>
-                      <a href="/tables" className="mx-5 font-medium text-blue-600 hover:underline dark:text-blue-500">
-                        Edit
+                      <a href="/tables" className="font-medium text-red-600 hover:underline ">
+                        <FaTrashAlt />
                       </a>
                     </div>
                   </Table.Cell>
