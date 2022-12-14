@@ -9,15 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.4",
+    "@headlessui/react": "^1.7.5",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
     "flowbite": "^1.5.4",
-    "flowbite-react": "^0.3.5",
+    "flowbite-react": "^0.3.7",
     "js-cookie": "3.0.1",
     "next": "13.0.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.7.1",
     "react-slideshow-image": "^4.0.5",
     "swiper": "^8.4.5"
   },

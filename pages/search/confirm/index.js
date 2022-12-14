@@ -1,7 +1,7 @@
 
 import { NavbarComponent, Footer, ConfirmBooking } from "../../../components"
 
-export default function login() {
+export default function Confirm() {
   return (
     <div>
       <NavbarComponent />
