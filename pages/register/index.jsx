@@ -22,7 +22,6 @@ export default function Register() {
   }
 
   async function doRegister(e) {
-    // e.preventDefault();
 
 
     const req = await fetch('https://beckend-takeoff-production.up.railway.app/api/v1/register',
