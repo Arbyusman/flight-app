@@ -44,7 +44,6 @@ export default function UserProfile() {
   }, []);
 
   async function handelUpdate() {
-
     setSaveLoading(true);
 
     const body = new FormData();
@@ -107,52 +106,40 @@ export default function UserProfile() {
     );
   } else {
     return (
-      <div className=" flex justify-center mt-5  ">
+      <div className="justify-center items-center flex-row">
         {!editProfile ? (
-          <div className="w-full mx-3 rounded-md md:w-1/2 items-center shadow-xl bg-white">
-            <div className="flex shadow-md w-full ">
-              <button className=" rounded-md ml-5 ">
-                <p className="text-lg font-bold text-black px-3 py-3 flex items-center justify-center gap-2">
-                  {" "}
-                  {/* <RiUser3Line className="text-green-500" /> */}
-                  Profile
-                </p>
-              </button>
+          <div className="w-full">
+            <div className="flex justify-center items-center">
+              <div className="w-full md:w-2/3 flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
+                <div className="text-gray-700">
+                  <h1 className="font-semibold tracking-wide antialiased text-lg">
+                    Profile
+                  </h1>
+                </div>
+                <div className="gap-2 flex items-center justify-center "></div>
+              </div>
+              <hr></hr>
             </div>
-            <hr></hr>
 
-            <div className="mt-5 md:mx-5 ">
-              <div className="justify-center items-start flex gap-4 my-6">
-                <div className="w-2/3 shadow-md ">
-                  <div className="flex flex-col justify-center py-5 items-center">
+            <div className=" flex justify-center items-center ">
+              <div className="md:w-2/3 w-96  bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-7 md:flex flex-row justify-center ">
+                <div className="lg:w-2/3 md:w-full flex justify-center ">
+                  <figure className="flex-row w-full  justify-center py-5 ">
                     <img
-                      className="h-32 w-32 rounded-full shadow-sm "
+                      class="max-w-full h-auto rounded-lg "
                       src={user.photo}
                       alt="image profil"
                     />
-                    <p className="text-xs">{user.username}</p>
-                    <p className="text-xs">{user.email}</p>
-                  </div>
+                    <figcaption class="mt-1 text-center text-gray-700 text-lg ">
+                      {user.username}
+                    </figcaption>
+
+                    <figcaption class="mt-1 text-center text-gray-700 text-lg ">
+                      {user.email}
+                    </figcaption>
+                  </figure>
                 </div>
-                <div className="w-full shadow-md">
-                  {/* <div className="flex w-full px-4 ">
-                  <div className="my-1 w-full">
-                    <label
-                      htmlFor="username"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Username
-                    </label>
-                    <input
-                      type="text"
-                      id="username"
-                      className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="John"
-                      value={user.username}
-                      disabled
-                    />
-                  </div>
-                </div> */}
+                <div className="w-full ">
                   <div className="flex w-full px-4 ">
                     <div className="my-1 w-full">
                       <label
@@ -164,7 +151,7 @@ export default function UserProfile() {
                       <input
                         type="text"
                         id="first_name"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John Doe"
                         value={`${user.firstName}  ${user.lastName}`}
                         disabled
@@ -182,7 +169,7 @@ export default function UserProfile() {
                       <input
                         type="text"
                         id="first_name"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John"
                         value={user.firstName}
                         disabled
@@ -198,7 +185,7 @@ export default function UserProfile() {
                       <input
                         type="text"
                         id="last_name"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="Doe"
                         value={user.lastName}
                         disabled
@@ -217,28 +204,12 @@ export default function UserProfile() {
                       <input
                         type="phone"
                         id="phone"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="+628222"
                         value={user.phone}
                         disabled
                       />
                     </div>
-                    {/* <div className="my-1 w-full">
-                    <label
-                      htmlFor="email"
-                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="Email"
-                      id="email"
-                      className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                      placeholder="John@mail.com"
-                      value={user.email}
-                      disabled
-                    />
-                  </div> */}
                   </div>
                   <div className="flex w-full px-4 ">
                     <div className="my-1 w-full">
@@ -276,34 +247,22 @@ export default function UserProfile() {
           </div>
         ) : (
           // edit profile
-          <div className="w-full mx-3 rounded-md md:w-1/2 items-center shadow-xl bg-white">
-            <div className="flex shadow-md w-full ">
-              <button className=" rounded-md ml-5 ">
-                <p className="text-lg font-bold text-black px-3 py-3 flex items-center justify-center gap-2">
-                  {" "}
-                  {/* <RiUser3Line className="text-green-500" /> */}
-                  Profile
-                </p>
-              </button>
-            </div>
-            <hr></hr>
-
-            <div className="mt-5 md:mx-5">
-              <div className="justify-center items-start flex gap-4 my-6">
-                {/* <div className="w-2/3 shadow-md ">
-                <div className="flex flex-col justify-center py-5 items-center">
-                  <Image
-                    class="h-32 w-32 rounded-full shadow-sm "
-                    src={imageProfil}
-                    alt="image profil"
-                  />
-                  <p className="font-medium text-lg ">John Doe</p>
-                  <p className="text-xs">username</p>
-                  <p className="text-xs">johndoe@mail.com</p>
+          <div className="w-full">
+            <div className="flex justify-center items-center">
+              <div className="md:w-2/3 flex w-full bg-white rounded-md mt-5 justify-between shadow-md p-7">
+                <div className="text-gray-700">
+                  <h1 className="font-semibold tracking-wide antialiased text-lg">
+                    Edit Profile
+                  </h1>
                 </div>
-              </div> */}
+              </div>
+              <hr></hr>
+            </div>
+
+            <div className="gap-2 flex items-center justify-center ">
+              <div className="md:w-2/3 flex bg-white rounded-md mt-5 justify-center shadow-md p-7">
                 <div className="w-full">
-                  <div className="flex w-full px-4 gap-4">
+                  <div className="flex-row md:flex w-full px-4 gap-4">
                     <div className="my-1 w-full">
                       <label
                         htmlFor="username"
@@ -314,9 +273,8 @@ export default function UserProfile() {
                       <input
                         type="text"
                         id="username"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block w-full p-2 text-gray-800   rounded-sm border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
                         placeholder="John"
-                        // onChange={(e) => setUsername(e.target.value)}
                         value={user.username}
                         disabled
                       />
@@ -331,16 +289,15 @@ export default function UserProfile() {
                       <input
                         type="text"
                         id="username"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        className="block w-full p-2 text-gray-800   rounded-sm border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
                         placeholder="John"
-                        // onChange={(e) => setEmail(e.target.value)}
                         value={user.email}
                         disabled
                       />
                     </div>
                   </div>
 
-                  <div className="flex w-full px-4  gap-4">
+                  <div className="flex-row md:flex   w-full px-4  gap-4">
                     <div className="my-1 w-full">
                       <label
                         htmlFor="first_name"
@@ -351,8 +308,8 @@ export default function UserProfile() {
                       <input
                         type="text"
                         id="first_name"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="John"
+                        className="block w-full p-2 text-gray-800   rounded-sm border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
+                        placeholder={user.firstName}
                         onChange={(e) => setfirstName(e.target.value)}
                         value={firstName}
                       />
@@ -367,15 +324,15 @@ export default function UserProfile() {
                       <input
                         type="text"
                         id="last_name"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Doe"
+                        className="block w-full p-2 text-gray-800    border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
+                        placeholder={user.lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         value={lastName}
                       />
                     </div>
                   </div>
 
-                  <div className="flex w-full px-4  gap-4">
+                  <div className="flex-row md:flex w-full px-4  gap-4">
                     <div className="my-1 w-full">
                       <label
                         htmlFor="phone"
@@ -386,8 +343,8 @@ export default function UserProfile() {
                       <input
                         type="phone"
                         id="phone"
-                        className="bg-gray-50 border w-full border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="+628222"
+                        className="block w-full p-2 text-gray-800    border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
+                        placeholder={user.phone}
                         onChange={(e) => setPhone(e.target.value)}
                         value={phone}
                       />
@@ -400,12 +357,11 @@ export default function UserProfile() {
                         Upload photo
                       </label>
                       <input
-                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-sm cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none "
                         aria-describedby="file_input_help"
                         id="file_input"
                         type="file"
                         onChange={(e) => setPhoto(e.target.files[0])}
-                        // value={photo}
                       />
                       <p
                         className="mt-1 text-sm text-gray-500 dark:text-gray-300"
@@ -418,16 +374,16 @@ export default function UserProfile() {
                   <div className="flex w-full px-4 ">
                     <div className="my-1 w-full">
                       <label
-                        htmlFor="message"
-                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        htmlFor="address"
+                        className="block mb-2 text-sm font-medium text-gray-900 bg-gray-50  "
                       >
                         Address
                       </label>
                       <textarea
-                        id="message"
+                        id="address"
                         rows="4"
-                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="adress here"
+                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-0 focus:border-black "
+                        placeholder={user.address}
                         onChange={(e) => setAddress(e.target.value)}
                         value={address}
                       ></textarea>
