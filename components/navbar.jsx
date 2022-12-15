@@ -17,6 +17,7 @@ import { data } from "autoprefixer";
 
 export default function NavbarComponent() {
   const router = useRouter();
+  const currentRoute = router.pathname;
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
@@ -203,14 +204,24 @@ export default function NavbarComponent() {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <Navbar.Link href="/" active={true}>
+        <Navbar.Link href="/" active={currentRoute === "/" ? true : false}>
           Home
         </Navbar.Link>
-        <Navbar.Link href="/">About Us</Navbar.Link>
-        <Navbar.Link href="/">Airline</Navbar.Link>
-        <Navbar.Link href="/">Flight</Navbar.Link>
-        <Navbar.Link href="/promo">Promo</Navbar.Link>
-        <Navbar.Link href="/">Contact Us</Navbar.Link>
+        <Navbar.Link
+          href="/"
+          active={currentRoute === "/about-us" ? true : false}
+        >
+          About Us
+        </Navbar.Link>
+        {/* <Navbar.Link href="/">Airline</Navbar.Link> */}
+        {/* <Navbar.Link href="/" active={}>Flight</Navbar.Link> */}
+        <Navbar.Link
+          href="/promo"
+          active={currentRoute === "/promo" ? true : false}
+        >
+          Promo
+        </Navbar.Link>
+        {/* <Navbar.Link href="/" active={}>Contact Us</Navbar.Link> */}
       </Navbar.Collapse>
     </Navbar>
   );

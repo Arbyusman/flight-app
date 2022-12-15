@@ -50,15 +50,21 @@ export default function SearcResult() {
       <div className="flex justify-center ">
         <div className="lg:w-2/3 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-7">
           <div className="flex-row mx-4 md:mx-0 md:flex items-center  justify-between ">
-            <Image className="w-16 flex " src={logoMaskapai} />
+            <Image
+              className="w-16 flex "
+              src={logoMaskapai}
+              alt="Gambar Maskapai"
+              width={100}
+              height={100}
+            />
             <div className="flex items-center gap-4 lg:gap-16 my-1  lg:my-0">
               <p>9 :30</p>
               <IoMdArrowRoundForward />
               <p>11 :30</p>
-              <p className="flex items-center gap-1">
+              <div className="flex items-center gap-1">
                 <AiOutlineFieldTime className="text-red-700 text-lg" />
                 <p>2h 0m</p>
-              </p>
+              </div>
             </div>
             <p className="flex gap-1 items-center my-1 lg:my-0">
               <MdOutlineLuggage className="text-lg text-blue-700" />
