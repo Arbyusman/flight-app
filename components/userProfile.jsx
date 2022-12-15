@@ -45,6 +45,9 @@ export default function UserProfile() {
 
   async function handelUpdate() {
     setSaveLoading(true);
+    setTimeout(() => {
+      setSaveLoading(false);
+    }, 2500);
 
     const body = new FormData();
     body.append("firstName", firstName);
@@ -53,7 +56,7 @@ export default function UserProfile() {
     body.append("photo", photo);
     body.append("address", address);
 
-    const id = localStorage.getItem("id");
+    const id = user.id;
     const token = localStorage.getItem("token");
     const response = await fetch(
       `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
@@ -68,10 +71,6 @@ export default function UserProfile() {
     ).catch((err) => {
       throw err;
     });
-
-    setTimeout(() => {
-      setSaveLoading(false);
-    }, 1500);
 
     const data = await response.json();
 
