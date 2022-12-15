@@ -23,7 +23,7 @@ export default function ResultFlight() {
     <div className="justify-center items-center flex-row">
       {/* title */}
       <div className="flex justify-center items-center ">
-        <div className="lg:w-9/12 w-full flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
+        <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
           <div className="text-gray-700">
             <h1 className="font-semibold tracking-wide antialiased text-lg">
               Penerbangan keberangkatan ke bandara makassar
