@@ -8,7 +8,6 @@ export default function History() {
   const router = useRouter();
 
   useEffect(() => {
-    whoami();
     const tokenprofile = localStorage.getItem("token");
     if (!tokenprofile) router.push("/login");
 
