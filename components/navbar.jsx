@@ -233,6 +233,7 @@ export default function NavbarComponent() {
                 inline={true}
                 label={
                   <Avatar
+                    fetchpriority="high"
                     alt="User settings"
                     img={imageProfile}
                     rounded={true}

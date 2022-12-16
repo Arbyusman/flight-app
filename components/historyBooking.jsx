@@ -19,7 +19,7 @@ export default function HistoryBooking() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState([]);
 
   const [loading, setLoading] = useState(true);
 

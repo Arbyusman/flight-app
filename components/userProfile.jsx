@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Avatar } from "flowbite-react";
 
-import { Modal } from "flowbite-react";
 import { FaUserEdit } from "react-icons/fa";
 import { BsTrash } from "react-icons/bs";
 import { BiSave } from "react-icons/bi";
@@ -11,6 +11,8 @@ export default function UserProfile() {
 
   const [editProfile, setEditProfile] = useState(false);
 
+
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setfirstName] = useState("");
@@ -35,7 +37,7 @@ export default function UserProfile() {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("data", data);
+        setId(data.data.id)
         setEmail(data.data.email);
         setUsername(data.data.username);
         setfirstName(data.data.firstName);
@@ -67,7 +69,6 @@ export default function UserProfile() {
     body.append("photo", photo);
     body.append("address", address);
 
-    const id = user.id;
     const token = localStorage.getItem("token");
     const response = await fetch(
       `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
@@ -89,10 +90,9 @@ export default function UserProfile() {
     const data = await response.json();
 
     if (data.status === "OK") {
-      setPhoto(data.data.photo);
       setEditProfile(false);
+      setPhoto(data.data.photo);
     }
-
   }
 
   if (loading) {
@@ -136,19 +136,32 @@ export default function UserProfile() {
             <div className=" flex justify-center items-center ">
               <div className="md:w-2/3 w-96  bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-7 md:flex flex-row justify-center ">
                 <div className="lg:w-2/3 md:w-full flex justify-center ">
-                  <figure className="flex-row w-full  justify-center py-5 ">
-                    <img
-                      fetchpriority="high"
-                      className="max-w-full h-auto rounded-lg "
-                      src={photo}
-                      alt="image profil"
-                    />
-                    <figcaption className="mt-1 text-center text-gray-700 text-lg ">
-                      {firstName}
-                    </figcaption>
-
+                  <figure className="flex-row w-full items-center justify-center py-5 ">
+                    {photo === null ? (
+                      <div className="flex justify-center w-full">
+                        <img
+                          fetchpriority="high"
+                          className="max-w-full lg:w-60 h-auto rounded-lg "
+                          src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                          alt="image profil"
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex justify-center w-full">
+                      <img
+                        fetchpriority="high"
+                        className="max-w-full lg:w-60 h-auto rounded-lg "
+                        src={photo}
+                        alt="image profil"
+                      />
+                    </div>
+                    )}
                     <figcaption className="mt-1 text-center text-gray-700 text-lg ">
                       {username}
+                    </figcaption>
+
+                    <figcaption className="mt-1 text-center text-gray-700 text-sm ">
+                      {email}
                     </figcaption>
                   </figure>
                 </div>
