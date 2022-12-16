@@ -10,10 +10,9 @@ export default function UserProfile() {
   const router = useRouter();
 
   const [editProfile, setEditProfile] = useState(false);
-  const [user, setUser] = useState({});
 
-  const [email, setEmail] = useState(user.email);
-  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [firstName, setfirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -24,10 +23,8 @@ export default function UserProfile() {
 
   const [saveLoading, setSaveLoading] = useState(false);
 
-  useEffect(() => {
+  const whoami = () => {
     const token = localStorage.getItem("token");
-    if (!token) router.push("/login");
-
     fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
       method: "GET",
       headers: {
@@ -38,8 +35,22 @@ export default function UserProfile() {
       .then((res) => res.json())
 
       .then((data) => {
-        setUser(data.data);
+        console.log("data", data);
+        setEmail(data.data.email);
+        setUsername(data.data.username);
+        setfirstName(data.data.firstName);
+        setLastName(data.data.lastName);
+        setAddress(data.data.address);
+        setPhoto(data.data.photo);
+        setPhone(data.data.phone);
       });
+  };
+
+  useEffect(() => {
+    whoami();
+    const token = localStorage.getItem("token");
+    if (!token) router.push("/login");
+
     setLoading(false);
   }, []);
 
@@ -64,7 +75,6 @@ export default function UserProfile() {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
-          // "Content-Type": "multipart/form-data",
         },
         body: body,
       }
@@ -72,13 +82,17 @@ export default function UserProfile() {
       throw err;
     });
 
+    setTimeout(() => {
+      setSaveLoading(false);
+    }, 2000);
+
     const data = await response.json();
 
     if (data.status === "OK") {
+      setPhoto(data.data.photo);
       setEditProfile(false);
     }
 
-    console.log("status", data);
   }
 
   if (loading) {
@@ -87,7 +101,7 @@ export default function UserProfile() {
         {" "}
         <svg
           role="status"
-          class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+          className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +129,6 @@ export default function UserProfile() {
                     Profile
                   </h1>
                 </div>
-                <div className="gap-2 flex items-center justify-center "></div>
               </div>
               <hr></hr>
             </div>
@@ -125,16 +138,17 @@ export default function UserProfile() {
                 <div className="lg:w-2/3 md:w-full flex justify-center ">
                   <figure className="flex-row w-full  justify-center py-5 ">
                     <img
-                      class="max-w-full h-auto rounded-lg "
-                      src={user.photo}
+                      fetchpriority="high"
+                      className="max-w-full h-auto rounded-lg "
+                      src={photo}
                       alt="image profil"
                     />
-                    <figcaption class="mt-1 text-center text-gray-700 text-lg ">
-                      {user.username}
+                    <figcaption className="mt-1 text-center text-gray-700 text-lg ">
+                      {firstName}
                     </figcaption>
 
-                    <figcaption class="mt-1 text-center text-gray-700 text-lg ">
-                      {user.email}
+                    <figcaption className="mt-1 text-center text-gray-700 text-lg ">
+                      {username}
                     </figcaption>
                   </figure>
                 </div>
@@ -152,7 +166,7 @@ export default function UserProfile() {
                         id="first_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John Doe"
-                        value={`${user.firstName}  ${user.lastName}`}
+                        value={`${firstName}${lastName}`}
                         disabled
                       />
                     </div>
@@ -170,7 +184,7 @@ export default function UserProfile() {
                         id="first_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John"
-                        value={user.firstName}
+                        value={firstName}
                         disabled
                       />
                     </div>
@@ -186,7 +200,7 @@ export default function UserProfile() {
                         id="last_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="Doe"
-                        value={user.lastName}
+                        value={lastName}
                         disabled
                       />
                     </div>
@@ -205,7 +219,7 @@ export default function UserProfile() {
                         id="phone"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="+628222"
-                        value={user.phone}
+                        value={phone}
                         disabled
                       />
                     </div>
@@ -223,7 +237,7 @@ export default function UserProfile() {
                         rows="4"
                         className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="adress here"
-                        value={user.address}
+                        value={address}
                         disabled
                       ></textarea>
                     </div>
@@ -274,7 +288,7 @@ export default function UserProfile() {
                         id="username"
                         className="block w-full p-2 text-gray-800   rounded-sm border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
                         placeholder="John"
-                        value={user.username}
+                        value={username}
                         disabled
                       />
                     </div>
@@ -290,7 +304,7 @@ export default function UserProfile() {
                         id="username"
                         className="block w-full p-2 text-gray-800   rounded-sm border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
                         placeholder="John"
-                        value={user.email}
+                        value={email}
                         disabled
                       />
                     </div>
@@ -308,7 +322,6 @@ export default function UserProfile() {
                         type="text"
                         id="first_name"
                         className="block w-full p-2 text-gray-800   rounded-sm border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
-                        placeholder={user.firstName}
                         onChange={(e) => setfirstName(e.target.value)}
                         value={firstName}
                       />
@@ -324,7 +337,6 @@ export default function UserProfile() {
                         type="text"
                         id="last_name"
                         className="block w-full p-2 text-gray-800    border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
-                        placeholder={user.lastName}
                         onChange={(e) => setLastName(e.target.value)}
                         value={lastName}
                       />
@@ -343,7 +355,6 @@ export default function UserProfile() {
                         type="phone"
                         id="phone"
                         className="block w-full p-2 text-gray-800    border-gray-300 border-2   text-base  focus:bg-gray-50   focus:border-black focus:ring-0 focus:shadow-none"
-                        placeholder={user.phone}
                         onChange={(e) => setPhone(e.target.value)}
                         value={phone}
                       />
@@ -382,7 +393,6 @@ export default function UserProfile() {
                         id="address"
                         rows="4"
                         className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-0 focus:border-black "
-                        placeholder={user.address}
                         onChange={(e) => setAddress(e.target.value)}
                         value={address}
                       ></textarea>
@@ -409,7 +419,7 @@ export default function UserProfile() {
                         {saveLoading && (
                           <svg
                             role="status"
-                            class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+                            className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
                             viewBox="0 0 100 101"
                             fill="none"
                             xmlns="http://www.w3.org/2000/svg"

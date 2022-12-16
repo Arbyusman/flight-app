@@ -5,7 +5,6 @@ import { IoAirplaneOutline } from "react-icons/io5";
 import { MdOutlineLuggage } from "react-icons/md";
 import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
-import { BsHeartFill } from "react-icons/bs";
 import Image from "next/image";
 import logoMaskapai from "../public/images/lion_air.png";
 
