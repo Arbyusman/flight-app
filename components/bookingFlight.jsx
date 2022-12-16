@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { BsPerson } from "react-icons/bs";
+import { IoIosTimer } from "react-icons/io";
+import { MdOutlineLuggage } from "react-icons/md";
+import { BiJoystick } from "react-icons/bi";
+import { GiBackpack } from "react-icons/gi";
 
 BsPerson;
 
@@ -138,16 +142,32 @@ export default function BookingFlight() {
                           <option value="Ms">Ms</option>
                         </select>
                       </div>
+                    </div>
+                    <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
                       <div className="lg:w-52">
                         <label
-                          for="name"
+                          for="first_name"
                           class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
                         >
-                          Full Name
+                          First Name
                         </label>
                         <input
                           type="text"
-                          id="name"
+                          id="first_name"
+                          class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                          required
+                        />
+                      </div>
+                      <div className="lg:w-52">
+                        <label
+                          for="last_name"
+                          class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                        >
+                          Last Name
+                        </label>
+                        <input
+                          type="text"
+                          id="last_name"
                           class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                           required
                         />
@@ -183,12 +203,30 @@ export default function BookingFlight() {
                         />
                       </div>
                     </div>
+                    <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
+                      
+                      <div className="lg:w-52">
+                        <label
+                          for="id_card"
+                          class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                          required
+                        >
+                          Phone
+                        </label>
+                        <input
+                          type="text"
+                          id="id_card"
+                          class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
         {/* tiket Detail */}
         <div className="w-full  md:w-full lg:w-4/12">
           <div className="w-full md:justify-between ">
@@ -200,23 +238,58 @@ export default function BookingFlight() {
               </div>
               <hr />
               <div className="p-7">
-                <div className="font-semibold gap-5 my-2 text-base flex justify-between">
-                  <div className="flex items-center gap-2 ">
-                    <p>Depart</p>
-                    <p>KDI</p>
-                    <IoAirplaneOutline />
-                    <p>UPG</p>
-                  </div>
-                  <p>RP 678.000</p>
+                <div className="flex justify-between md:flex-row text-sm font-thin my-1">
+                  <p>Depart Flight</p>
+                  <p>Sat, 17 December 2022</p>
                 </div>
-                <div className="flex justify-between text-sm font-thin my-1">
-                  <p>Adult x 1</p>
-                  <p>RP 678.000</p>
+                <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
+                  <p>Lion Air</p>
+                  <p>JT991</p>
                 </div>
                 <hr />
-                <div className="flex justify-between text-lg font-bold tracking-wider my-2">
-                  <p>total Price</p>
-                  <p>RP 678.000</p>
+                <div className=" items-center gap-2 text-gray-600 tracking-wide antialiased">
+                  <div className="flex gap-4 items-center">
+                    <div>
+                      <p className="font-bold text-xl">10 : 30</p>
+                      <p className="text-sm">9 Dec 2022</p>
+                    </div>
+                    <div className="w-36 lg:w-40 ">
+                      <p className="text-md font-semibold">Kendari ( KDI )</p>
+                      <p className="text-sm">Haluoleo Airport</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2 my-2 items-center">
+                    <IoIosTimer />
+                    <p> 1h:0m</p>
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <div>
+                      <p className="font-bold text-xl">11 : 30</p>
+                      <p className="text-sm">9 Dec 2022</p>
+                    </div>
+                    <div className=" w-36 lg:w-40">
+                      <p className="text-md font-semibold">Makassar ( UPG ) </p>
+                      <p className="text-sm">
+                        Sultan Hasanuddin International Airport
+                      </p>
+                    </div>
+                  </div>
+                  <hr></hr>
+
+                  <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm ">
+                    <div className="flex gap-3 items-center my-1 ">
+                      <GiBackpack className="" />
+                      <p>Cabin Baggage 7kg</p>
+                    </div>
+                    <div className="flex gap-3 items-center my-1">
+                      <MdOutlineLuggage className="t" />
+                      <p>Baggage 20kg</p>
+                    </div>
+                    <div className="flex gap-3 items-center my-1">
+                      <BiJoystick className="" />
+                      <p>Entertainment</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
