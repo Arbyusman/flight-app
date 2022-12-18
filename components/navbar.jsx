@@ -99,7 +99,7 @@ export default function NavbarComponent() {
   }
 
   return (
-    <Navbar fluid={true} rounded={true} className="sticky top-0 z-10">
+    <Navbar  rounded={true} className="sticky top-0 z-10">
       <Navbar.Brand href="/">
         <Image src={LogoImage} className="mr-3 h-12 w-16" alt="TakeOff Logo" />
       </Navbar.Brand>

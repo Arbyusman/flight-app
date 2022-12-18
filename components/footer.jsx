@@ -41,7 +41,12 @@ export default function Footer() {
           <h2 className=" text-gray-700 font-semibold rounded">Account</h2>
           <ul className="text-gray-600 ">
             <li className="">
-              <a href="#" className=" text-gray-600 md:p-0">
+              <a href="/login" className=" text-gray-600 md:p-0">
+                Login
+              </a>
+            </li>
+            <li className="">
+              <a href="/register" className=" text-gray-600 md:p-0">
                 Register
               </a>
             </li>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Avatar } from "flowbite-react";
+import Link from "next/link";
 
 import { FaUserEdit } from "react-icons/fa";
 import { BsTrash } from "react-icons/bs";
+
 import { BiSave } from "react-icons/bi";
+import { HiArrowSmLeft } from "react-icons/hi";
 import { useRouter } from "next/router";
 
 export default function UserProfile() {
@@ -57,7 +59,7 @@ export default function UserProfile() {
 
   async function handelUpdate() {
     setSaveLoading(true);
-    
+
     setTimeout(() => {
       setSaveLoading(false);
     }, 2500);
@@ -129,6 +131,13 @@ export default function UserProfile() {
                     Profile
                   </h1>
                 </div>
+                <Link
+                  href="/"
+                  className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1"
+                >
+                  <HiArrowSmLeft className="text-xl" />
+                  <span>Back</span>
+                </Link>
               </div>
               <hr></hr>
             </div>
