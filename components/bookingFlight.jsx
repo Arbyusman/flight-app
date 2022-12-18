@@ -6,8 +6,6 @@ import { MdOutlineLuggage } from "react-icons/md";
 import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
 
-BsPerson;
-
 export default function BookingFlight() {
   return (
     <div className="justify-center items-center flex">
@@ -24,74 +22,95 @@ export default function BookingFlight() {
 
           {/* form contact information */}
           <div className="flex justify-center  ">
-            <div className="w-full gap-5  bg-white   shadow-md p-7">
-              <div className="lg:flex w-full lg:justify-start lg:items-center lg:gap-10">
-                <div className="lg:w-52">
-                  <label
-                    for="title"
-                    class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                  >
-                    Title
-                  </label>
+            <div className="w-full gap-5  bg-white  flex justify-center  items-center shadow-md p-7">
+              <div className="w-11/12">
+                <div className="md:flex w-full md:justify-center md:items-center md:gap-10">
+                  <div className="md:w-40">
+                    <label
+                      htmlFor="title"
+                      className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                    >
+                      Title
+                    </label>
 
-                  <select
-                    id="title"
-                    label="Select"
-                    color="gray"
-                    className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none"
-                    required
-                  >
-                    <option disabled hidden>
-                      Select
-                    </option>
-                    <option value="Mr">Mr</option>
-                    <option value="Mrs">Mrs</option>
-                    <option value="Ms">Ms</option>
-                  </select>
+                    <select
+                      id="title"
+                      label="Select"
+                      color="gray"
+                      className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none"
+                      required
+                    >
+                      <option disabled hidden>
+                        Select
+                      </option>
+                      <option value="Mr">Mr</option>
+                      <option value="Mrs">Mrs</option>
+                      <option value="Ms">Ms</option>
+                    </select>
+                  </div>
+                  <div className="md:w-full">
+                    <label
+                      htmlFor="name"
+                      className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                    >
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                      required
+                      placeholder="ex. Joh Doe"
+                    />
+                  </div>
                 </div>
-                <div className="lg:w-52">
-                  <label
-                    for="name"
-                    class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                  >
-                    Full Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                    required
-                  />
+                <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                  <div className="md:w-full">
+                    <label
+                      htmlFor="email"
+                      className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                      required
+                      placeholder="ex. johndoe@gmail.com"
+                    />
+                  </div>
+                  <div className="md:w-full">
+                    <label
+                      htmlFor="phone"
+                      className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                      required
+                    >
+                      Phone
+                    </label>
+                    <input
+                      type="phone"
+                      id="phone"
+                      className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
+                      placeholder="ex. +622-8888-2222"
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
-                <div className="lg:w-52">
-                  <label
-                    for="email"
-                    class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                  >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                    required
-                  />
-                </div>
-                <div className="lg:w-52">
-                  <label
-                    for="phone"
-                    class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                    required
-                  >
-                    Phone
-                  </label>
-                  <input
-                    type="phone"
-                    id="phone"
-                    class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
-                  />
+                <div className="md:flex w-full md:justify-start md:mt-2 md:items-center">
+                  <div className="my-1 w-full">
+                    <label
+                      htmlFor="address"
+                      className="block mb-2 text-sm font-medium text-gray-900 bg-gray-50  "
+                    >
+                      Address
+                    </label>
+                    <textarea
+                      id="address"
+                      rows="4"
+                      className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-0 focus:border-black "
+                      placeholder="ex. kendari"
+                    ></textarea>
+                  </div>
                 </div>
               </div>
             </div>
@@ -107,8 +126,8 @@ export default function BookingFlight() {
           <div className="flex justify-center  ">
             <div className="w-full gap-5  bg-white    shadow-md p-7">
               {/* card traveler */}
-              <div className="rounded-md shadow-lg bg-slate-50 m-2">
-                <div className="w-full  bg-white rounded-t-md flex-row md:flex justify-start items-center gap-3 shadow-md p-7">
+              <div className="w-full rounded-md md:shadow-lg bg-slate-50 m-2">
+                <div className="w-full  bg-white rounded-t-md flex md:flex justify-start items-center gap-3 md:shadow-md md:p-7">
                   <BsPerson className="text-2xl font-bold  text-gray-700 " />
                   <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700">
                     Traveler 1
@@ -117,107 +136,110 @@ export default function BookingFlight() {
 
                 {/* form contact information */}
                 <div className="flex justify-center  ">
-                  <div className="w-full gap-5  bg-white border-t-2   shadow-md p-7">
-                    <div className="lg:flex w-full lg:justify-start lg:items-center lg:gap-10">
-                      <div className="lg:w-52">
-                        <label
-                          for="title"
-                          class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                        >
-                          Title
-                        </label>
+                  <div className="w-full gap-5  bg-white border-t-2 flex justify-center  md:shadow-md md:p-7">
+                    <div className="md:w-11/12 w-full">
+                      <div className="md:flex w-full md:justify-start md:items-center md:gap-10">
+                        <div className="md:w-40">
+                          <label
+                            htmlFor="title"
+                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                          >
+                            Title
+                          </label>
 
-                        <select
-                          id="title"
-                          label="Select"
-                          color="gray"
-                          className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none"
-                          required
-                        >
-                          <option disabled hidden>
-                            Select
-                          </option>
-                          <option value="Mr">Mr</option>
-                          <option value="Mrs">Mrs</option>
-                          <option value="Ms">Ms</option>
-                        </select>
+                          <select
+                            id="title"
+                            label="Select"
+                            color="gray"
+                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none"
+                            required
+                          >
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Ms">Ms</option>
+                          </select>
+                        </div>
                       </div>
-                    </div>
-                    <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
-                      <div className="lg:w-52">
-                        <label
-                          for="first_name"
-                          class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                        >
-                          First Name
-                        </label>
-                        <input
-                          type="text"
-                          id="first_name"
-                          class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                          required
-                        />
+                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                        <div className="md:w-full">
+                          <label
+                            htmlFor="first_name"
+                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                          >
+                            First Name
+                          </label>
+                          <input
+                            type="text"
+                            id="first_name"
+                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                            placeholder="ex. john"
+                            required
+                          />
+                        </div>
+                        <div className="md:w-full">
+                          <label
+                            htmlFor="last_name"
+                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                          >
+                            Last Name
+                          </label>
+                          <input
+                            type="text"
+                            id="last_name"
+                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                            required
+                            placeholder="ex. Doe"
+                          />
+                        </div>
                       </div>
-                      <div className="lg:w-52">
-                        <label
-                          for="last_name"
-                          class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                        >
-                          Last Name
-                        </label>
-                        <input
-                          type="text"
-                          id="last_name"
-                          class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                          required
-                        />
+                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                        <div className="md:w-full">
+                          <label
+                            htmlFor="email"
+                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                          >
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            id="email"
+                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                            placeholder="ex. johndoe@gmail.com"
+                            required
+                          />
+                        </div>
+                        <div className="md:w-full">
+                          <label
+                            htmlFor="phone"
+                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                            required
+                          >
+                            Phone
+                          </label>
+                          <input
+                            type="phone"
+                            id="phone"
+                            placeholder="ex. +62-8888-2222"
+                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
-                      <div className="lg:w-52">
-                        <label
-                          for="email"
-                          class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                        >
-                          Email
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                          required
-                        />
-                      </div>
-                      <div className="lg:w-52">
-                        <label
-                          for="phone"
-                          class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                          required
-                        >
-                          Phone
-                        </label>
-                        <input
-                          type="phone"
-                          id="phone"
-                          class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
-                        />
-                      </div>
-                    </div>
-                    <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
-                      
-                      <div className="lg:w-52">
-                        <label
-                          for="id_card"
-                          class="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                          required
-                        >
-                          Phone
-                        </label>
-                        <input
-                          type="text"
-                          id="id_card"
-                          class="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
-                        />
+                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                        <div className="md:w-[47%]">
+                          <label
+                            htmlFor="id_card"
+                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                            required
+                          >
+                            ID Card
+                          </label>
+                          <input
+                            type="text"
+                            id="id_card"
+                            placeholder="ex. 74012222000022"
+                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -247,13 +269,13 @@ export default function BookingFlight() {
                   <p>JT991</p>
                 </div>
                 <hr />
-                <div className=" items-center gap-2 text-gray-600 tracking-wide antialiased">
-                  <div className="flex gap-4 items-center">
+                <div className="flex justify-center lg:block  items-center gap-2 text-gray-600 tracking-wide my-3 antialiased">
+                  <div className="flex  gap-4 items-center">
                     <div>
                       <p className="font-bold text-xl">10 : 30</p>
                       <p className="text-sm">9 Dec 2022</p>
                     </div>
-                    <div className="w-36 lg:w-40 ">
+                    <div className="w-36 lg:w-52 ">
                       <p className="text-md font-semibold">Kendari ( KDI )</p>
                       <p className="text-sm">Haluoleo Airport</p>
                     </div>
@@ -267,28 +289,27 @@ export default function BookingFlight() {
                       <p className="font-bold text-xl">11 : 30</p>
                       <p className="text-sm">9 Dec 2022</p>
                     </div>
-                    <div className=" w-36 lg:w-40">
+                    <div className=" w-36 lg:w-52">
                       <p className="text-md font-semibold">Makassar ( UPG ) </p>
                       <p className="text-sm">
                         Sultan Hasanuddin International Airport
                       </p>
                     </div>
                   </div>
+                </div>
+                <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
                   <hr></hr>
-
-                  <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm ">
-                    <div className="flex gap-3 items-center my-1 ">
-                      <GiBackpack className="" />
-                      <p>Cabin Baggage 7kg</p>
-                    </div>
-                    <div className="flex gap-3 items-center my-1">
-                      <MdOutlineLuggage className="t" />
-                      <p>Baggage 20kg</p>
-                    </div>
-                    <div className="flex gap-3 items-center my-1">
-                      <BiJoystick className="" />
-                      <p>Entertainment</p>
-                    </div>
+                  <div className="flex gap-3 items-center my-1 ">
+                    <GiBackpack className="" />
+                    <p>Cabin Baggage 7kg</p>
+                  </div>
+                  <div className="flex gap-3 items-center my-1">
+                    <MdOutlineLuggage className="t" />
+                    <p>Baggage 20kg</p>
+                  </div>
+                  <div className="flex gap-3 items-center my-1">
+                    <BiJoystick className="" />
+                    <p>Entertainment</p>
                   </div>
                 </div>
               </div>
@@ -323,14 +344,16 @@ export default function BookingFlight() {
                 </div>
               </div>
             </div>
-            <a href="confirm/book">
-              <button
-                type="button"
-                class="focus:outline-none lg:w-full mt-2 text-white bg-red-700 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-semibold antialiased tracking-wide rounded-md text-md  px-5 py-2.5 mr-2 mb-2 "
-              >
-                Continue Booking
-              </button>
-            </a>
+            <div className="flex justify-center items-center">
+              <a href="confirm/book">
+                <button
+                  type="button"
+                  className="focus:outline-none lg:w-full mt-2 text-white bg-red-700 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-semibold antialiased tracking-wide rounded-md text-md  px-5 py-2.5 mr-2 mb-2 "
+                >
+                  Continue Booking
+                </button>
+              </a>
+            </div>
           </div>
         </div>
       </div>

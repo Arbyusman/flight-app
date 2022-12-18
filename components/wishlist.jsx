@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Card, Dropdown } from "flowbite-react";
-import {
-  IoMdArrowRoundForward,
-  IoIosArrowDropdown,
-  IoIosTimer,
-} from "react-icons/io";
+import { IoIosArrowDropdown, IoIosTimer } from "react-icons/io";
 import { MdOutlineLuggage } from "react-icons/md";
-import { AiOutlineFieldTime } from "react-icons/ai";
+import { HiArrowSmLeft } from "react-icons/hi";
 import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
+import Link from "next/link";
 import Image from "next/image";
 import logoMaskapai from "../public/images/lion_air.png";
 
@@ -47,13 +43,21 @@ export default function Wishlist() {
       {/* title */}
       <div className="flex justify-center items-center">
         <div className="lg:w-9/12 md:w-11/12 w-full flex-row  bg-white rounded-md mt-5 justify-between shadow-md p-7">
-          <div className="text-gray-700">
-            <h1 className="font-semibold tracking-wide antialiased text-lg">
-              Wishlist
-            </h1>
-            <p className="text-sm">jumlah Wishlist</p>
+          <div className="text-gray-700 flex justify-between items-center">
+            <div className="flex-row">
+              <h1 className="font-semibold tracking-wide antialiased text-lg">
+                Wishlist
+              </h1>
+              <p className="text-sm">jumlah Wishlist</p>
+            </div>
+            <Link
+              href="/"
+              className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1"
+            >
+              <HiArrowSmLeft className="text-xl" />
+              <span>Back</span>
+            </Link>
           </div>
-          <div className="gap-2 flex items-center justify-center "></div>
         </div>
       </div>
       {/* end title */}

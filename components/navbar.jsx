@@ -7,7 +7,7 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
-
+import { BsArrowLeftSquare } from "react-icons/bs";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
@@ -99,11 +99,13 @@ export default function NavbarComponent() {
   }
 
   return (
-    <Navbar fluid={true} rounded={true} className="sticky top-0 z-10">
+    <Navbar rounded={true} className="sticky top-0 z-10  ">
+      <Navbar.Toggle className="" />
+
       <Navbar.Brand href="/">
         <Image src={LogoImage} className="mr-3 h-12 w-16" alt="TakeOff Logo" />
       </Navbar.Brand>
-      <div className="flex md:order-2">
+      <div className="flex md:order-2 ">
         <div>
           <Button
             className={isLoggedIn ? "hidden" : ""}
@@ -223,11 +225,15 @@ export default function NavbarComponent() {
                   <Link href={`wishlist/${id}`}>Wishlist</Link>
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={handleLogout}
+                  className="justify-center items-center flex gap-2"
+                >
+                  <BsArrowLeftSquare />
+                  <span>Sign out</span>
+                </Dropdown.Item>
               </Dropdown>
             ) : (
-              // }
-              // {imageProfile  &&
               <Dropdown
                 arrowIcon={false}
                 inline={true}
@@ -237,7 +243,7 @@ export default function NavbarComponent() {
                     alt="User settings"
                     img={imageProfile}
                     rounded={true}
-                    className="border border-gray-400 rounded-full"
+                    className="border border-gray-400 rounded-full shadow-md "
                   />
                 }
               >
@@ -257,14 +263,19 @@ export default function NavbarComponent() {
                   <Link href={`/wishlist/${id}`}>Wishlist</Link>
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={handleLogout}
+                  className="justify-center items-center flex gap-2"
+                >
+                  <BsArrowLeftSquare />
+                  <span>Sign out</span>
+                </Dropdown.Item>
               </Dropdown>
             )}
           </div>
         </div>
-        <Navbar.Toggle />
       </div>
-      <Navbar.Collapse>
+      <Navbar.Collapse className="">
         <Navbar.Link href="/" active={true}>
           Home
         </Navbar.Link>
