@@ -100,6 +100,8 @@ export default function NavbarComponent() {
 
   return (
     <Navbar rounded={true} className="sticky top-0 z-10  ">
+      <Navbar.Toggle className="" />
+
       <Navbar.Brand href="/">
         <Image src={LogoImage} className="mr-3 h-12 w-16" alt="TakeOff Logo" />
       </Navbar.Brand>
@@ -272,7 +274,6 @@ export default function NavbarComponent() {
             )}
           </div>
         </div>
-        <Navbar.Toggle />
       </div>
       <Navbar.Collapse className="">
         <Navbar.Link href="/" active={true}>

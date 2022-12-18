@@ -24,8 +24,8 @@ export default function BookingFlight() {
           <div className="flex justify-center  ">
             <div className="w-full gap-5  bg-white  flex justify-center  items-center shadow-md p-7">
               <div className="w-11/12">
-                <div className="lg:flex w-full lg:justify-center lg:items-center lg:gap-10">
-                  <div className="lg:w-40">
+                <div className="md:flex w-full md:justify-center md:items-center md:gap-10">
+                  <div className="md:w-40">
                     <label
                       htmlFor="title"
                       className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -48,7 +48,7 @@ export default function BookingFlight() {
                       <option value="Ms">Ms</option>
                     </select>
                   </div>
-                  <div className="lg:w-full">
+                  <div className="md:w-full">
                     <label
                       htmlFor="name"
                       className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -64,8 +64,8 @@ export default function BookingFlight() {
                     />
                   </div>
                 </div>
-                <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
-                  <div className="lg:w-full">
+                <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                  <div className="md:w-full">
                     <label
                       htmlFor="email"
                       className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -80,7 +80,7 @@ export default function BookingFlight() {
                       placeholder="ex. johndoe@gmail.com"
                     />
                   </div>
-                  <div className="lg:w-full">
+                  <div className="md:w-full">
                     <label
                       htmlFor="phone"
                       className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -96,7 +96,7 @@ export default function BookingFlight() {
                     />
                   </div>
                 </div>
-                <div className="lg:flex w-full lg:justify-start lg:mt-2 lg:items-center">
+                <div className="md:flex w-full md:justify-start md:mt-2 md:items-center">
                   <div className="my-1 w-full">
                     <label
                       htmlFor="address"
@@ -126,8 +126,8 @@ export default function BookingFlight() {
           <div className="flex justify-center  ">
             <div className="w-full gap-5  bg-white    shadow-md p-7">
               {/* card traveler */}
-              <div className="rounded-md shadow-lg bg-slate-50 m-2">
-                <div className="w-full  bg-white rounded-t-md flex-row md:flex justify-start items-center gap-3 shadow-md p-7">
+              <div className="w-full rounded-md md:shadow-lg bg-slate-50 m-2">
+                <div className="w-full  bg-white rounded-t-md flex md:flex justify-start items-center gap-3 md:shadow-md md:p-7">
                   <BsPerson className="text-2xl font-bold  text-gray-700 " />
                   <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700">
                     Traveler 1
@@ -136,10 +136,10 @@ export default function BookingFlight() {
 
                 {/* form contact information */}
                 <div className="flex justify-center  ">
-                  <div className="w-full gap-5  bg-white border-t-2 flex justify-center  shadow-md md:p-7">
+                  <div className="w-full gap-5  bg-white border-t-2 flex justify-center  md:shadow-md md:p-7">
                     <div className="md:w-11/12 w-full">
-                      <div className="lg:flex w-full lg:justify-start lg:items-center lg:gap-10">
-                        <div className="lg:w-40">
+                      <div className="md:flex w-full md:justify-start md:items-center md:gap-10">
+                        <div className="md:w-40">
                           <label
                             htmlFor="title"
                             className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -160,8 +160,8 @@ export default function BookingFlight() {
                           </select>
                         </div>
                       </div>
-                      <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
-                        <div className="lg:w-full">
+                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                        <div className="md:w-full">
                           <label
                             htmlFor="first_name"
                             className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -176,7 +176,7 @@ export default function BookingFlight() {
                             required
                           />
                         </div>
-                        <div className="lg:w-full">
+                        <div className="md:w-full">
                           <label
                             htmlFor="last_name"
                             className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -192,8 +192,8 @@ export default function BookingFlight() {
                           />
                         </div>
                       </div>
-                      <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
-                        <div className="lg:w-full">
+                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                        <div className="md:w-full">
                           <label
                             htmlFor="email"
                             className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -208,7 +208,7 @@ export default function BookingFlight() {
                             required
                           />
                         </div>
-                        <div className="lg:w-full">
+                        <div className="md:w-full">
                           <label
                             htmlFor="phone"
                             className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -224,8 +224,8 @@ export default function BookingFlight() {
                           />
                         </div>
                       </div>
-                      <div className="lg:flex w-full lg:justify-start lg:gap-10 lg:mt-2 lg:items-center">
-                        <div className="lg:w-[47%]">
+                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                        <div className="md:w-[47%]">
                           <label
                             htmlFor="id_card"
                             className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -269,8 +269,8 @@ export default function BookingFlight() {
                   <p>JT991</p>
                 </div>
                 <hr />
-                <div className=" items-center gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                  <div className="flex gap-4 items-center">
+                <div className="flex justify-center lg:block  items-center gap-2 text-gray-600 tracking-wide my-3 antialiased">
+                  <div className="flex  gap-4 items-center">
                     <div>
                       <p className="font-bold text-xl">10 : 30</p>
                       <p className="text-sm">9 Dec 2022</p>
