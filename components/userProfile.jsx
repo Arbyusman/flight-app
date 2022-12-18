@@ -414,7 +414,7 @@ export default function UserProfile() {
                       <textarea
                         id="address"
                         rows="4"
-                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-0 focus:border-black "
+                        className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-0 focus:border-black "
                         onChange={(e) => setAddress(e.target.value)}
                         value={address}
                       ></textarea>

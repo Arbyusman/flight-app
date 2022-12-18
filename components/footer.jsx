@@ -1,19 +1,20 @@
 import Image from "next/image";
 import googlePlayImage from "../public/images/google-play-badge.png";
 import LogoImage from "../public/images/TakeOff.png";
+import Link from "next/link";
 
 export default function Footer() {
   return (
     <footer className="bg-white px-2 sm:px-4 py-2.5 rounded sm:justify-center mt-12 mb-7">
       <div className="container lg:flex lg:flex-wrap  justify-between mx-auto sm:grid sm:grid-cols-2 sm:grid-rows-1">
         <div className="mb-6 md:mb-0 sm:mb-2">
-          <a href="#" className="flex items-center">
+          <Link href="#" className="flex items-center">
             <Image
               src={LogoImage}
               className="mr-3 h-16 w-20"
               alt="TakeOff Logo"
             />
-          </a>
+          </Link>
         </div>
         <div className="mt-2 ">
           <h2 className=" text-gray-700 font-semibold rounded ">
@@ -21,9 +22,9 @@ export default function Footer() {
           </h2>
           <ul className="text-gray-600">
             <li className="">
-              <a href="#" className=" text-gray-600 md:p-0 ">
+              <Link href="#" className=" text-gray-600 md:p-0 ">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
               <a href="" className=" text-gray-600 md:p-0 ">
@@ -41,21 +42,21 @@ export default function Footer() {
           <h2 className=" text-gray-700 font-semibold rounded">Account</h2>
           <ul className="text-gray-600 ">
             <li className="">
-              <a href="/login" className=" text-gray-600 md:p-0">
+              <Link href="/login" className=" text-gray-600 md:p-0">
                 Login
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a href="/register" className=" text-gray-600 md:p-0">
+              <Link href="/register" className=" text-gray-600 md:p-0">
                 Register
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
         <div className=" mt-2">
           <h2 className=" text-gray-700 font-semibold rounded">Follow us</h2>
           <div className="flex mt-1 space-x-4 sm:justify-start ">
-            <a href="#" className="text-blue-700 hover:text-blue-800">
+            <Link href="#" className="text-blue-700 hover:text-blue-800">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -69,8 +70,8 @@ export default function Footer() {
                 />
               </svg>
               <span className="sr-only">Facebook page</span>
-            </a>
-            <a href="#" className="text-red-600 hover:text-red-700">
+            </Link>
+            <Link href="#" className="text-red-600 hover:text-red-700">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -84,8 +85,8 @@ export default function Footer() {
                 />
               </svg>
               <span className="sr-only">Instagram page</span>
-            </a>
-            <a href="#" className="text-blue-600 hover:text-blue-700">
+            </Link>
+            <Link href="#" className="text-blue-600 hover:text-blue-700">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -95,8 +96,8 @@ export default function Footer() {
                 <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
               </svg>
               <span className="sr-only">Twitter page</span>
-            </a>
-            <a href="#" className="text-gray-700 hover:text-black">
+            </Link>
+            <Link href="#" className="text-gray-700 hover:text-black">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -110,8 +111,8 @@ export default function Footer() {
                 />
               </svg>
               <span className="sr-only">GitHub account</span>
-            </a>
-            <a href="#" className="text-gray-700  hover:text-black">
+            </Link>
+            <Link href="#" className="text-gray-700  hover:text-black">
               <svg
                 className="w-5 h-5"
                 fill="currentColor"
@@ -125,7 +126,7 @@ export default function Footer() {
                 />
               </svg>
               <span className="sr-only">Dribbbel account</span>
-            </a>
+            </Link>
           </div>
         </div>
         <div className="mt-3">
@@ -134,13 +135,13 @@ export default function Footer() {
           </h2>
           <ul className="text-gray-600">
             <li className="">
-              <a href="#" className=" text-gray-600 md:p-0">
+              <Link href="#" className=" text-gray-600 md:p-0">
                 <Image
                   src={googlePlayImage}
                   alt="Get on Google Play logo"
                   width={100}
                 />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
