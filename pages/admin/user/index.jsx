@@ -8,7 +8,7 @@ export default function User() {
   const router = useRouter();
 
   const [users, setUser] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
