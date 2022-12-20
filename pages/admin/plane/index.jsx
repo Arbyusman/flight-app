@@ -8,7 +8,7 @@ import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import React, { useEffect, useState } from "react";
 
-export default function Ticket() {
+export default function Plane() {
   const [plane, setPlane] = useState([]);
 
   useEffect(() => {

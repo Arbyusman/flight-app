@@ -13,10 +13,17 @@ export default function User() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
+    handelGetUsers();
+   
+    setLoading(false);
+  }, []);
+
+
+  const handelGetUsers = () => {
+    const token = localStorage.getItem("token");
+    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/users`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     })
@@ -24,10 +31,9 @@ export default function User() {
 
       .then((data) => {
         setUser(data.data.users);
-        console.log(data.data);
+        console.log("users",data.data)
       });
-    setLoading(false);
-  }, []);
+  };
 
   if (loading) {
     return (
