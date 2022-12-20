@@ -86,7 +86,7 @@ const SearchFlightForm = () => {
               <path
                 fillRule="evenodd"
                 d="M5 9a7 7 0 1114 0c0 5.25-7 13-7 13S5 14.25 5 9zm4.5 0a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z"
-                clipRule="evenodd"
+                clip-rule="evenodd"
               />
             </svg>
           </svg>
@@ -118,7 +118,7 @@ const SearchFlightForm = () => {
               <path
                 fillRule="evenodd"
                 d="M5 9a7 7 0 1114 0c0 5.25-7 13-7 13S5 14.25 5 9zm4.5 0a2.5 2.5 0 105 0 2.5 2.5 0 00-5 0z"
-                clipRule="evenodd"
+                clip-rule="evenodd"
               />
             </svg>
           </svg>
@@ -139,7 +139,7 @@ const SearchFlightForm = () => {
               <path
                 fillRule="evenodd"
                 d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 00-1.99 2L3 19a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm0 5v11H5V8h14zm-7 2H7v5h5v-5z"
-                clipRule="evenodd"
+                clip-rule="evenodd"
               />
             </svg>
           </svg>
@@ -160,7 +160,7 @@ const SearchFlightForm = () => {
               <path
                 fillRule="evenodd"
                 d="M19 3h-1V1h-2v2H8V1H6v2H5a2 2 0 00-1.99 2L3 19a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm0 5v11H5V8h14zm-7 2H7v5h5v-5z"
-                clipRule="evenodd"
+                clip-rule="evenodd"
               />
             </svg>
           </svg>
@@ -169,9 +169,6 @@ const SearchFlightForm = () => {
             <p className="text-lg">Feb 13</p>
           </div>
         </div>
-        <button className="mx-2 bg-blue-600 rounded-xl drop-shadow">
-          <p className="p-3 text-lg text-white">Search</p>
-        </button>
       </div>
     </div>
   );

@@ -5,8 +5,9 @@ import { IoIosTimer } from "react-icons/io";
 import { MdOutlineLuggage } from "react-icons/md";
 import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
+import { Button } from "flowbite-react";
 
-export default function BookingFlight() {
+export default function ConfirmFlight() {
   return (
     <div className="justify-center items-center flex">
       <div className="lg:flex mt-5 gap-3 w-full md:w-11/12 lg:w-9/12 flex-row ">
@@ -336,6 +337,10 @@ export default function BookingFlight() {
                 <div className="flex justify-between text-sm font-thin my-1">
                   <p>Adult x 1</p>
                   <p>RP 678.000</p>
+                </div>
+                <div className="flex justify-between text-sm font-thin my-1">
+                  <input></input>
+                  <Button></Button>
                 </div>
                 <hr />
                 <div className="flex justify-between text-lg font-bold tracking-wider my-2">
