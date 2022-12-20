@@ -14,7 +14,7 @@ import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
 import { Transition, Popover } from "@headlessui/react";
-import { BiBell, BiCheck } from "react-icons/bi";
+import { BiBell } from "react-icons/bi";
 
 export default function NavbarComponent() {
   const router = useRouter();
