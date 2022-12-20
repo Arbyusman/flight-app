@@ -11,10 +11,24 @@ import React, { useEffect, useState } from "react";
 
 export default function Ticket() {
   const [ticket, setTicket] = useState([]);
+  const [flight, setFlight] = useState([]);
 
   useEffect(() => {
     getListTicket();
+    handelGetFlight();
   }, []);
+
+  const handelGetFlight = () => {
+    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/flight`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setFlight(data.data.data);
+        console.log("data flight", data.data);
+      });
+  };
 
   const getListTicket = () => {
     fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/ticket`, {
@@ -24,14 +38,17 @@ export default function Ticket() {
 
       .then((data) => {
         setTicket(data.data);
-        //console.log("datahere", data);
+        console.log("datahere", data);
       });
   };
 
   const handleDelete = (id) => {
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/ticket/${id}`, {
-      method: "DELETE",
-    }).catch((err) => {
+    fetch(
+      `https://beckend-takeoff-production.up.railway.app/api/v1/ticket/${id}`,
+      {
+        method: "DELETE",
+      }
+    ).catch((err) => {
       throw err;
     });
 
@@ -92,17 +109,29 @@ export default function Ticket() {
             </Table.Head>
             <Table.Body className="divide-y">
               {ticket.map((ticket) => (
-                <Table.Row key={ticket.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{ticket.flight_id}</Table.Cell>
+                <Table.Row
+                  key={ticket.id}
+                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                >
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    {ticket.flight_id}
+                  </Table.Cell>
                   <Table.Cell>{ticket.type}</Table.Cell>
                   <Table.Cell>Rp. {ticket.price}</Table.Cell>
                   <Table.Cell>{ticket.desc}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a href={`/admin/ticket/edit/${ticket.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
+                      <a
+                        href={`/admin/ticket/edit/${ticket.id}`}
+                        className="w-5 h-5  font-medium text-green-600 hover:underline "
+                      >
                         <FaEdit />
                       </a>
-                      <button onClick={() => handleDelete(ticket.id)} type="button" className="font-medium text-red-600 hover:underline gap-20 ">
+                      <button
+                        onClick={() => handleDelete(ticket.id)}
+                        type="button"
+                        className="font-medium text-red-600 hover:underline gap-20 "
+                      >
                         <FaTrashAlt />
                       </button>
                     </div>

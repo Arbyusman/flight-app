@@ -12,6 +12,10 @@ export default function Flight() {
   const [flight, setFlight] = useState([]);
 
   useEffect(() => {
+    handelGetFlight();
+  }, []);
+
+  const handelGetFlight = () => {
     fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/flight`, {
       method: "GET",
     })
@@ -19,9 +23,10 @@ export default function Flight() {
 
       .then((data) => {
         setFlight(data.data.data);
-        console.log("datahere", data);
+        console.log("data flight", data);
       });
-  }, []);
+  };
+
   return (
     <Layout>
       <div className="mt-10">
@@ -78,18 +83,29 @@ export default function Flight() {
             </Table.Head>
             <Table.Body className="divide-y">
               {flight.map((flight) => (
-                <Table.Row key={flight.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{flight.plane_id}</Table.Cell>
-                  <Table.Cell>{flight.from_airport_id}</Table.Cell>
-                  <Table.Cell>{flight.to_airport_id}</Table.Cell>
+                <Table.Row
+                  key={flight.id}
+                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                >
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    {flight.Plane.name}
+                  </Table.Cell>
+                  <Table.Cell>{flight.from.name}</Table.Cell>
+                  <Table.Cell>{flight.to.name}</Table.Cell>
                   <Table.Cell>{flight.arrival_time}</Table.Cell>
                   <Table.Cell>{flight.depature}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a href={`/admin/flight/edit/${flight.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
+                      <a
+                        href={`/admin/flight/edit/${flight.id}`}
+                        className="w-5 h-5  font-medium text-green-600 hover:underline "
+                      >
                         <FaEdit />
                       </a>
-                      <a href="/tables" className="font-medium text-red-600 hover:underline gap-20 ">
+                      <a
+                        href="/tables"
+                        className="font-medium text-red-600 hover:underline gap-20 "
+                      >
                         <FaTrashAlt />
                       </a>
                     </div>
