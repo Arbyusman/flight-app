@@ -1,11 +1,11 @@
 
-import { NavbarComponent,Footer,BookingFlight } from "../../../../components";
+import { NavbarComponent,Footer,ConfirmFlight } from "../../../../components";
 
 export default function Book() {
   return (
     <div>
       <NavbarComponent />
-      <BookingFlight/>
+      <ConfirmFlight/>
       <Footer />
     </div>
   );

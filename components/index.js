@@ -13,11 +13,9 @@ import Layout from "./admin/Layout";
 
 import HistoryBooking from "./historyBooking";
 import ResultFlight from "./searchResult";
-import ConfirmBooking from "./confirmBooking";
+import FlightBooking from "./flightBooking";
 import Wishlist from "./wishlist";
-import BookingFlight from "./bookingFlight";
-
-
+import ConfirmFlight from "./confirmFlight";
 
 export {
   NavbarComponent,
@@ -31,9 +29,9 @@ export {
   SideBar,
   HistoryBooking,
   ResultFlight,
-  ConfirmBooking,
+  FlightBooking,
   Wishlist,
   Carousel,
   SearchForm,
-  BookingFlight,
+  ConfirmFlight,
 };

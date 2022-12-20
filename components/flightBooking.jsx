@@ -8,7 +8,7 @@ import { GiBackpack } from "react-icons/gi";
 import Image from "next/image";
 import logoMaskapai from "../public/images/lion_air.png";
 
-export default function ConfirmBooking() {
+export default function FlightBooking() {
   return (
     <div className="justify-center items-center flex">
       <div className="lg:flex mt-5 gap-3 w-full md:w-11/12 lg:w-9/12 flex-row ">
@@ -91,7 +91,6 @@ export default function ConfirmBooking() {
                     <p>Entertainment</p>
                   </div>
                 </div>
-               
               </div>
             </div>
           </div>
@@ -99,7 +98,7 @@ export default function ConfirmBooking() {
         {/* Price Detail */}
         <div className="w-full  md:w-full lg:w-4/12">
           <div className="w-full md:justify-between ">
-          <div className=" items-center justify-between flex-row shadow-md lg:pb-8 pt-4 bg-white rounded-sm text-gray-600 tracking-wide antialiased mb-2">
+            <div className=" items-center justify-between flex-row shadow-md lg:pb-8 pt-4 bg-white rounded-sm text-gray-600 tracking-wide antialiased mb-2">
               <div className="w-full   flex-row md:flex justify-between items-center px-7 py-2 lg:py-6">
                 <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700 ">
                   Price Detail
@@ -127,7 +126,7 @@ export default function ConfirmBooking() {
                 </div>
               </div>
             </div>
-            <a href="confirm/book" className="flex justify-center items-center">
+            <a href="flight/book" className="flex justify-center items-center">
               <button
                 type="button"
                 className="focus:outline-none lg:w-2/3 mt-2 text-white bg-red-700 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-semibold antialiased tracking-wide rounded-md text-md  px-5 py-2.5 mr-2 mb-2 "

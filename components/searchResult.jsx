@@ -64,10 +64,10 @@ export default function ResultFlight() {
               <IoMdArrowRoundForward />
               <p>11 :30</p>
               <div className="flex items-center gap-1">
-              <div className="flex items-center gap-1">
-                <AiOutlineFieldTime className="text-red-700 text-lg" />
-                <p>2h 0m</p>
-              </div>
+                <div className="flex items-center gap-1">
+                  <AiOutlineFieldTime className="text-red-700 text-lg" />
+                  <p>2h 0m</p>
+                </div>
               </div>
             </div>
             <p className="flex gap-1 items-center my-1 lg:my-0">
@@ -80,7 +80,7 @@ export default function ResultFlight() {
               <p>/Pax</p>
             </div>
             <div className="flex lg:gap-10 md:gap-3 justify-between">
-              <a href="search/confirm">
+              <a href="search/flight">
                 <button
                   type="button"
                   className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
