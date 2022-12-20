@@ -26,6 +26,14 @@ export default function UserProfile() {
 
   const [saveLoading, setSaveLoading] = useState(false);
 
+  useEffect(() => {
+    whoami();
+    const token = localStorage.getItem("token");
+    if (!token) router.push("/login");
+
+    setLoading(false);
+  }, []);
+
   const whoami = () => {
     const token = localStorage.getItem("token");
     fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
@@ -48,21 +56,8 @@ export default function UserProfile() {
         setPhone(data.data.phone);
       });
   };
-
-  useEffect(() => {
-    whoami();
-    const token = localStorage.getItem("token");
-    if (!token) router.push("/login");
-
-    setLoading(false);
-  }, []);
-
   async function handelUpdate() {
     setSaveLoading(true);
-
-    setTimeout(() => {
-      setSaveLoading(false);
-    }, 2500);
 
     const body = new FormData();
     body.append("firstName", firstName);
@@ -85,16 +80,14 @@ export default function UserProfile() {
       throw err;
     });
 
-    setTimeout(() => {
-      setSaveLoading(false);
-    }, 2000);
+    setSaveLoading(false);
 
     const data = await response.json();
 
     if (data.status === "OK") {
       setEditProfile(false);
-      setPhoto(data.data.photo);
     }
+    whoami();
   }
 
   if (loading) {

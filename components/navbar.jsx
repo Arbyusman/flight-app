@@ -13,6 +13,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
+import { Transition, Popover } from "@headlessui/react";
+import { BiBell, BiCheck } from "react-icons/bi";
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -24,14 +26,22 @@ export default function NavbarComponent() {
   const [err, setErr] = useState("");
   const [imageProfile, setImageProfile] = useState("");
 
+  const [notification, setNotification] = useState([]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [loginLoading, setLoginLoading] = useState(false);
 
   useEffect(() => {
+    whoami();
+    getNotifications();
     const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
 
+  const whoami = () => {
+    const token = localStorage.getItem("token");
     fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
       method: "GET",
       headers: {
@@ -40,20 +50,34 @@ export default function NavbarComponent() {
       },
     })
       .then((res) => res.json())
+
       .then((data) => {
         setId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
       });
+  };
 
-    setIsLoggedIn(!!token);
-  }, []);
+  const getNotifications = () => {
+    const token = localStorage.getItem("token");
+    fetch(
+      `https://beckend-takeoff-production.up.railway.app/api/v1/user/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+
+      .then((data) => {
+        setNotification(data.data);
+      });
+  };
 
   async function handelLogin() {
     setLoginLoading(true);
-    setTimeout(() => {
-      setLoginLoading(false);
-    }, 2500);
 
     const response = await fetch(
       "https://beckend-takeoff-production.up.railway.app/api/v1/login",
@@ -75,14 +99,18 @@ export default function NavbarComponent() {
 
     if (data.status === "OK" && data.data.role === "admin") {
       localStorage.setItem("token", data.data.token);
+      whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/admin");
+      setSaveLoading(false);
     } else if (data.status === "OK" && data.data.role === "buyer") {
       localStorage.setItem("token", data.data.token);
+      whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/");
+      setSaveLoading(false);
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
@@ -105,7 +133,55 @@ export default function NavbarComponent() {
       <Navbar.Brand href="/">
         <Image src={LogoImage} className="mr-3 h-12 w-16" alt="TakeOff Logo" />
       </Navbar.Brand>
-      <div className="flex md:order-2 ">
+      <div className="flex md:order-2 justify-center items-center ">
+        {/* Notification */}
+        <Popover className="relative justify-center items-center">
+          <Popover.Button className="outline-none mr-2 md:mr-3 cursor-pointer  ">
+            <BiBell className="h-6 w-6 text-gray-500 hover:text-gray-700 active:text-gray-700 focus:text-gray-700" />
+          </Popover.Button>
+          <Transition
+            enter="transition ease-out duration-100"
+            enterFrom="transform scale-95"
+            enterTo="transform scale-100"
+            leave="transition ease-in duration=75"
+            leaveFrom="transform scale-100"
+            leaveTo="transform scale-95"
+          >
+            <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
+              <div className="relative p-3">
+                <div className="flex justify-between items-center w-full">
+                  <p className="text-gray-700 font-medium text-base tracking-normal antialiased">
+                    Notifications
+                  </p>
+                  <button className="text-base text-orange-500" href="#">
+                    Mark all as read
+                  </button>
+                </div>
+                <hr></hr>
+                <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
+                  <div className="flex">
+                    {/* {notification.map((notification) => ( */}
+                    <div className="mx-2">
+                      <p className="font-medium text-sm text-gray-700">
+                        Notification Title
+                      </p>
+                      <p className="text-xs text-gray-500 text-justify w-full ">
+                        {/* {notification.message} */}
+                        Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. Quas ullam numquam maiores? Quaerat consequatur
+                        provident veritatis. Totam aperiam eaque facilis
+                        nesciunt tempora nihil et sit, libero voluptatum quo
+                        delectus excepturi!
+                      </p>
+                    </div>
+                    {/* ))} */}
+                  </div>
+                </div>
+              </div>
+            </Popover.Panel>
+          </Transition>
+        </Popover>
+        {/* profile */}
         <div>
           <Button
             className={isLoggedIn ? "hidden" : ""}
@@ -275,6 +351,7 @@ export default function NavbarComponent() {
           </div>
         </div>
       </div>
+
       <Navbar.Collapse className="">
         <Navbar.Link href="/" active={true}>
           Home

@@ -13,7 +13,7 @@ export default function User() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/users`, {
+    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
