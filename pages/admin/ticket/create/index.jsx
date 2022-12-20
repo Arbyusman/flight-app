@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../../../components/admin/Layout";
 import { Button } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 
 export default function CreatePromo() {
   const [field, setField] = useState({});
@@ -28,8 +29,10 @@ export default function CreatePromo() {
   }, []);
 
   const getListFlight = () => {
+    const token = localStorage.getItem("token");
     fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/flight`, {
       method: "GET",
+      Authorization: `Bearer ${token}`,
     })
       .then((res) => res.json())
 
@@ -41,6 +44,7 @@ export default function CreatePromo() {
 
   async function doCreate(e) {
     e.preventDefault();
+    const token = localStorage.getItem("token");
 
     const req = await fetch(
       "https://beckend-takeoff-production.up.railway.app/api/v1/ticket",
@@ -48,6 +52,7 @@ export default function CreatePromo() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(field),
       }
@@ -80,92 +85,125 @@ export default function CreatePromo() {
             <h5 className="text-2xl text-center">Form Create Ticket</h5>
           </div>
           <div className="mt-10">
-            <div className="relative">
-              {/* <input
-                type="text"
-                id="floating_outlined"
-                name="flight_id"
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                onChange={setValue}
-              /> */}
+            <div className="flex gap-5 justify-center items-center">
+              <div className="relative w-full">
+                <label
+                  for="flight_id"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Flight
+                </label>
 
-              <label
-                for="from"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
-                From
-              </label>
-
-              <select
-                id="from"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <option>-----</option>
-                {/* {flight.map((flight) => (
-                  <option value={flight.plane.name} key={flight.plane.id}>
-                    {flight.plane.name}
+                <select
+                  id="flight_id"
+                  name="flight_id"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={setValue}
+                >
+                  <option selected disabled>
+                    Choose a Flight
                   </option>
-                ))} */}
-              </select>
-            </div>
-            <div className="relative">
-              {/* <input
-                type="text"
-                id="floating_outlined"
-                name="flight_id"
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                onChange={setValue}
-              /> */}
+                  {flight.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      <div className="">
+                        <p>From :</p>
+                        <p> {item.from.name} </p>
+                      </div>
+                      <div>
+                        <p>To :</p>
+                        <p> {item.to.name} </p>
+                      </div>
+                      <div>
+                        <p>Arrival Time :</p>
+                        <p> {item.arrival_time} </p>
+                      </div>
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="relative w-full">
+                <label
+                  for="flight_id"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  one way
+                </label>
 
-              <label
-                for="to"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
-                To
-              </label>
-
-              <select
-                id="to"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <option>-----</option>
-                {/* {flight.map((flight) => (
-                  <option value={flight.plane.name} key={flight.plane.id}>
-                    {flight.plane.name}
+                <select
+                  id="flight_id"
+                  name="flight_id"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={setValue}
+                >
+                  <option selected disabled>
+                    Choose a Flight
                   </option>
-                ))} */}
-              </select>
+                  {flight.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      <div className="">
+                        <p>From :</p>
+                        <p> {item.from.name} </p>
+                      </div>
+                      <div>
+                        <p>To :</p>
+                        <p> {item.to.name} </p>
+                      </div>
+                      <div>
+                        <p>Arrival Time :</p>
+                        <p> {item.arrival_time} </p>
+                      </div>
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="relative w-full">
+                <label
+                  for="return_flight_id"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Round Trip
+                </label>
+
+                <select
+                  id="return_flight_id"
+                  name="return_flight_id"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={setValue}
+                >
+                  <option selected disabled>
+                    Choose a Flight
+                  </option>
+                  {flight.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      <div className="">
+                        <p>From :</p>
+                        <p> {item.from.name} </p>
+                      </div>
+                      <div>
+                        <p>To :</p>
+                        <p> {item.to.name} </p>
+                      </div>
+                      <div>
+                        <p>Arrival Time :</p>
+                        <p> {item.arrival_time} </p>
+                      </div>
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             <div className="relative mt-3">
               <input
                 type="text"
-                id="floating_outlined"
-                name="type"
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                onChange={setValue}
-              />
-              <label
-                for="floating_outlined"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
-                Type
-              </label>
-            </div>
-            <div className="relative mt-3">
-              <input
-                type="text"
-                id="floating_outlined"
+                id="price"
                 name="price"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 onChange={setValue}
               />
               <label
-                for="floating_outlined"
+                for="price"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
               >
                 Price
@@ -174,14 +212,30 @@ export default function CreatePromo() {
             <div className="relative mt-3">
               <input
                 type="text"
-                id="floating_outlined"
+                id="price"
+                name="price"
+                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+                onChange={setValue}
+              />
+              <label
+                for="price"
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              >
+                Price
+              </label>
+            </div>
+            <div className="relative mt-3">
+              <input
+                type="text"
+                id="desc"
                 name="desc"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
                 onChange={setValue}
               />
               <label
-                for="floating_outlined"
+                for="desc"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
               >
                 Description
