@@ -64,8 +64,10 @@ export default function ResultFlight() {
               <IoMdArrowRoundForward />
               <p>11 :30</p>
               <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1">
                 <AiOutlineFieldTime className="text-red-700 text-lg" />
                 <p>2h 0m</p>
+              </div>
               </div>
             </div>
             <p className="flex gap-1 items-center my-1 lg:my-0">

@@ -1,11 +1,10 @@
-
-import { NavbarComponent, Footer, ResultFlight } from "../../components";
+import { NavbarComponent, Footer, SearchResult } from "../../components";
 
 export default function Search() {
   return (
     <div>
       <NavbarComponent />
-      <ResultFlight/>
+      <SearchResult />
       <Footer />
     </div>
   );

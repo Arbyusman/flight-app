@@ -18,6 +18,7 @@ import { BiBell, BiCheck } from "react-icons/bi";
 
 export default function NavbarComponent() {
   const router = useRouter();
+  const currentRoute = router.pathname;
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -351,16 +352,25 @@ export default function NavbarComponent() {
           </div>
         </div>
       </div>
-
-      <Navbar.Collapse className="">
-        <Navbar.Link href="/" active={true}>
+      <Navbar.Collapse>
+        <Navbar.Link href="/" active={currentRoute === "/" ? true : false}>
           Home
         </Navbar.Link>
-        <Navbar.Link href="/">About Us</Navbar.Link>
-        <Navbar.Link href="/">Airline</Navbar.Link>
-        <Navbar.Link href="/">Flight</Navbar.Link>
-        <Navbar.Link href="/promo">Promo</Navbar.Link>
-        <Navbar.Link href="/">Contact Us</Navbar.Link>
+        <Navbar.Link
+          href="/"
+          active={currentRoute === "/about-us" ? true : false}
+        >
+          About Us
+        </Navbar.Link>
+        {/* <Navbar.Link href="/">Airline</Navbar.Link> */}
+        {/* <Navbar.Link href="/" active={}>Flight</Navbar.Link> */}
+        <Navbar.Link
+          href="/promo"
+          active={currentRoute === "/promo" ? true : false}
+        >
+          Promo
+        </Navbar.Link>
+        {/* <Navbar.Link href="/" active={}>Contact Us</Navbar.Link> */}
       </Navbar.Collapse>
     </Navbar>
   );
