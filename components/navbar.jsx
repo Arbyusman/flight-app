@@ -26,14 +26,22 @@ export default function NavbarComponent() {
   const [err, setErr] = useState("");
   const [imageProfile, setImageProfile] = useState("");
 
+  const [notification, setNotification] = useState([]);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [loginLoading, setLoginLoading] = useState(false);
 
   useEffect(() => {
+    whoami();
+    getNotifications();
     const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
 
+  const whoami = () => {
+    const token = localStorage.getItem("token");
     fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
       method: "GET",
       headers: {
@@ -42,14 +50,31 @@ export default function NavbarComponent() {
       },
     })
       .then((res) => res.json())
+
       .then((data) => {
         setId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
       });
+  };
 
-    setIsLoggedIn(!!token);
-  }, []);
+  const getNotifications = () => {
+    const token = localStorage.getItem("token");
+    fetch(
+      `https://beckend-takeoff-production.up.railway.app/api/v1/user/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+
+      .then((data) => {
+        setNotification(data.data);
+      });
+  };
 
   async function handelLogin() {
     setLoginLoading(true);
@@ -74,12 +99,14 @@ export default function NavbarComponent() {
 
     if (data.status === "OK" && data.data.role === "admin") {
       localStorage.setItem("token", data.data.token);
+      whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/admin");
       setSaveLoading(false);
     } else if (data.status === "OK" && data.data.role === "buyer") {
       localStorage.setItem("token", data.data.token);
+      whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/");
@@ -133,14 +160,21 @@ export default function NavbarComponent() {
                 <hr></hr>
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
                   <div className="flex">
-                    <div className="ml-4">
+                    {/* {notification.map((notification) => ( */}
+                    <div className="mx-2">
                       <p className="font-medium text-sm text-gray-700">
                         Notification Title
                       </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        Test Notification text for design
+                      <p className="text-xs text-gray-500 text-justify w-full ">
+                        {/* {notification.message} */}
+                        Lorem, ipsum dolor sit amet consectetur adipisicing
+                        elit. Quas ullam numquam maiores? Quaerat consequatur
+                        provident veritatis. Totam aperiam eaque facilis
+                        nesciunt tempora nihil et sit, libero voluptatum quo
+                        delectus excepturi!
                       </p>
                     </div>
+                    {/* ))} */}
                   </div>
                 </div>
               </div>
