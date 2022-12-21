@@ -1,4 +1,4 @@
-import { NavbarComponent, WhyUs, Footer, Banner, Carousel, SearchForm } from "../components";
+import { NavbarComponent, WhyUs, Footer, Banner, Carousel, SearchForm ,Airline} from "../components";
 
 export default function Home() {
   return (
@@ -10,6 +10,7 @@ export default function Home() {
       <SearchForm />
       <WhyUs />
       <Banner />
+      <Airline/>
       <Footer />
     </div>
   );
