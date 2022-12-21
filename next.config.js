@@ -5,5 +5,4 @@ const nextConfig = {
     domains: ["flowbite.com"],
   },
 };
-
 module.exports = nextConfig;

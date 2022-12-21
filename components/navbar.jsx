@@ -28,7 +28,7 @@ export default function NavbarComponent() {
   const [err, setErr] = useState("");
   const [imageProfile, setImageProfile] = useState("");
 
-  const [notification, setNotification] = useState([]);
+  const [notification, setNotification] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -161,13 +161,13 @@ export default function NavbarComponent() {
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
                   <div className="flex">
                     {/* {notification.map((notification) => ( */}
-                    {notification.map((item) => (
+                    {/* {notification.map((item) => (
                       <div key={item.id} className="mx-2">
                         <p className="text-xs text-gray-500 text-justify w-full ">
                           {item.message}
                         </p>
                       </div>
-                    ))}
+                    ))} */}
                     {/* ))} */}
                   </div>
                 </div>
