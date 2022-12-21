@@ -11,6 +11,11 @@ import React, { useEffect, useState } from "react";
 export default function Airport() {
   const [airport, setAirport] = useState([]);
 
+  
+  useEffect(() => {
+    handelGetAirport();
+  }, []);
+  
   const handelGetAirport = () => {
     const token = localStorage.getItem("token");
     fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/airport`, {
@@ -26,10 +31,7 @@ export default function Airport() {
         console.log("data airport", data.data);
       });
   };
-  useEffect(() => {
-    handelGetAirport();
-  }, []);
-
+  
   const handleDelete = (id) => {
     const token = localStorage.getItem("token");
     fetch(
@@ -86,12 +88,12 @@ export default function Airport() {
                   <Table.Cell>{item.country}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a
+                      <Link
                         href={`/admin/airport/edit/${item.id}`}
                         className="w-5 h-5  font-medium text-green-600 hover:underline "
                       >
                         <FaEdit />
-                      </a>
+                      </Link>
                       <button
                         onClick={() => handleDelete(item.id)}
                         type="button"

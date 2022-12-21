@@ -19,6 +19,7 @@ import { BiBell } from "react-icons/bi";
 export default function NavbarComponent() {
   const router = useRouter();
   const currentRoute = router.pathname;
+  
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -62,7 +63,7 @@ export default function NavbarComponent() {
   const getNotifications = () => {
     const token = localStorage.getItem("token");
     fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/user/${id}`,
+      `https://beckend-takeoff-production.up.railway.app/api/v1/notification/${id}`,
       {
         method: "PUT",
         headers: {
@@ -74,6 +75,7 @@ export default function NavbarComponent() {
 
       .then((data) => {
         setNotification(data.data);
+        console.log("notif", data.data);
       });
   };
 
@@ -150,31 +152,22 @@ export default function NavbarComponent() {
           >
             <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
               <div className="relative p-3">
-                <div className="flex justify-between items-center w-full">
-                  <p className="text-gray-700 font-medium text-base tracking-normal antialiased">
+                <div className="flex justify-center items-center w-full">
+                  <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
                     Notifications
                   </p>
-                  <button className="text-base text-orange-500" href="#">
-                    Mark all as read
-                  </button>
                 </div>
                 <hr></hr>
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
                   <div className="flex">
                     {/* {notification.map((notification) => ( */}
-                    <div className="mx-2">
-                      <p className="font-medium text-sm text-gray-700">
-                        Notification Title
-                      </p>
-                      <p className="text-xs text-gray-500 text-justify w-full ">
-                        {/* {notification.message} */}
-                        Lorem, ipsum dolor sit amet consectetur adipisicing
-                        elit. Quas ullam numquam maiores? Quaerat consequatur
-                        provident veritatis. Totam aperiam eaque facilis
-                        nesciunt tempora nihil et sit, libero voluptatum quo
-                        delectus excepturi!
-                      </p>
-                    </div>
+                    {notification.map((item) => (
+                      <div key={item.id} className="mx-2">
+                        <p className="text-xs text-gray-500 text-justify w-full ">
+                          {item.message}
+                        </p>
+                      </div>
+                    ))}
                     {/* ))} */}
                   </div>
                 </div>

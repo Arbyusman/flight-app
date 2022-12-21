@@ -421,7 +421,7 @@ export default function UserProfile() {
                       <p className="text-lg font-bold text-white  px-3 py-3 flex items-center justify-center gap-2">
                         {" "}
                         <BsTrash className="text-white" />
-                        Batal
+                        Back
                       </p>
                     </button>
                     <button
