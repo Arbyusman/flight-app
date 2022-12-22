@@ -1,29 +1,26 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../../../components/admin/Layout";
 import { Button } from "flowbite-react";
 
-const editPromo = () => {
+export default function EditFlight() {
   const router = useRouter();
   const { id } = router.query;
 
   const [name, setName] = useState();
-  const [code, setCode] = useState();
-  const [description, setDescription] = useState();
-  const [discount, setDiscount] = useState();
-  const [photo, setPhoto] = useState();
+  const [city, setCity] = useState();
+  const [country, setCountry] = useState();
 
   useEffect(() => {
     if (!id) {
       return;
     }
-    handleGetPromo();
+    handelGetAirport();
   }, [router.isReady]);
 
-  const handleGetPromo = () => {
+  const handelGetAirport = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/promo/${id}`, {
+    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,55 +29,52 @@ const editPromo = () => {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("promo", data.data);
+        console.log("airport", data.data);
         setName(data.data.name);
-        setCode(data.data.code);
-        setDescription(data.data.description);
-        setDiscount(data.data.discount);
-        setPhoto(data.data.photo);
+        setCity(data.data.city);
+        setCountry(data.data.country);
       });
   };
 
-  async function handleUpdate() {
-    const body = new FormData();
-    body.append("name", name);
-    body.append("code", code);
-    body.append("description", description);
-    body.append("discount", discount);
-    body.append("photo", photo);
-
+  async function handelUpdate() {
     const token = localStorage.getItem("token");
-    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/promo/${id}`, {
+    const response = await fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport/${id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-      body: body,
+      body: JSON.stringify({
+        name,
+        city,
+        country,
+      }),
     }).catch((err) => {
       throw err;
     });
 
     const data = await response.json();
 
+    console.log("data update", data.status);
+
     if (data.status === "OK") {
-      alert("data berhasil di ubah");
-      router.push("/admin/promo");
+      alert("data bershail di ubah");
+      router.push("/admin/airport");
     }
   }
 
   return (
     <Layout>
       <div className="mt-10 block p-6 rounded-lg shadow-lg bg-white w-5/6 mx-auto">
-        <div className="w-100">
+        <div className="w-100" method="PUT">
           <div className="font-bold ">
-            <h5 className="text-2xl text-center">Form Edit Promo</h5>
+            <h5 className="text-2xl text-center">Form Edit Flight</h5>
           </div>
           <div className="mt-10">
-            <div className="relative">
+            <div className="relative mt-3">
               <input
                 type="text"
                 id="name"
-                name="name"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -88,74 +82,49 @@ const editPromo = () => {
               <label
                 htmlFor="name"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                Name
+                Airport Name
               </label>
             </div>
             <div className="relative mt-3">
               <input
                 type="text"
-                id="code"
-                name="code"
+                id="city"
+                name="city"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
               />
               <label
-                htmlFor="code"
+                htmlFor="city"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                Code
+                City
               </label>
             </div>
             <div className="relative mt-3">
               <input
                 type="text"
-                id="description"
-                name="description"
+                id="country"
+                name="country"
                 className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
               />
               <label
-                htmlFor="description"
+                htmlFor="country"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                Description
+                Country
               </label>
             </div>
-            <div className="relative mt-3">
-              <input
-                type="text"
-                id="discount"
-                name="discount"
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
-              />
-              <label
-                htmlFor="discount"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                Discount
-              </label>
-            </div>
-          </div>
-          <div>
-            <input
-              class="mt-3 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-              id="file_input"
-              type="file"
-              multiple
-              name="photo"
-              onChange={(e) => setPhoto(e.target.files[0])}
-            />
           </div>
 
           <div className="flex justify-end ">
             <div className="flex justify-between mt-5 gap-5">
-              <Button href="/admin/promo" color="success">
+              <Button href="/admin/airport" color="success">
                 Back
               </Button>
 
-              <Button onClick={handleUpdate} type="submit" name="submit" color="info">
-                Save
+              <Button type="submit" name="submit" onClick={handelUpdate} color="info">
+                Update
               </Button>
             </div>
           </div>
@@ -163,5 +132,4 @@ const editPromo = () => {
       </div>
     </Layout>
   );
-};
-export default editPromo;
+}

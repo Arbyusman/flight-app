@@ -77,13 +77,8 @@ export default function Airport() {
             </Table.Head>
             <Table.Body className="divide-y">
               {airport.map((item) => (
-                <Table.Row
-                  key={item.id}
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {item.name}
-                  </Table.Cell>
+                <Table.Row key={item.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{item.name}</Table.Cell>
                   <Table.Cell>{item.city}</Table.Cell>
                   <Table.Cell>{item.country}</Table.Cell>
                   <Table.Cell>
