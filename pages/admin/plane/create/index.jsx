@@ -25,16 +25,13 @@ export default function CreatePlane() {
   async function doCreate(e) {
     e.preventDefault();
 
-    const req = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/airport",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(field),
-      }
-    ).catch((err) => {
+    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(field),
+    }).catch((err) => {
       throw err;
     });
 

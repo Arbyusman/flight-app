@@ -27,19 +27,16 @@ export default function login() {
   async function handelLogin() {
     setLoginLoading(true);
 
-    const response = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      }
-    ).catch((err) => {
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    }).catch((err) => {
       throw err;
     });
 

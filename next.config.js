@@ -4,5 +4,9 @@ const nextConfig = {
   images: {
     domains: ["flowbite.com"],
   },
+  env: {
+    API_ENDPOINT: process.env.API_ENDPOINT
+  },
+  
 };
 module.exports = nextConfig;

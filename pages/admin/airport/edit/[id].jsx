@@ -21,7 +21,7 @@ export default function EditAirport() {
   const handelGetAirport = () => {
     const token = localStorage.getItem("token");
     fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/airport/${id}`,
+      `${process.env.API_ENDPOINT}api/v1/airport/${id}`,
       {
         method: "GET",
         headers: {
@@ -42,7 +42,7 @@ export default function EditAirport() {
   async function handelUpdate() {
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/airport/${id}`,
+      `${process.env.API_ENDPOINT}api/v1/airport/${id}`,
       {
         method: "PUT",
         headers: {

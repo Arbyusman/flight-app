@@ -16,7 +16,7 @@ export default function Flight() {
   }, []);
 
   const handelGetFlight = () => {
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/flight`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/flight`, {
       method: "GET",
     })
       .then((res) => res.json())

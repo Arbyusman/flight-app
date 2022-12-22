@@ -13,7 +13,7 @@ const editPromo = () => {
   const [photo, setPhoto] = useState("");
 
   async function handleUpdate() {
-    const response = await fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/promo/${id}`, {
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/promo/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -24,7 +24,7 @@ export default function CreatePromo() {
   async function doCreate(e) {
     e.preventDefault();
 
-    const req = await fetch("https://beckend-takeoff-production.up.railway.app/api/v1/promo", {
+    const req = await fetch(`${process.env.API_ENDPOINT}pi/v1/promo`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

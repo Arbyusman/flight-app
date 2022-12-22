@@ -14,14 +14,13 @@ export default function User() {
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
     handelGetUsers();
-   
+
     setLoading(false);
   }, []);
 
-
   const handelGetUsers = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/users`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/users`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,7 +30,7 @@ export default function User() {
 
       .then((data) => {
         setUser(data.data.users);
-        console.log("users",data.data)
+        console.log("users", data.data);
       });
   };
 

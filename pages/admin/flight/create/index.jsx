@@ -33,7 +33,7 @@ export default function CreatePromo() {
 
   const handelGetPlane = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/planes`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/planes`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ export default function CreatePromo() {
 
   const handelGetAirport = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/airport`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

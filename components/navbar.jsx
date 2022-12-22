@@ -19,7 +19,7 @@ import { BiBell } from "react-icons/bi";
 export default function NavbarComponent() {
   const router = useRouter();
   const currentRoute = router.pathname;
-  
+
   const [openModal, setOpenModal] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -36,15 +36,17 @@ export default function NavbarComponent() {
   const [loginLoading, setLoginLoading] = useState(false);
 
   useEffect(() => {
-    whoami();
-    getNotifications();
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
+    if (token) {
+      whoami();
+      getNotifications();
+    }
   }, []);
 
   const whoami = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -62,15 +64,12 @@ export default function NavbarComponent() {
 
   const getNotifications = () => {
     const token = localStorage.getItem("token");
-    fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/notification/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    fetch(`${process.env.API_ENDPOINT}api/v1/notification/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
 
       .then((data) => {
@@ -82,19 +81,16 @@ export default function NavbarComponent() {
   async function handelLogin() {
     setLoginLoading(true);
 
-    const response = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      }
-    ).catch((err) => {
+    const response = await fetch("${process.env.API_ENDPOINT}api/v1/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    }).catch((err) => {
       throw err;
     });
 
@@ -115,6 +111,7 @@ export default function NavbarComponent() {
       router.push("/");
       setSaveLoading(false);
     } else {
+      setSaveLoading(false);
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
@@ -160,15 +157,13 @@ export default function NavbarComponent() {
                 <hr></hr>
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
                   <div className="flex">
-                    {/* {notification.map((notification) => ( */}
                     {/* {notification.map((item) => (
                       <div key={item.id} className="mx-2">
                         <p className="text-xs text-gray-500 text-justify w-full ">
-                          {item.message}
+                          1{item.message}
                         </p>
                       </div>
                     ))} */}
-                    {/* ))} */}
                   </div>
                 </div>
               </div>

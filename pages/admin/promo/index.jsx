@@ -12,7 +12,7 @@ export default function Promo() {
   const [promo, setPromo] = useState([]);
 
   useEffect(() => {
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/promo`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/promo`, {
       method: "GET",
     })
       .then((res) => res.json())

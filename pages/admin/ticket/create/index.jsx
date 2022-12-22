@@ -30,7 +30,7 @@ export default function CreatePromo() {
 
   const getListFlight = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/flight`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/flight`, {
       method: "GET",
       Authorization: `Bearer ${token}`,
     })
@@ -46,17 +46,14 @@ export default function CreatePromo() {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
-    const req = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/ticket",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(field),
-      }
-    ).catch((err) => {
+    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(field),
+    }).catch((err) => {
       throw err;
     });
 
