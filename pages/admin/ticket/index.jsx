@@ -51,6 +51,7 @@ export default function Ticket() {
     ).catch((err) => {
       throw err;
     });
+    alert("Data berhasil Di hapus");
 
     getListTicket();
   };
@@ -101,37 +102,31 @@ export default function Ticket() {
         <div className="mt-10 border-spacing-2">
           <Table hoverable={true}>
             <Table.Head>
+              <Table.HeadCell>Image</Table.HeadCell>
               <Table.HeadCell>Flight</Table.HeadCell>
               <Table.HeadCell>Type</Table.HeadCell>
               <Table.HeadCell>Price</Table.HeadCell>
+              <Table.HeadCell>Cabin Baggage</Table.HeadCell>
+              <Table.HeadCell>Baggage</Table.HeadCell>
               <Table.HeadCell>Description</Table.HeadCell>
               <Table.HeadCell className="w-20">Action</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
               {ticket.map((ticket) => (
-                <Table.Row
-                  key={ticket.id}
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {ticket.flight_id}
-                  </Table.Cell>
+                <Table.Row key={ticket.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell>{ticket.photo}</Table.Cell>
+                  <Table.Cell>{ticket.flight_id}</Table.Cell>
                   <Table.Cell>{ticket.type}</Table.Cell>
                   <Table.Cell>Rp. {ticket.price}</Table.Cell>
+                  <Table.Cell>{ticket.cabin_baggage}</Table.Cell>
+                  <Table.Cell>{ticket.baggage}</Table.Cell>
                   <Table.Cell>{ticket.desc}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a
-                        href={`/admin/ticket/edit/${ticket.id}`}
-                        className="w-5 h-5  font-medium text-green-600 hover:underline "
-                      >
+                      <a href={`/admin/ticket/edit/${ticket.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
                         <FaEdit />
                       </a>
-                      <button
-                        onClick={() => handleDelete(ticket.id)}
-                        type="button"
-                        className="font-medium text-red-600 hover:underline gap-20 "
-                      >
+                      <button onClick={() => handleDelete(ticket.id)} type="button" className="font-medium text-red-600 hover:underline gap-20 ">
                         <FaTrashAlt />
                       </button>
                     </div>

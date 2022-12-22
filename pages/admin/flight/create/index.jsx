@@ -67,17 +67,14 @@ export default function CreatePromo() {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
-    const req = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/flight",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(field),
-      }
-    ).catch((err) => {
+    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/flight`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(field),
+    }).catch((err) => {
       throw err;
     });
 
@@ -108,18 +105,14 @@ export default function CreatePromo() {
           <div className="mt-10">
             <div className="flex gap-5 justify-center items-center">
               <div className="relative w-full">
-                <label
-                  for="from_airport_id"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label for="from_airport_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   From Aiport
                 </label>
                 <select
                   id="from_airport_id"
                   name="from_airport_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                >
+                  onChange={setValue}>
                   <option selected disabled>
                     Choose a Airport
                   </option>
@@ -132,18 +125,14 @@ export default function CreatePromo() {
               </div>
               <TbPlaneInflight className="-mb-5 text-5xl text-gray-700" />
               <div className="relative w-full">
-                <label
-                  for="to_airport_id"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label for="to_airport_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   To Aiport
                 </label>
                 <select
                   id="to_airport_id"
                   name="to_airport_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                >
+                  onChange={setValue}>
                   <option selected disabled>
                     Choose a Airport
                   </option>
@@ -158,18 +147,14 @@ export default function CreatePromo() {
 
             <div className="flex gap-14 mt-3 ">
               <div className="relative w-full">
-                <label
-                  for="plane_id"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label for="plane_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Plane
                 </label>
                 <select
                   id="plane_id"
                   name="plane_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                >
+                  onChange={setValue}>
                   <option selected disabled>
                     Choose a Plane
                   </option>
@@ -183,10 +168,7 @@ export default function CreatePromo() {
             </div>
             <div className="flex gap-14 mt-3 ">
               <div className="relative w-full">
-                <label
-                  for="arrival_time"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label for="arrival_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Arrival Time
                 </label>
                 <input
@@ -200,10 +182,7 @@ export default function CreatePromo() {
                 />
               </div>
               <div className="w-full">
-                <label
-                  for="depature"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label for="depature" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Departure
                 </label>
                 <input
@@ -228,8 +207,7 @@ export default function CreatePromo() {
               />
               <label
                 for="floating_outlined"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                 Description
               </label>
             </div>

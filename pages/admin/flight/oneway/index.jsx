@@ -1,4 +1,4 @@
-import Layout from "../../../components/admin/Layout";
+import Layout from "../../../../components/admin/Layout";
 import { Button } from "flowbite-react";
 import Link from "next/link";
 import { Table } from "flowbite-react";
@@ -8,15 +8,21 @@ import { GoPlus } from "react-icons/go";
 import React, { useEffect, useState } from "react";
 //import ListPromo from "../../../components/admin/flight/listPromo"
 
-export default function Flight() {
+export default function FlightOneWay() {
   const [flight, setFlight] = useState([]);
 
   useEffect(() => {
     handelGetFlight();
+    getDateString;
   }, []);
 
+  const getDateString = () => {
+    const event = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+    console.log(event.toLocaleString("en-GB", { timeZone: "UTC" }));
+  };
+
   const handelGetFlight = () => {
-    fetch(`${process.env.API_ENDPOINT}api/v1/flight`, {
+    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/flight`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -32,7 +38,7 @@ export default function Flight() {
       <div className="mt-10">
         <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
           <div className="mr-6">
-            <h1 className="text-4xl font-semibold mb-2">Flight</h1>
+            <h1 className="text-4xl font-semibold mb-2 ">Flight One Way</h1>
           </div>
 
           <div className="flex flex-wrap items-start justify-end -mb-3">
@@ -78,7 +84,6 @@ export default function Flight() {
               <Table.HeadCell>From Airport</Table.HeadCell>
               <Table.HeadCell>To Airport</Table.HeadCell>
               <Table.HeadCell>Arrival Time</Table.HeadCell>
-              <Table.HeadCell>Depature</Table.HeadCell>
               <Table.HeadCell className="w-20">Action</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
@@ -88,7 +93,6 @@ export default function Flight() {
                   <Table.Cell>{flight.from.name}</Table.Cell>
                   <Table.Cell>{flight.to.name}</Table.Cell>
                   <Table.Cell>{flight.arrival_time}</Table.Cell>
-                  <Table.Cell>{flight.depature}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
                       <a href={`/admin/flight/edit/${flight.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
