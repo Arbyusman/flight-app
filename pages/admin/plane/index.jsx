@@ -17,7 +17,7 @@ export default function Plane() {
 
   const handelGetPlane = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/planes`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/planes`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ export default function Plane() {
 
   const handleDelete = (id) => {
     fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/planes/${id}`,
+      `${process.env.API_ENDPOINT}api/v1/planes/${id}`,
       {
         method: "DELETE",
       }

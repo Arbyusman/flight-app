@@ -32,6 +32,10 @@ const SearchFlightForm = () => {
     setArrivalNative(e.target.value);
   };
 
+  
+
+
+
   const [fromSelectedCity, setFromSelectedCity] = useState(cities[0]);
   const [toSelectedCity, setToSelectedCity] = useState(cities[4]);
   const [query, setQuery] = useState("");

@@ -36,7 +36,7 @@ export default function UserProfile() {
 
   const whoami = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/user`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -68,7 +68,7 @@ export default function UserProfile() {
 
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/users/${id}`,
+      `${process.env.API_ENDPOINT}api/v1/users/${id}`,
       {
         method: "PUT",
         headers: {
