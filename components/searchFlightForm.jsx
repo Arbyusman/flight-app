@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Tabs, Button } from "flowbite-react";
 import { Combobox, Transition, Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
@@ -20,6 +20,8 @@ const categories = [
 const SearchFlightForm = () => {
   const [selectedCategories, setSelectedCategories] = useState(categories[0]);
 
+  const [airport, setAirport] = useState([]);
+
   const [departureNative, setDepartureNative] = useState("");
   const onDepartureNativeChange = (e) => {
     console.log("onDepartureNativeChange: ", e.target.value);
@@ -32,19 +34,34 @@ const SearchFlightForm = () => {
     setArrivalNative(e.target.value);
   };
 
-  
+  useEffect(() => {
+    handelGetAirport();
 
+    if (fromSelectedCity !== toSelectedCity) {
+    }
+  }, []);
 
+  const handelGetAirport = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
 
-  const [fromSelectedCity, setFromSelectedCity] = useState(cities[0]);
-  const [toSelectedCity, setToSelectedCity] = useState(cities[4]);
+      .then((data) => {
+        console.log("data airport", data.data);
+        setAirport(data.data);
+      });
+  };
+  const [fromSelectedCity, setFromSelectedCity] = useState("");
+  const [toSelectedCity, setToSelectedCity] = useState("");
   const [query, setQuery] = useState("");
 
   const filteredCity =
     query === ""
-      ? cities
-      : cities.filter((city) => {
-          return city.toLowerCase().includes(query.toLowerCase());
+      ? airport
+      : airport.filter((city) => {
+          return city.city.toLowerCase().includes(query.toLowerCase());
         });
   return (
     <div>
@@ -96,7 +113,7 @@ const SearchFlightForm = () => {
                           ) : (
                             filteredCity.map((city) => (
                               <Combobox.Option
-                                key={city}
+                                key={city.id}
                                 className={({ active }) =>
                                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                     active
@@ -104,7 +121,7 @@ const SearchFlightForm = () => {
                                       : "text-gray-900"
                                   }`
                                 }
-                                value={city}
+                                value={`${city.city} ( ${city.city_code})`}
                               >
                                 {({ selected, active }) => (
                                   <>
@@ -113,7 +130,12 @@ const SearchFlightForm = () => {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                      {city}
+                                      <p className="font-semibold antialiased tracking-normal">
+                                        {city.city}
+                                        {`, ${city.country}`}
+                                      </p>
+
+                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -175,7 +197,7 @@ const SearchFlightForm = () => {
                           ) : (
                             filteredCity.map((city) => (
                               <Combobox.Option
-                                key={city}
+                                key={city.id}
                                 className={({ active }) =>
                                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                     active
@@ -183,7 +205,7 @@ const SearchFlightForm = () => {
                                       : "text-gray-900"
                                   }`
                                 }
-                                value={city}
+                                value={`${city.city} ( ${city.city_code})`}
                               >
                                 {({ selected, active }) => (
                                   <>
@@ -192,7 +214,12 @@ const SearchFlightForm = () => {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                      {city}
+                                      <p className="font-semibold antialiased tracking-normal">
+                                        {city.city}
+                                        {`, ${city.country}`}
+                                      </p>
+
+                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -351,7 +378,7 @@ const SearchFlightForm = () => {
                           ) : (
                             filteredCity.map((city) => (
                               <Combobox.Option
-                                key={city}
+                                key={city.id}
                                 className={({ active }) =>
                                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
                                     active
@@ -359,7 +386,7 @@ const SearchFlightForm = () => {
                                       : "text-gray-900"
                                   }`
                                 }
-                                value={city}
+                                value={`${city.city} (${city.city_code})`}
                               >
                                 {({ selected, active }) => (
                                   <>
@@ -368,7 +395,12 @@ const SearchFlightForm = () => {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                      {city}
+                                     <p className="font-semibold antialiased tracking-normal">
+                                        {city.city}
+                                        {`, ${city.country}`}
+                                      </p>
+
+                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -438,7 +470,7 @@ const SearchFlightForm = () => {
                                       : "text-gray-900"
                                   }`
                                 }
-                                value={city}
+                                value={`${city.city} (${city.city_code})`}
                               >
                                 {({ selected, active }) => (
                                   <>
@@ -447,7 +479,12 @@ const SearchFlightForm = () => {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                      {city}
+                                     <p className="font-semibold antialiased tracking-normal">
+                                        {city.city}
+                                        {`, ${city.country}`}
+                                      </p>
+
+                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
                                     </span>
                                     {selected ? (
                                       <span
