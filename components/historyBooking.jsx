@@ -21,7 +21,7 @@ export default function HistoryBooking() {
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
 
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/history`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/history`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

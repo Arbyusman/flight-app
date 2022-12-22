@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="bg-white px-2 sm:px-4 py-2.5 rounded sm:justify-center mt-12 mb-7">
-      <div className="container lg:flex lg:flex-wrap  justify-between mx-auto sm:grid sm:grid-cols-2 sm:grid-rows-1">
+      <div className="container lg:flex lg:flex-wrap  justify-between mx-auto md:grid md:grid-cols-5 md:grid-rows-1">
         <div className="mb-6 md:mb-0 sm:mb-2">
           <Link href="#" className="flex items-center">
             <Image
@@ -55,7 +55,8 @@ export default function Footer() {
         </div>
         <div className=" mt-2">
           <h2 className=" text-gray-700 font-semibold rounded">Follow us</h2>
-          <div className="flex mt-1 space-x-4 sm:justify-start ">
+
+          <div className="flex mt-1 sm:gap-2 lg:gap-4 sm:justify-start ">
             <Link href="#" className="text-blue-700 hover:text-blue-800">
               <svg
                 className="w-5 h-5"

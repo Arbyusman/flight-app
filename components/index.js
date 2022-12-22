@@ -17,6 +17,8 @@ import FlightBooking from "./flightBooking";
 import Wishlist from "./wishlist";
 import ConfirmFlight from "./confirmFlight";
 
+
+import Airline from "./availableAirlines";
 export {
   NavbarComponent,
   Footer,
@@ -34,4 +36,5 @@ export {
   Carousel,
   SearchForm,
   ConfirmFlight,
+  Airline,
 };

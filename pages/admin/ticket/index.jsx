@@ -19,7 +19,7 @@ export default function Ticket() {
   }, []);
 
   const handelGetFlight = () => {
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/flight`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/flight`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -31,7 +31,7 @@ export default function Ticket() {
   };
 
   const getListTicket = () => {
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/ticket`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -43,8 +43,7 @@ export default function Ticket() {
   };
 
   const handleDelete = (id) => {
-    alert("Yakin ingin menghapus data?");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/ticket/${id}`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${id}`, {
       method: "DELETE",
     }).catch((err) => {
       throw err;

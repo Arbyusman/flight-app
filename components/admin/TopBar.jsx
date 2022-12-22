@@ -1,109 +1,191 @@
-import { Fragment } from "react";
-import { BiLeftArrowAlt, BiPencil, BiChevronDown, BiCreditCard, BiBarChartAlt, BiCoffeeTogo } from "react-icons/bi";
-import Image from "next/image";
-import Profile from "../../public/images/profile.jpg";
+import { Fragment, useEffect, useState } from "react";
+
 import { BiBell, BiCheck } from "react-icons/bi";
+import { BsArrowLeftSquare } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
-import { Menu, Transition, Popover } from "@headlessui/react";
+import { Dropdown, Avatar } from "flowbite-react";
+import { Transition, Popover } from "@headlessui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function TopBar({ showNav, setShowNav }) {
+  const router = useRouter();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [imageProfile, setImageProfile] = useState("");
+
+  const [notification, setNotification] = useState("");
+
+  const [username, setUsername] = useState("");
+  const [id, setId] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/");
+    } else {
+      whoami();
+      getNotifications();
+    }
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const whoami = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setId(data.data.id);
+        setUsername(data.data.username);
+        setImageProfile(data.data.photo);
+      });
+  };
+  const getNotifications = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/notification/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setNotification(data.data);
+        console.log("notif", data.data);
+      });
+  };
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
+
+    setIsLoggedIn(false);
+    router.push("/login");
+  }
+
   return (
-    <div className={`z-40 bg-blue-900 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-56" : ""}`}>
+    <div
+      className={`z-40 bg-blue-900 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
+        showNav ? "pl-56" : ""
+      }`}
+    >
       <div className="pl-4 md:pl-16">
-        <FaBars className="h-8 w-8 text-white cursor-pointer" onClick={() => setShowNav(!showNav)} />
+        <FaBars
+          className="h-8 w-8 text-white cursor-pointer"
+          onClick={() => setShowNav(!showNav)}
+        />
       </div>
       <div className="flex items-center text-white pr-4 md:pr-16">
-        <Popover className="relative">
-          <Popover.Button className="outline-none mr-5 md:mr-8 cursor-pointer text-gray-700">
-            <BiBell className="h-6 w-6 text-white" />
+        <Popover className="relative justify-center items-center">
+          <Popover.Button className="outline-none mr-2 md:mr-3 cursor-pointer  ">
+            <BiBell className="h-6 w-6 text-gray-100 hover:text-white active:text-gray-700 focus:text-gray-700" />
           </Popover.Button>
-          <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="transform scale-95" enterTo="transform scale-100" leave="transition ease-in duration=75" leaveFrom="transform scale-100" leaveTo="transform scale-95">
-            <Popover.Panel className="absolute -right-16 sm:right-4 z-50 mt-2 bg-white shadow-sm rounded max-w-xs sm:max-w-sm w-screen">
+          <Transition
+            enter="transition ease-out duration-100"
+            enterFrom="transform scale-95"
+            enterTo="transform scale-100"
+            leave="transition ease-in duration=75"
+            leaveFrom="transform scale-100"
+            leaveTo="transform scale-95"
+          >
+            <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
               <div className="relative p-3">
-                <div className="flex justify-between items-center w-full">
-                  <p className="text-gray-700 font-medium">Notifications</p>
-                  <a className="text-sm text-orange-500" href="#">
-                    Mark all as read
-                  </a>
+                <div className="flex justify-center items-center w-full">
+                  <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
+                    Notifications
+                  </p>
                 </div>
+                <hr></hr>
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
                   <div className="flex">
-                    <div className="rounded-full shrink-0 bg-green-200 h-8 w-8 flex items-center justify-center">
-                      <BiCheck className="h-4 w-4 text-green-600" />
-                    </div>
-                    <div className="ml-4">
-                      <p className="font-medium text-gray-700">Notification Title</p>
-                      <p className="text-sm text-gray-500 truncate">Test Notification text for design</p>
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div className="rounded-full shrink-0 bg-green-200 h-8 w-8 flex items-center justify-center">
-                      <BiCheck className="h-4 w-4 text-green-600" />
-                    </div>
-                    <div className="ml-4">
-                      <p className="font-medium text-gray-700">Notification Title</p>
-                      <p className="text-sm text-gray-500 truncate">Test Notification text for design</p>
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div className="rounded-full shrink-0 bg-green-200 h-8 w-8 flex items-center justify-center">
-                      <BiCheck className="h-4 w-4 text-green-600" />
-                    </div>
-                    <div className="ml-4">
-                      <p className="font-medium text-gray-700">Notification Title</p>
-                      <p className="text-sm text-gray-500 truncate">Test Notification text for design</p>
-                    </div>
-                  </div>
-                  <div className="flex">
-                    <div className="rounded-full shrink-0 bg-green-200 h-8 w-8 flex items-center justify-center">
-                      <BiCheck className="h-4 w-4 text-green-600" />
-                    </div>
-                    <div className="ml-4">
-                      <p className="font-medium text-gray-700">Notification Title</p>
-                      <p className="text-sm text-gray-500 truncate">Test Notification text for design</p>
-                    </div>
+                    {/* {notification.map((item) => (
+                      <div key={item.id} className="mx-2">
+                        <p className="text-xs text-gray-500 text-justify w-full ">
+                          1{item.message}
+                        </p>
+                      </div>
+                    ))} */}
                   </div>
                 </div>
               </div>
             </Popover.Panel>
           </Transition>
         </Popover>
-        <Menu as="div" className="relative inline-block text-left">
-          <div>
-            <Menu.Button className="inline-flex w-full justify-center items-center">
-              <picture>
-                <Image src={Profile} className="w-10 h-10 rounded-full mr-5" />
-              </picture>
-              <span className="hidden md:block font-medium text-white">Rettson</span>
-              <BiChevronDown className="ml-2 h-4 w-4 text-white" />
-            </Menu.Button>
-          </div>
-          <Transition as={Fragment} enter="transition ease-out duration-100" enterFrom="transform scale-95" enterTo="transform scale-100" leave="transition ease-in duration=75" leaveFrom="transform scale-100" leaveTo="transform scale-95">
-            <Menu.Items className="absolute right-0 w-56 z-50 mt-2 origin-top-right bg-white rounded shadow-sm">
-              <div className="p-1">
-                <Menu.Item>
-                  <Link href="#" className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center">
-                    <BiPencil className="h-4 w-4 mr-2" />
-                    Edit
-                  </Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link href="#" className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center">
-                    <BiCreditCard className="h-4 w-4 mr-2" />
-                    Billing
-                  </Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link href="#" className="flex hover:bg-orange-500 hover:text-white text-gray-700 rounded p-2 text-sm group transition-colors items-center">
-                    <BiChevronDown className="h-4 w-4 mr-2" />
-                    Settings
-                  </Link>
-                </Menu.Item>
-              </div>
-            </Menu.Items>
-          </Transition>
-        </Menu>
+        <div id="already-login" className={isLoggedIn ? "" : "hidden"}>
+          {imageProfile === null ? (
+            <Dropdown
+              arrowIcon={false}
+              inline={true}
+              label={
+                <Avatar
+                  alt="User settings"
+                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                  rounded={true}
+                />
+              }
+            >
+              <Dropdown.Item className="flex-row">
+                <span className="block truncate text-sm font-medium">
+                  {username}
+                </span>
+              </Dropdown.Item>
+
+              <Dropdown.Item>
+                <Link href={`admin/user/${id}`}>Profile</Link>
+              </Dropdown.Item>
+
+              <Dropdown.Divider />
+              <Dropdown.Item
+                onClick={handleLogout}
+                className="justify-center items-center flex gap-2"
+              >
+                <BsArrowLeftSquare />
+                <span>Sign out</span>
+              </Dropdown.Item>
+            </Dropdown>
+          ) : (
+            <Dropdown
+              arrowIcon={false}
+              inline={true}
+              label={
+                <Avatar
+                  fetchpriority="high"
+                  alt="User settings"
+                  img={imageProfile}
+                  rounded={true}
+                  className="border border-gray-400 rounded-full shadow-md "
+                />
+              }
+            >
+              <Dropdown.Item className="flex-row">
+                <span className="block truncate text-sm font-medium">
+                  {username}
+                </span>
+              </Dropdown.Item>
+
+              <Dropdown.Item>
+                <Link href={`admin/user/${id}`}>Profile</Link>
+              </Dropdown.Item>
+
+              <Dropdown.Divider />
+              <Dropdown.Item
+                onClick={handleLogout}
+                className="justify-center items-center flex gap-2"
+              >
+                <BsArrowLeftSquare />
+                <span>Sign out</span>
+              </Dropdown.Item>
+            </Dropdown>
+          )}
+        </div>
       </div>
     </div>
   );

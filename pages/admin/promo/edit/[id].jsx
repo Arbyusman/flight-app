@@ -23,7 +23,7 @@ const editPromo = () => {
 
   const handleGetPromo = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/promo/${id}`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/promo/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ const editPromo = () => {
     body.append("photo", photo);
 
     const token = localStorage.getItem("token");
-    const response = await fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/promo/${id}`, {
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/promo/${id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,

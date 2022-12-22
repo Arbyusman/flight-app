@@ -26,11 +26,12 @@ export default function CreateAirport() {
     e.preventDefault();
 
     const req = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/airport",
+      `${process.env.API_ENDPOINT}api/v1/airport`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(field),
       }

@@ -20,7 +20,7 @@ export default function EditAirport() {
 
   const handelGetAirport = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport/${id}`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/airport/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ export default function EditAirport() {
 
   async function handelUpdate() {
     const token = localStorage.getItem("token");
-    const response = await fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport/${id}`, {
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/airport/${id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ export default function EditAirport() {
       <div className="mt-10 block p-6 rounded-lg shadow-lg bg-white w-5/6 mx-auto">
         <div className="w-100" method="PUT">
           <div className="font-bold ">
-            <h5 className="text-2xl text-center">Form Edit Plane</h5>
+            <h5 className="text-2xl text-center">Form Create Ticket</h5>
           </div>
           <div className="mt-10">
             <div className="relative mt-3">

@@ -25,7 +25,7 @@ export default function CreatePromo() {
     body.append("photo", photo);
 
     const token = localStorage.getItem("token");
-    const req = await fetch("https://beckend-takeoff-production-46fc.up.railway.app/api/v1/promo", {
+    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/promo`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

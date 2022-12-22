@@ -11,9 +11,13 @@ import React, { useEffect, useState } from "react";
 export default function Airport() {
   const [airport, setAirport] = useState([]);
 
+  useEffect(() => {
+    handelGetAirport();
+  }, []);
+
   const handelGetAirport = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -26,13 +30,10 @@ export default function Airport() {
         console.log("data airport", data.data);
       });
   };
-  useEffect(() => {
-    handelGetAirport();
-  }, []);
 
   const handleDelete = (id) => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/ticket/${id}`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -78,9 +79,9 @@ export default function Airport() {
                   <Table.Cell>{item.country}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a href={`/admin/airport/edit/${item.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
+                      <Link href={`/admin/airport/edit/${item.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
                         <FaEdit />
-                      </a>
+                      </Link>
                       <button onClick={() => handleDelete(item.id)} type="button" className="font-medium text-red-600 hover:underline gap-20 ">
                         <FaTrashAlt />
                       </button>
