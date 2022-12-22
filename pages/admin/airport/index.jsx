@@ -13,7 +13,7 @@ export default function Airport() {
 
   const handelGetAirport = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/airport`, {
+    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,15 +32,12 @@ export default function Airport() {
 
   const handleDelete = (id) => {
     const token = localStorage.getItem("token");
-    fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/ticket/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    ).catch((err) => {
+    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/ticket/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).catch((err) => {
       throw err;
     });
 
@@ -75,28 +72,16 @@ export default function Airport() {
             </Table.Head>
             <Table.Body className="divide-y">
               {airport.map((item) => (
-                <Table.Row
-                  key={item.id}
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {item.name}
-                  </Table.Cell>
+                <Table.Row key={item.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{item.name}</Table.Cell>
                   <Table.Cell>{item.city}</Table.Cell>
                   <Table.Cell>{item.country}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a
-                        href={`/admin/airport/edit/${item.id}`}
-                        className="w-5 h-5  font-medium text-green-600 hover:underline "
-                      >
+                      <a href={`/admin/airport/edit/${item.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
                         <FaEdit />
                       </a>
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        type="button"
-                        className="font-medium text-red-600 hover:underline gap-20 "
-                      >
+                      <button onClick={() => handleDelete(item.id)} type="button" className="font-medium text-red-600 hover:underline gap-20 ">
                         <FaTrashAlt />
                       </button>
                     </div>

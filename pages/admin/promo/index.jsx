@@ -12,7 +12,7 @@ export default function Promo() {
   const [promo, setPromo] = useState([]);
 
   useEffect(() => {
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/promo`, {
+    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/promo`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -44,6 +44,7 @@ export default function Promo() {
             <Table.Head>
               <Table.HeadCell className="w-3/5">Image</Table.HeadCell>
               <Table.HeadCell>Name</Table.HeadCell>
+              <Table.HeadCell>Code Promo</Table.HeadCell>
               <Table.HeadCell>Description</Table.HeadCell>
               <Table.HeadCell>Discount</Table.HeadCell>
               <Table.HeadCell>
@@ -56,6 +57,7 @@ export default function Promo() {
                 <Table.Row key={promo.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                   <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{promo.photo}</Table.Cell>
                   <Table.Cell>{promo.name}</Table.Cell>
+                  <Table.Cell>{promo.code}</Table.Cell>
                   <Table.Cell>{promo.description}</Table.Cell>
                   <Table.Cell>{promo.discount}</Table.Cell>
                   <Table.Cell>

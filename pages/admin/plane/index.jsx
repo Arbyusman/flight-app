@@ -17,7 +17,7 @@ export default function Plane() {
 
   const handelGetPlane = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production.up.railway.app/api/v1/planes`, {
+    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/planes`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,15 +32,11 @@ export default function Plane() {
   };
 
   const handleDelete = (id) => {
-    fetch(
-      `https://beckend-takeoff-production.up.railway.app/api/v1/planes/${id}`,
-      {
-        method: "DELETE",
-      }
-    ).catch((err) => {
+    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/planes/${id}`, {
+      method: "DELETE",
+    }).catch((err) => {
       throw err;
     });
-
   };
 
   return (
@@ -48,7 +44,7 @@ export default function Plane() {
       <div className="mt-10">
         <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
           <div className="mr-6">
-            <h1 className="text-4xl font-semibold mb-2">Ticket</h1>
+            <h1 className="text-4xl font-semibold mb-2">Plane</h1>
           </div>
 
           <div className="flex flex-wrap items-start justify-end -mb-3">
@@ -71,27 +67,16 @@ export default function Plane() {
             </Table.Head>
             <Table.Body className="divide-y">
               {plane.map((item) => (
-                <Table.Row
-                  key={item.id}
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                >
-                  
+                <Table.Row key={item.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                   <Table.Cell>{item.name}</Table.Cell>
                   <Table.Cell>{item.capacity} Pasengger </Table.Cell>
                   <Table.Cell>{item.status}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a
-                        href={`/admin/plane/edit/${item.id}`}
-                        className="w-5 h-5  font-medium text-green-600 hover:underline "
-                      >
+                      <a href={`/admin/plane/edit/${item.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
                         <FaEdit />
                       </a>
-                      <button
-                        onClick={() => handleDelete(item.id)}
-                        type="button"
-                        className="font-medium text-red-600 hover:underline gap-20 "
-                      >
+                      <button onClick={() => handleDelete(item.id)} type="button" className="font-medium text-red-600 hover:underline gap-20 ">
                         <FaTrashAlt />
                       </button>
                     </div>

@@ -46,17 +46,14 @@ export default function CreatePromo() {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
-    const req = await fetch(
-      "https://beckend-takeoff-production.up.railway.app/api/v1/ticket",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(field),
-      }
-    ).catch((err) => {
+    const req = await fetch("https://beckend-takeoff-production.up.railway.app/api/v1/ticket", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(field),
+    }).catch((err) => {
       throw err;
     });
 
@@ -87,10 +84,7 @@ export default function CreatePromo() {
           <div className="mt-10">
             <div className="flex gap-5 justify-center items-center">
               <div className="relative w-full">
-                <label
-                  for="flight_id"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label for="flight_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Flight
                 </label>
 
@@ -98,8 +92,7 @@ export default function CreatePromo() {
                   id="flight_id"
                   name="flight_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                >
+                  onChange={setValue}>
                   <option selected disabled>
                     Choose a Flight
                   </option>
@@ -122,10 +115,7 @@ export default function CreatePromo() {
                 </select>
               </div>
               <div className="relative w-full">
-                <label
-                  for="flight_id"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label for="flight_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   one way
                 </label>
 
@@ -133,8 +123,7 @@ export default function CreatePromo() {
                   id="flight_id"
                   name="flight_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                >
+                  onChange={setValue}>
                   <option selected disabled>
                     Choose a Flight
                   </option>
@@ -157,10 +146,7 @@ export default function CreatePromo() {
                 </select>
               </div>
               <div className="relative w-full">
-                <label
-                  for="return_flight_id"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
+                <label for="return_flight_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Round Trip
                 </label>
 
@@ -168,8 +154,7 @@ export default function CreatePromo() {
                   id="return_flight_id"
                   name="return_flight_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                >
+                  onChange={setValue}>
                   <option selected disabled>
                     Choose a Flight
                   </option>
@@ -194,20 +179,24 @@ export default function CreatePromo() {
             </div>
 
             <div className="relative mt-3">
-              <input
-                type="text"
-                id="price"
-                name="price"
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                placeholder=" "
-                onChange={setValue}
-              />
               <label
-                for="price"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
-                Price
+                for="type"
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                Type
               </label>
+
+              <select
+                id="type"
+                name="type"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={setValue}>
+                <option selected disabled>
+                  Choose a Type
+                </option>
+
+                <option value="ekonomi">Ekonomi</option>
+                <option value="bisnis">Bisnis</option>
+              </select>
             </div>
             <div className="relative mt-3">
               <input
@@ -220,8 +209,7 @@ export default function CreatePromo() {
               />
               <label
                 for="price"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                 Price
               </label>
             </div>
@@ -236,8 +224,7 @@ export default function CreatePromo() {
               />
               <label
                 for="desc"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                 Description
               </label>
             </div>
