@@ -81,7 +81,7 @@ export default function NavbarComponent() {
   async function handelLogin() {
     setLoginLoading(true);
 
-    const response = await fetch("${process.env.API_ENDPOINT}api/v1/login", {
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -102,16 +102,16 @@ export default function NavbarComponent() {
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/admin");
-      setSaveLoading(false);
+      loginLoading(false);
     } else if (data.status === "OK" && data.data.role === "buyer") {
       localStorage.setItem("token", data.data.token);
       whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/");
-      setSaveLoading(false);
+      loginLoading(false);
     } else {
-      setSaveLoading(false);
+      loginLoading(false);
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
