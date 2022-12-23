@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { FaUserEdit } from "react-icons/fa";
 import { BsTrash } from "react-icons/bs";
 
 import { BiSave } from "react-icons/bi";
 import { HiArrowSmLeft } from "react-icons/hi";
-import { useRouter } from "next/router";
 
 export default function UserProfile() {
   const router = useRouter();
@@ -30,7 +30,6 @@ export default function UserProfile() {
     whoami();
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
-
     setLoading(false);
   }, []);
 
@@ -56,6 +55,7 @@ export default function UserProfile() {
         setPhone(data.data.phone);
       });
   };
+  
   async function handelUpdate() {
     setSaveLoading(true);
 
