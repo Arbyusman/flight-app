@@ -67,7 +67,7 @@ export default function CreatePromo() {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
-    const req = await fetch("https://beckend-takeoff-production-46fc.up.railway.app/api/v1/flight", {
+    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/flight`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

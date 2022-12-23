@@ -23,7 +23,7 @@ const editPromo = () => {
 
   const handleGetPromo = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/promo/${id}`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/promo/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
