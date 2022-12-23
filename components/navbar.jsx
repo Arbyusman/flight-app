@@ -28,20 +28,22 @@ export default function NavbarComponent() {
   const [err, setErr] = useState("");
   const [imageProfile, setImageProfile] = useState("");
 
-  const [notification, setNotification] = useState("");
+  const [notification, setNotification] = useState([]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isRead] = useState(true);
+
   const [loginLoading, setLoginLoading] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-    if (token) {
-      whoami();
+    whoami();
+    if (id) {
       getNotifications();
     }
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
   }, []);
 
   const whoami = () => {
@@ -64,12 +66,15 @@ export default function NavbarComponent() {
 
   const getNotifications = () => {
     const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/notification/${id}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    const response = fetch(
+      `${process.env.API_ENDPOINT}api/v1/notification/user/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
       .then((res) => res.json())
 
       .then((data) => {
@@ -78,6 +83,28 @@ export default function NavbarComponent() {
       });
   };
 
+  async function handelReadNotifications() {
+    const token = localStorage.getItem("token");
+    const response = await fetch(
+      `${process.env.API_ENDPOINT}api/v1/notification/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          isRead: isRead,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log("hasil", data);
+    if (data.status === "OK") {
+      getNotifications();
+    }
+  }
   async function handelLogin() {
     setLoginLoading(true);
 
@@ -147,23 +174,38 @@ export default function NavbarComponent() {
             leaveFrom="transform scale-100"
             leaveTo="transform scale-95"
           >
-            <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
+            <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-gray-100 shadow-sm rounded max-w-xs w-screen md:w-screen">
               <div className="relative p-3">
-                <div className="flex justify-center items-center w-full">
+                <div className="flex justify-between items-center w-full">
                   <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
                     Notifications
                   </p>
+                  <button
+                    onClick={handelReadNotifications}
+                    className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center"
+                  >
+                    Read All
+                  </button>
                 </div>
                 <hr></hr>
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
                   <div className="flex">
-                    {/* {notification.map((item) => (
+                    {notification.map((item) => (
                       <div key={item.id} className="mx-2">
                         <p className="text-xs text-gray-500 text-justify w-full ">
-                          1{item.message}
+                          {item.transaction_id}
+                        </p>
+                        <p
+                          className={`text-xs text-gray-500 text-justify w-full ${
+                            item.isRead === false
+                              ? "bg-yellow-200"
+                              : "bg-red-400"
+                          } `}
+                        >
+                          <button>{item.message}</button>
                         </p>
                       </div>
-                    ))} */}
+                    ))}
                   </div>
                 </div>
               </div>
@@ -281,13 +323,13 @@ export default function NavbarComponent() {
                 </Dropdown.Item>
 
                 <Dropdown.Item>
-                  <Link href={`profile/${id}`}>Profile</Link>
+                  <Link href={`/profile/${id}`}>Profile</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`history/${id}`}>History</Link>
+                  <Link href={`/history/${id}`}>History</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`wishlist/${id}`}>Wishlist</Link>
+                  <Link href={`/wishlist/${id}`}>Wishlist</Link>
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item

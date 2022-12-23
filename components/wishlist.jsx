@@ -7,7 +7,6 @@ import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
 import Link from "next/link";
 import Image from "next/image";
-import logoMaskapai from "../public/images/lion_air.png";
 
 export default function Wishlist() {
   const router = useRouter();
@@ -43,8 +42,8 @@ export default function Wishlist() {
 
       .then((data) => {
         setData(data.data);
+        console.log("data", data.data);
       });
-    console.log("wishlist", data);
   };
 
   return (
@@ -57,7 +56,6 @@ export default function Wishlist() {
               <h1 className="font-semibold tracking-wide antialiased text-lg">
                 Wishlist
               </h1>
-              <p className="text-sm">jumlah Wishlist</p>
             </div>
             <Link
               href="/"
@@ -76,21 +74,25 @@ export default function Wishlist() {
         <div key={item.id}>
           <div className="flex justify-center ">
             <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-7">
-              <div className="flex-row mx-4 md:mx-0 md:flex items-center  justify-between ">
-                <p>Ticket ID : {item.ticket_id}</p>
-
+              <div className="flex-row mx-4  md:flex items-center  justify-between j ">
+                <p>Ticket ID : {item.ticket_id} </p>
+                <div className="flex gap-1 items-center">
+                  <p>{item.Ticket.type}</p>
+                </div>
                 <div className="flex gap-1 items-center">
                   <p>RP/ </p>
-                  <p>{item.price}</p>
+                  <p>{item.Ticket.price}</p>
                   <p>/Pax</p>
                 </div>
                 <div className="flex lg:gap-10 md:gap-3 justify-between">
-                  <button
-                    type="button"
-                    className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
-                  >
-                    Choose Flight
-                  </button>
+                  <Link href={`/search/flight/book/{item.ticket_id}`}>
+                    <button
+                      type="button"
+                      className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
+                    >
+                      Choose Flight
+                    </button>
+                  </Link>
 
                   <button
                     type="button"
@@ -121,53 +123,30 @@ export default function Wishlist() {
                 : "max-h-0"
             } `}
           >
-            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7">
+            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7 border-b-2">
               <div className=" md:flex items-start  justify-between lg:justify-around ">
                 <Image
                   className="w-16 lg:w-24 flex "
-                  src={logoMaskapai}
+                  src={item.Ticket.photo}
                   alt="logoMaskapai"
+                  width={100}
+                  height={100}
                 />
                 <div className=" items-center gap-7 text-gray-600 tracking-wide antialiased my-2">
                   <div className="flex lg:gap-20   gap-7 items-center">
-                    <div>
-                      <p className="font-bold text-xl">10 : 30</p>
-                      <p>9 Dec 2022</p>
-                    </div>
-                    <div className="w-40  lg:w-auto ">
-                      <p className="text-md">Kendari ( KDI )</p>
-                      <p className="text-sm">Haluoleo Airport</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 my-2 items-center">
-                    <IoIosTimer className="" />
-                    <p> 1h:0m</p>
-                  </div>
-                  <div className="flex lg:gap-20 gap-5  items-center">
-                    <div>
-                      <p className="font-bold text-xl">11 :30</p>
-                      <p>9 Dec 2022</p>
-                    </div>
-                    <div className=" w-40  lg:w-auto ">
-                      <p className="text-md">Makassar ( UPG )</p>
-                      <p className="text-sm">
-                        Sultan Hasanuddin International Airport
-                      </p>
+                    <div className="w-auto ">
+                      <p className="text-justify text-sm">{item.Ticket.desc}</p>
                     </div>
                   </div>
                 </div>
                 <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm ">
                   <div className="flex gap-3 items-center my-1 lg:my-3 ">
                     <GiBackpack className="text-xl text-green-500" />
-                    <p>Cabin Baggage 7kg</p>
+                    <p>Cabin Baggage {item.Ticket.cabin_baggage}</p>
                   </div>
                   <div className="flex gap-3 items-center my-1 lg:my-3">
                     <MdOutlineLuggage className="text-xl text-blue-500" />
-                    <p>Baggage 20kg</p>
-                  </div>
-                  <div className="flex gap-3 items-center my-1 lg:my-3">
-                    <BiJoystick className="text-xl text-red-500" />
-                    <p>Entertainment</p>
+                    <p>Baggage {item.Ticket.baggage}</p>
                   </div>
                 </div>
               </div>
