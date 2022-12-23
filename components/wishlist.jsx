@@ -11,6 +11,7 @@ import logoMaskapai from "../public/images/lion_air.png";
 
 export default function Wishlist() {
   const router = useRouter();
+  const { id } = router.query;
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
@@ -20,10 +21,18 @@ export default function Wishlist() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
+    wishlist();
+    setLoading(false);
+  }, [router.isReady]);
 
-    fetch(`${process.env.API_ENDPOINT}api/v1/wishlist`, {
+  const wishlist = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/wishlist/user/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -35,8 +44,8 @@ export default function Wishlist() {
       .then((data) => {
         setData(data.data);
       });
-    setLoading(false);
-  }, []);
+    console.log("wishlist", data);
+  };
 
   return (
     <div className="justify-center items-center flex-row">
@@ -69,12 +78,10 @@ export default function Wishlist() {
             <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-7">
               <div className="flex-row mx-4 md:mx-0 md:flex items-center  justify-between ">
                 <p>Ticket ID : {item.ticket_id}</p>
-                <p>1 Traveler</p>
-                <p>kam, 8 Des 2022</p>
 
                 <div className="flex gap-1 items-center">
                   <p>RP/ </p>
-                  <p>678.000</p>
+                  <p>{item.price}</p>
                   <p>/Pax</p>
                 </div>
                 <div className="flex lg:gap-10 md:gap-3 justify-between">
@@ -116,7 +123,11 @@ export default function Wishlist() {
           >
             <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7">
               <div className=" md:flex items-start  justify-between lg:justify-around ">
-                <Image className="w-16 lg:w-24 flex " src={logoMaskapai} />
+                <Image
+                  className="w-16 lg:w-24 flex "
+                  src={logoMaskapai}
+                  alt="logoMaskapai"
+                />
                 <div className=" items-center gap-7 text-gray-600 tracking-wide antialiased my-2">
                   <div className="flex lg:gap-20   gap-7 items-center">
                     <div>
