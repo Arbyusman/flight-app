@@ -22,7 +22,7 @@ export default function FlightOneWay() {
   };
 
   const handelGetFlight = () => {
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/flight`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/flight`, {
       method: "GET",
     })
       .then((res) => res.json())
