@@ -84,14 +84,14 @@ export default function CreatePromo() {
           <div className="mt-10">
             <div className="flex gap-5 justify-center items-center">
               <div className="relative w-full">
-                <label for="flight_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label for="flight_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Flight
                 </label>
 
                 <select
                   id="flight_id"
                   name="flight_id"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={setValue}>
                   <option selected disabled>
                     Choose a Flight
@@ -115,14 +115,14 @@ export default function CreatePromo() {
                 </select>
               </div>
               <div className="relative w-full">
-                <label for="flight_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label for="flight_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   one way
                 </label>
 
                 <select
                   id="flight_id"
                   name="flight_id"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={setValue}>
                   <option selected disabled>
                     Choose a Flight
@@ -146,14 +146,14 @@ export default function CreatePromo() {
                 </select>
               </div>
               <div className="relative w-full">
-                <label for="return_flight_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label for="return_flight_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                   Round Trip
                 </label>
 
                 <select
                   id="return_flight_id"
                   name="return_flight_id"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={setValue}>
                   <option selected disabled>
                     Choose a Flight
@@ -188,7 +188,7 @@ export default function CreatePromo() {
               <select
                 id="type"
                 name="type"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onChange={setValue}>
                 <option selected disabled>
                   Choose a Type

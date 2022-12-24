@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { IoIosArrowDropdown, IoIosTimer } from "react-icons/io";
+import { IoIosArrowDropdown } from "react-icons/io";
+import { BsPerson } from "react-icons/bs";
 import { HiArrowSmLeft } from "react-icons/hi";
-
 import Image from "next/image";
-import logoMaskapai from "../public/images/lion_air.png";
 
 export default function HistoryBooking() {
   const router = useRouter();
@@ -28,6 +27,21 @@ export default function HistoryBooking() {
     setLoading(false);
   }, [router.isReady]);
 
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const getTransaction = () => {
     const token = localStorage.getItem("token");
 
@@ -45,6 +59,8 @@ export default function HistoryBooking() {
         console.log("data", data.data);
       });
   };
+
+  
 
   return (
     <div className="justify-center items-center flex-row">
@@ -72,12 +88,25 @@ export default function HistoryBooking() {
         <div key={item.id}>
           <div className="flex justify-center ">
             <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-7">
-              <div className="flex-row mx-4  md:flex items-center  justify-between ">
+              <div className="flex mx-2 md:flex items-center  justify-between ">
                 <p>Ticket ID : {item.Ticket.id}</p>
-                <p>1 Traveler</p>
-                <p>December 2022</p>
 
-                <div className="flex gap-1 items-center">
+                <Image
+                  className="w-10 hidden sm:flex"
+                  src={item.Ticket.photo}
+                  alt="logo maskapai"
+                  width={50}
+                  height={40}
+                ></Image>
+                <p>
+                  {new Date(item.Ticket.Flight.departure_time).toLocaleString(
+                    "default",
+                    { month: "long" }
+                  )}{" "}
+                  {new Date(item.Ticket.Flight.departure_time).getFullYear()}
+                </p>
+
+                <div className=" gap-1 items-center hidden sm:flex">
                   <p>RP/ </p>
                   <p>{item.Ticket.price}</p>
                   <p>/Pax</p>
@@ -107,59 +136,126 @@ export default function HistoryBooking() {
 
           <div
             className={`flex justify-center duration-700 ease-in-out overflow-hidden  ${
-              isOpen && currentIndex === item.id
-                ? "max-h-auto lg:max-h-56"
-                : "max-h-0"
+              isOpen && currentIndex === item.id ? "max-h-auto " : "max-h-0"
             } `}
           >
             <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7">
-              <div className=" md:flex items-start  justify-between lg:justify-around ">
-                <Image
-                  className="w-16 lg:w-24 flex "
-                  src={item.Ticket.photo}
-                  width={100}
-                  height={100}
-                />
-                <div className=" items-center gap-7 text-gray-600 tracking-wide antialiased my-2">
-                  <div className="flex lg:gap-20   gap-7 items-center">
+              <div className=" md:flex items-start  justify-between  ">
+                <div className="">
+                  <Image
+                    className="w-10 lg:w-16 flex "
+                    src={item.Ticket.photo}
+                    alt="logo penerbangan"
+                    width={50}
+                    height={50}
+                  />
+                </div>
+                <div className="flex items-start  gap-7 md:gap-10 text-gray-600 tracking-wide antialiased my-2">
+                  <div className="flex-row lg:gap-20 gap-7 items-center">
+                    <div className="mb-2">
+                      <p className="font-bold text-xl">
+                        {new Date(item.Ticket.Flight.departure_time).getHours()}
+                        {" : "}
+                        {new Date(
+                          item.Ticket.Flight.departure_time
+                        ).getMinutes()}
+                      </p>
+                      <p>
+                        {new Date(
+                          item.Ticket.Flight.departure_time
+                        ).toDateString()}
+                      </p>
+                    </div>
                     <div>
-                      <p className="font-bold text-xl">10 : 30</p>
-                      <p>9 Dec 2022</p>
-                    </div>
-                    <div className="w-40  lg:w-auto ">
-                      <p className="text-md">Kendari ( KDI )</p>
-                      <p className="text-sm">Haluoleo Airport</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 my-2 items-center">
-                    <IoIosTimer className="" />
-                    <p> 1h:0m</p>
-                  </div>
-                  <div className="flex lg:gap-20 gap-5  items-center">
-                    <div>
-                      <p className="font-bold text-xl">11 :30</p>
-                      <p>9 Dec 2022</p>
-                    </div>
-                    <div className=" w-40  lg:w-auto ">
-                      <p className="text-md">Makassar ( UPG )</p>
-                      <p className="text-sm">
-                        Sultan Hasanuddin International Airport
+                      <p className="font-bold text-xl">
+                        {new Date(item.Ticket.Flight.arrival_time).getHours()}
+                        {" : "}
+                        {new Date(item.Ticket.Flight.arrival_time).getMinutes()}
+                      </p>
+                      <p>
+                        {new Date(
+                          item.Ticket.Flight.arrival_time
+                        ).toDateString()}
                       </p>
                     </div>
                   </div>
+
+                  <div className="flex-row  max-w-sm lg:gap-20 gap-5  items-center">
+                    <div className="mb-4">
+                      <p className="text-md">
+                        {item.Ticket.Flight.from.city} (
+                        {item.Ticket.Flight.from.city_code})
+                      </p>
+                      <p className="text-sm">{item.Ticket.Flight.from.name}</p>
+                    </div>
+                    <div className=" ">
+                      <p className="text-md">
+                        {item.Ticket.Flight.to.city}(
+                        {item.Ticket.Flight.to.city_code})
+                      </p>
+                      <p className="text-sm">{item.Ticket.Flight.to.name}</p>
+                    </div>
+                  </div>
                 </div>
-                <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm ">
+                <hr className="md:hidden mt-2 mb-1"></hr>
+                <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm max-w-xs ">
+                  <div className="flex gap-2">
+                    <BsPerson className="text-2xl font-bold  text-gray-700 " />
+                    <h1 className="text-md font-bold antialiased tracking-wider text-gray-700">
+                      Traveler Information
+                      <hr></hr>
+                    </h1>
+                  </div>
                   <div className="flex gap-3 items-center my-1 lg:my-3">
-                    <p>Name:</p>
+                    <p>Name :</p>
                     <p>
-                      {item.User.firstName}
-                      {" "}
-                      {item.User.lastName}
+                      {item.User.firstName} {item.User.lastName}
                     </p>
                   </div>
                   <div className="flex gap-3 items-center my-1 lg:my-3">
-                    <p>address :</p>
-                    <p>{item.User.address}</p>
+                    <p>Phone :</p>
+                    <p>{item.User.phone}</p>
+                  </div>
+                  <div className="flex items-start gap-3  my-1 lg:my-3">
+                    <p>address:</p>
+                    <textarea
+                      id="message"
+                      rows="4"
+                      className="block p-2.5 w-full text-sm text-gray-600 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      defaultValue={item.User.address}
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div className=" items-center justify-between flex-row   bg-white  text-gray-600 tracking-wide antialiased mb-2">
+                <div className="w-full   flex-row md:flex justify-between  mt-3">
+                  <h1 className="text-base font-medium antialiased tracking-wider text-gray-700 ">
+                    Price Detail
+                  </h1>
+                </div>
+                <div className="">
+                  <div className="font-thin gap-5 my-2 text-sm flex justify-between">
+                    <div className="flex items-center gap-2 ">
+                      <p>Depart</p>
+                      <p>{item.Ticket.Flight.from.city_code}</p>
+                      <p>{item.Ticket.Flight.to.city_code}</p>
+                    </div>
+                    <p>RP {item.Ticket.price} </p>
+                  </div>
+                  <div className="flex justify-between text-sm font-thin my-1">
+                    <p>Traveler x 1</p>
+                    <p>RP {item.Ticket.price}</p>
+                  </div>
+                  <div className="flex justify-between text-sm font-thin my-1">
+                    <p>promo </p>
+                    <p>RP {item.Promo.code}</p>
+                  </div>
+                  <div className="flex justify-between text-sm font-thin my-1"></div>
+                  <hr />
+                  <div className="flex justify-between text-sm font-bold tracking-wider my-2">
+                    <p>Total Price</p>
+                    <p>RP 678.000</p>
                   </div>
                 </div>
               </div>

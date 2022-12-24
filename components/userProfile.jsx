@@ -55,7 +55,7 @@ export default function UserProfile() {
         setPhone(data.data.phone);
       });
   };
-  
+
   async function handelUpdate() {
     setSaveLoading(true);
 
@@ -176,14 +176,14 @@ export default function UserProfile() {
                       >
                         Full Name
                       </label>
-                      <input
+                      <span
                         type="text"
                         id="first_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John Doe"
-                        value={`${firstName}${lastName}`}
-                        disabled
-                      />
+                      >
+                        {firstName} {lastName}
+                      </span>
                     </div>
                   </div>
                   <div className="flex w-full px-4  gap-4">

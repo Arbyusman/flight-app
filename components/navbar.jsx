@@ -83,28 +83,6 @@ export default function NavbarComponent() {
       });
   };
 
-  async function handelReadNotifications() {
-    const token = localStorage.getItem("token");
-    const response = await fetch(
-      `${process.env.API_ENDPOINT}api/v1/notification/${id}`,
-      {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          isRead: isRead,
-        }),
-      }
-    );
-    const data = await response.json();
-    console.log("hasil", data);
-    if (data.status === "OK") {
-      getNotifications();
-    }
-  }
   async function handelLogin() {
     setLoginLoading(true);
 
@@ -180,10 +158,7 @@ export default function NavbarComponent() {
                   <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
                     Notifications
                   </p>
-                  <button
-                    onClick={handelReadNotifications}
-                    className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center"
-                  >
+                  <button className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
                     Read All
                   </button>
                 </div>
@@ -273,7 +248,7 @@ export default function NavbarComponent() {
                     {loginLoading && (
                       <svg
                         role="status"
-                        class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+                        className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
