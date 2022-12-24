@@ -249,7 +249,7 @@ export default function HistoryBooking() {
                   </div>
                   <div className="flex justify-between text-sm font-thin my-1">
                     <p>promo </p>
-                    <p>RP {item.Promo.code}</p>
+                    <p>RP </p>
                   </div>
                   <div className="flex justify-between text-sm font-thin my-1"></div>
                   <hr />
