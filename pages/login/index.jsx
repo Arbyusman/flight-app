@@ -54,6 +54,9 @@ export default function login() {
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
+      setTimeout(() => {
+        setLoginLoading(false);
+      }, 2000);
     }
   }
 
@@ -110,6 +113,7 @@ export default function login() {
                     required={true}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                   
                   />
                 </div>
                 <div>

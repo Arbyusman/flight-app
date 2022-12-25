@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { IoIosArrowDropdown, IoIosTimer } from "react-icons/io";
-import { MdOutlineLuggage } from "react-icons/md";
+import { IoIosArrowDropdown, IoMdArrowRoundForward } from "react-icons/io";
+import {
+  MdOutlineLuggage,
+  MdOutlineAirlineSeatReclineNormal,
+} from "react-icons/md";
 import { HiArrowSmLeft } from "react-icons/hi";
-import { BiJoystick } from "react-icons/bi";
+
 import { GiBackpack } from "react-icons/gi";
 import Link from "next/link";
 import Image from "next/image";
@@ -73,19 +76,45 @@ export default function Wishlist() {
       {data.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center ">
-            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-7">
-              <div className="flex-row mx-4  md:flex items-center  justify-between j ">
-                <p>Ticket ID : {item.ticket_id} </p>
-                <div className="flex gap-1 items-center">
+            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-3">
+              <div className="flex-row mx-4 md:mx-2 md:flex items-center  justify-between  ">
+                <figure className="max-w-md flex md:block md:mb-0 gap-2 mb-1">
+                  <Image
+                    className="w-7 lg:w-10 flex  "
+                    src={item.Ticket.photo}
+                    alt="logo penerbangan"
+                    width={100}
+                    height={100}
+                  ></Image>
+                  <figcaption className="mt-2 text-xs  text-gray-500 dark:text-gray-400">
+                    {item.Ticket.Flight.Plane.name}
+                  </figcaption>
+                </figure>
+                <div className="flex items-center gap-1">
+                  <MdOutlineAirlineSeatReclineNormal className="text-green-700 text-lg" />
                   <p>{item.Ticket.type}</p>
                 </div>
-                <div className="flex gap-1 items-center">
+                <div className="flex items-center gap-4 lg:gap-6 my-1  lg:my-0">
+                  <p className="">
+                    {new Date(item.Ticket.Flight.departure_time).getHours()}
+                    {" : "}
+                    {new Date(item.Ticket.Flight.departure_time).getMinutes()}
+                  </p>
+                  <IoMdArrowRoundForward />
+                  <p className="">
+                    {new Date(item.Ticket.Flight.arrival_time).getHours()}
+                    {" : "}
+                    {new Date(item.Ticket.Flight.arrival_time).getMinutes()}
+                  </p>
+                </div>
+
+                <div className="flex gap-1 items-center my-1  lg:my-0">
                   <p>RP/ </p>
                   <p>{item.Ticket.price}</p>
                   <p>/Pax</p>
                 </div>
                 <div className="flex lg:gap-10 md:gap-3 justify-between">
-                  <Link href={`/search/flight/book/{item.ticket_id}`}>
+                  <Link href={`search/flight/${item.ticket_id}`}>
                     <button
                       type="button"
                       className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
@@ -123,19 +152,64 @@ export default function Wishlist() {
                 : "max-h-0"
             } `}
           >
-            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7 border-b-2">
-              <div className=" md:flex items-start  justify-between lg:justify-around ">
-                <Image
-                  className="w-16 lg:w-24 flex "
-                  src={item.Ticket.photo}
-                  alt="logoMaskapai"
-                  width={100}
-                  height={100}
-                />
-                <div className=" items-center gap-7 text-gray-600 tracking-wide antialiased my-2">
-                  <div className="flex lg:gap-20   gap-7 items-center">
-                    <div className="w-auto ">
-                      <p className="text-justify text-sm">{item.Ticket.desc}</p>
+            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7 mb-1">
+              <div className=" md:flex items-start  justify-between  ">
+                <figure className="max-w-md">
+                  <Image
+                    className="w-10 lg:w-12 flex "
+                    src={item.Ticket.photo}
+                    alt="logo penerbangan"
+                    width={50}
+                    height={50}
+                  ></Image>
+                  <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
+                    {item.Ticket.Flight.Plane.name}
+                  </figcaption>
+                </figure>
+                <div className="flex items-start  justify-between gap-7 md:gap-20 lg:gap-32 text-gray-600 tracking-wide antialiased my-2">
+                  <div className="flex-row lg:gap-20 gap-7 items-center">
+                    <div className="mb-2">
+                      <p className="font-bold text-xl">
+                        {new Date(item.Ticket.Flight.departure_time).getHours()}
+                        {" : "}
+                        {new Date(
+                          item.Ticket.Flight.departure_time
+                        ).getMinutes()}
+                      </p>
+                      <p>
+                        {new Date(
+                          item.Ticket.Flight.departure_time
+                        ).toDateString()}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-xl">
+                        {new Date(item.Ticket.Flight.arrival_time).getHours()}
+                        {" : "}
+                        {new Date(item.Ticket.Flight.arrival_time).getMinutes()}
+                      </p>
+                      <p>
+                        {new Date(
+                          item.Ticket.Flight.arrival_time
+                        ).toDateString()}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex-row  max-w-sm lg:gap-20 gap-5  items-center">
+                    <div className="mb-4">
+                      <p className="text-md">
+                        {item.Ticket.Flight.from.city} (
+                        {item.Ticket.Flight.from.city_code})
+                      </p>
+                      <p className="text-sm">{item.Ticket.Flight.from.name}</p>
+                    </div>
+                    <div className=" ">
+                      <p className="text-md">
+                        {item.Ticket.Flight.to.city}(
+                        {item.Ticket.Flight.to.city_code})
+                      </p>
+                      <p className="text-sm">{item.Ticket.Flight.to.name}</p>
                     </div>
                   </div>
                 </div>

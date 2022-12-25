@@ -1,23 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
 import { Dropdown } from "flowbite-react";
-
+import { IoMdArrowRoundForward, IoIosArrowDropdown } from "react-icons/io";
 import {
-  IoMdArrowRoundForward,
-  IoIosArrowDropdown,
-  IoIosTimer,
-} from "react-icons/io";
-
-import { MdOutlineLuggage } from "react-icons/md";
+  MdOutlineLuggage,
+  MdOutlineAirlineSeatReclineNormal,
+} from "react-icons/md";
 import { BsHeartFill } from "react-icons/bs";
-import { AiOutlineFieldTime } from "react-icons/ai";
 import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
-import Image from "next/image";
-import logoMaskapai from "../public/images/lion_air.png";
 
 export default function ResultFlight() {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    ticket();
+  }, []);
+
+  const ticket = () => {
+    fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setData(data.data);
+        console.log("data", data.data);
+      });
+  };
 
   return (
     <div className="justify-center items-center flex-row">
@@ -49,134 +68,158 @@ export default function ResultFlight() {
       </div>
       {/* end title */}
       {/* ticket */}
-      <div className="flex justify-center ">
-        <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-7">
-          <div className="flex-row mx-4 md:mx-0 md:flex items-center  justify-between ">
-            <Image
-              className=" flex "
-              src={logoMaskapai}
-              alt="logo-maskapai"
-              width={100}
-              height={100}
-            />
-            <div className="flex items-center gap-4 lg:gap-6 my-1  lg:my-0">
-              <p>9 :30</p>
-              <IoMdArrowRoundForward />
-              <p>11 :30</p>
-              <div className="flex items-center gap-1">
+      {data.map((item) => (
+        <div key={item.id}>
+          <div className="flex justify-center ">
+            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-3">
+              <div className="flex-row mx-4 md:mx-2 md:flex items-center  justify-between ">
+                <figure className="max-w-md flex md:block md:mb-0 gap-2 mb-1">
+                  <Image
+                    className="w-7 lg:w-10 flex  "
+                    src={item.photo}
+                    alt="logo penerbangan"
+                    width={100}
+                    height={100}
+                  ></Image>
+                  <figcaption className="mt-2 text-xs  text-gray-500 dark:text-gray-400">
+                    {item.Flight.Plane.name}
+                  </figcaption>
+                </figure>
                 <div className="flex items-center gap-1">
-                  <AiOutlineFieldTime className="text-red-700 text-lg" />
-                  <p>2h 0m</p>
+                  <MdOutlineAirlineSeatReclineNormal className="text-green-700 text-lg" />
+                  <p>{item.type}</p>
                 </div>
-              </div>
-            </div>
-            <p className="flex gap-1 items-center my-1 lg:my-0">
-              <MdOutlineLuggage className="text-lg text-blue-700" />
-              20 KG
-            </p>
-            <div className="flex gap-1 items-center my-1  lg:my-0">
-              <p>RP/ </p>
-              <p>678.000</p>
-              <p>/Pax</p>
-            </div>
-            <div className="flex lg:gap-10 md:gap-3 justify-between">
-              <a href="search/flight">
-                <button
-                  type="button"
-                  className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
-                >
-                  Choose Flight
-                </button>
-              </a>
-
-              <button
-                type="button"
-                className={`text-gray-400 rounded-full my-1 lg:my-0 hover:shadow-2xl hover:bg-gray-100 hover:text-gray-500   ${
-                  isOpen && currentIndex === 1
-                    ? "rotate-180 duration-700 "
-                    : "rotate-0 duration-700"
-                } `}
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                  setCurrentIndex(1);
-                }}
-              >
-                <IoIosArrowDropdown
-                  className="w-full"
-                  style={{ width: "25px", height: "25px" }}
-                />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ticket desc */}
-      <div
-        className={`flex justify-center duration-700 ease-in-out overflow-hidden  ${
-          isOpen && currentIndex === 1 ? "max-h-auto lg:max-h-56" : "max-h-0"
-        } `}
-      >
-        <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7">
-          <div className=" md:flex items-start  justify-between lg:justify-around ">
-            <Image
-              className="flex "
-              src={logoMaskapai}
-              alt="logo-maskapai"
-              width={100}
-              height={100}
-            />
-            <div className=" items-center gap-7 text-gray-600 tracking-wide antialiased my-2">
-              <div className="flex lg:gap-10   gap-7 items-center">
-                <div>
-                  <p className="font-bold text-xl">10 : 30</p>
-                  <p>9 Dec 2022</p>
-                </div>
-                <div className="w-40  lg:w-auto ">
-                  <p className="text-md">Kendari ( KDI )</p>
-                  <p className="text-sm">Haluoleo Airport</p>
-                </div>
-              </div>
-              <div className="flex gap-2 my-2 items-center">
-                <IoIosTimer className="" />
-                <p> 1h:0m</p>
-              </div>
-              <div className="flex lg:gap-10 gap-5  items-center">
-                <div>
-                  <p className="font-bold text-xl">11 :30</p>
-                  <p>9 Dec 2022</p>
-                </div>
-                <div className=" w-40 lg:w-auto ">
-                  <p className="text-md">Makassar ( UPG )</p>
-                  <p className="text-sm">
-                    Sultan Hasanuddin International Airport
+                <div className="flex items-center gap-4 lg:gap-6 my-1  lg:my-0">
+                  <p className="">
+                    {new Date(item.Flight.departure_time).getHours()}
+                    {" : "}
+                    {new Date(item.Flight.departure_time).getMinutes()}
+                  </p>
+                  <IoMdArrowRoundForward />
+                  <p className="">
+                    {new Date(item.Flight.arrival_time).getHours()}
+                    {" : "}
+                    {new Date(item.Flight.arrival_time).getMinutes()}
                   </p>
                 </div>
+
+                <div className="flex gap-1 items-center my-1  lg:my-0">
+                  <p>RP/ </p>
+                  <p>{item.price}</p>
+                  <p>/Pax</p>
+                </div>
+                <div className="flex lg:gap-10 md:gap-3 justify-between">
+                  <a href="search/flight">
+                    <button
+                      type="button"
+                      className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
+                    >
+                      Choose Flight
+                    </button>
+                  </a>
+
+                  <button
+                    type="button"
+                    className={`text-gray-400 rounded-full my-1 lg:my-0 hover:shadow-2xl hover:bg-gray-100 hover:text-gray-500   ${
+                      isOpen && currentIndex === item.id
+                        ? "rotate-180 duration-700 "
+                        : "rotate-0 duration-700"
+                    } `}
+                    onClick={() => {
+                      setIsOpen(!isOpen);
+                      setCurrentIndex(item.id);
+                    }}
+                  >
+                    <IoIosArrowDropdown
+                      className="w-full"
+                      style={{ width: "25px", height: "25px" }}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm ">
-              <div className="flex gap-3 items-center my-1 lg:my-3 ">
-                <GiBackpack className="text-xl text-green-500" />
-                <p>Cabin Baggage 7kg</p>
+          </div>
+
+          {/* ticket desc */}
+          <div
+            className={`flex justify-center duration-700 ease-in-out overflow-hidden  ${
+              isOpen && currentIndex === item.id ? "max-h-auto " : "max-h-0"
+            } `}
+          >
+            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7 mb-1">
+              <div className=" md:flex items-start  justify-between  ">
+                <figure className="max-w-md">
+                  <Image
+                    className="w-10 lg:w-12 flex "
+                    src={item.photo}
+                    alt="logo penerbangan"
+                    width={50}
+                    height={50}
+                  ></Image>
+                  <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
+                    {item.Flight.Plane.name}
+                  </figcaption>
+                </figure>
+                <div className="flex items-start justify-between  gap-7 md:gap-20 lg:gap-32 text-gray-600 tracking-wide antialiased my-2">
+                  <div className="flex-row lg:gap-20 gap-7 items-center">
+                    <div className="mb-2">
+                      <p className="font-bold text-xl">
+                        {new Date(item.Flight.departure_time).getHours()}
+                        {" : "}
+                        {new Date(item.Flight.departure_time).getMinutes()}
+                      </p>
+                      <p>
+                        {new Date(item.Flight.departure_time).toDateString()}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-bold text-xl">
+                        {new Date(item.Flight.arrival_time).getHours()}
+                        {" : "}
+                        {new Date(item.Flight.arrival_time).getMinutes()}
+                      </p>
+                      <p>{new Date(item.Flight.arrival_time).toDateString()}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex-row  max-w-sm lg:gap-20 gap-5  items-center">
+                    <div className="mb-4">
+                      <p className="text-md">
+                        {item.Flight.from.city} ({item.Flight.from.city_code})
+                      </p>
+                      <p className="text-sm">{item.Flight.from.name}</p>
+                    </div>
+                    <div className=" ">
+                      <p className="text-md">
+                        {item.Flight.to.city}({item.Flight.to.city_code})
+                      </p>
+                      <p className="text-sm">{item.Flight.to.name}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex md:block items-center justify-between gap-7 text-gray-600 tracking-wide antialiased text-sm ">
+                  <div>
+                    <div className="flex gap-3 items-center my-1 lg:my-3 ">
+                      <GiBackpack className="text-xl text-green-500" />
+                      <p>Cabin Baggage {item.cabin_baggage}</p>
+                    </div>
+                    <div className="flex gap-3 items-center my-1 lg:my-3">
+                      <MdOutlineLuggage className="text-xl text-blue-500" />
+                      <p>Baggage {item.baggage}</p>
+                    </div>
+                  </div>
+                  <div className="lg:mt-2 justify-start flex ">
+                    <button className=" flex justify-center border-2  border-red-600 items-center gap-1 px-0.5 py-0.5 md:px-1  antialiased transition duration-300 tracking-normal bg-red-600 rounded-md text-white text-base font-medium hover:bg-white   hover:text-red-600">
+                      <BsHeartFill className="" />
+                      <p > add to wishlist</p>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="flex gap-3 items-center my-1 lg:my-3">
-                <MdOutlineLuggage className="text-xl text-blue-500" />
-                <p>Baggage 20kg</p>
-              </div>
-              <div className="flex gap-3 items-center my-1 lg:my-3">
-                <BiJoystick className="text-xl text-red-500" />
-                <p>Entertainment</p>
-              </div>
-            </div>
-            <div className="lg:mt-2 justify-end flex">
-              <button className=" flex justify-center border-2  border-red-600 items-center gap-2 px-1 py-1 antialiased transition duration-300 tracking-normal bg-red-600 rounded-md text-white text-base font-medium hover:bg-white   hover:text-red-600">
-                <BsHeartFill className="" />
-                <p> add to wishlist</p>
-              </button>
             </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 }

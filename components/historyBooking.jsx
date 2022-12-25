@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { IoIosArrowDropdown } from "react-icons/io";
+import {
+  MdOutlineLuggage,
+  MdOutlineAirlineSeatReclineNormal,
+} from "react-icons/md";
+
+import { GiBackpack } from "react-icons/gi";
 import { BsPerson } from "react-icons/bs";
 import { HiArrowSmLeft } from "react-icons/hi";
 import Image from "next/image";
@@ -27,21 +33,6 @@ export default function HistoryBooking() {
     setLoading(false);
   }, [router.isReady]);
 
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   const getTransaction = () => {
     const token = localStorage.getItem("token");
 
@@ -59,8 +50,6 @@ export default function HistoryBooking() {
         console.log("data", data.data);
       });
   };
-
-  
 
   return (
     <div className="justify-center items-center flex-row">
@@ -87,17 +76,13 @@ export default function HistoryBooking() {
       {data.map((item) => (
         <div key={item.id}>
           <div className="flex justify-center ">
-            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-7">
+            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-3">
               <div className="flex mx-2 md:flex items-center  justify-between ">
                 <p>Ticket ID : {item.Ticket.id}</p>
-
-                <Image
-                  className="w-10 hidden sm:flex"
-                  src={item.Ticket.photo}
-                  alt="logo maskapai"
-                  width={50}
-                  height={40}
-                ></Image>
+                <div className="flex items-center gap-1">
+                  <MdOutlineAirlineSeatReclineNormal className="text-green-700 text-lg" />
+                  <p>{item.Ticket.type}</p>
+                </div>
                 <p>
                   {new Date(item.Ticket.Flight.departure_time).toLocaleString(
                     "default",
@@ -135,22 +120,26 @@ export default function HistoryBooking() {
           </div>
 
           <div
-            className={`flex justify-center duration-700 ease-in-out overflow-hidden  ${
+            className={`flex justify-center duration-700 ease-in-out overflow-hidden ${
               isOpen && currentIndex === item.id ? "max-h-auto " : "max-h-0"
             } `}
           >
-            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2   shadow-md p-7">
+            <div className="lg:w-9/12 w-96 md:w-11/12 bg-white border-t-2  border-b-gray-300 border  shadow-md p-7">
               <div className=" md:flex items-start  justify-between  ">
-                <div className="">
+                <figure className="max-w-md">
                   <Image
-                    className="w-10 lg:w-16 flex "
+                    className="w-10 lg:w-12 flex "
                     src={item.Ticket.photo}
                     alt="logo penerbangan"
                     width={50}
                     height={50}
-                  />
-                </div>
-                <div className="flex items-start  gap-7 md:gap-10 text-gray-600 tracking-wide antialiased my-2">
+                  ></Image>
+                  <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
+                    {item.Ticket.Flight.Plane.name}
+                  </figcaption>
+                </figure>
+
+                <div className="flex items-start  justify-between gap-7 md:gap-20 lg:gap-32 text-gray-600 tracking-wide antialiased my-2">
                   <div className="flex-row lg:gap-20 gap-7 items-center">
                     <div className="mb-2">
                       <p className="font-bold text-xl">
@@ -197,15 +186,28 @@ export default function HistoryBooking() {
                     </div>
                   </div>
                 </div>
-                <hr className="md:hidden mt-2 mb-1"></hr>
-                <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm max-w-xs ">
+
+                <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm ">
+                  <div className="flex gap-3 items-center my-1 lg:my-3 ">
+                    <GiBackpack className="text-xl text-green-500" />
+                    <p>Cabin Baggage {item.Ticket.cabin_baggage}</p>
+                  </div>
+                  <div className="flex gap-3 items-center my-1 lg:my-3">
+                    <MdOutlineLuggage className="text-xl text-blue-500" />
+                    <p>Baggage {item.Ticket.baggage}</p>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <div className="flex-row md:flex justify-between gap-5 mt-4">
+                <div className="gap-7 w-full text-gray-600 tracking-wide antialiased text-sm mb-2 md:mb-0 ">
                   <div className="flex gap-2">
                     <BsPerson className="text-2xl font-bold  text-gray-700 " />
                     <h1 className="text-md font-bold antialiased tracking-wider text-gray-700">
                       Traveler Information
-                      <hr></hr>
                     </h1>
                   </div>
+                  <hr></hr>
                   <div className="flex gap-3 items-center my-1 lg:my-3">
                     <p>Name :</p>
                     <p>
@@ -221,41 +223,44 @@ export default function HistoryBooking() {
                     <textarea
                       id="message"
                       rows="4"
-                      className="block p-2.5 w-full text-sm text-gray-600 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className="block p-2.5 w-full text-sm text-gray-600  border  rounded-sm  border-gray-300 "
                       defaultValue={item.User.address}
+                      disabled
                     ></textarea>
                   </div>
                 </div>
-              </div>
-              <hr />
-              <div className=" items-center justify-between flex-row   bg-white  text-gray-600 tracking-wide antialiased mb-2">
-                <div className="w-full   flex-row md:flex justify-between  mt-3">
-                  <h1 className="text-base font-medium antialiased tracking-wider text-gray-700 ">
-                    Price Detail
-                  </h1>
-                </div>
-                <div className="">
-                  <div className="font-thin gap-5 my-2 text-sm flex justify-between">
-                    <div className="flex items-center gap-2 ">
-                      <p>Depart</p>
-                      <p>{item.Ticket.Flight.from.city_code}</p>
-                      <p>{item.Ticket.Flight.to.city_code}</p>
+                <div className="flex border-b-2 mb-2 md:hidden"></div>
+                <div className="border-l-2 border-gray-300"></div>
+                <div className="w-full items-center justify-between flex-row   bg-white  text-gray-600 tracking-wide antialiased mb-2">
+                  <div className="w-full   flex-row md:flex justify-between ">
+                    <h1 className="text-md font-bold antialiased tracking-wider text-gray-700">
+                      Price Detail
+                    </h1>
+                  </div>
+                  <hr></hr>
+                  <div className="">
+                    <div className="font-thin gap-5 my-2 text-sm flex justify-between">
+                      <div className="flex items-center gap-2 ">
+                        <p>Depart</p>
+                        <p>{item.Ticket.Flight.from.city_code}</p>
+                        <p>{item.Ticket.Flight.to.city_code}</p>
+                      </div>
+                      <p>RP {item.Ticket.price} </p>
                     </div>
-                    <p>RP {item.Ticket.price} </p>
-                  </div>
-                  <div className="flex justify-between text-sm font-thin my-1">
-                    <p>Traveler x 1</p>
-                    <p>RP {item.Ticket.price}</p>
-                  </div>
-                  <div className="flex justify-between text-sm font-thin my-1">
-                    <p>promo </p>
-                    <p>RP </p>
-                  </div>
-                  <div className="flex justify-between text-sm font-thin my-1"></div>
-                  <hr />
-                  <div className="flex justify-between text-sm font-bold tracking-wider my-2">
-                    <p>Total Price</p>
-                    <p>RP 678.000</p>
+                    <div className="flex justify-between text-sm font-thin my-1">
+                      <p>Traveler x 1</p>
+                      <p>RP {item.Ticket.price}</p>
+                    </div>
+                    <div className="flex justify-between text-sm font-thin my-1">
+                      <p>promo </p>
+                      <p>RP </p>
+                    </div>
+                    <div className="flex justify-between text-sm font-thin my-1"></div>
+                    <hr />
+                    <div className="flex justify-between text-sm font-bold tracking-wider my-2">
+                      <p>Total Price</p>
+                      <p>RP 678.000</p>
+                    </div>
                   </div>
                 </div>
               </div>
