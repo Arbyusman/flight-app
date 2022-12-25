@@ -2,25 +2,38 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Layout from "../../../../components/admin/Layout";
 import { Button } from "flowbite-react";
+import { TbPlaneInflight } from "react-icons/tb";
 
-export default function EditFlight() {
+export default function CreatePromo() {
   const router = useRouter();
-  const { id } = router.query;
+  const [field, setField] = useState({});
 
-  const [name, setName] = useState();
-  const [city, setCity] = useState();
-  const [country, setCountry] = useState();
+  const [plane, setPlane] = useState([]);
+  const [airport, setAirport] = useState([]);
+
+  const [err, setErr] = useState("");
+
+  function setValue(e) {
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
+
+    console.log({ name, value });
+
+    setField({
+      ...field,
+      [name]: value,
+    });
+  }
 
   useEffect(() => {
-    if (!id) {
-      return;
-    }
     handelGetAirport();
-  }, [router.isReady]);
+    handelGetPlane();
+  }, []);
 
-  const handelGetAirport = () => {
+  const handelGetPlane = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport/${id}`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/planes`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -29,106 +42,180 @@ export default function EditFlight() {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("airport", data.data);
-        setName(data.data.name);
-        setCity(data.data.city);
-        setCountry(data.data.country);
+        setPlane(data.data);
+        console.log("data airport", data.data);
       });
   };
 
-  async function handelUpdate() {
+  const handelGetAirport = () => {
     const token = localStorage.getItem("token");
-    const response = await fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport/${id}`, {
-      method: "PUT",
+    fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        name,
-        city,
-        country,
-      }),
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setAirport(data.data);
+        console.log("data plane", data.data);
+      });
+  };
+
+  async function handleUpdate(e) {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+
+    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/flight/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(field),
     }).catch((err) => {
       throw err;
     });
 
-    const data = await response.json();
-
-    console.log("data update", data.status);
-
+    const data = await req.json();
     if (data.status === "OK") {
-      alert("data bershail di ubah");
-      router.push("/admin/airport");
+      alert("Data Berhasil di Ubah");
+      console.log(data.status, "ini diaaaaa");
+      router.push("/admin/flight");
+    } else {
+      const errStatus = data.status;
+      const errMessage = data.message;
+      setErr(`${errStatus} ${errMessage}`);
     }
+    console.log(data.data, "data here");
+
+    setField({});
+    e.target.reset();
+
+    console.log(data);
   }
 
   return (
     <Layout>
       <div className="mt-10 block p-6 rounded-lg shadow-lg bg-white w-5/6 mx-auto">
-        <div className="w-100" method="PUT">
+        <form className="w-100">
           <div className="font-bold ">
             <h5 className="text-2xl text-center">Form Edit Flight</h5>
           </div>
           <div className="mt-10">
-            <div className="relative mt-3">
-              <input
-                type="text"
-                id="name"
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <label
-                htmlFor="name"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                Airport Name
-              </label>
+            <div className="flex gap-5 justify-center items-center">
+              <div className="relative w-full">
+                <label for="from_airport_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  From Aiport
+                </label>
+                <select
+                  id="from_airport_id"
+                  name="from_airport_id"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={setValue}
+                  value={airport}>
+                  <option selected disabled>
+                    Choose a Airport
+                  </option>
+                  {airport.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <TbPlaneInflight className="-mb-5 text-5xl text-gray-700" />
+              <div className="relative w-full">
+                <label for="to_airport_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  To Aiport
+                </label>
+                <select
+                  id="to_airport_id"
+                  name="to_airport_id"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={setValue}
+                  value={airport}>
+                  <option selected disabled>
+                    Choose a Airport
+                  </option>
+                  {airport.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div className="relative mt-3">
-              <input
-                type="text"
-                id="city"
-                name="city"
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <label
-                htmlFor="city"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                City
-              </label>
+
+            <div className="flex gap-14 mt-3 ">
+              <div className="relative w-full">
+                <label for="plane_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Plane
+                </label>
+                <select
+                  id="plane_id"
+                  name="plane_id"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={setValue}
+                  value={plane}>
+                  <option selected disabled>
+                    Choose a Plane
+                  </option>
+                  {plane.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      <p>{item.name}</p>
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div className="relative mt-3">
-              <input
-                type="text"
-                id="country"
-                name="country"
-                className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-              />
-              <label
-                htmlFor="country"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                Country
-              </label>
+            <div className="flex gap-14 mt-3 ">
+              <div className="relative w-full">
+                <label for="arrival_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Arrival Time
+                </label>
+                <input
+                  type="date"
+                  id="arrival_time"
+                  name="arrival_time"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="1000000"
+                  required
+                  onChange={setValue}
+                  value={arrival_time}
+                />
+              </div>
+              <div className="w-full">
+                <label for="departure_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Departure
+                </label>
+                <input
+                  type="date"
+                  id="departure_time"
+                  name="departure_time"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="1000000"
+                  required
+                  onChange={setValue}
+                  value={departure_time}
+                />
+              </div>
             </div>
           </div>
 
           <div className="flex justify-end ">
             <div className="flex justify-between mt-5 gap-5">
-              <Button href="/admin/airport" color="success">
+              <Button href="/admin/ticket" color="success">
                 Back
               </Button>
 
-              <Button type="submit" name="submit" onClick={handelUpdate} color="info">
+              <Button type="submit" name="submit" onClick={handleUpdate} color="info">
                 Update
               </Button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </Layout>
   );

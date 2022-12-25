@@ -33,7 +33,8 @@ export default function Airport() {
 
   const handleDelete = (id) => {
     const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${id}`, {
+    alert("Yakin ingin Menghapus Data?");
+    fetch(`${process.env.API_ENDPOINT}api/v1/airport/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -42,7 +43,7 @@ export default function Airport() {
       throw err;
     });
 
-    getListTicket();
+    handelGetAirport();
   };
 
   return (
@@ -67,6 +68,7 @@ export default function Airport() {
           <Table hoverable={true}>
             <Table.Head>
               <Table.HeadCell>Airport</Table.HeadCell>
+              <Table.HeadCell>City Code</Table.HeadCell>
               <Table.HeadCell>City</Table.HeadCell>
               <Table.HeadCell>Country</Table.HeadCell>
               <Table.HeadCell className="w-20">Action</Table.HeadCell>
@@ -75,6 +77,7 @@ export default function Airport() {
               {airport.map((item) => (
                 <Table.Row key={item.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                   <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{item.name}</Table.Cell>
+                  <Table.Cell>{item.city_code}</Table.Cell>
                   <Table.Cell>{item.city}</Table.Cell>
                   <Table.Cell>{item.country}</Table.Cell>
                   <Table.Cell>

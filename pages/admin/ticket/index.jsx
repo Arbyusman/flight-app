@@ -48,6 +48,7 @@ export default function Ticket() {
     }).catch((err) => {
       throw err;
     });
+
     alert("Data berhasil Di hapus");
 
     getListTicket();

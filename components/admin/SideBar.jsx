@@ -74,7 +74,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/admin/choiceFlight" activeClassName="active">
+        <Link href="/admin/flight" activeClassName="active">
           <div
             className={`pl-6 py-3 text-white  mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors  ${
               router.pathname === "/flight" ? "bg-orange-100 text-orange-500" : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"

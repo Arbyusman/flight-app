@@ -32,11 +32,18 @@ export default function Plane() {
   };
 
   const handleDelete = (id) => {
+    const token = localStorage.getItem("token");
+    alert("Yakin ingin Menghapus Data?");
     fetch(`${process.env.API_ENDPOINT}api/v1/planes/${id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }).catch((err) => {
       throw err;
     });
+
+    handelGetPlane();
   };
 
   return (
