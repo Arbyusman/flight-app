@@ -1,5 +1,5 @@
 
-import { NavbarComponent,Footer,ConfirmFlight } from "../../../../components";
+import { NavbarComponent,Footer,ConfirmFlight } from "../../../components";
 
 export default function Book() {
   return (

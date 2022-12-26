@@ -49,14 +49,11 @@ export default function login() {
     } else if (data.status === "OK" && data.data.role === "buyer") {
       localStorage.setItem("token", data.data.token);
       router.push("/");
-      setLoginLoading(false);
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
-      setTimeout(() => {
-        setLoginLoading(false);
-      }, 2000);
+      setLoginLoading(false);
     }
   }
 
@@ -113,7 +110,6 @@ export default function login() {
                     required={true}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                   
                   />
                 </div>
                 <div>

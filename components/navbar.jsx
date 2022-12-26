@@ -107,16 +107,15 @@ export default function NavbarComponent() {
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/admin");
-      loginLoading(false);
+      setLoginLoading(false);
     } else if (data.status === "OK" && data.data.role === "buyer") {
       localStorage.setItem("token", data.data.token);
       whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
-      router.push("/");
-      loginLoading(false);
+      setLoginLoading(false);
     } else {
-      loginLoading(false);
+      setLoginLoading(false);
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
