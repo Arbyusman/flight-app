@@ -11,7 +11,7 @@ import { BsHeartFill } from "react-icons/bs";
 import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
 
-export default function ResultFlight() {
+export default function ResultFlight(props) {
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +21,7 @@ export default function ResultFlight() {
 
   useEffect(() => {
     ticket();
+    console.log(props);
   }, []);
 
   const ticket = () => {

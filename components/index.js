@@ -7,6 +7,7 @@ import UserProfile from "./userProfile";
 
 import Carousel from "./carouselPromo";
 import SearchForm from "./searchFlightForm";
+import SearchForm2 from "./search";
 import SideBar from "./admin/SideBar";
 import TopBar from "./admin/TopBar";
 import Layout from "./admin/Layout";
