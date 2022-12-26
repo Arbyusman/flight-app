@@ -176,14 +176,13 @@ export default function UserProfile() {
                       >
                         Full Name
                       </label>
-                      <span
+                      <input
                         type="text"
                         id="first_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John Doe"
-                      >
-                        {firstName} {lastName}
-                      </span>
+                        readOnly={`${firstName} ${lastName}`}
+                      />
                     </div>
                   </div>
                   <div className="flex w-full px-4  gap-4">
@@ -199,7 +198,7 @@ export default function UserProfile() {
                         id="first_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John"
-                        value={firstName}
+                        readOnly={firstName}
                         disabled
                       />
                     </div>
@@ -215,7 +214,7 @@ export default function UserProfile() {
                         id="last_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="Doe"
-                        value={lastName}
+                        readOnly={lastName}
                         disabled
                       />
                     </div>
@@ -234,7 +233,7 @@ export default function UserProfile() {
                         id="phone"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="+628222"
-                        value={phone}
+                        readOnly={phone}
                         disabled
                       />
                     </div>
@@ -252,8 +251,8 @@ export default function UserProfile() {
                         rows="4"
                         className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="adress here"
-                        value={address}
                         disabled
+                        value={address}
                       ></textarea>
                     </div>
                   </div>

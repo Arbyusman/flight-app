@@ -22,6 +22,10 @@ const SearchFlightForm = () => {
 
   const [airport, setAirport] = useState([]);
 
+  const [fromSelectedCity, setFromSelectedCity] = useState("");
+  const [toSelectedCity, setToSelectedCity] = useState("");
+  const [query, setQuery] = useState("");
+
   const [departureNative, setDepartureNative] = useState("");
   const onDepartureNativeChange = (e) => {
     console.log("onDepartureNativeChange: ", e.target.value);
@@ -36,13 +40,27 @@ const SearchFlightForm = () => {
 
   useEffect(() => {
     handelGetAirport();
+    handelGetTicket();
 
     if (fromSelectedCity !== toSelectedCity) {
     }
   }, []);
 
+  const handelFilter = () => {
+    console.log(fromSelectedCity, toSelectedCity, departureNative);
+  };
+  const handelGetTicket = () => {
+    fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        console.log("data ticket", data.data);
+        setAirport(data.data);
+      });
+  };
   const handelGetAirport = () => {
-    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
       method: "GET",
     })
@@ -53,9 +71,6 @@ const SearchFlightForm = () => {
         setAirport(data.data);
       });
   };
-  const [fromSelectedCity, setFromSelectedCity] = useState("");
-  const [toSelectedCity, setToSelectedCity] = useState("");
-  const [query, setQuery] = useState("");
 
   const filteredCity =
     query === ""
@@ -72,7 +87,7 @@ const SearchFlightForm = () => {
           className="border-none"
         >
           <Tabs.Item active={true} title="One-Way">
-            <form action="/search" method="GET">
+            <div action="/search" method="GET">
               <div className="flex justify-between flex-col md:flex-row md:space-x-2 md:space-y-0 space-y-2">
                 <div
                   id="from"
@@ -135,7 +150,9 @@ const SearchFlightForm = () => {
                                         {`, ${city.country}`}
                                       </p>
 
-                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
+                                      <p className="text-xs tracking-normal antialiased">
+                                        {city.name}
+                                      </p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -219,7 +236,9 @@ const SearchFlightForm = () => {
                                         {`, ${city.country}`}
                                       </p>
 
-                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
+                                      <p className="text-xs tracking-normal antialiased">
+                                        {city.name}
+                                      </p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -329,12 +348,16 @@ const SearchFlightForm = () => {
                   </Listbox>
                 </div>
                 <div>
-                  <Button type="submit" className="h-full">
+                  <Button
+                    onClick={handelFilter}
+                    type="submit"
+                    className="h-full"
+                  >
                     Cari
                   </Button>
                 </div>
               </div>
-            </form>
+            </div>
           </Tabs.Item>
           <Tabs.Item title="Roundtrip">
             <form>
@@ -395,12 +418,14 @@ const SearchFlightForm = () => {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                     <p className="font-semibold antialiased tracking-normal">
+                                      <p className="font-semibold antialiased tracking-normal">
                                         {city.city}
                                         {`, ${city.country}`}
                                       </p>
 
-                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
+                                      <p className="text-xs tracking-normal antialiased">
+                                        {city.name}
+                                      </p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -479,12 +504,14 @@ const SearchFlightForm = () => {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                     <p className="font-semibold antialiased tracking-normal">
+                                      <p className="font-semibold antialiased tracking-normal">
                                         {city.city}
                                         {`, ${city.country}`}
                                       </p>
 
-                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
+                                      <p className="text-xs tracking-normal antialiased">
+                                        {city.name}
+                                      </p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -609,7 +636,11 @@ const SearchFlightForm = () => {
                   </Listbox>
                 </div>
                 <div>
-                  <Button type="submit" className="h-full">
+                  <Button
+                    onClick={handelFilter}
+                    type="submit"
+                    className="h-full"
+                  >
                     Cari
                   </Button>
                 </div>

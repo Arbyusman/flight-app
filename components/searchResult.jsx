@@ -8,7 +8,6 @@ import {
   MdOutlineAirlineSeatReclineNormal,
 } from "react-icons/md";
 import { BsHeartFill } from "react-icons/bs";
-import { BiJoystick } from "react-icons/bi";
 import { GiBackpack } from "react-icons/gi";
 
 export default function ResultFlight() {
@@ -17,12 +16,15 @@ export default function ResultFlight() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
 
+  const [userId, setUserId] = useState("");
+
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    whoami();
     ticket();
   }, []);
-
+  
   const ticket = () => {
     fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
       method: "GET",
@@ -34,9 +36,53 @@ export default function ResultFlight() {
 
       .then((data) => {
         setData(data.data);
-        console.log("data", data.data);
       });
   };
+
+  const whoami = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setUserId(data.data.id);
+      });
+  };
+
+  async function addToWishlist() {
+    const ticket_id = currentIndex;
+    const user_id = userId;
+    const body = { user_id, ticket_id };
+
+    whoami();
+    const token = localStorage.getItem("token");
+    if (!token) router.push("login");
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/wishlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+      body: JSON.stringify(body),
+    }).catch((err) => {
+      throw err;
+    });
+
+    const data = await response.json();
+    console.log("wishlist", data);
+
+    if (data.status === "OK") {
+      alert("berhasil di tambahkan ke wislist");
+    }
+  }
 
   return (
     <div className="justify-center items-center flex-row">
@@ -109,7 +155,7 @@ export default function ResultFlight() {
                   <p>/Pax</p>
                 </div>
                 <div className="flex lg:gap-10 md:gap-3 justify-between">
-                  <a href="search/flight">
+                  <a href={`search/book/${item.id}`}>
                     <button
                       type="button"
                       className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
@@ -209,9 +255,12 @@ export default function ResultFlight() {
                     </div>
                   </div>
                   <div className="lg:mt-2 justify-start flex ">
-                    <button className=" flex justify-center border-2  border-red-600 items-center gap-1 px-0.5 py-0.5 md:px-1  antialiased transition duration-300 tracking-normal bg-red-600 rounded-md text-white text-base font-medium hover:bg-white   hover:text-red-600">
+                    <button
+                      onClick={addToWishlist}
+                      className=" flex justify-center border-2  border-red-600 items-center gap-1 px-0.5 py-0.5 md:px-1  antialiased transition duration-300 tracking-normal bg-red-600 rounded-md text-white text-base font-medium hover:bg-white   hover:text-red-600"
+                    >
                       <BsHeartFill className="" />
-                      <p > add to wishlist</p>
+                      <p> add to wishlist</p>
                     </button>
                   </div>
                 </div>
