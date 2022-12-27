@@ -26,10 +26,10 @@ export default function ConfirmFlight() {
 
   const [email, setEmail] = useState("");
 
-  const [firstName, setfirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [address, setAddress] = useState();
-  const [phone, setPhone] = useState();
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
 
   const [bookLoading, setBookLoading] = useState(false);
   useEffect(() => {
@@ -60,6 +60,32 @@ export default function ConfirmFlight() {
         setPhone(data.data.phone);
       });
   };
+
+  async function handelUpdate() {
+    const token = localStorage.getItem("token");
+    const response = await fetch(
+      `${process.env.API_ENDPOINT}api/v1/users/${userId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          phone,
+          address,
+        }),
+      }
+    ).catch((err) => {
+      throw err;
+    });
+
+    const data = await response.json();
+    console.log("data update", data);
+    whoami();
+  }
 
   const ticket = () => {
     fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${id}`, {
@@ -107,11 +133,11 @@ export default function ConfirmFlight() {
     });
 
     const data = await response.json();
-    console.log("book", data);
 
     if (data.status === "OK") {
       setBookLoading(false);
       setOpenModal(false);
+      router.push(`/history/${userId}`);
     }
   }
 
@@ -121,9 +147,9 @@ export default function ConfirmFlight() {
         <div className=" w-full lg:w-8/12 ">
           {/* Traveler Information */}
           <div className="flex justify-center  ">
-            <div className="w-full gap-5  bg-white  ">
-              <div className="w-full rounded-md  m-2">
-                <div className="w-full  rounded-t-md flex md:flex justify-start items-center gap-3  md:p-4">
+            <div className="w-full gap-5  ">
+              <div className="w-full  bg-white rounded-md pt-2 ">
+                <div className="w-full ml-4 mb-2 md:ml-0 md:mb-0  rounded-t-md flex md:flex justify-start items-center gap-3  md:p-4">
                   <BsPerson className="text-2xl font-bold  text-gray-700 " />
                   <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700">
                     Traveler
@@ -134,9 +160,9 @@ export default function ConfirmFlight() {
                 {/* form contact information */}
                 <div className="flex justify-center bg-white shadow-md  ">
                   <div className="w-full gap-5 flex justify-center   md:p-7">
-                    <div className="md:w-11/12 w-full">
-                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
-                        <div className="md:w-full">
+                    <div className="md:w-11/12 w-full mx-4 ">
+                      <div className="md:flex w-full  md:justify-start md:gap-10 md:mt-2 md:items-center">
+                        <div className="md:w-full w">
                           <label
                             htmlFor="first_name"
                             className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
@@ -147,10 +173,9 @@ export default function ConfirmFlight() {
                             type="text"
                             id="first_name"
                             className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                            onChange={(e) => setfirstName(e.target.value)}
                             value={firstName}
+                            onChange={(e) => setfirstName(e.target.value)}
                             placeholder="ex. john"
-                            required
                           />
                         </div>
                         <div className="md:w-full">
@@ -210,18 +235,28 @@ export default function ConfirmFlight() {
                         <div className="my-1 w-full">
                           <label
                             htmlFor="address"
-                            className="block mb-2 text-sm font-medium text-gray-900 bg-gray-50  "
+                            className="block mb-2 text-sm font-medium text-gray-900 "
                           >
                             Address
                           </label>
                           <textarea
                             id="address"
                             rows="4"
+                            placeholder="Kendari sulawesi tenggara"
                             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-0 focus:border-black "
-                            onChange={(e) => setAddress(e.target.value)}
                             value={address}
+                            onChange={(e) => setAddress(e.target.value)}
                           ></textarea>
                         </div>
+                      </div>
+                      <div className="justify-center flex mt-2">
+                        <button
+                          type="submit"
+                          onClick={handelUpdate}
+                          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                        >
+                          save
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -271,16 +306,16 @@ export default function ConfirmFlight() {
                       </figure>
                     </div>
 
-                    <div className="flex w-full justify-between    gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                      <p className="text-md font-semibold">
+                    <div className=" flex w-full justify-between  gap-2 text-gray-600 tracking-wide my-3 antialiased">
+                      <p className="text-sm md:text-md font-semibold">
                         {from.city} ( {from.city_code} ){" "}
                       </p>
-                      <TbPlane className="text-2xl text-green-700" />
-
-                      <p className="text-md font-semibold">
+                      <TbPlane className="text-2xl  text-green-700" />
+                      <p className="text-sm md:text-md font-semibold">
                         {to.city} ( {to.city_code} ){" "}
                       </p>
                     </div>
+
                     <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
                       <div className="flex gap-3 items-center my-1 lg:my-3 ">
                         <GiBackpack className="text-xl text-green-500" />
@@ -291,7 +326,7 @@ export default function ConfirmFlight() {
                         <p>Baggage {dataTicket.baggage}</p>
                       </div>
                     </div>
-                    <div className="font-normal gap-5 my-2 text-base flex justify-between">
+                    <div className="font-normal gap-5 my-2 text-sm md:text-base flex justify-between">
                       <div className="flex items-center gap-2 ">
                         <p>Depart</p>
                         <p>{from.city_code}</p>
@@ -336,9 +371,9 @@ export default function ConfirmFlight() {
             </Modal.Body>
           </Modal>
 
-          <div className="flex justify-center  ">
+          <div className="flex justify-center mt-4 ">
             <div className="w-full gap-5  bg-white  ">
-              <div className="w-full rounded-md  m-2">
+              <div className="w-full rounded-md ">
                 <div className=" items-center justify-center flex-row shadow-md  bg-white rounded-sm text-gray-600 tracking-wide antialiased ">
                   <div className="w-full   flex-row md:flex justify-between  px-7  py-5">
                     <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700 ">
@@ -372,7 +407,7 @@ export default function ConfirmFlight() {
                     </div>
                     <hr />
 
-                    <div className="flex w-full justify-between    gap-2 text-gray-600 tracking-wide my-3 antialiased">
+                    <div className="md:flex w-full justify-between    gap-2 text-gray-600 tracking-wide my-3 antialiased">
                       <div className="flex  gap-4 items-center">
                         <div>
                           <p className="font-bold text-xl">
