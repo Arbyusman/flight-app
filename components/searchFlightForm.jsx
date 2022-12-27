@@ -4,14 +4,9 @@ import { Combobox, Transition, Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import Router from "next/router";
 
-
-const categories = [
-  { category: "Economi" },
-  { category: "Business" },
-];
+const categories = [{ category: "Economi" }, { category: "Business" }];
 
 const SearchFlightForm = () => {
-
   const [selectedCategories, setSelectedCategories] = useState("");
   const [fromSelectedCity, setFromSelectedCity] = useState("");
   const [toSelectedCity, setToSelectedCity] = useState("");
@@ -32,9 +27,7 @@ const SearchFlightForm = () => {
     setArrivalNative(e.target.value);
   };
 
-
   const handelGetAirport = async () => {
-    const token = localStorage.getItem("token");
     await fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
       method: "GET",
     })
@@ -44,19 +37,20 @@ const SearchFlightForm = () => {
         setAirport(data.data);
       });
 
-      console.log(airport);
+    console.log(airport);
   };
 
   const handleGetTicket = async () => {
-    const token = localStorage.getItem("token");
     await fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
       method: "GET",
-    }).then((res) => res.json()).then((data) => {
-      setTicket(data.data);
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTicket(data.data);
+      });
 
     console.log(ticket);
-  }
+  };
 
   useEffect(() => {
     handelGetAirport();
@@ -66,35 +60,59 @@ const SearchFlightForm = () => {
     }
   }, []);
 
-  
-
   const handleSearchOneWayFlight = () => {
-    console.log(fromSelectedCity, toSelectedCity, departureNative, selectedCategories.category);
-    
-    const oneWayTicket = ticket.filter((item) => item.Flight.from.city == fromSelectedCity && item.Flight.to.city == toSelectedCity && item.type == selectedCategories.category);
+    console.log(
+      fromSelectedCity,
+      toSelectedCity,
+      departureNative,
+      selectedCategories.category
+    );
+
+    const oneWayTicket = ticket.filter(
+      (item) =>
+        item.Flight.from.city == fromSelectedCity &&
+        item.Flight.to.city == toSelectedCity &&
+        item.type == selectedCategories.category
+    );
 
     console.log(oneWayTicket);
     Router.push({
-      pathname: '/search',
-      query: { tickets1: JSON.stringify(oneWayTicket) }
-    })
-  }
+      pathname: "/search",
+      query: { tickets1: JSON.stringify(oneWayTicket) },
+    });
+  };
   const handleSearchRoundtripFlight = () => {
-    console.log(fromSelectedCity, toSelectedCity, departureNative, arrivalNative, selectedCategories.category);
-    
-    const roundtripTicket1 = ticket.filter((item) => item.Flight.from.city == fromSelectedCity && item.Flight.to.city == toSelectedCity && item.type == selectedCategories.category)
-    
-    const roundtripTicket2 = ticket.filter((item) => item.Flight.from.city == toSelectedCity && item.Flight.to.city == fromSelectedCity && item.type == selectedCategories.category)
+    console.log(
+      fromSelectedCity,
+      toSelectedCity,
+      departureNative,
+      arrivalNative,
+      selectedCategories.category
+    );
+
+    const roundtripTicket1 = ticket.filter(
+      (item) =>
+        item.Flight.from.city == fromSelectedCity &&
+        item.Flight.to.city == toSelectedCity &&
+        item.type == selectedCategories.category
+    );
+
+    const roundtripTicket2 = ticket.filter(
+      (item) =>
+        item.Flight.from.city == toSelectedCity &&
+        item.Flight.to.city == fromSelectedCity &&
+        item.type == selectedCategories.category
+    );
 
     console.log(roundtripTicket1, roundtripTicket2);
     Router.push({
-      pathname: '/search',
-      query: { 
+      pathname: "/search",
+      query: {
         tickets1: JSON.stringify(roundtripTicket1),
-        tickets2: JSON.stringify(roundtripTicket2)
-       }
-    })
-  }
+        tickets2: JSON.stringify(roundtripTicket2),
+      },
+    });
+  };
 
   const filteredCity =
     query === ""
@@ -113,13 +131,23 @@ const SearchFlightForm = () => {
           <Tabs.Item active={true} title="One-Way">
             <div action="" method="">
               <div className="flex justify-between flex-col md:flex-row md:space-x-2 md:space-y-0 space-y-2">
-                <div id="from" className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
-                  <label className="text-sm w-full font-bold mb-1 text-gray-500">Dari</label>
-                  <Combobox value={fromSelectedCity}
-                    onChange={setFromSelectedCity}>
+                <div
+                  id="from"
+                  className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
+                >
+                  <label className="text-sm w-full font-bold mb-1 text-gray-500">
+                    Dari
+                  </label>
+                  <Combobox
+                    value={fromSelectedCity}
+                    onChange={setFromSelectedCity}
+                  >
                     <div className="relative mt-1 w-full">
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
-                        <Combobox.Input className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0" onChange={(event) => setQuery(event.target.value)}/>
+                        <Combobox.Input
+                          className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
+                          onChange={(event) => setQuery(event.target.value)}
+                        />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                           <ChevronUpDownIcon
                             className="h-5 w-5 text-gray-400"
@@ -127,7 +155,13 @@ const SearchFlightForm = () => {
                           />
                         </Combobox.Button>
                       </div>
-                      <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0" afterLeave={() => setQuery("")}>
+                      <Transition
+                        as={Fragment}
+                        leave="transition ease-in duration-100"
+                        leaveFrom="opacity-100"
+                        leaveTo="opacity-0"
+                        afterLeave={() => setQuery("")}
+                      >
                         <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                           {filteredCity.length === 0 && query !== "" ? (
                             <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
@@ -135,7 +169,7 @@ const SearchFlightForm = () => {
                             </div>
                           ) : (
                             filteredCity.map((city) => (
-                              <Combobox.Option 
+                              <Combobox.Option
                                 key={city.id}
                                 className={({ active }) =>
                                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
@@ -186,7 +220,10 @@ const SearchFlightForm = () => {
                     </div>
                   </Combobox>
                 </div>
-                <div id="to" className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
+                <div
+                  id="to"
+                  className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
+                >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
                     Ke
                   </label>
@@ -284,7 +321,10 @@ const SearchFlightForm = () => {
                     </div>
                   </div>
                 </div>
-                <div id="category" className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
+                <div
+                  id="category"
+                  className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
+                >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
                     Kategori
                   </label>
@@ -350,7 +390,11 @@ const SearchFlightForm = () => {
                   </Listbox>
                 </div>
                 <div>
-                  <Button type="submit" className="h-full" onClick={handleSearchOneWayFlight}>
+                  <Button
+                    type="submit"
+                    className="h-full"
+                    onClick={handleSearchOneWayFlight}
+                  >
                     Cari
                   </Button>
                 </div>
@@ -634,7 +678,11 @@ const SearchFlightForm = () => {
                   </Listbox>
                 </div>
                 <div>
-                  <Button type="submit" className="h-full" onClick={handleSearchRoundtripFlight}>
+                  <Button
+                    type="submit"
+                    className="h-full"
+                    onClick={handleSearchRoundtripFlight}
+                  >
                     Cari
                   </Button>
                 </div>

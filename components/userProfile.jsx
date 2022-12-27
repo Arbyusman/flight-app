@@ -176,13 +176,14 @@ export default function UserProfile() {
                       >
                         Full Name
                       </label>
-                      <input
+                      <span
                         type="text"
                         id="first_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John Doe"
-                        readOnly={`${firstName} ${lastName}`}
-                      />
+                      >
+                        {`${firstName} ${lastName}`}
+                      </span>
                     </div>
                   </div>
                   <div className="flex w-full px-4  gap-4">
@@ -193,14 +194,14 @@ export default function UserProfile() {
                       >
                         First Name
                       </label>
-                      <input
+                      <span
                         type="text"
                         id="first_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John"
-                        readOnly={firstName}
-                        disabled
-                      />
+                      >
+                        {firstName}
+                      </span>
                     </div>
                     <div className="my-1 w-full">
                       <label
@@ -209,14 +210,14 @@ export default function UserProfile() {
                       >
                         Last Name
                       </label>
-                      <input
+                      <span
                         type="text"
                         id="last_name"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="Doe"
-                        readOnly={lastName}
-                        disabled
-                      />
+                      >
+                        {lastName}
+                      </span>
                     </div>
                   </div>
 
@@ -228,14 +229,14 @@ export default function UserProfile() {
                       >
                         Contact
                       </label>
-                      <input
+                      <span
                         type="phone"
                         id="phone"
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="+628222"
-                        readOnly={phone}
-                        disabled
-                      />
+                      >
+                        {phone}
+                      </span>
                     </div>
                   </div>
                   <div className="flex w-full px-4 ">

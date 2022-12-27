@@ -9,24 +9,22 @@ import {
 } from "react-icons/md";
 import { BsHeartFill } from "react-icons/bs";
 import { GiBackpack } from "react-icons/gi";
+import { set } from "react-hook-form";
 
 export default function ResultFlight() {
   const router = useRouter();
   let data1, data2;
 
-  const {
-    tickets1, tickets2
-  } = router.query
+  const { tickets1, tickets2 } = router.query;
 
-  if(tickets1 && tickets2){
-    data1 = JSON.parse(tickets1)
-    data2 = JSON.parse(tickets2)
-  } else if(tickets1){
-    data1 = JSON.parse(tickets1)
+  if (tickets1 && tickets2) {
+    data1 = JSON.parse(tickets1);
+    data2 = JSON.parse(tickets2);
+  } else if (tickets1) {
+    data1 = JSON.parse(tickets1);
   } else {
-    data1 = "Data Tidak Ada"
+    data1 = "Data Tidak Ada";
   }
-
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
@@ -37,30 +35,16 @@ export default function ResultFlight() {
 
   useEffect(() => {
     whoami();
-    ticket();
 
     if (data1 && data2) {
       console.log(data1, data2);
-    }else if(data1){
+    } else if (data1) {
       console.log(data1);
-    }else{
+    } else {
       console.log("data tidak ada");
     }
+    setData(data1, data2);
   }, []);
-  
-  const ticket = () => {
-    fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-
-      .then((data) => {
-        setData(data.data);
-      });
-  };
 
   const whoami = () => {
     const token = localStorage.getItem("token");
@@ -100,7 +84,6 @@ export default function ResultFlight() {
     });
 
     const data = await response.json();
-    console.log("wishlist", data);
 
     if (data.status === "OK") {
       alert("berhasil di tambahkan ke wislist");
