@@ -39,9 +39,8 @@ export default function NavbarComponent() {
 
   useEffect(() => {
     whoami();
-    if (id) {
-      getNotifications();
-    }
+    if (id) getNotifications();
+
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
   }, []);
@@ -58,6 +57,7 @@ export default function NavbarComponent() {
       .then((res) => res.json())
 
       .then((data) => {
+        console.log(data);
         setId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
@@ -66,15 +66,12 @@ export default function NavbarComponent() {
 
   const getNotifications = () => {
     const token = localStorage.getItem("token");
-    const response = fetch(
-      `${process.env.API_ENDPOINT}api/v1/notification/user/${id}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    )
+    fetch(`${process.env.API_ENDPOINT}api/v1/notification/user/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
 
       .then((data) => {
@@ -163,21 +160,24 @@ export default function NavbarComponent() {
                 </div>
                 <hr></hr>
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
-                  <div className="flex">
+                  <div className="flex md:block">
                     {notification.map((item) => (
-                      <div key={item.id} className="mx-2">
-                        <p className="text-xs text-gray-500 text-justify w-full ">
+                      <div
+                        className="flex items-center justify-start"
+                        key={item.id}
+                      >
+                        <div className="flex gap-2 text-xs text-gray-500 text-left w-full ">
                           {item.transaction_id}
-                        </p>
-                        <p
-                          className={`text-xs text-gray-500 text-justify w-full ${
-                            item.isRead === false
-                              ? "bg-yellow-200"
-                              : "bg-red-400"
-                          } `}
-                        >
-                          <button>{item.message}</button>
-                        </p>
+                          <p
+                            className={`text-xs text-gray-500 text-left w-full ${
+                              item.isRead === false
+                                ? "bg-yellow-200"
+                                : "bg-red-400"
+                            } `}
+                          >
+                            <button>{item.message}</button>
+                          </p>
+                        </div>
                       </div>
                     ))}
                   </div>

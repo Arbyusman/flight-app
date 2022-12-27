@@ -9,9 +9,22 @@ import {
 } from "react-icons/md";
 import { BsHeartFill } from "react-icons/bs";
 import { GiBackpack } from "react-icons/gi";
+import { set } from "react-hook-form";
 
 export default function ResultFlight() {
   const router = useRouter();
+  let data1, data2;
+
+  const { tickets1, tickets2 } = router.query;
+
+  if (tickets1 && tickets2) {
+    data1 = JSON.parse(tickets1);
+    data2 = JSON.parse(tickets2);
+  } else if (tickets1) {
+    data1 = JSON.parse(tickets1);
+  } else {
+    data1 = "Data Tidak Ada";
+  }
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
@@ -22,22 +35,16 @@ export default function ResultFlight() {
 
   useEffect(() => {
     whoami();
-    ticket();
-  }, []);
-  
-  const ticket = () => {
-    fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
 
-      .then((data) => {
-        setData(data.data);
-      });
-  };
+    if (data1 && data2) {
+      console.log(data1, data2);
+    } else if (data1) {
+      console.log(data1);
+    } else {
+      console.log("data tidak ada");
+    }
+    setData(data1, data2);
+  }, []);
 
   const whoami = () => {
     const token = localStorage.getItem("token");
@@ -77,7 +84,6 @@ export default function ResultFlight() {
     });
 
     const data = await response.json();
-    console.log("wishlist", data);
 
     if (data.status === "OK") {
       alert("berhasil di tambahkan ke wislist");
@@ -91,7 +97,7 @@ export default function ResultFlight() {
         <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
           <div className="text-gray-700">
             <h1 className="font-semibold tracking-wide antialiased text-lg">
-              Penerbangan keberangkatan ke bandara makassar
+              Penerbangan keberangkatan dari bandara ke bandara
             </h1>
             <div className="flex gap-2 text-sm">
               <p>kam, 8 Des 2022</p>
