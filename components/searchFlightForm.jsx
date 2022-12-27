@@ -2,8 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { Tabs, Button } from "flowbite-react";
 import { Combobox, Transition, Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { useRouter } from "next/router";
-import ResultFlight from "./searchResult";
+import Router from "next/router";
 
 
 const categories = [
@@ -12,7 +11,6 @@ const categories = [
 ];
 
 const SearchFlightForm = () => {
-  const router = useRouter();
 
   const [selectedCategories, setSelectedCategories] = useState("");
   const [fromSelectedCity, setFromSelectedCity] = useState("");
@@ -21,8 +19,6 @@ const SearchFlightForm = () => {
   const [query2, setQuery2] = useState("");
   const [airport, setAirport] = useState([]);
   const [ticket, setTicket] = useState([]);
-  const [oneWayTicket, setOneWayTicket] = useState([]);
-  const [roundTripTicket, setRoundTripTicket] = useState([]);
 
   const [departureNative, setDepartureNative] = useState("");
   const onDepartureNativeChange = (e) => {
@@ -37,17 +33,9 @@ const SearchFlightForm = () => {
   };
 
 
-  useEffect(() => {
-    handelGetAirport();
-    handleGetTicket();
-
-    if (fromSelectedCity !== toSelectedCity) {
-    }
-  }, []);
-
-  const handelGetAirport = () => {
+  const handelGetAirport = async () => {
     const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
+    await fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
       method: "GET",
     })
       .then((res) => res.json())
@@ -61,7 +49,7 @@ const SearchFlightForm = () => {
 
   const handleGetTicket = async () => {
     const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
+    await fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
       method: "GET",
     }).then((res) => res.json()).then((data) => {
       setTicket(data.data);
@@ -69,28 +57,43 @@ const SearchFlightForm = () => {
 
     console.log(ticket);
   }
+
+  useEffect(() => {
+    handelGetAirport();
+    handleGetTicket();
+
+    if (fromSelectedCity !== toSelectedCity) {
+    }
+  }, []);
+
   
 
   const handleSearchOneWayFlight = () => {
-    // console.log(fromSelectedCity, toSelectedCity, departureNative, selectedCategories.category);
+    console.log(fromSelectedCity, toSelectedCity, departureNative, selectedCategories.category);
     
-    const filterTicket = ticket.filter((item) => item.Flight.from.city == fromSelectedCity && item.Flight.to.city == toSelectedCity && item.type == selectedCategories.category)
-
-    setOneWayTicket(filterTicket);
+    const oneWayTicket = ticket.filter((item) => item.Flight.from.city == fromSelectedCity && item.Flight.to.city == toSelectedCity && item.type == selectedCategories.category);
 
     console.log(oneWayTicket);
-    router.push('/search')
+    Router.push({
+      pathname: '/search',
+      query: { tickets1: JSON.stringify(oneWayTicket) }
+    })
   }
   const handleSearchRoundtripFlight = () => {
     console.log(fromSelectedCity, toSelectedCity, departureNative, arrivalNative, selectedCategories.category);
     
-    const filterTicket1 = ticket.filter((item) => item.Flight.from.city == fromSelectedCity && item.Flight.to.city == toSelectedCity && item.type == selectedCategories.category)
+    const roundtripTicket1 = ticket.filter((item) => item.Flight.from.city == fromSelectedCity && item.Flight.to.city == toSelectedCity && item.type == selectedCategories.category)
     
-    const filterTicket2 = ticket.filter((item) => item.Flight.from.city == toSelectedCity && item.Flight.to.city == fromSelectedCity && item.type == selectedCategories.category)
+    const roundtripTicket2 = ticket.filter((item) => item.Flight.from.city == toSelectedCity && item.Flight.to.city == fromSelectedCity && item.type == selectedCategories.category)
 
-    setRoundTripTicket([filterTicket1, filterTicket2])
-
-    router.push('/search')
+    console.log(roundtripTicket1, roundtripTicket2);
+    Router.push({
+      pathname: '/search',
+      query: { 
+        tickets1: JSON.stringify(roundtripTicket1),
+        tickets2: JSON.stringify(roundtripTicket2)
+       }
+    })
   }
 
   const filteredCity =
@@ -632,7 +635,6 @@ const SearchFlightForm = () => {
           </Tabs.Item>
         </Tabs.Group>
       </div>
-      <ResultFlight oneWayTicket={oneWayTicket} roundTripTicket={roundTripTicket}/>
     </div>
   );
 };
