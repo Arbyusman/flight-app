@@ -9,7 +9,6 @@ import {
 } from "react-icons/md";
 import { BsHeartFill } from "react-icons/bs";
 import { GiBackpack } from "react-icons/gi";
-import { set } from "react-hook-form";
 
 export default function ResultFlight() {
   const router = useRouter();
@@ -38,12 +37,13 @@ export default function ResultFlight() {
 
     if (data1 && data2) {
       console.log(data1, data2);
+      setData(data1, data2);
     } else if (data1) {
+      setData(data1);
       console.log(data1);
     } else {
       console.log("data tidak ada");
     }
-    setData(data1, data2);
   }, []);
 
   const whoami = () => {

@@ -182,7 +182,7 @@ export default function UserProfile() {
                         className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                         placeholder="John Doe"
                       >
-                        {`${firstName} ${lastName}`}
+                        {firstName === null ? " " : `${firstName} ${lastName}`}
                       </span>
                     </div>
                   </div>

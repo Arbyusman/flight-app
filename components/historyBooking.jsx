@@ -77,7 +77,7 @@ export default function HistoryBooking() {
         <div key={item.id}>
           <div className="flex justify-center ">
             <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-3">
-              <div className="flex mx-2 md:flex items-center  justify-between ">
+              <div className="flex mx-2 md:flex items-center py-3 justify-between ">
                 <p>Ticket ID : {item.Ticket.id}</p>
                 <div className="flex items-center gap-1">
                   <MdOutlineAirlineSeatReclineNormal className="text-green-700 text-lg" />
