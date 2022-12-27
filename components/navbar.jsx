@@ -58,6 +58,7 @@ export default function NavbarComponent() {
       .then((res) => res.json())
 
       .then((data) => {
+        console.log(data);
         setId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);

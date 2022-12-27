@@ -12,6 +12,21 @@ import { GiBackpack } from "react-icons/gi";
 
 export default function ResultFlight() {
   const router = useRouter();
+  let data1, data2;
+
+  const {
+    tickets1, tickets2
+  } = router.query
+
+  if(tickets1 && tickets2){
+    data1 = JSON.parse(tickets1)
+    data2 = JSON.parse(tickets2)
+  } else if(tickets1){
+    data1 = JSON.parse(tickets1)
+  } else {
+    data1 = "Data Tidak Ada"
+  }
+
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
@@ -23,6 +38,14 @@ export default function ResultFlight() {
   useEffect(() => {
     whoami();
     ticket();
+
+    if (data1 && data2) {
+      console.log(data1, data2);
+    }else if(data1){
+      console.log(data1);
+    }else{
+      console.log("data tidak ada");
+    }
   }, []);
   
   const ticket = () => {
@@ -91,7 +114,7 @@ export default function ResultFlight() {
         <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
           <div className="text-gray-700">
             <h1 className="font-semibold tracking-wide antialiased text-lg">
-              Penerbangan keberangkatan ke bandara makassar
+              Penerbangan keberangkatan dari bandara ke bandara
             </h1>
             <div className="flex gap-2 text-sm">
               <p>kam, 8 Des 2022</p>
