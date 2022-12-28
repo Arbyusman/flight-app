@@ -49,11 +49,11 @@ export default function login() {
     } else if (data.status === "OK" && data.data.role === "buyer") {
       localStorage.setItem("token", data.data.token);
       router.push("/");
-      setLoginLoading(false);
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
+      setLoginLoading(false);
     }
   }
 
@@ -141,7 +141,7 @@ export default function login() {
                     {loginLoading && (
                       <svg
                         role="status"
-                        class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+                        className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"

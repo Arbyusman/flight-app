@@ -20,7 +20,7 @@ export default function EditFlight() {
 
   const handelGetAirport = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport/${id}`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/airport/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ export default function EditFlight() {
 
   async function handelUpdate() {
     const token = localStorage.getItem("token");
-    const response = await fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/airport/${id}`, {
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/airport/${id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,

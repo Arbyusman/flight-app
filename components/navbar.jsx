@@ -28,20 +28,21 @@ export default function NavbarComponent() {
   const [err, setErr] = useState("");
   const [imageProfile, setImageProfile] = useState("");
 
-  const [notification, setNotification] = useState("");
+  const [notification, setNotification] = useState([]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [isRead] = useState(true);
+
   const [loginLoading, setLoginLoading] = useState(false);
 
   useEffect(() => {
+    whoami();
+    if (id) getNotifications();
+
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
-    if (token) {
-      whoami();
-      getNotifications();
-    }
   }, []);
 
   const whoami = () => {
@@ -56,6 +57,7 @@ export default function NavbarComponent() {
       .then((res) => res.json())
 
       .then((data) => {
+        console.log(data);
         setId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
@@ -64,8 +66,8 @@ export default function NavbarComponent() {
 
   const getNotifications = () => {
     const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/notification/${id}`, {
-      method: "PUT",
+    fetch(`${process.env.API_ENDPOINT}api/v1/notification/user/${id}`, {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -102,16 +104,15 @@ export default function NavbarComponent() {
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/admin");
-      loginLoading(false);
+      setLoginLoading(false);
     } else if (data.status === "OK" && data.data.role === "buyer") {
       localStorage.setItem("token", data.data.token);
       whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
-      router.push("/");
-      loginLoading(false);
+      setLoginLoading(false);
     } else {
-      loginLoading(false);
+      setLoginLoading(false);
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
@@ -147,23 +148,38 @@ export default function NavbarComponent() {
             leaveFrom="transform scale-100"
             leaveTo="transform scale-95"
           >
-            <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
+            <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-gray-100 shadow-sm rounded max-w-xs w-screen md:w-screen">
               <div className="relative p-3">
-                <div className="flex justify-center items-center w-full">
+                <div className="flex justify-between items-center w-full">
                   <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
                     Notifications
                   </p>
+                  <button className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
+                    Read All
+                  </button>
                 </div>
                 <hr></hr>
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
-                  <div className="flex">
-                    {/* {notification.map((item) => (
-                      <div key={item.id} className="mx-2">
-                        <p className="text-xs text-gray-500 text-justify w-full ">
-                          1{item.message}
-                        </p>
+                  <div className="flex md:block">
+                    {notification.map((item) => (
+                      <div
+                        className="flex items-center justify-start"
+                        key={item.id}
+                      >
+                        <div className="flex gap-2 text-xs text-gray-500 text-left w-full ">
+                          {item.transaction_id}
+                          <p
+                            className={`text-xs text-gray-500 text-left w-full ${
+                              item.isRead === false
+                                ? "bg-yellow-200"
+                                : "bg-red-400"
+                            } `}
+                          >
+                            <button>{item.message}</button>
+                          </p>
+                        </div>
                       </div>
-                    ))} */}
+                    ))}
                   </div>
                 </div>
               </div>
@@ -231,7 +247,7 @@ export default function NavbarComponent() {
                     {loginLoading && (
                       <svg
                         role="status"
-                        class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
+                        className="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -281,13 +297,13 @@ export default function NavbarComponent() {
                 </Dropdown.Item>
 
                 <Dropdown.Item>
-                  <Link href={`profile/${id}`}>Profile</Link>
+                  <Link href={`/profile/${id}`}>Profile</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`history/${id}`}>History</Link>
+                  <Link href={`/history/${id}`}>History</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`wishlist/${id}`}>Wishlist</Link>
+                  <Link href={`/wishlist/${id}`}>Wishlist</Link>
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
