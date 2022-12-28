@@ -53,8 +53,8 @@ const SearchFlightForm = () => {
   };
 
   useEffect(() => {
-    handelGetAirport();
     handleGetTicket();
+    handelGetAirport();
 
     if (fromSelectedCity !== toSelectedCity) {
     }
@@ -72,7 +72,8 @@ const SearchFlightForm = () => {
       (item) =>
         item.Flight.from.city == fromSelectedCity &&
         item.Flight.to.city == toSelectedCity &&
-        item.type == selectedCategories.category
+        item.Flight.departure_date == departureNative &&
+        item.type == selectedCategories.category 
     );
 
     console.log(oneWayTicket);
@@ -94,6 +95,7 @@ const SearchFlightForm = () => {
       (item) =>
         item.Flight.from.city == fromSelectedCity &&
         item.Flight.to.city == toSelectedCity &&
+        item.Flight.departure_date == departureNative &&
         item.type == selectedCategories.category
     );
 
@@ -101,6 +103,7 @@ const SearchFlightForm = () => {
       (item) =>
         item.Flight.from.city == toSelectedCity &&
         item.Flight.to.city == fromSelectedCity &&
+        item.Flight.departure_date == arrivalNative &&
         item.type == selectedCategories.category
     );
 

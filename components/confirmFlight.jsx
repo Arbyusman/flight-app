@@ -253,7 +253,7 @@ export default function ConfirmFlight() {
                         <button
                           type="submit"
                           onClick={handelUpdate}
-                          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
                         >
                           save
                         </button>
