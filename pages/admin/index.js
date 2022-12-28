@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from "../../components/admin/Layout";
 import Dashboard from "../../components/admin/dashboard/dashboard";
 

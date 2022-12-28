@@ -72,36 +72,20 @@ export default function TopBar({ showNav, setShowNav }) {
   }
 
   return (
-    <div
-      className={`z-40 bg-blue-900 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${
-        showNav ? "pl-56" : ""
-      }`}
-    >
+    <div className={`z-40 bg-blue-900 shadow-xl fixed w-full h-16 flex justify-between items-center transition-all duration-[400ms] ${showNav ? "pl-56" : ""}`}>
       <div className="pl-4 md:pl-16">
-        <FaBars
-          className="h-8 w-8 text-white cursor-pointer"
-          onClick={() => setShowNav(!showNav)}
-        />
+        <FaBars className="h-8 w-8 text-white cursor-pointer" onClick={() => setShowNav(!showNav)} />
       </div>
       <div className="flex items-center text-white pr-4 md:pr-16">
         <Popover className="relative justify-center items-center">
           <Popover.Button className="outline-none mr-2 md:mr-3 cursor-pointer  ">
             <BiBell className="h-6 w-6 text-gray-100 hover:text-white active:text-gray-700 focus:text-gray-700" />
           </Popover.Button>
-          <Transition
-            enter="transition ease-out duration-100"
-            enterFrom="transform scale-95"
-            enterTo="transform scale-100"
-            leave="transition ease-in duration=75"
-            leaveFrom="transform scale-100"
-            leaveTo="transform scale-95"
-          >
+          <Transition enter="transition ease-out duration-100" enterFrom="transform scale-95" enterTo="transform scale-100" leave="transition ease-in duration=75" leaveFrom="transform scale-100" leaveTo="transform scale-95">
             <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
               <div className="relative p-3">
                 <div className="flex justify-center items-center w-full">
-                  <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
-                    Notifications
-                  </p>
+                  <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">Notifications</p>
                 </div>
                 <hr></hr>
                 <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
@@ -121,21 +105,9 @@ export default function TopBar({ showNav, setShowNav }) {
         </Popover>
         <div id="already-login" className={isLoggedIn ? "" : "hidden"}>
           {imageProfile === null ? (
-            <Dropdown
-              arrowIcon={false}
-              inline={true}
-              label={
-                <Avatar
-                  alt="User settings"
-                  img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                  rounded={true}
-                />
-              }
-            >
+            <Dropdown arrowIcon={false} inline={true} label={<Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded={true} />}>
               <Dropdown.Item className="flex-row">
-                <span className="block truncate text-sm font-medium">
-                  {username}
-                </span>
+                <span className="block truncate text-sm font-medium">{username}</span>
               </Dropdown.Item>
 
               <Dropdown.Item>
@@ -143,32 +115,15 @@ export default function TopBar({ showNav, setShowNav }) {
               </Dropdown.Item>
 
               <Dropdown.Divider />
-              <Dropdown.Item
-                onClick={handleLogout}
-                className="justify-center items-center flex gap-2"
-              >
+              <Dropdown.Item onClick={handleLogout} className="justify-center items-center flex gap-2">
                 <BsArrowLeftSquare />
                 <span>Sign out</span>
               </Dropdown.Item>
             </Dropdown>
           ) : (
-            <Dropdown
-              arrowIcon={false}
-              inline={true}
-              label={
-                <Avatar
-                  fetchpriority="high"
-                  alt="User settings"
-                  img={imageProfile}
-                  rounded={true}
-                  className="border border-gray-400 rounded-full shadow-md "
-                />
-              }
-            >
+            <Dropdown arrowIcon={false} inline={true} label={<Avatar fetchpriority="high" alt="User settings" img={imageProfile} rounded={true} className="border border-gray-400 rounded-full shadow-md " />}>
               <Dropdown.Item className="flex-row">
-                <span className="block truncate text-sm font-medium">
-                  {username}
-                </span>
+                <span className="block truncate text-sm font-medium">{username}</span>
               </Dropdown.Item>
 
               <Dropdown.Item>
@@ -176,10 +131,7 @@ export default function TopBar({ showNav, setShowNav }) {
               </Dropdown.Item>
 
               <Dropdown.Divider />
-              <Dropdown.Item
-                onClick={handleLogout}
-                className="justify-center items-center flex gap-2"
-              >
+              <Dropdown.Item onClick={handleLogout} className="justify-center items-center flex gap-2">
                 <BsArrowLeftSquare />
                 <span>Sign out</span>
               </Dropdown.Item>
