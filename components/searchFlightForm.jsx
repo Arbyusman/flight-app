@@ -53,8 +53,8 @@ const SearchFlightForm = () => {
   };
 
   useEffect(() => {
-    handelGetAirport();
     handleGetTicket();
+    handelGetAirport();
 
     if (fromSelectedCity !== toSelectedCity) {
     }
