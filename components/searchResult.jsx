@@ -63,8 +63,6 @@ export default function ResultFlight() {
   };
 
   useEffect(() => {
-    console.log("pilig tiket pergi", selectedTicket1);
-    console.log("pilig tiket pulang", selectedTicket2);
     handleGetTicket();
     whoami();
   }, [router.isReady]);
@@ -91,7 +89,7 @@ export default function ResultFlight() {
         pathname: "/search/book",
 
         query: {
-          ticket1: selectedTicket1,
+          ticket1: selectedTicket1[0].id,
         },
       });
     } else {
@@ -99,8 +97,8 @@ export default function ResultFlight() {
         pathname: "/search/book",
 
         query: {
-          ticket1: selectedTicket1,
-          ticket2: selectedTicket2,
+          ticket1: selectedTicket1[0].id,
+          ticket2: selectedTicket2[0].id,
         },
       });
     }
@@ -141,16 +139,104 @@ export default function ResultFlight() {
     <div className="justify-center items-center flex-row">
       {/* title */}
       <div className="flex justify-center items-center ">
-        <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-end shadow-md p-7">
-          <div></div>
-          <div className="flex">
-            <button
-              onClick={handelNext}
-              className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 "
-            >
-              Select Flight
-            </button>
+        <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
+          <div className="flex gap-10">
+            {!selectedTicket1 && <span>Select Departure Flight </span>}
+            {selectedTicket1 &&
+              selectedTicket1.map((item) => (
+                <div key={item.id}>
+                  <h1 className="font-normal tracking-wide antialiased text-base">
+                    Flights departing
+                    <hr />
+                  </h1>
+                  <div className="flex gap-5 items-center">
+                    <div className="text-sm text-gray-600">
+                      <Image
+                        className="w-7 lg:w-10 flex  "
+                        src={item.photo}
+                        alt="logo penerbangan"
+                        width={100}
+                        height={100}
+                      ></Image>
+                      <p className="">
+                        {new Date(item.Flight.departure_date).toDateString()}
+                      </p>
+                    </div>
+
+                    <div className="text-gray-600">
+                      <div className="flex items-center gap-1">
+                        <MdOutlineAirlineSeatReclineNormal className="text-green-700 text-lg" />
+                        <p>{item.type}</p>
+                      </div>
+                      <div className="flex text-sm items-center gap-1">
+                        <p>{item.Flight.from.city_code}</p>
+                        <IoMdArrowRoundForward />
+                        <p>{item.Flight.to.city_code}</p>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm   lg:my-0">
+                        <p className="">{item.Flight.departure_time}</p>
+                        <IoMdArrowRoundForward />
+                        <p className="">{item.Flight.arrival_time}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            <div className="border-l-2"></div>
+            {arrival && (
+              <div>
+                {!selectedTicket2 && <span>Select Return flight</span>}
+                {selectedTicket2 &&
+                  selectedTicket2.map((item) => (
+                    <div key={item.id}>
+                      <h1 className="font-normal tracking-wide antialiased text-base">
+                        Return flight
+                        <hr />
+                      </h1>
+                      <div className="flex gap-5 items-center">
+                        <div className="text-sm text-gray-600">
+                          <Image
+                            className="w-7 lg:w-10 flex  "
+                            src={item.photo}
+                            alt="logo penerbangan"
+                            width={100}
+                            height={100}
+                          ></Image>
+                          <p className="">
+                            {new Date(
+                              item.Flight.departure_date
+                            ).toDateString()}
+                          </p>
+                        </div>
+
+                        <div className="text-gray-600">
+                          <div className="flex items-center gap-1">
+                            <MdOutlineAirlineSeatReclineNormal className="text-green-700 text-lg" />
+                            <p>{item.type}</p>
+                          </div>
+                          <div className="flex text-sm items-center gap-1">
+                            <p>{item.Flight.from.city_code}</p>
+                            <IoMdArrowRoundForward />
+                            <p>{item.Flight.to.city_code}</p>
+                          </div>
+                          <div className="flex items-center gap-2 text-sm   lg:my-0">
+                            <p className="">{item.Flight.departure_time}</p>
+                            <IoMdArrowRoundForward />
+                            <p className="">{item.Flight.arrival_time}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
           </div>
+          <button
+            onClick={handelNext}
+            className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 h-10"
+          >
+            Select Flight
+          </button>
         </div>
       </div>
 
@@ -181,7 +267,7 @@ export default function ResultFlight() {
         </div>
       </div>
 
-      <Modal show={openModal} size="sm" popup={true} position={"top-center"}  >
+      <Modal show={openModal} size="sm" popup={true} position={"top-center"}>
         <Alert color="success" className="justify-center items-center">
           <span className="font-medium">
             Successfully added to the wishlist
@@ -227,9 +313,8 @@ export default function ResultFlight() {
                   <div className="flex lg:gap-10 md:gap-3 justify-between">
                     <div>
                       <button
-                        id={item.id}
                         onClick={() => {
-                          setSelectedTicket1(item.id);
+                          setSelectedTicket1([item]);
                         }}
                         type="button"
                         className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
@@ -420,9 +505,8 @@ export default function ResultFlight() {
                   <div className="flex lg:gap-10 md:gap-3 justify-between">
                     <div>
                       <button
-                        id={item.id}
                         onClick={() => {
-                          setSelectedTicket2(item.id);
+                          setSelectedTicket2([item]);
                         }}
                         type="button"
                         className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
