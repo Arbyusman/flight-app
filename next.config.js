@@ -5,8 +5,7 @@ const nextConfig = {
     domains: ["flowbite.com","res.cloudinary.com"],
   },
   env: {
-    API_ENDPOINT: process.env.API_ENDPOINT
+    API_ENDPOINT: process.env.API_ENDPOINT,
   },
-  
 };
 module.exports = nextConfig;

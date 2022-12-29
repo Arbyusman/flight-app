@@ -25,7 +25,7 @@ export default function CreatePlane() {
   async function doCreate(e) {
     e.preventDefault();
 
-    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
+    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/planes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,6 +38,7 @@ export default function CreatePlane() {
     const data = await req.json();
     if (data.status === "OK") {
       router.push("/admin/plane");
+      alert("Data berhasil ditambahkan");
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
@@ -70,8 +71,7 @@ export default function CreatePlane() {
               />
               <label
                 for="name"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                 Plane Name
               </label>
             </div>
@@ -86,18 +86,12 @@ export default function CreatePlane() {
               />
               <label
                 for="capacity"
-                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-              >
+                className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                 Capacity
               </label>
             </div>
             <div className="relative mt-3">
-              <select
-                id="status"
-                name="status"
-                onChange={setValue}
-                className="bg-gray-50 border border-gray-300 text-gray-500 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-              >
+              <select id="status" name="status" onChange={setValue} class="bg-gray-50 border border-gray-300 text-gray-500 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                 <option selected disabled>
                   Status
                 </option>
