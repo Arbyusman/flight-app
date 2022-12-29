@@ -191,7 +191,7 @@ export default function ConfirmFlight() {
                 <hr></hr>
 
                 {/* form contact information */}
-                <div className="flex justify-center bg-white shadow-md  ">
+                {/* <div className="flex justify-center bg-white shadow-md  ">
                   <div className="w-full gap-5 flex justify-center   md:p-7">
                     <div className="md:w-11/12 w-full mx-4 ">
                       <div className="md:flex w-full  md:justify-start md:gap-10 md:mt-2 md:items-center">
@@ -293,7 +293,7 @@ export default function ConfirmFlight() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -405,7 +405,7 @@ export default function ConfirmFlight() {
           </Modal>
 
           <div className="flex justify-center mt-4 ">
-            <div className="w-full gap-5  bg-white  ">
+            {/* <div className="w-full gap-5  bg-white  ">
               <div className="w-full rounded-md ">
                 <div className=" items-center justify-center flex-row shadow-md  bg-white rounded-sm text-gray-600 tracking-wide antialiased ">
                   <div className="w-full   flex-row md:flex justify-between  px-7  py-5">
@@ -493,7 +493,7 @@ export default function ConfirmFlight() {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
