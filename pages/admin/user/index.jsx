@@ -12,6 +12,10 @@ export default function Promo() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    handleGetUser();
+  }, []);
+
+  const handleGetUser = () => {
     fetch(`${process.env.API_ENDPOINT}api/v1/users`, {
       method: "GET",
     })
@@ -21,7 +25,23 @@ export default function Promo() {
         setUsers(data.data.users);
         console.log("datahere", data);
       });
-  }, []);
+  };
+
+  const handleDelete = (id) => {
+    const token = localStorage.getItem("token");
+    alert("Yakin ingin Menghapus Data?");
+    fetch(`${process.env.API_ENDPOINT}api/v1/users/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).catch((err) => {
+      throw err;
+    });
+
+    handleGetUser();
+  };
+
   return (
     <Layout>
       <div className="mt-10">
@@ -63,10 +83,7 @@ export default function Promo() {
                   <Table.Cell>{users.address}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a href={`/admin/user/edit/${users.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
-                        <FaEdit />
-                      </a>
-                      <a href="/tables" className="font-medium text-red-600 hover:underline ">
+                      <a onClick={() => handleDelete(users.id)} className="font-medium text-red-600 hover:underline ">
                         <FaTrashAlt />
                       </a>
                     </div>

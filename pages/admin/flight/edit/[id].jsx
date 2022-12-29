@@ -73,8 +73,8 @@ export default function CreatePromo() {
       .then((res) => res.json())
 
       .then((data) => {
-        setAirport(data.data.from_airport_id);
-        setAirport(data.data.to_airport_id);
+        setFromAirportId(data.data.from_airport_id);
+        setToAirportId(data.data.to_airport_id);
         setPlaneId(data.data.plane_id);
         setArrival_time(data.data.arrival_time);
         setArrival_date(data.data.arrival_date);
@@ -83,9 +83,9 @@ export default function CreatePromo() {
       });
   };
 
-  async function handleUpdate(e) {
+  async function handleUpdate() {
     const token = localStorage.getItem("token");
-    const req = await fetch(`${process.env.API_ENDPOINT}api/v1/flight/${id}`, {
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/flight/${id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -104,17 +104,12 @@ export default function CreatePromo() {
       throw err;
     });
 
-    const data = await req.json();
+    const data = await response.json();
     if (data.status === "OK") {
       alert("Data Berhasil di Ubah");
-      console.log(data.status, "ini diaaaaa");
       router.push("/admin/flight");
-    } else {
-      const errStatus = data.status;
-      const errMessage = data.message;
-      setErr(`${errStatus} ${errMessage}`);
     }
-    console.log(data.data, "data here");
+    console.log(data.status, "data here");
 
     console.log(data);
   }
