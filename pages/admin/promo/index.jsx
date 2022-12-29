@@ -13,10 +13,10 @@ export default function Promo() {
   const [promo, setPromo] = useState([]);
 
   useEffect(() => {
-    handelGetTicket();
+    handelGetPromo();
   }, []);
 
-  const handelGetTicket = () => {
+  const handelGetPromo = () => {
     fetch(`${process.env.API_ENDPOINT}api/v1/promo`, {
       method: "GET",
     })
@@ -40,7 +40,7 @@ export default function Promo() {
       throw err;
     });
 
-    handelGetTicket();
+    handelGetPromo();
   };
   return (
     <Layout>
