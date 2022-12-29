@@ -12,38 +12,59 @@ import { GiBackpack } from "react-icons/gi";
 
 export default function ResultFlight() {
   const router = useRouter();
-  let data1, data2;
 
-  const { tickets1, tickets2 } = router.query;
-
-  if (tickets1 && tickets2) {
-    data1 = JSON.parse(tickets1);
-    data2 = JSON.parse(tickets2);
-  } else if (tickets1) {
-    data1 = JSON.parse(tickets1);
-  } else {
-    data1 = "Data Tidak Ada";
-  }
+  const { from, to, depart, arrival, category } = router.query;
 
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState();
 
   const [userId, setUserId] = useState("");
 
+  const [ticket, setTicket] = useState([]);
+
+  const [oneWay, setOneWay] = useState([]);
+  const [roundWay, setRoundWay] = useState([]);
+
   const [selectedTicket1, setSelectedTicket1] = useState("");
   const [selectedTicket2, setSelectedTicket2] = useState("");
 
-  useEffect(() => {
-    whoami();
+  const handleGetTicket = () => {
+    fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTicket(data.data);
+        console.log("all ticket", data.data);
+        const oneWayTicket = data.data.filter(
+          (item) =>
+            item.Flight.from.city == from &&
+            item.Flight.to.city == to &&
+            item.Flight.departure_date == depart &&
+            item.type == category
+        );
+        const roundWayTicket = data.data.filter(
+          (item) =>
+            item.Flight.from.city == to &&
+            item.Flight.to.city == from &&
+            item.Flight.departure_date == arrival &&
+            item.type == category
+        );
 
-    console.log("data1", data1);
-    if (data1 && data2) {
-      console.log(data1, data2);
-    } else if (data1) {
-      console.log(data1);
-    } else {
-      console.log("data tidak ada");
-    }
+        setOneWay(oneWayTicket);
+        setRoundWay(roundWayTicket);
+        console.log("one way ticket", oneWayTicket);
+        console.log("round way ticket", roundWayTicket);
+      });
+
+    console.log(ticket);
+  };
+
+  useEffect(() => {
+    console.log("pilig tiket pergi", selectedTicket1);
+    console.log("pilig tiket pulang", selectedTicket2);
+    handleGetTicket();
+    whoami();
   }, [router.isReady]);
 
   const whoami = () => {
@@ -62,15 +83,26 @@ export default function ResultFlight() {
       });
   };
 
-  function handelSelect() {
-    router.push({
-      pathname: "/search/book",
-      query: {
-        selectedTicket1,
-        selectedTicket2,
-      },
-    });
-  }
+  const handelNext = () => {
+    if (selectedTicket2 === null) {
+      Router.push({
+        pathname: "/search/book",
+
+        query: {
+          ticket1: selectedTicket1,
+        },
+      });
+    } else {
+      Router.push({
+        pathname: "/search/book",
+
+        query: {
+          ticket1: selectedTicket1,
+          ticket2: selectedTicket2,
+        },
+      });
+    }
+  };
 
   async function addToWishlist() {
     const ticket_id = currentIndex;
@@ -108,7 +140,7 @@ export default function ResultFlight() {
           <div></div>
           <div className="flex">
             <button
-              onClick={handelSelect}
+              onClick={handelNext}
               className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 "
             >
               Select Flight
@@ -121,15 +153,15 @@ export default function ResultFlight() {
         <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
           <div className="text-gray-700">
             <h1 className="font-semibold tracking-wide antialiased text-lg">
-              Flights departing from {data1[0].Flight.from.city} to{" "}
-              {data1[0].Flight.to.city}
+              Flights departing from {from} to {to}
             </h1>
             <div className="flex gap-2 text-sm">
-              <p>kam, 8 Des 2022</p>
+              <p>{depart}</p>
               <p>|</p>
-              <p>1 Traveler</p>
+              <p>{category}</p>
             </div>
           </div>
+
           <div className="gap-2 flex justify-end lg:items-center lg:justify-center ">
             <Dropdown
               id="filter_tiket"
@@ -145,8 +177,8 @@ export default function ResultFlight() {
       </div>
       {/* end title */}
       {/* ticket */}
-      {data1 ? (
-        data1.map((item) => (
+      {oneWay.length > 0 ? (
+        oneWay.map((item) => (
           <div key={item.id}>
             <div className="flex justify-center ">
               <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-3">
@@ -303,19 +335,19 @@ export default function ResultFlight() {
           </p>
         </div>
       )}
+
       <div>
-        {data2 ? (
+        {roundWay.length > 0 ? (
           <div className="flex justify-center items-center ">
             <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
               <div className="text-gray-700">
                 <h1 className="font-semibold tracking-wide antialiased text-lg">
-                  Return flight from {data2[0].Flight.from.city} To{" "}
-                  {data2[0].Flight.to.city}
+                  Return flight from {to} To {from}
                 </h1>
                 <div className="flex gap-2 text-sm">
-                  <p>kam, 8 Des 2022</p>
+                  <p>{arrival}</p>
                   <p>|</p>
-                  <p>1 Traveler</p>
+                  <p>{category}</p>
                 </div>
               </div>
               <div className="gap-2 flex justify-end lg:items-center lg:justify-center ">
@@ -334,13 +366,13 @@ export default function ResultFlight() {
         ) : (
           <div className="flex justify-center items-center my-5">
             <p className="text-xl font-normal text-gray-900">
-              Return flight ticket not found
+              {/* Return flight ticket not found */}
             </p>
           </div>
         )}
 
-        {data2 ? (
-          data2.map((item) => (
+        {roundWay.length > 0 ? (
+          roundWay.map((item) => (
             <div key={item.id}>
               <div className="flex justify-center ">
                 <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:mx-2 lg:p-3">
@@ -362,17 +394,9 @@ export default function ResultFlight() {
                       <p>{item.type}</p>
                     </div>
                     <div className="flex items-center gap-4 lg:gap-6 my-1  lg:my-0">
-                      <p className="">
-                        {new Date(item.Flight.departure_time).getHours()}
-                        {" : "}
-                        {new Date(item.Flight.departure_time).getMinutes()}
-                      </p>
+                      <p className="">{item.Flight.departure_time}</p>
                       <IoMdArrowRoundForward />
-                      <p className="">
-                        {new Date(item.Flight.arrival_time).getHours()}
-                        {" : "}
-                        {new Date(item.Flight.arrival_time).getMinutes()}
-                      </p>
+                      <p className="">{item.Flight.arrival_time}</p>
                     </div>
 
                     <div className="flex gap-1 items-center my-1  lg:my-0">
@@ -440,24 +464,21 @@ export default function ResultFlight() {
                       <div className="flex-row lg:gap-20 gap-7 items-center">
                         <div className="mb-2">
                           <p className="font-bold text-xl">
-                            {new Date(item.Flight.departure_time).getHours()}
+                            {item.Flight.departure_time}
                             {" : "}
-                            {new Date(item.Flight.departure_time).getMinutes()}
                           </p>
                           <p>
                             {new Date(
-                              item.Flight.departure_time
+                              item.Flight.departure_date
                             ).toDateString()}
                           </p>
                         </div>
                         <div>
                           <p className="font-bold text-xl">
-                            {new Date(item.Flight.arrival_time).getHours()}
-                            {" : "}
-                            {new Date(item.Flight.arrival_time).getMinutes()}
+                            {item.Flight.arrival_time}
                           </p>
                           <p>
-                            {new Date(item.Flight.arrival_time).toDateString()}
+                            {new Date(item.Flight.arrival_date).toDateString()}
                           </p>
                         </div>
                       </div>

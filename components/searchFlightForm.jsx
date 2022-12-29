@@ -68,20 +68,17 @@ const SearchFlightForm = () => {
       selectedCategories.category
     );
 
-    const oneWayTicket = ticket.filter(
-      (item) =>
-        item.Flight.from.city == fromSelectedCity &&
-        item.Flight.to.city == toSelectedCity &&
-        item.Flight.departure_date == departureNative &&
-        item.type == selectedCategories.category 
-    );
-
-    console.log(oneWayTicket);
     Router.push({
       pathname: "/search",
-      query: { tickets1: JSON.stringify(oneWayTicket) },
+      query: {
+        from: fromSelectedCity,
+        to: toSelectedCity,
+        depart: departureNative,
+        category: selectedCategories.category,
+      },
     });
   };
+
   const handleSearchRoundtripFlight = () => {
     console.log(
       fromSelectedCity,
@@ -111,8 +108,11 @@ const SearchFlightForm = () => {
     Router.push({
       pathname: "/search",
       query: {
-        tickets1: JSON.stringify(roundtripTicket1),
-        tickets2: JSON.stringify(roundtripTicket2),
+        from: fromSelectedCity,
+        to: toSelectedCity,
+        depart: departureNative,
+        arrival: arrivalNative,
+        category: selectedCategories.category,
       },
     });
   };
