@@ -13,6 +13,10 @@ export default function Promo() {
   const [promo, setPromo] = useState([]);
 
   useEffect(() => {
+    handelGetTicket();
+  }, []);
+
+  const handelGetTicket = () => {
     fetch(`${process.env.API_ENDPOINT}api/v1/promo`, {
       method: "GET",
     })
@@ -22,7 +26,22 @@ export default function Promo() {
         setPromo(data.data);
         console.log("datahere", data);
       });
-  }, []);
+  };
+
+  const handleDelete = (id) => {
+    const token = localStorage.getItem("token");
+    alert("Yakin ingin Menghapus Data?");
+    fetch(`${process.env.API_ENDPOINT}api/v1/promo/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).catch((err) => {
+      throw err;
+    });
+
+    handelGetTicket();
+  };
   return (
     <Layout>
       <div className="mt-10">
@@ -56,7 +75,9 @@ export default function Promo() {
             <Table.Body className="divide-y">
               {promo.map((promo) => (
                 <Table.Row key={promo.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>{promo.photo}</Table.Cell>
+                  <Table.Cell>
+                    <img src={promo.photo} alt="img-promo" />
+                  </Table.Cell>
                   <Table.Cell>{promo.name}</Table.Cell>
                   <Table.Cell>{promo.code}</Table.Cell>
                   <Table.Cell>{promo.description}</Table.Cell>
@@ -66,7 +87,7 @@ export default function Promo() {
                       <a href={`/admin/promo/edit/${promo.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
                         <FaEdit />
                       </a>
-                      <a href="/tables" className="font-medium text-red-600 hover:underline ">
+                      <a onClick={() => handleDelete(promo.id)} className="font-medium text-red-600 hover:underline ">
                         <FaTrashAlt />
                       </a>
                     </div>

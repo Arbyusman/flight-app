@@ -30,14 +30,7 @@ export default function Promo() {
             <h1 className="text-4xl font-semibold mb-2">Users</h1>
           </div>
 
-          <div className="flex flex-wrap items-start justify-end -mb-3">
-            <Link href="/admin/promo/create">
-              <Button>
-                <GoPlus className="mx-2" />
-                Create New Promo
-              </Button>
-            </Link>
-          </div>
+          <div className="flex flex-wrap items-start justify-end -mb-3"></div>
         </div>
         <div className="mt-10 border-spacing-2">
           <Table hoverable={true}>
@@ -58,7 +51,9 @@ export default function Promo() {
             <Table.Body className="divide-y">
               {users.map((users) => (
                 <Table.Row key={users.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{users.photo}</Table.Cell>
+                  <Table.Cell>
+                    <img src={users.photo} alt="img-photo" />
+                  </Table.Cell>
                   <Table.Cell>{users.firstName}</Table.Cell>
                   <Table.Cell>{users.lastName}</Table.Cell>
                   <Table.Cell>{users.role}</Table.Cell>

@@ -93,7 +93,9 @@ export default function Flight() {
               <Table.HeadCell>From Airport</Table.HeadCell>
               <Table.HeadCell>To Airport</Table.HeadCell>
               <Table.HeadCell>Arrival Time</Table.HeadCell>
-              <Table.HeadCell>Departure</Table.HeadCell>
+              <Table.HeadCell>Arrival Date</Table.HeadCell>
+              <Table.HeadCell>Departure Time</Table.HeadCell>
+              <Table.HeadCell>Departure Date</Table.HeadCell>
               <Table.HeadCell className="w-20">Action</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
@@ -103,7 +105,9 @@ export default function Flight() {
                   <Table.Cell>{flight.from.name}</Table.Cell>
                   <Table.Cell>{flight.to.name}</Table.Cell>
                   <Table.Cell>{flight.arrival_time}</Table.Cell>
+                  <Table.Cell>{flight.arrival_date}</Table.Cell>
                   <Table.Cell>{flight.departure_time}</Table.Cell>
+                  <Table.Cell>{flight.departure_date}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
                       <a href={`/admin/flight/edit/${flight.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">

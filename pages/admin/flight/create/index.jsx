@@ -168,13 +168,13 @@ export default function CreatePromo() {
             </div>
             <div className="flex gap-14 mt-3 ">
               <div className="relative w-full">
-                <label for="arrival_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Arrival Time
+                <label for="departure_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Departure Date
                 </label>
                 <input
                   type="date"
-                  id="arrival_time"
-                  name="arrival_time"
+                  id="departure_date"
+                  name="departure_date"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="1000000"
                   required
@@ -183,12 +183,42 @@ export default function CreatePromo() {
               </div>
               <div className="w-full">
                 <label for="departure_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Departure
+                  Departure Time
+                </label>
+                <input
+                  type="time"
+                  id="departure_time"
+                  name="departure_time"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="1000000"
+                  required
+                  onChange={setValue}
+                />
+              </div>
+            </div>
+            <div className="flex gap-14 mt-3 ">
+              <div className="relative w-full">
+                <label for="departure_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Arrival Date
                 </label>
                 <input
                   type="date"
-                  id="departure_time"
-                  name="departure_time"
+                  id="arrival_date"
+                  name="arrival_date"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="1000000"
+                  required
+                  onChange={setValue}
+                />
+              </div>
+              <div className="w-full">
+                <label for="departure_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Arrival Time
+                </label>
+                <input
+                  type="time"
+                  id="arrival_time"
+                  name="arrival_time"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="1000000"
                   required

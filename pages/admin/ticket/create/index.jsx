@@ -12,7 +12,9 @@ export default function CreateTicket() {
   const [baggage, setBaggage] = useState("");
   const [desc, setDesc] = useState("");
   const [photo, setPhoto] = useState("");
+  const [flightId, setFlightId] = useState("");
 
+  const [field, setField] = useState({});
   const router = useRouter();
   const [err, setErr] = useState("");
 
@@ -38,7 +40,7 @@ export default function CreateTicket() {
     e.preventDefault();
 
     const body = new FormData();
-    body.append("flight", flight);
+    body.append("flight_id", flightId);
     body.append("type", type);
     body.append("price", price);
     body.append("cabin_baggage", cabin_baggage);
@@ -59,7 +61,7 @@ export default function CreateTicket() {
 
     const data = await req.json();
     if (data.status === "OK") {
-      console.log(data.status, "ini diaaaaa");
+      console.log(data.status, "data ticket");
       alert("Data Berhasil Ditambahkan");
       router.push("/admin/ticket");
     } else {
@@ -68,6 +70,9 @@ export default function CreateTicket() {
       setErr(`${errStatus} ${errMessage}`);
     }
     console.log(data.data, "data here");
+
+    setField({});
+    e.target.reset();
 
     console.log(data);
   }
@@ -90,10 +95,8 @@ export default function CreateTicket() {
                   id="flight_id"
                   name="flight_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={(e) => setFlight(e.target.value)}>
-                  <option selected disabled>
-                    Choose a Flight
-                  </option>
+                  onChange={(e) => setFlightId(e.target.value)}>
+                  <option selected>Choose a Flight</option>
                   {flight.map((flight) => (
                     <option key={flight.id} value={flight.id}>
                       <div className="">
@@ -126,8 +129,8 @@ export default function CreateTicket() {
                   Choose a Type
                 </option>
 
-                <option value="ekonomi">Ekonomi</option>
-                <option value="bisnis">Bisnis</option>
+                <option value="economi">Economi</option>
+                <option value="business">Business</option>
               </select>
             </div>
             <div className="relative mt-3">

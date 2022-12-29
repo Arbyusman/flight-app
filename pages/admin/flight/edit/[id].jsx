@@ -6,30 +6,29 @@ import { TbPlaneInflight } from "react-icons/tb";
 
 export default function CreatePromo() {
   const router = useRouter();
-  const [field, setField] = useState({});
 
   const [plane, setPlane] = useState([]);
   const [airport, setAirport] = useState([]);
+  const [arrival_time, setArrival_time] = useState("");
+  const [arrival_date, setArrival_date] = useState("");
+  const [departure_time, setDeparture_time] = useState("");
+  const [departure_date, setDeparture_date] = useState("");
+
+  const [from_airport_id, setFromAirportId] = useState("");
+  const [to_airport_id, setToAirportId] = useState("");
+  const [plane_id, setPlaneId] = useState("");
 
   const [err, setErr] = useState("");
-
-  function setValue(e) {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-
-    console.log({ name, value });
-
-    setField({
-      ...field,
-      [name]: value,
-    });
-  }
+  const { id } = router.query;
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
     handelGetAirport();
     handelGetPlane();
-  }, []);
+    handleGetFlight();
+  }, [router.isReady]);
 
   const handelGetPlane = () => {
     const token = localStorage.getItem("token");
@@ -43,7 +42,7 @@ export default function CreatePromo() {
 
       .then((data) => {
         setPlane(data.data);
-        console.log("data airport", data.data);
+        console.log("data plane", data.data);
       });
   };
 
@@ -58,22 +57,49 @@ export default function CreatePromo() {
       .then((res) => res.json())
 
       .then((data) => {
+        console.log("data airport", data.data);
         setAirport(data.data);
-        console.log("data plane", data.data);
+      });
+  };
+
+  const handleGetFlight = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/flight/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setAirport(data.data.from_airport_id);
+        setAirport(data.data.to_airport_id);
+        setPlaneId(data.data.plane_id);
+        setArrival_time(data.data.arrival_time);
+        setArrival_date(data.data.arrival_date);
+        setDeparture_time(data.data.departure_time);
+        setDeparture_date(data.data.departure_date);
       });
   };
 
   async function handleUpdate(e) {
-    e.preventDefault();
     const token = localStorage.getItem("token");
-
     const req = await fetch(`${process.env.API_ENDPOINT}api/v1/flight/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(field),
+      body: JSON.stringify({
+        from_airport_id,
+        to_airport_id,
+        plane_id,
+        arrival_time,
+        arrival_date,
+        departure_time,
+        departure_date,
+      }),
     }).catch((err) => {
       throw err;
     });
@@ -89,9 +115,6 @@ export default function CreatePromo() {
       setErr(`${errStatus} ${errMessage}`);
     }
     console.log(data.data, "data here");
-
-    setField({});
-    e.target.reset();
 
     console.log(data);
   }
@@ -113,14 +136,12 @@ export default function CreatePromo() {
                   id="from_airport_id"
                   name="from_airport_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                  value={airport}>
-                  <option selected disabled>
-                    Choose a Airport
-                  </option>
-                  {airport.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name}
+                  onChange={(e) => setFromAirportId(e.target.value)}
+                  value={from_airport_id}>
+                  <option selected>Choose a Airport</option>
+                  {airport.map((airport) => (
+                    <option key={airport.id} value={airport.id}>
+                      {airport.name}
                     </option>
                   ))}
                 </select>
@@ -134,14 +155,12 @@ export default function CreatePromo() {
                   id="to_airport_id"
                   name="to_airport_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                  value={airport}>
-                  <option selected disabled>
-                    Choose a Airport
-                  </option>
-                  {airport.map((item) => (
-                    <option key={item.id} value={item.id}>
-                      {item.name}
+                  onChange={(e) => setToAirportId(e.target.value)}
+                  value={to_airport_id}>
+                  <option selected>Choose a Airport</option>
+                  {airport.map((airport) => (
+                    <option key={airport.id} value={airport.id}>
+                      {airport.name}
                     </option>
                   ))}
                 </select>
@@ -157,11 +176,9 @@ export default function CreatePromo() {
                   id="plane_id"
                   name="plane_id"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={setValue}
-                  value={plane}>
-                  <option selected disabled>
-                    Choose a Plane
-                  </option>
+                  onChange={(e) => setPlaneId(e.target.value)}
+                  value={plane_id}>
+                  <option selected>Choose a Plane</option>
                   {plane.map((item) => (
                     <option key={item.id} value={item.id}>
                       <p>{item.name}</p>
@@ -172,33 +189,61 @@ export default function CreatePromo() {
             </div>
             <div className="flex gap-14 mt-3 ">
               <div className="relative w-full">
-                <label for="arrival_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Arrival Time
+                <label for="departure_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Departure Date
                 </label>
                 <input
                   type="date"
-                  id="arrival_time"
-                  name="arrival_time"
+                  id="departure_date"
+                  name="departure_date"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="1000000"
                   required
-                  onChange={setValue}
-                  value={arrival_time}
+                  value={departure_date}
+                  onChange={(e) => setDeparture_date(e.target.value)}
                 />
               </div>
               <div className="w-full">
                 <label for="departure_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Departure
+                  Departure Time
                 </label>
                 <input
-                  type="date"
+                  type="time"
                   id="departure_time"
                   name="departure_time"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="1000000"
                   required
-                  onChange={setValue}
                   value={departure_time}
+                  onChange={(e) => setDeparture_time(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex gap-14 mt-3 ">
+              <div className="relative w-full">
+                <label for="departure_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Arrival Date
+                </label>
+                <input
+                  type="date"
+                  id="arrival_date"
+                  name="arrival_date"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  value={arrival_date}
+                  onChange={(e) => setArrival_date(e.target.value)}
+                />
+              </div>
+              <div className="w-full">
+                <label for="departure_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Arrival Time
+                </label>
+                <input
+                  type="time"
+                  id="arrival_time"
+                  name="arrival_time"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  value={arrival_time}
+                  onChange={(e) => setArrival_time(e.target.value)}
                 />
               </div>
             </div>
@@ -206,7 +251,7 @@ export default function CreatePromo() {
 
           <div className="flex justify-end ">
             <div className="flex justify-between mt-5 gap-5">
-              <Button href="/admin/ticket" color="success">
+              <Button href="/admin/flight" color="success">
                 Back
               </Button>
 

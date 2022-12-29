@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 //import ListPromo from "../../../components/admin/ticket/listPromo"
 
 export default function Ticket() {
@@ -112,12 +113,14 @@ export default function Ticket() {
             <Table.Body className="divide-y">
               {ticket.map((ticket) => (
                 <Table.Row key={ticket.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>{ticket.photo}</Table.Cell>
+                  <Table.Cell>
+                    <img src={ticket.photo} alt="img-photo" />
+                  </Table.Cell>
                   <Table.Cell>{ticket.flight_id}</Table.Cell>
                   <Table.Cell>{ticket.type}</Table.Cell>
                   <Table.Cell>Rp. {ticket.price}</Table.Cell>
-                  <Table.Cell>{ticket.cabin_baggage}</Table.Cell>
-                  <Table.Cell>{ticket.baggage}</Table.Cell>
+                  <Table.Cell>{ticket.cabin_baggage} KG</Table.Cell>
+                  <Table.Cell>{ticket.baggage} KG</Table.Cell>
                   <Table.Cell>{ticket.desc}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
