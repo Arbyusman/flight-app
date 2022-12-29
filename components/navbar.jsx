@@ -15,6 +15,7 @@ import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
 import { Transition, Popover } from "@headlessui/react";
 import { BiBell } from "react-icons/bi";
+import { data } from "autoprefixer";
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -37,14 +38,6 @@ export default function NavbarComponent() {
 
   const [loginLoading, setLoginLoading] = useState(false);
 
-  useEffect(() => {
-    whoami();
-    if (id) getNotifications();
-
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-  }, []);
-
   const whoami = () => {
     const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/user`, {
@@ -57,28 +50,32 @@ export default function NavbarComponent() {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log(data);
         setId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
+
+        fetch(
+          `${process.env.API_ENDPOINT}api/v1/notification/user/${data.data.id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+          .then((res) => res.json())
+
+          .then((data) => {
+            setNotification(data.data);
+          });
       });
   };
 
-  const getNotifications = () => {
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/notification/user/${id}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-
-      .then((data) => {
-        setNotification(data.data);
-        console.log("notif", data.data);
-      });
-  };
+    whoami();
+    setIsLoggedIn(!!token);
+  }, []);
 
   async function handelLogin() {
     setLoginLoading(true);
@@ -136,56 +133,64 @@ export default function NavbarComponent() {
       </Navbar.Brand>
       <div className="flex md:order-2 justify-center items-center ">
         {/* Notification */}
-        <Popover className="relative justify-center items-center">
-          <Popover.Button className="outline-none mr-2 md:mr-3 cursor-pointer  ">
-            <BiBell className="h-6 w-6 text-gray-500 hover:text-gray-700 active:text-gray-700 focus:text-gray-700" />
-          </Popover.Button>
-          <Transition
-            enter="transition ease-out duration-100"
-            enterFrom="transform scale-95"
-            enterTo="transform scale-100"
-            leave="transition ease-in duration=75"
-            leaveFrom="transform scale-100"
-            leaveTo="transform scale-95"
-          >
-            <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-gray-100 shadow-sm rounded max-w-xs w-screen md:w-screen">
-              <div className="relative p-3">
-                <div className="flex justify-between items-center w-full">
-                  <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
-                    Notifications
-                  </p>
-                  <button className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
-                    Read All
-                  </button>
-                </div>
-                <hr></hr>
-                <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
-                  <div className="flex md:block">
-                    {notification.map((item) => (
-                      <div
-                        className="flex items-center justify-start"
-                        key={item.id}
-                      >
-                        <div className="flex gap-2 text-xs text-gray-500 text-left w-full ">
-                          {item.transaction_id}
-                          <p
-                            className={`text-xs text-gray-500 text-left w-full ${
-                              item.isRead === false
-                                ? "bg-yellow-200"
-                                : "bg-red-400"
-                            } `}
+
+        {isLoggedIn && (
+          <Popover className="relative justify-center items-center">
+            <Popover.Button className="outline-none mr-2 md:mr-3 cursor-pointer  ">
+              <BiBell className="h-6 w-6 text-gray-500 hover:text-gray-700 active:text-gray-700 focus:text-gray-700" />
+            </Popover.Button>
+            <Transition
+              enter="transition ease-out duration-100"
+              enterFrom="transform scale-95"
+              enterTo="transform scale-100"
+              leave="transition ease-in duration=75"
+              leaveFrom="transform scale-100"
+              leaveTo="transform scale-95"
+            >
+              <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-gray-100 shadow-sm rounded max-w-xs w-screen md:w-screen">
+                <div className="relative p-3">
+                  <div className="flex justify-between items-center w-full">
+                    <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
+                      Notifications
+                    </p>
+                    <button className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
+                      Read All
+                    </button>
+                  </div>
+                  <hr></hr>
+                  <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
+                    <div className="flex md:block">
+                      {notification.length > 0 ? (
+                        notification.map((item) => (
+                          <div
+                            className="flex items-center justify-start"
+                            key={item.id}
                           >
-                            <button>{item.message}</button>
-                          </p>
-                        </div>
-                      </div>
-                    ))}
+                            <div className="flex gap-2 text-xs text-gray-500 text-left w-full ">
+                              {item.transaction_id}
+                              <p
+                                className={`text-xs text-gray-500 text-left w-full ${
+                                  item.isRead === false
+                                    ? "bg-yellow-200"
+                                    : "bg-red-400"
+                                } `}
+                              >
+                                <button>{item.message}</button>
+                              </p>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div></div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Popover.Panel>
-          </Transition>
-        </Popover>
+              </Popover.Panel>
+            </Transition>
+          </Popover>
+        )}
+
         {/* profile */}
         <div>
           <Button

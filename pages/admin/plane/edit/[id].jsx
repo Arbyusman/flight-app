@@ -58,7 +58,7 @@ export default function EditPlane() {
     console.log("data update", data.status);
 
     if (data.status === "OK") {
-      alert("data bershail di ubah");
+      alert("Data Berhasil di ubah");
       router.push("/admin/plane");
     }
   }
