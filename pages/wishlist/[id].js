@@ -2,7 +2,7 @@ import { NavbarComponent, Footer, Wishlist } from "../../components";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-export default function History() {
+export default function WishlistUser() {
   const [token, setToken] = useState("");
 
   const router = useRouter();

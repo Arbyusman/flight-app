@@ -78,7 +78,7 @@ export default function HistoryBooking() {
           <div key={item.id}>
             <div className="flex justify-center ">
               <div className="lg:w-9/12 w-96 md:w-11/12 bg-white rounded-t-md mt-5 shadow-md py-4 px-1  lg:p-3">
-                <div className="flex mx-2 md:flex items-center py-3 justify-between ">
+                <div className="flex mx-2 md:flex items-center md:h-10 justify-between ">
                   <p>Ticket ID : {item.Ticket.id}</p>
                   <div className="flex items-center gap-1">
                     <MdOutlineAirlineSeatReclineNormal className="text-green-700 text-lg" />
@@ -129,7 +129,7 @@ export default function HistoryBooking() {
                 <div className=" md:flex items-start  justify-between  ">
                   <figure className="max-w-md">
                     <Image
-                      className="w-10 lg:w-12 flex "
+                      className="w-10 lg:w-16 flex "
                       src={item.Ticket.photo}
                       alt="logo penerbangan"
                       width={50}
@@ -144,10 +144,7 @@ export default function HistoryBooking() {
                     <div className="flex-row lg:gap-20 gap-7 items-center">
                       <div className="mb-2">
                         <p className="font-bold text-xl">
-                          {
-                            item.Ticket.Flight.departure_time
-                          }
-                         
+                          {item.Ticket.Flight.departure_time}
                         </p>
                         <p>
                           {new Date(
@@ -157,8 +154,7 @@ export default function HistoryBooking() {
                       </div>
                       <div>
                         <p className="font-bold text-xl">
-                        
-                            {item.Ticket.Flight.arrival_time}
+                          {item.Ticket.Flight.arrival_time}
                         </p>
                         <p>
                           {new Date(
@@ -199,8 +195,7 @@ export default function HistoryBooking() {
                     </div>
                   </div>
                 </div>
-                <hr />
-                <div className="flex-row md:flex justify-between gap-5 mt-4">
+                <div className="flex-row md:flex justify-between gap-5 mt-6">
                   <div className="gap-7 w-full text-gray-600 tracking-wide antialiased text-sm mb-2 md:mb-0 ">
                     <div className="flex gap-2">
                       <BsPerson className="text-2xl font-bold  text-gray-700 " />
@@ -224,7 +219,7 @@ export default function HistoryBooking() {
                       <textarea
                         id="message"
                         rows="4"
-                        className="block p-2.5 w-full text-sm text-gray-600  border  rounded-sm  border-gray-300 "
+                        className="block p-2.5 w-full text-sm text-gray-600  border-none  rounded-sm  border-gray-300 "
                         defaultValue={item.User.address}
                         disabled
                       ></textarea>
@@ -248,10 +243,7 @@ export default function HistoryBooking() {
                         </div>
                         <p>RP {item.Ticket.price} </p>
                       </div>
-                      <div className="flex justify-between text-sm font-thin my-1">
-                        <p>Traveler x 1</p>
-                        <p>RP {item.Ticket.price}</p>
-                      </div>
+
                       <div className="flex justify-between text-sm font-thin my-1">
                         <p>promo </p>
                         <p>RP </p>
@@ -260,7 +252,7 @@ export default function HistoryBooking() {
                       <hr />
                       <div className="flex justify-between text-sm font-bold tracking-wider my-2">
                         <p>Total Price</p>
-                        <p>RP 678.000</p>
+                        <p>RP {item.Ticket.price}</p>
                       </div>
                     </div>
                   </div>
