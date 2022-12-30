@@ -27,7 +27,6 @@ export default function Ticket() {
 
       .then((data) => {
         setFlight(data.data.data);
-        console.log("data flight", data.data);
       });
   };
 
@@ -39,7 +38,6 @@ export default function Ticket() {
 
       .then((data) => {
         setTicket(data.data);
-        console.log("datahere", data);
       });
   };
 

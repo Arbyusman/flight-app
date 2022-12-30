@@ -59,7 +59,6 @@ export default function ResultFlight() {
         console.log("round way ticket", roundWayTicket);
       });
 
-    console.log(ticket);
   };
 
   useEffect(() => {
@@ -146,7 +145,7 @@ export default function ResultFlight() {
               selectedTicket1.map((item) => (
                 <div key={item.id}>
                   <h1 className="font-normal tracking-wide antialiased text-base">
-                    Flights departing
+                    Flight departing
                     <hr />
                   </h1>
                   <div className="flex gap-5 items-center">

@@ -17,7 +17,7 @@ export default function Airline() {
             Available Airlines
           </h1>
         </div>
-        <div className="md:flex-row grid-cols-4 gap-5 grid md:flex items-center justify-center text-center md:gap-7 bg-white">
+        <div className="md:flex-row grid-cols-4 gap-5 grid md:flex items-center justify-center text-center md:gap-7">
           <figure className="max-w-md">
             <Image
               width={100}
