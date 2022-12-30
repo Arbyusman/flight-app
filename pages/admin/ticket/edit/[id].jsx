@@ -43,8 +43,12 @@ export default function CreateTicket() {
   };
 
   const getListPlane = () => {
+    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/planes`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
 
@@ -55,8 +59,12 @@ export default function CreateTicket() {
   };
 
   const handleGetTicket = () => {
+    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${id}`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
 

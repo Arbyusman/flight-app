@@ -15,8 +15,12 @@ export default function Promo() {
   }, []);
 
   const handelGetPromo = () => {
+    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/promo`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
 
