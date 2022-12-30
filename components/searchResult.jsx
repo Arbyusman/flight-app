@@ -83,7 +83,7 @@ export default function ResultFlight() {
   };
 
   const handelNext = () => {
-    if (selectedTicket2 === null) {
+    if (!selectedTicket2) {
       Router.push({
         pathname: "/search/book",
 

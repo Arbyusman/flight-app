@@ -111,6 +111,10 @@ export default function CreateTicket() {
                         <p>To :</p>
                         <p> {flight.to.name} </p>
                       </div>
+                      <div>
+                        <p>Date :</p>
+                        <p> {flight.departure_date} </p>
+                      </div>
                     </option>
                   ))}
                 </select>
@@ -132,7 +136,7 @@ export default function CreateTicket() {
                 onChange={(e) => setType(e.target.value)}
               >
                 <option selected disabled>
-                  Choose a Type 
+                  Choose a Type
                 </option>
 
                 <option value="Economi">Economi</option>

@@ -25,6 +25,9 @@ export default function ConfirmFlight() {
 
   const [bookLoading, setBookLoading] = useState(false);
 
+  const [oneWayPrice, setOneWayPrice] = useState("");
+  const [roundWayPrice, setRoundWayPrice] = useState("");
+
   useEffect(() => {
     if (router.isReady) {
       if (!ticket1 && !ticket2) router.push("/");
@@ -48,6 +51,8 @@ export default function ConfirmFlight() {
 
         setOneWayTicket(oneWayTicket);
         setRoundTicket(roundWayTicket);
+        setOneWayPrice(oneWayTicket.price);
+        setRoundTicket(roundWayTicket.price);
         console.log("one way ticket", oneWayTicket);
         console.log("round way ticket", roundWayTicket);
       });
@@ -72,9 +77,6 @@ export default function ConfirmFlight() {
   };
 
   const totalPriceTicket = () => {
-    let oneWayPrice = oneWayTicket[0].price;
-    let roundWayPrice = roundTicket[0].price;
-
     let total = oneWayPrice + roundWayPrice;
 
     setTotalPrice(total);
@@ -116,7 +118,16 @@ export default function ConfirmFlight() {
     whoami();
   }
 
-  async function handelBooking() {
+  const handelBooking = () => {
+    if (!ticket2) {
+      handelBookingOneWay();
+    } else {
+      handelBookingOneWay();
+      handelBookingroundWay();
+    }
+  };
+
+  async function handelBookingOneWay() {
     const ticket_id = ticket1;
     const user_id = user.id;
     const total = oneWayTicket.price;
@@ -146,30 +157,41 @@ export default function ConfirmFlight() {
     const data = await response.json();
 
     if (data.status === "OK") {
-      const ticket_id = ticket2;
-      const user_id = user.id;
-      const total = roundTicket.price;
-      const promo_id = 1;
-      const body = { user_id, ticket_id, total, promo_id };
+      setBookLoading(false);
+      setOpenModal(false);
+      router.push(`/history/${user.id}`);
+    }
+  }
+  async function handelBookingroundWay() {
+    const ticket_id = ticket1;
+    const user_id = user.id;
+    const total = oneWayTicket.price;
+    const promo_id = 1;
+    const body = { user_id, ticket_id, total, promo_id };
 
-      const response = await fetch(
-        `${process.env.API_ENDPOINT}api/v1/transaction`,
-        {
-          method: "POST",
+    whoami();
+    setBookLoading(true);
+    const token = localStorage.getItem("token");
+    if (!token) router.push("/login");
+    const response = await fetch(
+      `${process.env.API_ENDPOINT}api/v1/transaction`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
           headers: {
-            "Content-Type": "application/json",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(body),
-        }
-      ).catch((err) => {
-        throw err;
-      });
+        },
+        body: JSON.stringify(body),
+      }
+    ).catch((err) => {
+      throw err;
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
+    if (data.status === "OK") {
       setBookLoading(false);
       setOpenModal(false);
       router.push(`/history/${user.id}`);
