@@ -19,14 +19,14 @@ export default function ConfirmFlight() {
   const [openModal, setOpenModal] = useState(false);
   const [openModalAlert, setOpenModalAlert] = useState(false);
 
-  const [oneWayPrice, setOneWayPrice] = useState("");
-  const [roundPrice, setRoundPrice] = useState("");
-
-  const [totalPrice, setTotalPrice] = useState("");
-
   const [user, setUser] = useState([]);
 
   const [bookLoading, setBookLoading] = useState(false);
+
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     if (router.isReady) {
@@ -47,8 +47,6 @@ export default function ConfirmFlight() {
 
         setOneWayTicket(oneWayTicket);
         setRoundTicket(roundWayTicket);
-        setOneWayPrice(oneWayTicket.price);
-        setRoundPrice(roundWayTicket.price);
       });
   };
 
@@ -68,20 +66,18 @@ export default function ConfirmFlight() {
       });
   };
 
-  const totalPriceTicket = () => {
-    let oneWayPrice = oneWayPrice;
-    let roundWayPrice = roundPrice;
-
-    let total = oneWayPrice + roundWayPrice;
-
-    setTotalPrice(total);
-  };
-
   function openModalBooking() {
     const token = localStorage.getItem("token");
     if (!token) {
       alert("you are not logged in");
       router.push("/login");
+    } else if (
+      user.firstName == null ||
+      user.lastName == null ||
+      user.phone == null ||
+      user.address == null 
+    ) {
+      alert("anda harus melengkapi data");
     } else {
       setOpenModal(true);
     }
@@ -109,18 +105,28 @@ export default function ConfirmFlight() {
     });
 
     const data = await response.json();
-    console.log("data update", data);
+    if ((data.status = "OK")) {
+      alert("data berhasil di ubah");
+    }
     whoami();
   }
 
   async function handelBooking() {
+    if (ticket2 === null) {
+      handelBookingOneWay();
+    } else {
+      handelBookingOneWay();
+      handelBookingRound();
+    }
+  }
+
+  const handelBookingOneWay = async () => {
     const ticket_id = ticket1;
     const user_id = user.id;
     const total = oneWayTicket.price;
     const promo_id = 1;
     const body = { user_id, ticket_id, total, promo_id };
 
-    whoami();
     setBookLoading(true);
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
@@ -143,35 +149,50 @@ export default function ConfirmFlight() {
     const data = await response.json();
 
     if (data.status === "OK") {
-      const ticket_id = ticket2;
-      const user_id = user.id;
-      const total = roundTicket.price;
-      const promo_id = 1;
-      const body = { user_id, ticket_id, total, promo_id };
-
-      const response = await fetch(
-        `${process.env.API_ENDPOINT}api/v1/transaction`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
-          body: JSON.stringify(body),
-        }
-      ).catch((err) => {
-        throw err;
-      });
-
-      const data = await response.json();
-
+      alert("berhasil booking perjalanan pergi");
       setBookLoading(false);
       setOpenModal(false);
-      router.push(`/history/${user.id}`);
+    } else {
+      setBookLoading(false);
     }
-  }
+  };
+
+  const handelBookingRound = async () => {
+    const ticket_id = ticket2;
+    const user_id = user.id;
+    const total = oneWayTicket.price;
+    const promo_id = 1;
+    const body = { user_id, ticket_id, total, promo_id };
+
+    setBookLoading(true);
+    const token = localStorage.getItem("token");
+    if (!token) router.push("/login");
+    const response = await fetch(
+      `${process.env.API_ENDPOINT}api/v1/transaction`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        body: JSON.stringify(body),
+      }
+    ).catch((err) => {
+      throw err;
+    });
+
+    const data = await response.json();
+
+    if (data.status === "OK") {
+      alert("berhasil booking perjalanan pergi");
+      setBookLoading(false);
+      setOpenModal(false);
+    } else {
+      setBookLoading(false);
+    }
+  };
 
   return (
     <div className="justify-center items-center flex">
@@ -192,7 +213,7 @@ export default function ConfirmFlight() {
                 {/* form contact information */}
                 <div className="flex justify-center bg-white shadow-md  ">
                   <div className="w-full gap-5 flex justify-center   md:p-7">
-                    <div className="md:w-11/12 w-full mx-4 ">
+                    <form className="md:w-11/12 w-full mx-4 ">
                       <div className="md:flex w-full  md:justify-start md:gap-10 md:mt-2 md:items-center">
                         <div className="md:w-full w">
                           <label
@@ -281,7 +302,7 @@ export default function ConfirmFlight() {
                           ></textarea>
                         </div>
                       </div>
-                      {/* <div className="justify-center flex mt-2">
+                      <div className="justify-center flex mt-2">
                         <button
                           type="submit"
                           onClick={handelUpdateUsers}
@@ -289,8 +310,8 @@ export default function ConfirmFlight() {
                         >
                           save
                         </button>
-                      </div> */}
-                    </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -327,7 +348,14 @@ export default function ConfirmFlight() {
                       <div key={item.id} className="p-1 ">
                         <div className="flex justify-between md:flex-row text-sm font-thin my-1">
                           <p>Departure Flight</p>
-                          {item.Flight.departure_time}
+                          <div className="gap-5">
+                            <p className="">{item.Flight.departure_time}</p>
+                            <p className="text-xs">
+                              {new Date(
+                                item.Flight.departure_date
+                              ).toDateString()}
+                            </p>
+                          </div>
                         </div>
                         <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
                           <p>Plane</p>
@@ -346,12 +374,12 @@ export default function ConfirmFlight() {
                         </div>
 
                         <div className=" flex w-full justify-between  gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                          <p className="text-sm md:text-md font-semibold">
+                          <p className="text-sm md:text-md lg:w-4/6  font-semibold">
                             {item.Flight.from.city} ({" "}
                             {item.Flight.from.city_code} ){" "}
                           </p>
                           <TbPlane className="text-2xl  text-green-700" />
-                          <p className="text-sm md:text-md font-semibold">
+                          <p className="text-sm md:text-md lg:w-4/6  font-semibold">
                             {item.Flight.to.city} ( {item.Flight.to.city_code} ){" "}
                           </p>
                         </div>
@@ -389,7 +417,14 @@ export default function ConfirmFlight() {
                       <div className="p-1 ">
                         <div className="flex justify-between md:flex-row text-sm font-thin my-1">
                           <p>Return Flight</p>
-                          {item.Flight.departure_time}
+                          <div className="gap-5">
+                            <p className="">{item.Flight.departure_time}</p>
+                            <p className="text-xs">
+                              {new Date(
+                                item.Flight.departure_date
+                              ).toDateString()}
+                            </p>
+                          </div>
                         </div>
                         <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
                           <p>Plane</p>
@@ -407,15 +442,13 @@ export default function ConfirmFlight() {
                           </figure>
                         </div>
 
-                        <div className=" flex w-full justify-between  gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                          <div className="flex w-40">
-                            <p className="text-sm md:text-md font-semibold ">
-                              {item.Flight.from.city} ({" "}
-                              {item.Flight.from.city_code} ){" "}
-                            </p>
-                          </div>
+                        <div className=" flex col-span-3 w-full justify-between  gap-2 text-gray-600 tracking-wide my-3 antialiased">
+                          <p className="text-sm md:text-md  lg:w-4/6 font-semibold ">
+                            {item.Flight.from.city} ({" "}
+                            {item.Flight.from.city_code} ){" "}
+                          </p>
                           <TbPlane className="text-2xl  text-green-700" />
-                          <p className="text-sm md:text-md font-semibold ">
+                          <p className="text-sm md:text-md  lg:w-4/6 font-semibold ">
                             {item.Flight.to.city} ( {item.Flight.to.city_code} ){" "}
                           </p>
                         </div>
@@ -575,93 +608,98 @@ export default function ConfirmFlight() {
           <div className="flex justify-center mt-4 ">
             <div className="w-full gap-5  bg-white  ">
               <div className="w-full rounded-md ">
-                <div className=" items-center justify-center flex-row shadow-md  bg-white rounded-sm text-gray-600 tracking-wide antialiased ">
-                  <div className="w-full   flex-row md:flex justify-between  px-7  py-5">
-                    <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700 ">
-                      Return Flight
-                    </h1>
+                {!ticket2 ? (
+                  <span> </span>
+                ) : (
+                  <div className=" items-center justify-center flex-row shadow-md  bg-white rounded-sm text-gray-600 tracking-wide antialiased ">
+                    <div className="w-full   flex-row md:flex justify-between  px-7  py-5">
+                      <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700 ">
+                        Return Flight
+                      </h1>
+                    </div>
+                    <hr />
+                    {roundTicket.length > 0 ? (
+                      roundTicket.map((item) => (
+                        <div className="p-7 ">
+                          <div className="flex justify-between md:flex-row text-sm font-thin my-1">
+                            <p>Depart Flight</p>
+                            {item.Flight.departure_date}{" "}
+                            {item.Flight.departure_time}{" "}
+                          </div>
+                          <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
+                            <p>Plane</p>
+                            <figure className="max-w-md">
+                              <Image
+                                className="w-10 lg:w-12 flex "
+                                src={item.photo}
+                                alt="logo penerbangan"
+                                width={50}
+                                height={50}
+                              ></Image>
+                              <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
+                                {item.Flight.Plane.name}
+                              </figcaption>
+                            </figure>
+                          </div>
+                          <hr />
+
+                          <div className="md:flex w-full justify-between    gap-2 text-gray-600 tracking-wide my-3 antialiased">
+                            <div className="flex  gap-4 items-center">
+                              <div>
+                                <p className="font-bold text-xl">
+                                  {item.Flight.departure_time}
+                                </p>
+                                <p className="text-sm">
+                                  {item.Flight.departure_time}
+                                </p>
+                              </div>
+                              <div className=" w-36 lg:w-56">
+                                <p className="text-md font-semibold">
+                                  {item.Flight.from.city} ({" "}
+                                  {item.Flight.from.city_code} ){" "}
+                                </p>
+                                <p className="text-sm">
+                                  {item.Flight.from.name}
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="flex gap-4 items-center">
+                              <div>
+                                <p className="font-bold text-xl">
+                                  {item.Flight.arrival_time}
+                                </p>
+                                <p className="text-sm">
+                                  {item.Flight.arrival_date}
+                                </p>
+                              </div>
+                              <div className=" w-36 lg:w-56">
+                                <p className="text-md font-semibold">
+                                  {item.Flight.to.city} ({" "}
+                                  {item.Flight.to.city_code} ){" "}
+                                </p>
+                                <p className="text-sm">{item.Flight.to.name}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
+                            <hr></hr>
+                            <div className="flex gap-3 items-center my-1 lg:my-3 ">
+                              <GiBackpack className="text-xl text-green-500" />
+                              <p>Cabin Baggage {item.cabin_baggage}</p>
+                            </div>
+                            <div className="flex gap-3 items-center my-1 lg:my-3">
+                              <MdOutlineLuggage className="text-xl text-blue-500" />
+                              <p>Baggage {item.baggage}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
-                  <hr />
-                  {!roundTicket && <span> </span>}
-                  {roundTicket.length > 0 ? (
-                    roundTicket.map((item) => (
-                      <div className="p-7 ">
-                        <div className="flex justify-between md:flex-row text-sm font-thin my-1">
-                          <p>Depart Flight</p>
-                          {item.Flight.departure_date}{" "}
-                          {item.Flight.departure_time}{" "}
-                        </div>
-                        <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
-                          <p>Plane</p>
-                          <figure className="max-w-md">
-                            <Image
-                              className="w-10 lg:w-12 flex "
-                              src={item.photo}
-                              alt="logo penerbangan"
-                              width={50}
-                              height={50}
-                            ></Image>
-                            <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
-                              {item.Flight.Plane.name}
-                            </figcaption>
-                          </figure>
-                        </div>
-                        <hr />
-
-                        <div className="md:flex w-full justify-between    gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                          <div className="flex  gap-4 items-center">
-                            <div>
-                              <p className="font-bold text-xl">
-                                {item.Flight.departure_time}
-                              </p>
-                              <p className="text-sm">
-                                {item.Flight.departure_time}
-                              </p>
-                            </div>
-                            <div className=" w-36 lg:w-56">
-                              <p className="text-md font-semibold">
-                                {item.Flight.from.city} ({" "}
-                                {item.Flight.from.city_code} ){" "}
-                              </p>
-                              <p className="text-sm">{item.Flight.from.name}</p>
-                            </div>
-                          </div>
-
-                          <div className="flex gap-4 items-center">
-                            <div>
-                              <p className="font-bold text-xl">
-                                {item.Flight.arrival_time}
-                              </p>
-                              <p className="text-sm">
-                                {item.Flight.arrival_date}
-                              </p>
-                            </div>
-                            <div className=" w-36 lg:w-56">
-                              <p className="text-md font-semibold">
-                                {item.Flight.to.city} ({" "}
-                                {item.Flight.to.city_code} ){" "}
-                              </p>
-                              <p className="text-sm">{item.Flight.to.name}</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
-                          <hr></hr>
-                          <div className="flex gap-3 items-center my-1 lg:my-3 ">
-                            <GiBackpack className="text-xl text-green-500" />
-                            <p>Cabin Baggage {item.cabin_baggage}</p>
-                          </div>
-                          <div className="flex gap-3 items-center my-1 lg:my-3">
-                            <MdOutlineLuggage className="text-xl text-blue-500" />
-                            <p>Baggage {item.baggage}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -715,7 +753,7 @@ export default function ConfirmFlight() {
                 <hr />
                 <div className="flex justify-between text-lg font-bold tracking-wider my-2">
                   <p>total Price</p>
-                  <p>{totalPrice}</p>
+                  <p>total Price</p>
                 </div>
               </div>
             </div>

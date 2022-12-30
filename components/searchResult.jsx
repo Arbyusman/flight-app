@@ -58,7 +58,6 @@ export default function ResultFlight() {
         console.log("one way ticket", oneWayTicket);
         console.log("round way ticket", roundWayTicket);
       });
-
   };
 
   useEffect(() => {
@@ -238,33 +237,36 @@ export default function ResultFlight() {
           </button>
         </div>
       </div>
+      {oneWay.length > 0 ? (
+        <div className="flex justify-center items-center ">
+          <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
+            <div className="text-gray-700">
+              <h1 className="font-semibold tracking-wide antialiased text-lg">
+                Flights departing from {from} to {to}
+              </h1>
+              <div className="flex gap-2 text-sm">
+                <p>{depart}</p>
+                <p>|</p>
+                <p>{category}</p>
+              </div>
+            </div>
 
-      <div className="flex justify-center items-center ">
-        <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
-          <div className="text-gray-700">
-            <h1 className="font-semibold tracking-wide antialiased text-lg">
-              Flights departing from {from} to {to}
-            </h1>
-            <div className="flex gap-2 text-sm">
-              <p>{depart}</p>
-              <p>|</p>
-              <p>{category}</p>
+            <div className="gap-2 flex justify-end lg:items-center lg:justify-center ">
+              <Dropdown
+                id="filter_tiket"
+                label="Filter"
+                color="gray"
+                className="md:py-2.5 md:px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 "
+              >
+                <Dropdown.Item>Harga Terendah</Dropdown.Item>
+                <Dropdown.Item>Harga Tertinggi</Dropdown.Item>
+              </Dropdown>
             </div>
           </div>
-
-          <div className="gap-2 flex justify-end lg:items-center lg:justify-center ">
-            <Dropdown
-              id="filter_tiket"
-              label="Filter"
-              color="gray"
-              className="md:py-2.5 md:px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 "
-            >
-              <Dropdown.Item>Harga Terendah</Dropdown.Item>
-              <Dropdown.Item>Harga Tertinggi</Dropdown.Item>
-            </Dropdown>
-          </div>
         </div>
-      </div>
+      ) : (
+        <div></div>
+      )}
 
       <Modal show={openModal} size="sm" popup={true} position={"top-center"}>
         <Alert color="success" className="justify-center items-center">
@@ -463,7 +465,7 @@ export default function ResultFlight() {
       ) : (
         <div className="flex justify-center items-center my-5">
           <p className="text-xl font-normal text-gray-900">
-            {/* Return flight ticket not found */}
+            Return flight not found
           </p>
         </div>
       )}

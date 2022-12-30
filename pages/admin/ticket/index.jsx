@@ -30,7 +30,7 @@ export default function Ticket() {
       .then((res) => res.json())
 
       .then((data) => {
-        setFlight(data.data.data);
+        setFlight(data.data);
       });
   };
 
