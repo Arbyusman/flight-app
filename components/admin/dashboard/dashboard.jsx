@@ -14,8 +14,12 @@ const Dashboard = () => {
   }, []);
 
   const handleGetTransaction = () => {
+    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/transaction`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
 
@@ -26,8 +30,12 @@ const Dashboard = () => {
   };
 
   const handleGetUser = () => {
+    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/users`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
 
@@ -38,8 +46,12 @@ const Dashboard = () => {
   };
 
   const handleGetPromo = () => {
+    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/promo`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
 

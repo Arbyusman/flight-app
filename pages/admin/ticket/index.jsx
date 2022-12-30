@@ -15,9 +15,8 @@ export default function Ticket() {
   const [flight, setFlight] = useState([]);
 
   useEffect(() => {
-    getListTicket();
     handelGetFlight();
-    getListPlane();
+    getListTicket();
   }, []);
 
   const handelGetFlight = () => {
@@ -45,13 +44,16 @@ export default function Ticket() {
   };
 
   const handleDelete = (id) => {
+    const token = localStorage.getItem("token");
+    alert("Yakin ingin Menghapus Data?");
     fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }).catch((err) => {
       throw err;
     });
-
-    alert("Data berhasil Di hapus");
 
     getListTicket();
   };

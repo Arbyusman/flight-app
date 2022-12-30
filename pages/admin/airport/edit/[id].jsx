@@ -61,7 +61,7 @@ export default function EditAirport() {
     console.log("data update", data.status);
 
     if (data.status === "OK") {
-      alert("data bershail di ubah");
+      alert("Data berhasil  di ubah");
       router.push("/admin/airport");
     }
   }

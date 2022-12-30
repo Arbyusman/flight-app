@@ -9,10 +9,20 @@ import React, { useEffect, useState } from "react";
 
 export default function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    handleGetUser();
+    handleGetWishlist();
+  }, []);
+
+  const handleGetWishlist = () => {
+    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/wishlist`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
 
@@ -20,7 +30,24 @@ export default function Wishlist() {
         setWishlist(data.data);
         console.log("datahere", data);
       });
-  }, []);
+  };
+
+  const handleGetUser = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/users`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setUsers(data.data.users);
+        console.log("datahere", data);
+      });
+  };
+
   return (
     <Layout>
       <div className="mt-10">
@@ -39,7 +66,7 @@ export default function Wishlist() {
             <Table.Body className="divide-y">
               {wishlist.map((wishlist) => (
                 <Table.Row key={wishlist.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{wishlist.user_id}</Table.Cell>
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{wishlist.User.username}</Table.Cell>
                   <Table.Cell>{wishlist.ticket_id}</Table.Cell>
                 </Table.Row>
               ))}

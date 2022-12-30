@@ -80,6 +80,7 @@ export default function CreatePromo() {
 
     const data = await req.json();
     if (data.status === "OK") {
+      alert("Data berhasil Ditambahkan");
       console.log(data.status, "ini diaaaaa");
       router.push("/admin/flight");
     } else {

@@ -16,8 +16,12 @@ export default function Promo() {
   }, []);
 
   const handleGetUser = () => {
+    const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/users`, {
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
 
