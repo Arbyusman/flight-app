@@ -112,9 +112,12 @@ export default function Ticket() {
             </Table.Head>
             <Table.Body className="divide-y">
               {ticket.map((ticket) => (
-                <Table.Row key={ticket.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                <Table.Row
+                  key={ticket.id}
+                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                >
                   <Table.Cell>
-                    <img src={ticket.photo} alt="img-photo" />
+                    <img className="w-52" src={ticket.photo} alt="img-photo" />
                   </Table.Cell>
                   <Table.Cell>{ticket.flight_id}</Table.Cell>
                   <Table.Cell>{ticket.type}</Table.Cell>
@@ -124,10 +127,17 @@ export default function Ticket() {
                   <Table.Cell>{ticket.desc}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a href={`/admin/ticket/edit/${ticket.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
+                      <a
+                        href={`/admin/ticket/edit/${ticket.id}`}
+                        className="w-5 h-5  font-medium text-green-600 hover:underline "
+                      >
                         <FaEdit />
                       </a>
-                      <button onClick={() => handleDelete(ticket.id)} type="button" className="font-medium text-red-600 hover:underline gap-20 ">
+                      <button
+                        onClick={() => handleDelete(ticket.id)}
+                        type="button"
+                        className="font-medium text-red-600 hover:underline gap-20 "
+                      >
                         <FaTrashAlt />
                       </button>
                     </div>

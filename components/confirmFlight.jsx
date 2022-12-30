@@ -10,17 +10,15 @@ import { GiBackpack } from "react-icons/gi";
 
 export default function ConfirmFlight() {
   const router = useRouter();
-  const { id } = router.query;
+
+  const { ticket1, ticket2 } = router.query;
+
+  const [oneWayTicket, setOneWayTicket] = useState([]);
+  const [roundTicket, setRoundTicket] = useState([]);
 
   const [openModal, setOpenModal] = useState(false);
 
   const [totalPrice, setTotalPrice] = useState("");
-
-  const [dataTicket, setDataTicket] = useState([]);
-  const [flight, setFlight] = useState([]);
-  const [plane, setPlane] = useState([]);
-  const [from, setFrom] = useState([]);
-  const [to, setTo] = useState([]);
 
   const [userId, setUserId] = useState("");
 
@@ -32,13 +30,37 @@ export default function ConfirmFlight() {
   const [phone, setPhone] = useState("");
 
   const [bookLoading, setBookLoading] = useState(false);
+
   useEffect(() => {
-    if (!id) {
-      return;
-    }
+    if (!ticket1) return;
+    handelGetTicket();
+
     whoami();
-    ticket();
   }, [router.isReady]);
+
+  const handelGetTicket = () => {
+    fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${ticket1}`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        console.log("ticket 1", data.data);
+        setOneWayTicket(data.data);
+      });
+
+    if (ticket2) {
+      fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${ticket2}`, {
+        method: "GET",
+      })
+        .then((res) => res.json())
+
+        .then((data) => {
+          console.log("ticket", data.data);
+          setRoundTicket(data.data);
+        });
+    }
+  };
 
   const whoami = () => {
     const token = localStorage.getItem("token");
@@ -87,24 +109,6 @@ export default function ConfirmFlight() {
     whoami();
   }
 
-  const ticket = () => {
-    fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-
-      .then((data) => {
-        setDataTicket(data.data);
-        setFlight(data.data.Flight);
-        setPlane(data.data.Flight.Plane);
-        setFrom(data.data.Flight.from);
-        setTo(data.data.Flight.to);
-      });
-  };
-
   async function handelBooking() {
     const ticket_id = dataTicket.id;
     const user_id = userId;
@@ -137,6 +141,35 @@ export default function ConfirmFlight() {
     if (data.status === "OK") {
       setBookLoading(false);
       setOpenModal(false);
+      const handelGetTicket = () => {
+        fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${ticket1}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+
+          .then((data) => {
+            console.log("ticket 1", data.data);
+            setOneWayTicket(data.data);
+          });
+
+        if (ticket2) {
+          fetch(`${process.env.API_ENDPOINT}api/v1/ticket/${ticket2}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => res.json())
+
+            .then((data) => {
+              console.log("ticket", data.data);
+              setRoundTicket(data.data);
+            });
+        }
+      };
       router.push(`/history/${userId}`);
     }
   }
@@ -158,7 +191,7 @@ export default function ConfirmFlight() {
                 <hr></hr>
 
                 {/* form contact information */}
-                <div className="flex justify-center bg-white shadow-md  ">
+                {/* <div className="flex justify-center bg-white shadow-md  ">
                   <div className="w-full gap-5 flex justify-center   md:p-7">
                     <div className="md:w-11/12 w-full mx-4 ">
                       <div className="md:flex w-full  md:justify-start md:gap-10 md:mt-2 md:items-center">
@@ -260,7 +293,7 @@ export default function ConfirmFlight() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -275,7 +308,7 @@ export default function ConfirmFlight() {
                 Detail
               </h1>
             </Modal.Header>
-            <Modal.Body>
+            {/* <Modal.Body>
               <div className=" justify-center flex-row  items-center  bg-white px-2 text-gray-600 tracking-wide antialiased  rounded-md">
                 <hr />
                 <div className="justify-center items-center">
@@ -368,40 +401,38 @@ export default function ConfirmFlight() {
                   </button>
                 </div>
               </div>
-            </Modal.Body>
+            </Modal.Body> */}
           </Modal>
 
           <div className="flex justify-center mt-4 ">
-            <div className="w-full gap-5  bg-white  ">
+            {/* <div className="w-full gap-5  bg-white  ">
               <div className="w-full rounded-md ">
                 <div className=" items-center justify-center flex-row shadow-md  bg-white rounded-sm text-gray-600 tracking-wide antialiased ">
                   <div className="w-full   flex-row md:flex justify-between  px-7  py-5">
                     <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700 ">
                       Flight
+                      {oneWayTicket.Flight.departure_date}{" "}
                     </h1>
                   </div>
                   <hr />
                   <div className="p-7 ">
                     <div className="flex justify-between md:flex-row text-sm font-thin my-1">
                       <p>Depart Flight</p>
-                      {new Date(flight.departure_time).toLocaleString(
-                        "default",
-                        { month: "long" }
-                      )}{" "}
-                      {new Date(flight.departure_time).getFullYear()}
+                      {oneWayTicket.Flight.departure_date}{" "}
+                      {oneWayTicket.Flight.departure_time}{" "}
                     </div>
                     <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
                       <p>Plane</p>
                       <figure className="max-w-md">
                         <Image
                           className="w-10 lg:w-12 flex "
-                          src={dataTicket.photo}
+                          src={oneWayTicket.photo}
                           alt="logo penerbangan"
                           width={50}
                           height={50}
                         ></Image>
                         <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
-                          {plane.name}
+                          {oneWayTicket.Flight.Plane.name}
                         </figcaption>
                       </figure>
                     </div>
@@ -411,36 +442,38 @@ export default function ConfirmFlight() {
                       <div className="flex  gap-4 items-center">
                         <div>
                           <p className="font-bold text-xl">
-                            {new Date(flight.departure_time).getHours()}
                             {" : "}
-                            {new Date(flight.departure_time).getMinutes()}
+                            {oneWayTicket.Flight.departure_time}
                           </p>
                           <p className="text-sm">
-                            {new Date(flight.departure_time).toDateString()}
+                            {oneWayTicket.Flight.departure_time}
                           </p>
                         </div>
                         <div className=" w-36 lg:w-56">
                           <p className="text-md font-semibold">
-                            {from.city} ( {from.city_code} ){" "}
+                            {oneWayTicket.Flight.from.city} ({" "}
+                            {oneWayTicket.Flight.from.city_code} ){" "}
                           </p>
-                          <p className="text-sm">{from.name}</p>
+                          <p className="text-sm">
+                            {oneWayTicket.Flight.from.name}
+                          </p>
                         </div>
                       </div>
 
                       <div className="flex gap-4 items-center">
                         <div>
                           <p className="font-bold text-xl">
-                            {new Date(flight.arrival_time).getHours()}
                             {" : "}
-                            {new Date(flight.arrival_time).getMinutes()}
+                            {oneWayTicket.Flight.arrival_time}
                           </p>
                           <p className="text-sm">
-                            {new Date(flight.arrival_time).toDateString()}
+                            {oneWayTicket.Flight.arrival_date}
                           </p>
                         </div>
                         <div className=" w-36 lg:w-56">
                           <p className="text-md font-semibold">
-                            {to.city} ( {to.city_code} ){" "}
+                            {oneWayTicket.Flight.to.city} ({" "}
+                            {oneWayTicket.Flight.to.city_code} ){" "}
                           </p>
                           <p className="text-sm">{to.name}</p>
                         </div>
@@ -450,17 +483,17 @@ export default function ConfirmFlight() {
                       <hr></hr>
                       <div className="flex gap-3 items-center my-1 lg:my-3 ">
                         <GiBackpack className="text-xl text-green-500" />
-                        <p>Cabin Baggage {dataTicket.cabin_baggage}</p>
+                        <p>Cabin Baggage {oneWayTicket.cabin_baggage}</p>
                       </div>
                       <div className="flex gap-3 items-center my-1 lg:my-3">
                         <MdOutlineLuggage className="text-xl text-blue-500" />
-                        <p>Baggage {dataTicket.baggage}</p>
+                        <p>Baggage {oneWayTicket.baggage}</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -475,7 +508,7 @@ export default function ConfirmFlight() {
                 </h1>
               </div>
               <hr />
-              <div className="p-7">
+              {/* <div className="p-7">
                 <div className="font-semibold gap-5 my-2 text-base flex justify-between">
                   <div className="flex items-center gap-2 ">
                     <p>Depart</p>
@@ -489,10 +522,7 @@ export default function ConfirmFlight() {
                   <p>Adult x 1</p>
                   <p>RP 678.000</p>
                 </div>
-                {/* <div className="flex justify-between text-sm font-thin my-1">
-                  <Button></Button>
-                  <input type="text"></input>
-                </div> */}
+               
                 <hr />
                 <div className="flex justify-between text-lg font-bold tracking-wider my-2">
                   <p>total Price</p>
@@ -503,7 +533,7 @@ export default function ConfirmFlight() {
                     RP {dataTicket.price}
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="flex justify-center items-center">
               <div>
