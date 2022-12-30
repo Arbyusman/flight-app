@@ -58,7 +58,7 @@ const Dashboard = () => {
             <h2 className="text-gray-600 ml-0.5">Admin TakeOFF</h2>
           </div>
         </div>
-        <h1>Transaction</h1>
+        <h1 className="text-center text-4xl font-semibold mb-2">Transaction</h1>
         <div className="mt-10 border-spacing-2">
           <Table hoverable={true}>
             <Table.Head>
@@ -71,7 +71,7 @@ const Dashboard = () => {
               {transaction.map((transaction) => (
                 <Table.Row key={transaction.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
                   <Table.Cell>{transaction.ticket_id}</Table.Cell>
-                  <Table.Cell>{transaction.User.username}</Table.Cell>
+                  {transaction.user_id === null ? <Table.Cell></Table.Cell> : <Table.Cell>{transaction.User.username}</Table.Cell>}
 
                   {transaction.promo_id === null ? <Table.Cell></Table.Cell> : <Table.Cell>{transaction.Promo.name}</Table.Cell>}
 

@@ -25,9 +25,11 @@ export default function CreatePlane() {
   async function doCreate(e) {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
     const req = await fetch(`${process.env.API_ENDPOINT}api/v1/planes`, {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(field),

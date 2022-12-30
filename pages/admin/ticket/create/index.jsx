@@ -13,6 +13,7 @@ export default function CreateTicket() {
   const [desc, setDesc] = useState("");
   const [photo, setPhoto] = useState("");
   const [flightId, setFlightId] = useState("");
+  const [planes, setPlanes] = useState([]);
 
   const [field, setField] = useState({});
   const router = useRouter();
@@ -20,6 +21,7 @@ export default function CreateTicket() {
 
   useEffect(() => {
     getListFlight();
+    getListPlane();
   }, []);
 
   const getListFlight = () => {
@@ -33,6 +35,20 @@ export default function CreateTicket() {
       .then((data) => {
         setFlight(data.data.data);
         console.log("dataFlight", data.data.data);
+      });
+  };
+
+  const getListPlane = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/plane`, {
+      method: "GET",
+      Authorization: `Bearer ${token}`,
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setPlanes(data.data);
+        console.log("dataPlane", data.data);
       });
   };
 
@@ -107,6 +123,10 @@ export default function CreateTicket() {
                         <p>To :</p>
                         <p> {flight.to.name} </p>
                       </div>
+                      <div>
+                        <p>Plane :</p>
+                        <p>{flight.Plane.name} </p>
+                      </div>
                     </option>
                   ))}
                 </select>
@@ -129,8 +149,8 @@ export default function CreateTicket() {
                   Choose a Type
                 </option>
 
-                <option value="economi">Economi</option>
-                <option value="business">Business</option>
+                <option value="Economi">Economi</option>
+                <option value="Business">Business</option>
               </select>
             </div>
             <div className="relative mt-3">
