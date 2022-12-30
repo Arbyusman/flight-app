@@ -47,7 +47,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             </div>
           </div>
         </Link>
-        <Link href="/admin/airport" activeClassName="active">
+        <Link href="/admin/airport">
           <div
             className={`pl-6 py-3 text-white  mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors  ${
               router.pathname === "/airport" ? "bg-orange-100 text-orange-500" : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
@@ -60,7 +60,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             </div>
           </div>
         </Link>
-        <Link href="/admin/plane" activeClassName="active">
+        <Link href="/admin/plane">
           <div
             className={`pl-6 py-3 text-white  mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors  ${
               router.pathname === "/plane" ? "bg-orange-100 text-orange-500" : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
@@ -74,7 +74,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
           </div>
         </Link>
 
-        <Link href="/admin/flight" activeClassName="active">
+        <Link href="/admin/flight">
           <div
             className={`pl-6 py-3 text-white  mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors  ${
               router.pathname === "/flight" ? "bg-orange-100 text-orange-500" : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
@@ -87,7 +87,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             </div>
           </div>
         </Link>
-        <Link href="/admin/promo" activeClassName="active">
+        <Link href="/admin/promo">
           <div
             className={`pl-6 py-3 text-white  mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors  ${
               router.pathname === "/promo" ? "bg-orange-100 text-orange-500" : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
@@ -100,7 +100,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             </div>
           </div>
         </Link>
-        <Link href="/admin/ticket" activeClassName="active">
+        <Link href="/admin/ticket">
           <div
             className={`pl-6 py-3 text-white  mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors  ${
               router.pathname === "/ticket" ? "bg-orange-100 text-orange-500" : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"
@@ -114,7 +114,7 @@ const SideBar = forwardRef(({ showNav }, ref) => {
             </div>
           </div>
         </Link>
-        <Link href="/admin/wishlist" activeClassName="active">
+        <Link href="/admin/wishlist">
           <div
             className={`pl-6 py-3 text-white  mx-5 rounded text-center cursor-pointer mb-3 flex items-center transition-colors  ${
               router.pathname === "/wishlist" ? "bg-orange-100 text-orange-500" : "text-gray-600 hover:bg-orange-100 hover:text-orange-500"

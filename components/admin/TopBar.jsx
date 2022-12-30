@@ -25,7 +25,6 @@ export default function TopBar({ showNav, setShowNav }) {
       router.push("/");
     } else {
       whoami();
-      getNotifications();
     }
     setIsLoggedIn(!!token);
   }, []);
@@ -45,21 +44,6 @@ export default function TopBar({ showNav, setShowNav }) {
         setId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
-      });
-  };
-  const getNotifications = () => {
-    const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/notification/${id}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-
-      .then((data) => {
-        setNotification(data.data);
-        console.log("notif", data.data);
       });
   };
 
