@@ -2,15 +2,18 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
 
 export default function Register() {
   const router = useRouter();
-  const [err, setErr] = useState("");
-
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
+  const [err, setErr] = useState("");
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -19,29 +22,28 @@ export default function Register() {
     setToken(token);
   }, []);
 
-  async function handelRegister() {
+  const onSubmit = async (data) => {
     const response = await fetch(`${process.env.API_ENDPOINT}api/v1/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        username,
-        email,
-        password,
-      }),
+      body: JSON.stringify(data),
     }).catch((err) => {
       throw err;
     });
-    const data = await response.json();
+    const res = await response.json();
+    console.log(data);
 
-    console.log("data register", data.status);
+    console.log("data register", res.status);
 
-    if (data.status === "OK") {
+    if (res.status === "OK") {
       alert("Congratulation!! , Your accounnt has been Regitered");
       router.push("login");
     }
-  }
+  };
+
+  async function handelRegister() {}
   if (token) {
     return (
       <section className="h-screen">
@@ -82,11 +84,19 @@ export default function Register() {
               </div>
 
               <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
-                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <div
+                  method="POST"
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="p-6 space-y-4 md:space-y-6 sm:p-8"
+                >
                   <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                     Create and account
                   </h1>
-                  <div className="space-y-4 md:space-y-6" action="#">
+                  <form
+                    method="POST"
+                    className="space-y-4 md:space-y-6"
+                    action="#"
+                  >
                     <div>
                       <label
                         htmlFor="username"
@@ -100,8 +110,17 @@ export default function Register() {
                         id="username"
                         className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
                         placeholder="Mega Watt"
-                        onChange={(e) => setUsername(e.target.value)}
+                        {...register("username", {
+                          required: true,
+                          minLength: 10,
+                        })}
                       />
+                      {errors.password &&
+                        errors.password.type === "minLength" && (
+                          <span className="text-xs text-red-600">
+                            Username should be at-least 10 characters.
+                          </span>
+                        )}
                     </div>
                     <div>
                       <label
@@ -117,8 +136,22 @@ export default function Register() {
                         id="email"
                         className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
                         placeholder="name@company.com"
-                        onChange={(e) => setEmail(e.target.value)}
+                        // onChange={(e) => setEmail(e.target.value)}
+                        {...register("email", {
+                          required: true,
+                          pattern: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                        })}
                       />
+                      {errors.email && errors.email.type === "required" && (
+                        <span className="text-xs text-red-600">
+                          Email is required.
+                        </span>
+                      )}
+                      {errors.email && errors.email.type === "pattern" && (
+                        <span className="text-xs text-red-600">
+                          Email is not valid.
+                        </span>
+                      )}
                     </div>
                     <div>
                       <label
@@ -133,8 +166,23 @@ export default function Register() {
                         id="password"
                         placeholder="••••••••"
                         className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
-                        onChange={(e) => setPassword(e.target.value)}
+                        ref={register("password", {
+                          required: true,
+                          minLength: 8,
+                        })}
                       />
+                      {errors.password &&
+                        errors.password.type === "required" && (
+                          <span className="text-xs text-red-600">
+                            Password is required.
+                          </span>
+                        )}
+                      {errors.password &&
+                        errors.password.type === "minLength" && (
+                          <span className="text-xs text-red-600">
+                            Password should be at-least 8 characters.
+                          </span>
+                        )}
                     </div>
                     <div className="flex items-start">
                       <div className="flex items-center h-5">
@@ -163,7 +211,7 @@ export default function Register() {
                     </div>
                     <center>
                       <button
-                        onClick={handelRegister}
+                        // onClick={handelRegister}
                         type="submit"
                         name="submit"
                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-20  py-3.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 "
@@ -180,7 +228,7 @@ export default function Register() {
                         Login here
                       </Link>
                     </p>
-                  </div>
+                  </form>
                 </div>
               </div>
             </div>
