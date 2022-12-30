@@ -85,22 +85,25 @@ export default function CreatePromo() {
 
   async function handleUpdate() {
     const token = localStorage.getItem("token");
-    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/flight/${id}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from_airport_id,
-        to_airport_id,
-        plane_id,
-        arrival_time,
-        arrival_date,
-        departure_time,
-        departure_date,
-      }),
-    }).catch((err) => {
+    const response = await fetch(
+      `${process.env.API_ENDPOINT}api/v1/flight/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from_airport_id,
+          to_airport_id,
+          plane_id,
+          arrival_time,
+          arrival_date,
+          departure_time,
+          departure_date,
+        }),
+      }
+    ).catch((err) => {
       throw err;
     });
 
@@ -124,7 +127,10 @@ export default function CreatePromo() {
           <div className="mt-10">
             <div className="flex gap-5 justify-center items-center">
               <div className="relative w-full">
-                <label for="from_airport_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label
+                  for="from_airport_id"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
                   From Aiport
                 </label>
                 <select
@@ -132,7 +138,8 @@ export default function CreatePromo() {
                   name="from_airport_id"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={(e) => setFromAirportId(e.target.value)}
-                  value={from_airport_id}>
+                  value={from_airport_id}
+                >
                   <option selected>Choose a Airport</option>
                   {airport.map((airport) => (
                     <option key={airport.id} value={airport.id}>
@@ -143,7 +150,10 @@ export default function CreatePromo() {
               </div>
               <TbPlaneInflight className="-mb-5 text-5xl text-gray-700" />
               <div className="relative w-full">
-                <label for="to_airport_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label
+                  for="to_airport_id"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
                   To Aiport
                 </label>
                 <select
@@ -151,7 +161,8 @@ export default function CreatePromo() {
                   name="to_airport_id"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={(e) => setToAirportId(e.target.value)}
-                  value={to_airport_id}>
+                  value={to_airport_id}
+                >
                   <option selected>Choose a Airport</option>
                   {airport.map((airport) => (
                     <option key={airport.id} value={airport.id}>
@@ -164,7 +175,10 @@ export default function CreatePromo() {
 
             <div className="flex gap-14 mt-3 ">
               <div className="relative w-full">
-                <label for="plane_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label
+                  for="plane_id"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
                   Plane
                 </label>
                 <select
@@ -172,7 +186,8 @@ export default function CreatePromo() {
                   name="plane_id"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={(e) => setPlaneId(e.target.value)}
-                  value={plane_id}>
+                  value={plane_id}
+                >
                   <option selected>Choose a Plane</option>
                   {plane.map((item) => (
                     <option key={item.id} value={item.id}>
@@ -184,7 +199,10 @@ export default function CreatePromo() {
             </div>
             <div className="flex gap-14 mt-3 ">
               <div className="relative w-full">
-                <label for="departure_date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label
+                  for="departure_date"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
                   Departure Date
                 </label>
                 <input
@@ -198,7 +216,10 @@ export default function CreatePromo() {
                 />
               </div>
               <div className="w-full">
-                <label for="departure_time" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label
+                  for="departure_time"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
                   Departure Time
                 </label>
                 <input
@@ -214,7 +235,10 @@ export default function CreatePromo() {
             </div>
             <div className="flex gap-14 mt-3 ">
               <div className="relative w-full">
-                <label for="departure_date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label
+                  for="departure_date"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
                   Arrival Date
                 </label>
                 <input
@@ -228,7 +252,10 @@ export default function CreatePromo() {
                 />
               </div>
               <div className="w-full">
-                <label for="departure_time" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label
+                  for="departure_time"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
                   Arrival Time
                 </label>
                 <input
@@ -243,6 +270,7 @@ export default function CreatePromo() {
               </div>
             </div>
           </div>
+        </form>
 
         <div className="flex justify-end ">
           <div className="flex justify-between mt-5 gap-5">
@@ -250,7 +278,12 @@ export default function CreatePromo() {
               Back
             </Button>
 
-            <Button type="submit" name="submit" onClick={handleUpdate} color="info">
+            <Button
+              type="submit"
+              name="submit"
+              onClick={handleUpdate}
+              color="info"
+            >
               Update
             </Button>
           </div>
