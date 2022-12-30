@@ -17,7 +17,6 @@ export default function Ticket() {
   useEffect(() => {
     getListTicket();
     handelGetFlight();
-    getListPlane();
   }, []);
 
   const handelGetFlight = () => {
@@ -27,7 +26,7 @@ export default function Ticket() {
       .then((res) => res.json())
 
       .then((data) => {
-        setFlight(data.data.data);
+        setFlight(data.data);
       });
   };
 

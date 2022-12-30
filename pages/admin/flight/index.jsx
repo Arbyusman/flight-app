@@ -100,20 +100,35 @@ export default function Flight() {
             </Table.Head>
             <Table.Body className="divide-y">
               {flight.map((flight) => (
-                <Table.Row key={flight.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{flight.Plane.name}</Table.Cell>
-                  <Table.Cell>{flight.from.name}</Table.Cell>
-                  <Table.Cell>{flight.to.name}</Table.Cell>
+                <Table.Row
+                  key={flight.id}
+                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                >
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                    {flight.Plane.name}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {flight.from.name} | {flight.from.city}
+                  </Table.Cell>
+                  <Table.Cell>
+                    {flight.to.name} | {flight.to.city}
+                  </Table.Cell>
                   <Table.Cell>{flight.arrival_time}</Table.Cell>
                   <Table.Cell>{flight.arrival_date}</Table.Cell>
                   <Table.Cell>{flight.departure_time}</Table.Cell>
                   <Table.Cell>{flight.departure_date}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">
-                      <a href={`/admin/flight/edit/${flight.id}`} className="w-5 h-5  font-medium text-green-600 hover:underline ">
+                      <a
+                        href={`/admin/flight/edit/${flight.id}`}
+                        className="w-5 h-5  font-medium text-green-600 hover:underline "
+                      >
                         <FaEdit />
                       </a>
-                      <a onClick={() => handleDelete(flight.id)} className="font-medium text-red-600 hover:underline gap-20 ">
+                      <a
+                        onClick={() => handleDelete(flight.id)}
+                        className="font-medium text-red-600 hover:underline gap-20 "
+                      >
                         <FaTrashAlt />
                       </a>
                     </div>
