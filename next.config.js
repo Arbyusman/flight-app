@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["flowbite.com", "res.cloudinary.com"],
+    domains: ["flowbite.com","res.cloudinary.com"],
   },
   env: {
     API_ENDPOINT: process.env.API_ENDPOINT,

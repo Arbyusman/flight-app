@@ -2,25 +2,18 @@ import { Fragment, useState, useEffect } from "react";
 import { Tabs, Button } from "flowbite-react";
 import { Combobox, Transition, Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import Router from "next/router";
 
-const cities = [
-  "Jakarta",
-  "Makassar",
-  "Padang",
-  "Surabaya",
-  "Denpasar",
-  "Manado",
-];
-
-const categories = [
-  { category: "Economy Class" },
-  { category: "Business Class" },
-];
+const categories = [{ category: "Economi" }, { category: "Business" }];
 
 const SearchFlightForm = () => {
-  const [selectedCategories, setSelectedCategories] = useState(categories[0]);
-
+  const [selectedCategories, setSelectedCategories] = useState("");
+  const [fromSelectedCity, setFromSelectedCity] = useState("");
+  const [toSelectedCity, setToSelectedCity] = useState("");
+  const [query, setQuery] = useState("");
+  const [query2, setQuery2] = useState("");
   const [airport, setAirport] = useState([]);
+  const [ticket, setTicket] = useState([]);
 
   const [departureNative, setDepartureNative] = useState("");
   const onDepartureNativeChange = (e) => {
@@ -34,28 +27,95 @@ const SearchFlightForm = () => {
     setArrivalNative(e.target.value);
   };
 
+  const handelGetAirport = async () => {
+    await fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setAirport(data.data);
+      });
+
+    console.log(airport);
+  };
+
+  const handleGetTicket = async () => {
+    await fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTicket(data.data);
+      });
+
+    console.log(ticket);
+  };
+
   useEffect(() => {
+    handleGetTicket();
     handelGetAirport();
 
     if (fromSelectedCity !== toSelectedCity) {
     }
   }, []);
 
-  const handelGetAirport = () => {
-    const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/airport`, {
-      method: "GET",
-    })
-      .then((res) => res.json())
+  const handleSearchOneWayFlight = () => {
+    console.log(
+      fromSelectedCity,
+      toSelectedCity,
+      departureNative,
+      selectedCategories.category
+    );
 
-      .then((data) => {
-        console.log("data airport", data.data);
-        setAirport(data.data);
-      });
+    Router.push({
+      pathname: "/search",
+      query: {
+        from: fromSelectedCity,
+        to: toSelectedCity,
+        depart: departureNative,
+        category: selectedCategories.category,
+      },
+    });
   };
-  const [fromSelectedCity, setFromSelectedCity] = useState("");
-  const [toSelectedCity, setToSelectedCity] = useState("");
-  const [query, setQuery] = useState("");
+
+  const handleSearchRoundtripFlight = () => {
+    console.log(
+      fromSelectedCity,
+      toSelectedCity,
+      departureNative,
+      arrivalNative,
+      selectedCategories.category
+    );
+
+    const roundtripTicket1 = ticket.filter(
+      (item) =>
+        item.Flight.from.city == fromSelectedCity &&
+        item.Flight.to.city == toSelectedCity &&
+        item.Flight.departure_date == departureNative &&
+        item.type == selectedCategories.category
+    );
+
+    const roundtripTicket2 = ticket.filter(
+      (item) =>
+        item.Flight.from.city == toSelectedCity &&
+        item.Flight.to.city == fromSelectedCity &&
+        item.Flight.departure_date == arrivalNative &&
+        item.type == selectedCategories.category
+    );
+
+    console.log(roundtripTicket1, roundtripTicket2);
+    Router.push({
+      pathname: "/search",
+      query: {
+        from: fromSelectedCity,
+        to: toSelectedCity,
+        depart: departureNative,
+        arrival: arrivalNative,
+        category: selectedCategories.category,
+      },
+    });
+  };
 
   const filteredCity =
     query === ""
@@ -72,7 +132,7 @@ const SearchFlightForm = () => {
           className="border-none"
         >
           <Tabs.Item active={true} title="One-Way">
-            <form action="/search" method="GET">
+            <div action="" method="">
               <div className="flex justify-between flex-col md:flex-row md:space-x-2 md:space-y-0 space-y-2">
                 <div
                   id="from"
@@ -121,7 +181,7 @@ const SearchFlightForm = () => {
                                       : "text-gray-900"
                                   }`
                                 }
-                                value={`${city.city} ( ${city.city_code})`}
+                                value={`${city.city}`}
                               >
                                 {({ selected, active }) => (
                                   <>
@@ -135,7 +195,9 @@ const SearchFlightForm = () => {
                                         {`, ${city.country}`}
                                       </p>
 
-                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
+                                      <p className="text-xs tracking-normal antialiased">
+                                        {city.name}
+                                      </p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -173,7 +235,7 @@ const SearchFlightForm = () => {
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
                           className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
-                          onChange={(event) => setQuery(event.target.value)}
+                          onChange={(event) => setQuery2(event.target.value)}
                         />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                           <ChevronUpDownIcon
@@ -187,7 +249,7 @@ const SearchFlightForm = () => {
                         leave="transition ease-in duration-100"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
-                        afterLeave={() => setQuery("")}
+                        afterLeave={() => setQuery2("")}
                       >
                         <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                           {filteredCity.length === 0 && query !== "" ? (
@@ -205,7 +267,7 @@ const SearchFlightForm = () => {
                                       : "text-gray-900"
                                   }`
                                 }
-                                value={`${city.city} ( ${city.city_code})`}
+                                value={`${city.city}`}
                               >
                                 {({ selected, active }) => (
                                   <>
@@ -219,7 +281,9 @@ const SearchFlightForm = () => {
                                         {`, ${city.country}`}
                                       </p>
 
-                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
+                                      <p className="text-xs tracking-normal antialiased">
+                                        {city.name}
+                                      </p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -329,15 +393,19 @@ const SearchFlightForm = () => {
                   </Listbox>
                 </div>
                 <div>
-                  <Button type="submit" className="h-full">
+                  <Button
+                    type="submit"
+                    className="h-full"
+                    onClick={handleSearchOneWayFlight}
+                  >
                     Cari
                   </Button>
                 </div>
               </div>
-            </form>
+            </div>
           </Tabs.Item>
           <Tabs.Item title="Roundtrip">
-            <form>
+            <div>
               <div className="flex justify-between flex-col md:flex-row md:space-x-2 md:space-y-0 space-y-2">
                 <div
                   id="from"
@@ -386,7 +454,7 @@ const SearchFlightForm = () => {
                                       : "text-gray-900"
                                   }`
                                 }
-                                value={`${city.city} (${city.city_code})`}
+                                value={`${city.city}`}
                               >
                                 {({ selected, active }) => (
                                   <>
@@ -395,12 +463,14 @@ const SearchFlightForm = () => {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                     <p className="font-semibold antialiased tracking-normal">
+                                      <p className="font-semibold antialiased tracking-normal">
                                         {city.city}
                                         {`, ${city.country}`}
                                       </p>
 
-                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
+                                      <p className="text-xs tracking-normal antialiased">
+                                        {city.name}
+                                      </p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -470,7 +540,7 @@ const SearchFlightForm = () => {
                                       : "text-gray-900"
                                   }`
                                 }
-                                value={`${city.city} (${city.city_code})`}
+                                value={`${city.city}`}
                               >
                                 {({ selected, active }) => (
                                   <>
@@ -479,12 +549,14 @@ const SearchFlightForm = () => {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                     <p className="font-semibold antialiased tracking-normal">
+                                      <p className="font-semibold antialiased tracking-normal">
                                         {city.city}
                                         {`, ${city.country}`}
                                       </p>
 
-                                      <p className="text-xs tracking-normal antialiased">{city.name}</p>
+                                      <p className="text-xs tracking-normal antialiased">
+                                        {city.name}
+                                      </p>
                                     </span>
                                     {selected ? (
                                       <span
@@ -609,12 +681,16 @@ const SearchFlightForm = () => {
                   </Listbox>
                 </div>
                 <div>
-                  <Button type="submit" className="h-full">
+                  <Button
+                    type="submit"
+                    className="h-full"
+                    onClick={handleSearchRoundtripFlight}
+                  >
                     Cari
                   </Button>
                 </div>
               </div>
-            </form>
+            </div>
           </Tabs.Item>
         </Tabs.Group>
       </div>

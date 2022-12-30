@@ -20,7 +20,7 @@ export default function EditPlane() {
 
   const handleGetPlane = () => {
     const token = localStorage.getItem("token");
-    fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/planes/${id}`, {
+    fetch(`${process.env.API_ENDPOINT}api/v1/planes/${id}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ export default function EditPlane() {
 
   async function handleUpdate() {
     const token = localStorage.getItem("token");
-    const response = await fetch(`https://beckend-takeoff-production-46fc.up.railway.app/api/v1/planes/${id}`, {
+    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/planes/${id}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
