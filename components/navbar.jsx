@@ -54,20 +54,22 @@ export default function NavbarComponent() {
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
 
-        fetch(
-          `${process.env.API_ENDPOINT}api/v1/notification/user/${data.data.id}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-          .then((res) => res.json())
+        if (data.data.id) {
+          fetch(
+            `${process.env.API_ENDPOINT}api/v1/notification/user/${data.data.id}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+            .then((res) => res.json())
 
-          .then((data) => {
-            setNotification(data.data);
-          });
+            .then((data) => {
+              setNotification(data.data);
+            });
+        }
       });
   };
 

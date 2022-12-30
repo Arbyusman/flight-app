@@ -91,7 +91,7 @@ export default function CreatePlane() {
               </label>
             </div>
             <div className="relative mt-3">
-              <select id="status" name="status" onChange={setValue} class="bg-gray-50 border border-gray-300 text-gray-500 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+              <select id="status" name="status" onChange={setValue} className="bg-gray-50 border border-gray-300 text-gray-500 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                 <option selected disabled>
                   Status
                 </option>

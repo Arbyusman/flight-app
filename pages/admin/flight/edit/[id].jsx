@@ -117,131 +117,132 @@ export default function CreatePromo() {
   return (
     <Layout>
       <div className="mt-10 block p-6 rounded-lg shadow-lg bg-white w-5/6 mx-auto">
-        <div className="font-bold ">
-          <h5 className="text-2xl text-center">Form Edit Flight</h5>
-        </div>
-        <div className="mt-10">
-          <div className="flex gap-5 justify-center items-center">
-            <div className="relative w-full">
-              <label for="from_airport_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                From Aiport
-              </label>
-              <select
-                id="from_airport_id"
-                name="from_airport_id"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={(e) => setFromAirportId(e.target.value)}
-                value={from_airport_id}>
-                <option selected>Choose a Airport</option>
-                {airport.map((airport) => (
-                  <option key={airport.id} value={airport.id}>
-                    {airport.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <TbPlaneInflight className="-mb-5 text-5xl text-gray-700" />
-            <div className="relative w-full">
-              <label for="to_airport_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                To Aiport
-              </label>
-              <select
-                id="to_airport_id"
-                name="to_airport_id"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={(e) => setToAirportId(e.target.value)}
-                value={to_airport_id}>
-                <option selected>Choose a Airport</option>
-                {airport.map((airport) => (
-                  <option key={airport.id} value={airport.id}>
-                    {airport.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <form className="w-100">
+          <div className="font-bold ">
+            <h5 className="text-2xl text-center">Form Edit Flight</h5>
           </div>
+          <div className="mt-10">
+            <div className="flex gap-5 justify-center items-center">
+              <div className="relative w-full">
+                <label for="from_airport_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  From Aiport
+                </label>
+                <select
+                  id="from_airport_id"
+                  name="from_airport_id"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={(e) => setFromAirportId(e.target.value)}
+                  value={from_airport_id}>
+                  <option selected>Choose a Airport</option>
+                  {airport.map((airport) => (
+                    <option key={airport.id} value={airport.id}>
+                      {airport.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <TbPlaneInflight className="-mb-5 text-5xl text-gray-700" />
+              <div className="relative w-full">
+                <label for="to_airport_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  To Aiport
+                </label>
+                <select
+                  id="to_airport_id"
+                  name="to_airport_id"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={(e) => setToAirportId(e.target.value)}
+                  value={to_airport_id}>
+                  <option selected>Choose a Airport</option>
+                  {airport.map((airport) => (
+                    <option key={airport.id} value={airport.id}>
+                      {airport.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
 
-          <div className="flex gap-14 mt-3 ">
-            <div className="relative w-full">
-              <label for="plane_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Plane
-              </label>
-              <select
-                id="plane_id"
-                name="plane_id"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={(e) => setPlaneId(e.target.value)}
-                value={plane_id}>
-                <option selected>Choose a Plane</option>
-                {plane.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    <p>{item.name}</p>
-                  </option>
-                ))}
-              </select>
+            <div className="flex gap-14 mt-3 ">
+              <div className="relative w-full">
+                <label for="plane_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Plane
+                </label>
+                <select
+                  id="plane_id"
+                  name="plane_id"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onChange={(e) => setPlaneId(e.target.value)}
+                  value={plane_id}>
+                  <option selected>Choose a Plane</option>
+                  {plane.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      <p>{item.name}</p>
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="flex gap-14 mt-3 ">
+              <div className="relative w-full">
+                <label for="departure_date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Departure Date
+                </label>
+                <input
+                  type="date"
+                  id="departure_date"
+                  name="departure_date"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  value={departure_date}
+                  onChange={(e) => setDeparture_date(e.target.value)}
+                />
+              </div>
+              <div className="w-full">
+                <label for="departure_time" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Departure Time
+                </label>
+                <input
+                  type="time"
+                  id="departure_time"
+                  name="departure_time"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  value={departure_time}
+                  onChange={(e) => setDeparture_time(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex gap-14 mt-3 ">
+              <div className="relative w-full">
+                <label for="departure_date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Arrival Date
+                </label>
+                <input
+                  type="date"
+                  id="arrival_date"
+                  name="arrival_date"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  value={arrival_date}
+                  onChange={(e) => setArrival_date(e.target.value)}
+                />
+              </div>
+              <div className="w-full">
+                <label for="departure_time" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Arrival Time
+                </label>
+                <input
+                  type="time"
+                  id="arrival_time"
+                  name="arrival_time"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                  value={arrival_time}
+                  onChange={(e) => setArrival_time(e.target.value)}
+                />
+              </div>
             </div>
           </div>
-          <div className="flex gap-14 mt-3 ">
-            <div className="relative w-full">
-              <label for="departure_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Departure Date
-              </label>
-              <input
-                type="date"
-                id="departure_date"
-                name="departure_date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required
-                value={departure_date}
-                onChange={(e) => setDeparture_date(e.target.value)}
-              />
-            </div>
-            <div className="w-full">
-              <label for="departure_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Departure Time
-              </label>
-              <input
-                type="time"
-                id="departure_time"
-                name="departure_time"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required
-                value={departure_time}
-                onChange={(e) => setDeparture_time(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="flex gap-14 mt-3 ">
-            <div className="relative w-full">
-              <label for="departure_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Arrival Date
-              </label>
-              <input
-                type="date"
-                id="arrival_date"
-                name="arrival_date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required
-                value={arrival_date}
-                onChange={(e) => setArrival_date(e.target.value)}
-              />
-            </div>
-            <div className="w-full">
-              <label for="departure_time" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Arrival Time
-              </label>
-              <input
-                type="time"
-                id="arrival_time"
-                name="arrival_time"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                required
-                value={arrival_time}
-                onChange={(e) => setArrival_time(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
 
         <div className="flex justify-end ">
           <div className="flex justify-between mt-5 gap-5">
