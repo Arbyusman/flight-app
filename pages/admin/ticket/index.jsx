@@ -17,6 +17,7 @@ export default function Ticket() {
   useEffect(() => {
     getListTicket();
     handelGetFlight();
+    getListPlane();
   }, []);
 
   const handelGetFlight = () => {

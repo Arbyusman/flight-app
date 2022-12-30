@@ -8,6 +8,7 @@ export default function CreateTicket() {
   const { id } = router.query;
 
   const [flight, setFlight] = useState([]);
+  const [plane, setPlane] = useState([]);
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
   const [cabin_baggage, setCabin_Baggage] = useState("");
@@ -22,6 +23,7 @@ export default function CreateTicket() {
     }
     getListFlight();
     handleGetTicket();
+    getListPlane();
   }, [router.isReady]);
 
   const getListFlight = () => {
@@ -37,6 +39,18 @@ export default function CreateTicket() {
       .then((data) => {
         setFlight(data.data.data);
         console.log("dataFlight", data.data.data);
+      });
+  };
+
+  const getListPlane = () => {
+    fetch(`${process.env.API_ENDPOINT}api/v1/planes`, {
+      method: "GET",
+    })
+      .then((res) => res.json())
+
+      .then((data) => {
+        setPlane(data.data);
+        console.log("datahere", data);
       });
   };
 
@@ -116,6 +130,10 @@ export default function CreateTicket() {
                     <div>
                       <p>To :</p>
                       <p> {flight.to.name} </p>
+                    </div>
+                    <div>
+                      <p> Plane : </p>
+                      <p> {flight.Plane.name} </p>
                     </div>
                   </option>
                 ))}

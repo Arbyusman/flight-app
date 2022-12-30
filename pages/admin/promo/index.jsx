@@ -6,8 +6,6 @@ import { Table } from "flowbite-react";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-//import ListPromo from "../../../components/admin/promo/listPromo"
 
 export default function Promo() {
   const [promo, setPromo] = useState([]);
@@ -24,7 +22,7 @@ export default function Promo() {
 
       .then((data) => {
         setPromo(data.data);
-        console.log("datahere", data);
+        console.log("dataPromo", data);
       });
   };
 

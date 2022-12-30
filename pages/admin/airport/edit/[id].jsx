@@ -32,7 +32,7 @@ export default function EditAirport() {
       .then((data) => {
         console.log("airport", data.data);
         setName(data.data.name);
-        setCityCode(data.data.cityCode);
+        setCityCode(data.data.city_code);
         setCity(data.data.city);
         setCountry(data.data.country);
       });
@@ -71,7 +71,7 @@ export default function EditAirport() {
       <div className="mt-10 block p-6 rounded-lg shadow-lg bg-white w-5/6 mx-auto">
         <div className="w-100" method="PUT">
           <div className="font-bold ">
-            <h5 className="text-2xl text-center">Form Create Ticket</h5>
+            <h5 className="text-2xl text-center">Form Edit Airport</h5>
           </div>
           <div className="mt-10">
             <div className="relative mt-3">

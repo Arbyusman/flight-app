@@ -230,7 +230,7 @@ export default function CreatePromo() {
 
           <div className="flex justify-end ">
             <div className="flex justify-between mt-5 gap-5">
-              <Button href="/admin/ticket" color="success">
+              <Button href="/admin/flight" color="success">
                 Back
               </Button>
 
