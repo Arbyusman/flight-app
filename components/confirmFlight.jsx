@@ -19,14 +19,14 @@ export default function ConfirmFlight() {
   const [openModal, setOpenModal] = useState(false);
   const [openModalAlert, setOpenModalAlert] = useState(false);
 
+  const [oneWayPrice, setOneWayPrice] = useState("");
+  const [roundPrice, setRoundPrice] = useState("");
+
   const [totalPrice, setTotalPrice] = useState("");
 
   const [user, setUser] = useState([]);
 
   const [bookLoading, setBookLoading] = useState(false);
-
-  const [oneWayPrice, setOneWayPrice] = useState("");
-  const [roundWayPrice, setRoundWayPrice] = useState("");
 
   useEffect(() => {
     if (router.isReady) {
@@ -52,11 +52,10 @@ export default function ConfirmFlight() {
         setOneWayTicket(oneWayTicket);
         setRoundTicket(roundWayTicket);
         setOneWayPrice(oneWayTicket.price);
-        setRoundTicket(roundWayTicket.price);
+        setRoundPrice(roundWayTicket.price);
         console.log("one way ticket", oneWayTicket);
         console.log("round way ticket", roundWayTicket);
       });
-    totalPriceTicket();
   };
 
   const whoami = () => {
@@ -77,6 +76,9 @@ export default function ConfirmFlight() {
   };
 
   const totalPriceTicket = () => {
+    let oneWayPrice = oneWayPrice;
+    let roundWayPrice = roundPrice;
+
     let total = oneWayPrice + roundWayPrice;
 
     setTotalPrice(total);
@@ -95,7 +97,7 @@ export default function ConfirmFlight() {
   async function handelUpdateUsers() {
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `${process.env.API_ENDPOINT}api/v1/users/${userId}`,
+      `${process.env.API_ENDPOINT}api/v1/users/${user.id}`,
       {
         method: "PUT",
         headers: {
@@ -118,16 +120,7 @@ export default function ConfirmFlight() {
     whoami();
   }
 
-  const handelBooking = () => {
-    if (!ticket2) {
-      handelBookingOneWay();
-    } else {
-      handelBookingOneWay();
-      handelBookingroundWay();
-    }
-  };
-
-  async function handelBookingOneWay() {
+  async function handelBooking() {
     const ticket_id = ticket1;
     const user_id = user.id;
     const total = oneWayTicket.price;
@@ -157,41 +150,30 @@ export default function ConfirmFlight() {
     const data = await response.json();
 
     if (data.status === "OK") {
-      setBookLoading(false);
-      setOpenModal(false);
-      router.push(`/history/${user.id}`);
-    }
-  }
-  async function handelBookingroundWay() {
-    const ticket_id = ticket1;
-    const user_id = user.id;
-    const total = oneWayTicket.price;
-    const promo_id = 1;
-    const body = { user_id, ticket_id, total, promo_id };
+      const ticket_id = ticket2;
+      const user_id = user.id;
+      const total = roundTicket.price;
+      const promo_id = 1;
+      const body = { user_id, ticket_id, total, promo_id };
 
-    whoami();
-    setBookLoading(true);
-    const token = localStorage.getItem("token");
-    if (!token) router.push("/login");
-    const response = await fetch(
-      `${process.env.API_ENDPOINT}api/v1/transaction`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}api/v1/transaction`,
+        {
+          method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        },
-        body: JSON.stringify(body),
-      }
-    ).catch((err) => {
-      throw err;
-    });
+          body: JSON.stringify(body),
+        }
+      ).catch((err) => {
+        throw err;
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.status === "OK") {
       setBookLoading(false);
       setOpenModal(false);
       router.push(`/history/${user.id}`);

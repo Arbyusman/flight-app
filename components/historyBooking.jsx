@@ -39,7 +39,6 @@ export default function HistoryBooking() {
     fetch(`${process.env.API_ENDPOINT}api/v1/transaction/history/${id}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     })
