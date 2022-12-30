@@ -100,11 +100,12 @@ export default function Ticket() {
           <Table hoverable={true}>
             <Table.Head>
               <Table.HeadCell>Image</Table.HeadCell>
-              <Table.HeadCell>Flight</Table.HeadCell>
+              <Table.HeadCell>From</Table.HeadCell>
+              <Table.HeadCell>To</Table.HeadCell>
               <Table.HeadCell>Type</Table.HeadCell>
               <Table.HeadCell>Price</Table.HeadCell>
-              <Table.HeadCell>Cabin Baggage</Table.HeadCell>
-              <Table.HeadCell>Baggage</Table.HeadCell>
+              <Table.HeadCell>Departure</Table.HeadCell>
+              <Table.HeadCell>Arrival</Table.HeadCell>
               <Table.HeadCell>Description</Table.HeadCell>
               <Table.HeadCell className="w-20">Action</Table.HeadCell>
             </Table.Head>
@@ -115,13 +116,25 @@ export default function Ticket() {
                   className="bg-white dark:border-gray-700 dark:bg-gray-800"
                 >
                   <Table.Cell>
-                    <img className="w-52" src={ticket.photo} alt="img-photo" />
+                    <figure className="max-w-md ">
+                      <Image
+                        className="w-12 flex "
+                        src={ticket.photo}
+                        alt="logo penerbangan"
+                        width={50}
+                        height={50}
+                      ></Image>
+                      <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
+                        {ticket.Flight.Plane.name}
+                      </figcaption>
+                    </figure>
                   </Table.Cell>
-                  <Table.Cell>{ticket.flight_id}</Table.Cell>
+                  <Table.Cell>{ticket.Flight.from.name}</Table.Cell>
+                  <Table.Cell>{ticket.Flight.to.name}</Table.Cell>
                   <Table.Cell>{ticket.type}</Table.Cell>
                   <Table.Cell>Rp. {ticket.price}</Table.Cell>
-                  <Table.Cell>{ticket.cabin_baggage} KG</Table.Cell>
-                  <Table.Cell>{ticket.baggage} KG</Table.Cell>
+                  <Table.Cell>{ticket.Flight.departure_date}</Table.Cell>
+                  <Table.Cell>{ticket.Flight.arrival_date} </Table.Cell>
                   <Table.Cell>{ticket.desc}</Table.Cell>
                   <Table.Cell>
                     <div className="flex justify-between">

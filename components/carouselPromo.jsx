@@ -36,7 +36,7 @@ const CarouselPromo = () => {
       className="mySwiper px-6"
     >
       {promoImages.map((promoImage, index) => (
-        <SwiperSlide key={index} className="max-w-lg">
+        <SwiperSlide key={index} className="max-w-xl">
           <Image src={promoImage} alt="promo-images" className="w-auto" />
         </SwiperSlide>
       ))}

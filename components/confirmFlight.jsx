@@ -31,10 +31,6 @@ export default function ConfirmFlight() {
   useEffect(() => {
     if (router.isReady) {
       if (!ticket1 && !ticket2) router.push("/");
-      console.log("data 1", ticket1);
-      console.log("data 2", ticket2);
-      console.log("ticket 1", oneWayTicket);
-      console.log("ticket 2", roundTicket);
       handleGetTicket();
       whoami();
     }
@@ -53,8 +49,6 @@ export default function ConfirmFlight() {
         setRoundTicket(roundWayTicket);
         setOneWayPrice(oneWayTicket.price);
         setRoundPrice(roundWayTicket.price);
-        console.log("one way ticket", oneWayTicket);
-        console.log("round way ticket", roundWayTicket);
       });
   };
 
@@ -71,7 +65,6 @@ export default function ConfirmFlight() {
 
       .then((data) => {
         setUser(data.data);
-        console.log("data user", data, data);
       });
   };
 

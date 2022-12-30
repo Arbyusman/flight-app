@@ -97,7 +97,7 @@ export default function CreateTicket() {
                 <select
                   id="flight_id"
                   name="flight_id"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   onChange={(e) => setFlightId(e.target.value)}
                 >
                   <option selected>Choose a Flight</option>
@@ -105,15 +105,19 @@ export default function CreateTicket() {
                     <option key={flight.id} value={flight.id}>
                       <div className="">
                         <p>From :</p>
-                        <p> {flight.from.name} </p>
+                        <p> {flight.from.name} |</p>
                       </div>
                       <div>
                         <p>To :</p>
-                        <p> {flight.to.name} </p>
+                        <p> {flight.to.name} |</p>
                       </div>
                       <div>
                         <p>Date :</p>
-                        <p> {flight.departure_date} </p>
+                        <p> {flight.departure_date} |</p>
+                      </div>
+                      <div>
+                        <p>Plane :</p>
+                        <p> {flight.Plane.name} |</p>
                       </div>
                     </option>
                   ))}
@@ -132,7 +136,7 @@ export default function CreateTicket() {
               <select
                 id="type"
                 name="type"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 onChange={(e) => setType(e.target.value)}
               >
                 <option selected disabled>
@@ -210,7 +214,7 @@ export default function CreateTicket() {
             </div>
             <div>
               <input
-                class="mt-3 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                className="mt-3 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 id="file_input"
                 type="file"
                 multiple
