@@ -12,10 +12,10 @@ export default function TopBar({ showNav, setShowNav }) {
   const router = useRouter();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [imageProfile, setImageProfile] = useState("");
 
+  const [userId, setUserId] = useState("");
   const [username, setUsername] = useState("");
-  const [id, setId] = useState("");
+  const [imageProfile, setImageProfile] = useState("");
   const [notification, setNotification] = useState([]);
   const [notificationRead, setNotificationRead] = useState([]);
 
@@ -240,7 +240,7 @@ export default function TopBar({ showNav, setShowNav }) {
               </Dropdown.Item>
 
               <Dropdown.Item>
-                <Link href={`admin/user/${id}`}>Profile</Link>
+                <Link href={`user/${userId}`}>Profile</Link>
               </Dropdown.Item>
 
               <Dropdown.Divider />
@@ -273,7 +273,7 @@ export default function TopBar({ showNav, setShowNav }) {
               </Dropdown.Item>
 
               <Dropdown.Item>
-                <Link href={`admin/user/${id}`}>Profile</Link>
+                <Link href={`user/${userId}`}>Profile</Link>
               </Dropdown.Item>
 
               <Dropdown.Divider />
