@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 import { Modal, Alert } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +18,8 @@ export default function ConfirmFlight() {
   const [oneWayTicket, setOneWayTicket] = useState([]);
   const [roundTicket, setRoundTicket] = useState([]);
 
+  const [totalPrice, setTotalPrice] = useState("");
+
   const [openModal, setOpenModal] = useState(false);
   const [openModalAlertNotLogin, setOpenModalAlertNotLogin] = useState(false);
   const [openModalAlertProfile, setOpenModalAlertProfile] = useState(false);
@@ -26,10 +29,11 @@ export default function ConfirmFlight() {
 
   const [bookLoading, setBookLoading] = useState(false);
 
-  const [firstName, setfirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const [token, setToken] = useState("");
 
@@ -54,8 +58,17 @@ export default function ConfirmFlight() {
 
         setOneWayTicket(oneWayTicket);
         setRoundTicket(roundWayTicket);
+
+        if (ticket1 && ticket2) {
+          const price = oneWayTicket[0].price + roundWayTicket[0].price;
+          setTotalPrice(price);
+        } else if (ticket1) {
+          const price = oneWayTicket[0].price;
+          setTotalPrice(price);
+        } else {
+          setTotalPrice(" ");
+        }
       });
-    setAddress;
   };
 
   const whoami = () => {
@@ -96,7 +109,7 @@ export default function ConfirmFlight() {
     }
   }
 
-  async function handelUpdateUsers() {
+  const onSubmit = async (data) => {
     const token = localStorage.getItem("token");
     if (!token) {
       alert("your are not login in");
@@ -109,19 +122,15 @@ export default function ConfirmFlight() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            firstName,
-            lastName,
-            phone,
-            address,
-          }),
+          body: JSON.stringify(data),
         }
       ).catch((err) => {
         throw err;
       });
 
-      const data = await response.json();
-      if ((data.status = "OK")) {
+      const res = await response.json();
+      console.log("res update", res);
+      if ((res.status = "OK")) {
         setOpenModalProfileUpdate(true);
         setTimeout(() => {
           setOpenModalProfileUpdate(false);
@@ -129,7 +138,7 @@ export default function ConfirmFlight() {
       }
       whoami();
     }
-  }
+  };
 
   function handelBooking() {
     if (ticket1 && ticket2) {
@@ -143,7 +152,7 @@ export default function ConfirmFlight() {
   const handelBookingOneWay = async () => {
     const ticket_id = ticket1;
     const user_id = user.id;
-    const total = oneWayTicket.price;
+    const total = oneWayTicket[0].price;
     const promo_id = 1;
     const body = { user_id, ticket_id, total, promo_id };
 
@@ -180,7 +189,7 @@ export default function ConfirmFlight() {
   const handelBookingRound = async () => {
     const ticket_id = ticket2;
     const user_id = user.id;
-    const total = oneWayTicket.price;
+    const total = roundTicket[0].price;
     const promo_id = 1;
     const body = { user_id, ticket_id, total, promo_id };
 
@@ -247,40 +256,60 @@ export default function ConfirmFlight() {
                   {/* form contact information */}
                   <div className="flex justify-center bg-white shadow-md  ">
                     <div className="w-full gap-5 flex justify-center   md:p-7">
-                      <div className="md:w-11/12 w-full mx-4 ">
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        method="PUT"
+                        className="md:w-11/12 w-full mx-4 "
+                      >
                         <div className="md:flex w-full  md:justify-start md:gap-10 md:mt-2 md:items-center">
                           <div className="md:w-full w">
                             <label
-                              htmlFor="first_name"
+                              htmlFor="firstName"
                               className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
                             >
                               First Name
                             </label>
                             <input
                               type="text"
-                              id="first_name"
+                              id="firstName"
                               className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                               value={user.firstName}
-                              onChange={(e) => setfirstName(e.target.value)}
                               placeholder="ex. john"
+                              // onChange={(e) => setfirstName(e.target.value)}
+                              {...register("firstName", {
+                                required: true,
+                              })}
                             />
+                            {errors.firstName?.type === "required" && (
+                              <span className="text-xs text-red-600">
+                                FirstName is required.
+                              </span>
+                            )}
                           </div>
                           <div className="md:w-full">
                             <label
-                              htmlFor="last_name"
+                              htmlFor="lastName"
                               className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
                             >
                               Last Name
                             </label>
                             <input
                               type="text"
-                              id="last_name"
+                              id="lastName"
                               className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
                               required
                               placeholder="ex. Doe"
                               value={user.lastName}
-                              onChange={(e) => setLastName(e.target.value)}
+                              // onChange={(e) => setLastName(e.target.value)}
+                              {...register("lastName", {
+                                required: true,
+                              })}
                             />
+                            {errors.lastName?.type === "required" && (
+                              <span className="text-xs text-red-600">
+                                LastName is required.
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
@@ -314,8 +343,16 @@ export default function ConfirmFlight() {
                               placeholder="ex. +62-8888-2222"
                               className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
                               value={user.phone}
-                              onChange={(e) => setPhone(e.target.value)}
+                              // onChange={(e) => setPhone(e.target.value)}
+                              {...register("phone", {
+                                required: true,
+                              })}
                             />
+                            {errors.phone?.type === "required" && (
+                              <span className="text-xs text-red-600">
+                                Phone is required.
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
@@ -332,20 +369,28 @@ export default function ConfirmFlight() {
                               placeholder="Kendari sulawesi tenggara"
                               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-0 focus:border-black "
                               value={user.address}
-                              onChange={(e) => setAddress(e.target.value)}
+                              // onChange={(e) => setAddress(e.target.value)}
+                              {...register("address", {
+                                required: true,
+                              })}
                             ></textarea>
+                            {errors.phone?.type === "required" && (
+                              <span className="text-xs text-red-600">
+                                address is required.
+                              </span>
+                            )}
                           </div>
                         </div>
                         <div className="justify-center flex mt-2">
                           <button
                             type="submit"
-                            onClick={handelUpdateUsers}
+                            // onClick={handelUpdateUsers}
                             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
                           >
                             save
                           </button>
                         </div>
-                      </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -630,7 +675,7 @@ export default function ConfirmFlight() {
                           </div>
 
                           <div className="justify-center  items-center flex rotate-90 md:rotate-0">
-                            <TbPlane className="text-3xl  text-green-700" />
+                            <TbPlane className="text-3xl   text-green-700" />
                           </div>
 
                           <div className="flex gap-4 md:w-56 items-center">
@@ -813,8 +858,14 @@ export default function ConfirmFlight() {
 
                 <hr />
                 <div className="flex justify-between text-lg font-bold tracking-wider my-2">
-                  <p>total Price</p>
-                  <p>total Price</p>
+                  <p>Total Price</p>
+                  {!totalPrice && <p> RP </p>}
+                  {totalPrice && (
+                    <div className="flex">
+                      <p> RP </p>
+                      <p> {totalPrice}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
