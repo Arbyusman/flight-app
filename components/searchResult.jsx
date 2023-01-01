@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
+import Link from "next/link";
 import Image from "next/image";
 import { Dropdown, Modal, Alert, Toast } from "flowbite-react";
 import { IoMdArrowRoundForward, IoIosArrowDropdown } from "react-icons/io";
@@ -20,15 +21,17 @@ export default function ResultFlight() {
 
   const [userId, setUserId] = useState("");
 
-  const [ticket, setTicket] = useState([]);
-
   const [oneWay, setOneWay] = useState([]);
   const [roundWay, setRoundWay] = useState([]);
 
   const [selectedTicket1, setSelectedTicket1] = useState("");
   const [selectedTicket2, setSelectedTicket2] = useState("");
 
+  const [openModalError, setOpenModalError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openModalSelectTicketError, setOpenModalSelectTicketError] =
+    useState(false);
+  const [token, setToken] = useState("");
 
   const handleGetTicket = () => {
     fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
@@ -36,8 +39,6 @@ export default function ResultFlight() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setTicket(data.data);
-        console.log("all ticket", data.data);
         const oneWayTicket = data.data.filter(
           (item) =>
             item.Flight.from.city == from &&
@@ -63,6 +64,8 @@ export default function ResultFlight() {
   useEffect(() => {
     handleGetTicket();
     whoami();
+    const token = localStorage.getItem("token");
+    setToken(token);
   }, [router.isReady]);
 
   const whoami = () => {
@@ -82,60 +85,93 @@ export default function ResultFlight() {
   };
 
   const handelNext = () => {
-    if (!selectedTicket2) {
-      Router.push({
-        pathname: "/search/book",
-
-        query: {
-          ticket1: selectedTicket1[0].id,
-        },
-      });
+    if (!selectedTicket1) {
+      setOpenModalSelectTicketError(true);
+      setTimeout(() => {
+        setOpenModalSelectTicketError(false);
+      }, 1000);
     } else {
-      Router.push({
-        pathname: "/search/book",
+      if (!selectedTicket2) {
+        Router.push({
+          pathname: "/search/book",
 
-        query: {
-          ticket1: selectedTicket1[0].id,
-          ticket2: selectedTicket2[0].id,
-        },
-      });
+          query: {
+            ticket1: selectedTicket1[0].id,
+          },
+        });
+      } else {
+        Router.push({
+          pathname: "/search/book",
+
+          query: {
+            ticket1: selectedTicket1[0].id,
+            ticket2: selectedTicket2[0].id,
+          },
+        });
+      }
     }
   };
 
   async function addToWishlist() {
-    setOpenModal(true);
     const ticket_id = currentIndex;
     const user_id = userId;
     const body = { user_id, ticket_id };
 
-    whoami();
     const token = localStorage.getItem("token");
-    if (!token) router.push("login");
-    const response = await fetch(`${process.env.API_ENDPOINT}api/v1/wishlist`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-      body: JSON.stringify(body),
-    }).catch((err) => {
-      throw err;
-    });
-
-    const data = await response.json();
-
-    if (data.status === "OK") {
+    if (!token) {
+      setOpenModalError(true);
       setTimeout(() => {
-        setOpenModal();
-      }, 600);
+        setOpenModalError(false);
+      }, 1000);
+    } else {
+      setOpenModal(true);
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}api/v1/wishlist`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+          body: JSON.stringify(body),
+        }
+      ).catch((err) => {
+        throw err;
+      });
+
+      const data = await response.json();
+
+      if (data.status === "OK") {
+        setTimeout(() => {
+          setOpenModal(false);
+        }, 1000);
+      }
     }
   }
 
   return (
     <div className="justify-center items-center flex-row">
       {/* title */}
+      {!token && (
+        <div className="justify-center items-center flex">
+          <Alert
+            color="info"
+            className="shadow-lg my-2 lg:w-9/12 w-full md:w-11/12 "
+          >
+            <span>
+              <span className="font-semibold">you are not logged in!</span>{" "}
+              please login to get more experience{" "}
+              <Link href="login" className="underline font-semibold">
+                {" "}
+                login
+              </Link>{" "}
+              or press the login button above
+            </span>
+          </Alert>
+        </div>
+      )}
       <div className="flex justify-center items-center ">
         <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
           <div className="flex gap-10">
@@ -267,6 +303,37 @@ export default function ResultFlight() {
       ) : (
         <div></div>
       )}
+      <Modal
+        size="sm"
+        popup={true}
+        position={"top-center"}
+        show={openModalSelectTicketError}
+      >
+        <Alert
+          color="warning"
+          className="justify-center items-center text-center"
+        >
+          <span className="font-medium">
+            The destination flight has not been selected
+          </span>
+        </Alert>
+      </Modal>
+      <Modal
+        show={openModalError}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert
+          color="failure"
+          className="justify-center items-center text-center"
+        >
+          <span>
+            <span className="font-medium">you are not logged in!</span>
+            please login to get more experience
+          </span>
+        </Alert>
+      </Modal>
 
       <Modal show={openModal} size="sm" popup={true} position={"top-center"}>
         <Alert color="success" className="justify-center items-center">
@@ -371,7 +438,6 @@ export default function ResultFlight() {
                       <div className="mb-2">
                         <p className="font-bold text-xl">
                           {item.Flight.departure_time}
-                          {" : "}
                         </p>
                         <p>
                           {new Date(item.Flight.departure_date).toDateString()}
@@ -563,7 +629,6 @@ export default function ResultFlight() {
                       <div className="mb-2">
                         <p className="font-bold text-xl">
                           {item.Flight.departure_time}
-                          {" : "}
                         </p>
                         <p>
                           {new Date(item.Flight.departure_date).toDateString()}

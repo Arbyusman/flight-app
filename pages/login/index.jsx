@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { Button, Label, TextInput } from "flowbite-react";
 
@@ -10,12 +11,15 @@ export default function login() {
 
   const [token, setToken] = useState("");
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(true);
-
   const [err, setErr] = useState("");
+
   const [loginLoading, setLoginLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -24,38 +28,32 @@ export default function login() {
     setToken(token);
   }, []);
 
-  async function handelLogin() {
+  const onSubmit = async (data) => {
     setLoginLoading(true);
-
     const response = await fetch(`${process.env.API_ENDPOINT}api/v1/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+      body: JSON.stringify(data),
     }).catch((err) => {
       throw err;
     });
+    const res = await response.json();
 
-    const data = await response.json();
-
-    if (data.status === "OK" && data.data.role === "admin") {
-      localStorage.setItem("token", data.data.token);
+    if (res.status === "OK" && res.data.role === "admin") {
+      localStorage.setItem("token", res.data.token);
       router.push("/admin");
       setLoginLoading(false);
-    } else if (data.status === "OK" && data.data.role === "buyer") {
-      localStorage.setItem("token", data.data.token);
+    } else if (res.status === "OK" && res.data.role === "buyer") {
+      localStorage.setItem("token", res.data.token);
       router.push("/");
     } else {
-      const errStatus = data.status;
-      const errMessage = data.message;
-      setErr(`${errStatus} ${errMessage}`);
+      const errMessage = res.message;
+      setErr(errMessage);
       setLoginLoading(false);
     }
-  }
+  };
 
   if (token) {
     return (
@@ -95,7 +93,10 @@ export default function login() {
               />
             </div>
             <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 white:bg-gray-800 ">
-              <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8"
+              >
                 <h3 className="text-xl text-center  font-medium text-gray-900 dark:text-white">
                   Sign in to our platform
                 </h3>
@@ -105,12 +106,25 @@ export default function login() {
                   </div>
                   <TextInput
                     id="email"
-                    type="email"
+                    type="text"
                     placeholder="JohnDoe@company.com"
-                    required={true}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    {...register("email", {
+                      required: true,
+                      pattern: {
+                        value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                      },
+                    })}
                   />
+                  {errors.email?.type === "required" && (
+                    <span className="text-xs text-red-600">
+                      Email is required.
+                    </span>
+                  )}
+                  {errors.email?.type === "pattern" && (
+                    <span className="text-xs text-yellow-600">
+                      Email is not valid.
+                    </span>
+                  )}
                 </div>
                 <div>
                   <div className="mb-2 block">
@@ -119,14 +133,34 @@ export default function login() {
                   <TextInput
                     id="password"
                     type="password"
-                    required={true}
-                    value={password}
-                    minLength="5"
                     placeholder="••••••••"
-                    pattern="[a-z0-9]{1,15}"
-                    title="Password should be digits (0 to 9) or alphabets (a to z)."
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register("password", {
+                      required: true,
+                      validate: {
+                        checkLength: (value) => value.length >= 6,
+                        matchPattern: (value) =>
+                          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=.*[!@#$*?=-_])/.test(
+                            value
+                          ),
+                      },
+                    })}
                   />
+                  {errors.password?.type === "required" && (
+                    <span className="text-xs text-red-600">
+                      Password is required.
+                    </span>
+                  )}
+                  {errors.password?.type === "checkLength" && (
+                    <span className="text-xs text-yellow-600">
+                      Password should be at-least 6 characters.
+                    </span>
+                  )}
+                  {errors.password?.type === "matchPattern" && (
+                    <span className="text-xs text-yellow-600">
+                      Password should contain at least one uppercase letter,
+                      lowercase letter, digit, and special symbol.
+                    </span>
+                  )}
                 </div>
                 <div className="w-full  items-center justify-center ">
                   <div
@@ -136,7 +170,7 @@ export default function login() {
                     <span className="font-medium">{err}</span>
                   </div>
 
-                  <Button className="w-full" onClick={handelLogin}>
+                  <Button className="w-full" type="submit">
                     {!loginLoading && <span>Log in to your account</span>}
                     {loginLoading && (
                       <svg
@@ -168,7 +202,7 @@ export default function login() {
                     Create account
                   </a>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
