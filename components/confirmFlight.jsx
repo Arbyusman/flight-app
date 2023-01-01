@@ -24,6 +24,7 @@ export default function ConfirmFlight() {
   const [openModalAlertNotLogin, setOpenModalAlertNotLogin] = useState(false);
   const [openModalAlertProfile, setOpenModalAlertProfile] = useState(false);
   const [openModalProfileUpdate, setOpenModalProfileUpdate] = useState(false);
+  const [openModalSuccesBooking, setOpenModalSuccesBooking] = useState(false);
 
   const [user, setUser] = useState([]);
 
@@ -178,7 +179,10 @@ export default function ConfirmFlight() {
     const data = await response.json();
 
     if (data.status === "OK") {
-      alert("berhasil booking perjalanan pergi");
+      setOpenModalSuccesBooking(true);
+      setTimeout(() => {
+        setOpenModalSuccesBooking(false);
+      }, 2000);
       setBookLoading(false);
       setOpenModal(false);
     } else {
@@ -215,7 +219,6 @@ export default function ConfirmFlight() {
     const data = await response.json();
 
     if (data.status === "OK") {
-      alert("berhasil booking perjalanan pulang");
       setBookLoading(false);
       setOpenModal(false);
     } else {
@@ -397,6 +400,17 @@ export default function ConfirmFlight() {
               )}
             </div>
           </div>
+
+          <Modal
+            show={openModalSuccesBooking}
+            size="sm"
+            popup={true}
+            position={"top-center"}
+          >
+            <Alert color="success" className="justify-center items-center">
+              <span>You have successfully booked your ticket</span>
+            </Alert>
+          </Modal>
           <Modal
             show={openModalProfileUpdate}
             size="sm"
