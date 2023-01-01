@@ -1,14 +1,15 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import Image from "next/image";
-
 // import swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
-
 // import swiper modules
 import { EffectCoverflow, Pagination, Navigation } from "swiper";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import Image from "next/image";
+
+
 
 // import images
 import promoImages from "../public/images/images";

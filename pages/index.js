@@ -1,8 +1,6 @@
 import {
   NavbarComponent,
-  WhyUs,
   Footer,
-  Banner,
   Carousel,
   SearchForm,
   Airline,
