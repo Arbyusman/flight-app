@@ -15,7 +15,6 @@ import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
 import { Transition, Popover } from "@headlessui/react";
-import { BiBell } from "react-icons/bi";
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -40,6 +39,12 @@ export default function NavbarComponent() {
 
   const [loginLoading, setLoginLoading] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    whoami();
+    setIsLoggedIn(!!token);
+  }, []);
+
   const whoami = () => {
     const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/user`, {
@@ -55,33 +60,49 @@ export default function NavbarComponent() {
         setUserId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
+        if (data.data.id) {
+          fetch(
+            `${process.env.API_ENDPOINT}api/v1/notification/user/${data.data.id}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+            .then((res) => res.json())
+
+            .then((data) => {
+              setNotification(data.data);
+              const notification = data.data.filter(
+                (item) => item.isRead == false
+              );
+
+              setNotificationRead(notification);
+            });
+        }
       });
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    whoami();
-    handelGetNotif();
-    setIsLoggedIn(!!token);
-  }, []);
+  // const handleGetNotif = () => {
+  //   whoami();
+  //   const token = localStorage.getItem("token");
 
-  const handelGetNotif = () => {
-    const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/notification/user/${userId}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
+  //   fetch(`${process.env.API_ENDPOINT}api/v1/notification/user/${userId}`, {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
 
-      .then((data) => {
-        setNotification(data.data);
-        const notification = data.data.filter((item) => item.isRead == false);
+  //     .then((data) => {
+  //       setNotification(data.data);
+  //       const notification = data.data.filter((item) => item.isRead == false);
 
-        setNotificationRead(notification);
-      });
-  };
+  //       setNotificationRead(notification);
+  //     });
+  // };
 
   const handelReadNotif = (id) => {
     const token = localStorage.getItem("token");
@@ -93,8 +114,31 @@ export default function NavbarComponent() {
     })
       .then((res) => res.json())
 
-      .then((data) => {});
-    handelGetNotif();
+      .then((data) => {
+        console.log("res read", data);
+        if (data.status === "OK") {
+          fetch(
+            `${process.env.API_ENDPOINT}api/v1/notification/user/${userId}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+            .then((res) => res.json())
+
+            .then((data) => {
+              setNotification(data.data);
+              const notification = data.data.filter(
+                (item) => item.isRead == false
+              );
+
+              setNotificationRead(notification);
+            });
+        }
+        // handleGetNotif();
+      });
   };
 
   const onSubmit = async (data) => {
@@ -152,7 +196,15 @@ export default function NavbarComponent() {
 
         {isLoggedIn && (
           <Popover className="relative  justify-center items-center ">
-            <Popover.Button className="outline-none mr-2 md:mr-6 cursor-pointer   ">
+            <Popover.Button
+              onClick={() => {
+                {
+                  whoami();
+                  // handleGetNotif();
+                }
+              }}
+              className="outline-none mr-2 md:mr-6 cursor-pointer   "
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -186,8 +238,8 @@ export default function NavbarComponent() {
             >
               <Popover.Panel className="absolute  overflow-y-scroll h-80  right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
                 <div className="relative p-3">
-                  <div className="md:flex justify-between bg-white sticky top-0 z-10 items-center w-full">
-                    <p className="text-gray-700 font-medium text-base  tracking-normal antialiased items-center justify-center text-center">
+                  <div className="md:flex justify-between shadow-md bg-gray-300 px-4 py-2   sticky top-0 z-10 items-center w-full">
+                    <p className="text-gray-700  font-medium text-lg  tracking-normal antialiased items-center justify-center text-center">
                       Notifications
                     </p>
                   </div>

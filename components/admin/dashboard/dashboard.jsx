@@ -68,16 +68,31 @@ const Dashboard = () => {
               <Table.HeadCell>Total</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
-              {transaction.map((transaction) => (
-                <Table.Row key={transaction.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>{transaction.ticket_id}</Table.Cell>
-                  {transaction.user_id === null ? <Table.Cell></Table.Cell> : <Table.Cell>{transaction.User.username}</Table.Cell>}
+              {transaction.length > 0 ? (
+                transaction.map((transaction) => (
+                  <Table.Row
+                    key={transaction.id}
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                  >
+                    <Table.Cell>{transaction.ticket_id}</Table.Cell>
+                    {transaction.user_id === null ? (
+                      <Table.Cell></Table.Cell>
+                    ) : (
+                      <Table.Cell>{transaction.User.username}</Table.Cell>
+                    )}
 
-                  {transaction.promo_id === null ? <Table.Cell></Table.Cell> : <Table.Cell>{transaction.Promo.name}</Table.Cell>}
+                    {transaction.promo_id === null ? (
+                      <Table.Cell></Table.Cell>
+                    ) : (
+                      <Table.Cell>{transaction.Promo.name}</Table.Cell>
+                    )}
 
-                  <Table.Cell>Rp. {transaction.total}</Table.Cell>
-                </Table.Row>
-              ))}
+                    <Table.Cell>Rp. {transaction.total}</Table.Cell>
+                  </Table.Row>
+                ))
+              ) : (
+                <div></div>
+              )}
             </Table.Body>
           </Table>
         </div>
