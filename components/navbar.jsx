@@ -25,21 +25,18 @@ export default function NavbarComponent() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [username, setUsername] = useState("");
-  const [id, setId] = useState("");
+  const [userId, setUserId] = useState("");
   const [err, setErr] = useState("");
   const [imageProfile, setImageProfile] = useState("");
 
   const [notification, setNotification] = useState([]);
   const [notificationRead, setNotificationRead] = useState([]);
-  const [notifId, setNotifId] = useState("");
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const [isRead] = useState(true);
 
   const [loginLoading, setLoginLoading] = useState(false);
 
@@ -55,38 +52,23 @@ export default function NavbarComponent() {
       .then((res) => res.json())
 
       .then((data) => {
-        setId(data.data.id);
+        setUserId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
-
-        if (data.data.id) {
-          fetch(
-            `${process.env.API_ENDPOINT}api/v1/notification/user/${data.data.id}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          )
-            .then((res) => res.json())
-
-            .then((data) => {
-              setNotification(data.data);
-              const notification = data.data.filter(
-                (item) => item.isRead == false
-              );
-
-              setNotificationRead(notification);
-            });
-        }
       });
   };
 
-  const handelReadNotif = () => {
+  useEffect(() => {
     const token = localStorage.getItem("token");
-    fetch(`${process.env.API_ENDPOINT}api/v1/notification/${notifId}`, {
-      method: "PUT",
+    whoami();
+    handelGetNotif();
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handelGetNotif = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${process.env.API_ENDPOINT}api/v1/notification/user/${userId}`, {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -94,16 +76,26 @@ export default function NavbarComponent() {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("notif", data);
+        setNotification(data.data);
+        const notification = data.data.filter((item) => item.isRead == false);
+
+        setNotificationRead(notification);
       });
   };
 
-  useEffect(() => {
+  const handelReadNotif = (id) => {
     const token = localStorage.getItem("token");
-    whoami();
-    setIsLoggedIn(!!token);
-    console.log("btn read", notifId);
-  }, []);
+    fetch(`${process.env.API_ENDPOINT}api/v1/notification/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+
+      .then((data) => {});
+    handelGetNotif();
+  };
 
   const onSubmit = async (data) => {
     setLoginLoading(true);
@@ -159,18 +151,8 @@ export default function NavbarComponent() {
         {/* Notification */}
 
         {isLoggedIn && (
-          <Popover className="relative justify-center items-center">
+          <Popover className="relative  justify-center items-center ">
             <Popover.Button className="outline-none mr-2 md:mr-6 cursor-pointer   ">
-              {/* <svg
-                class="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-              </svg> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -202,16 +184,16 @@ export default function NavbarComponent() {
               leaveFrom="transform scale-100"
               leaveTo="transform scale-95"
             >
-              <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
+              <Popover.Panel className="absolute  overflow-y-scroll h-80  right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
                 <div className="relative p-3">
-                  <div className="flex justify-between items-center w-full">
-                    <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
+                  <div className="md:flex justify-between bg-white sticky top-0 z-10 items-center w-full">
+                    <p className="text-gray-700 font-medium text-base  tracking-normal antialiased items-center justify-center text-center">
                       Notifications
                     </p>
                   </div>
                   <hr></hr>
                   <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
-                    <div className="flex md:block">
+                    <div className="block ">
                       {notification.length > 0 ? (
                         (notification.sort((a, b) => b.id - a.id),
                         notification.map((item) => (
@@ -222,29 +204,24 @@ export default function NavbarComponent() {
                             <div
                               className={`flex justify-between gap-2 text-sm shadow-md py-1 px-4 rounded-sm mb-1 items-center text-gray-500 text-left w-full  ${
                                 item.isRead === true
-                                  ? "bg-gray-200 text-gray-600"
-                                  : "bg-gray-600 text-white"
+                                  ? "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-700"
+                                  : "bg-gray-600 hover:bg-gray-700 text-gray-50 hover:text-white"
                               }`}
                             >
                               <span>{item.message}</span>
                               <button
-                                className="bg-gray-200 px-4 py-0.5 rounded-md"
+                                className={`bg-gray-200 px-4 py-0.5 rounded-sm hover:bg-gray-300 ${
+                                  item.isRead === true
+                                    ? " hidden"
+                                    : " text-gray-600 hover:text-gray-700"
+                                }`}
                                 onClick={() => {
                                   {
-                                    setNotifId(item.id);
-                                    handelReadNotif();
+                                    handelReadNotif(item.id);
                                   }
                                 }}
                               >
-                                <span
-                                  className={` ${
-                                    item.isRead === true
-                                      ? " hidden"
-                                      : " text-gray-600"
-                                  }`}
-                                >
-                                  Read
-                                </span>
+                                <span>Read</span>
                               </button>{" "}
                             </div>
                           </div>
@@ -407,13 +384,13 @@ export default function NavbarComponent() {
                 </Dropdown.Item>
 
                 <Dropdown.Item>
-                  <Link href={`/profile/${id}`}>Profile</Link>
+                  <Link href={`/profile/${userId}`}>Profile</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`/history/${id}`}>History</Link>
+                  <Link href={`/history/${userId}`}>History</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`/wishlist/${id}`}>Wishlist</Link>
+                  <Link href={`/wishlist/${userId}`}>Wishlist</Link>
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
@@ -445,13 +422,13 @@ export default function NavbarComponent() {
                 </Dropdown.Item>
 
                 <Dropdown.Item>
-                  <Link href={`/profile/${id}`}>Profile</Link>
+                  <Link href={`/profile/${userId}`}>Profile</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`/history/${id}`}>History</Link>
+                  <Link href={`/history/${userId}`}>History</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`/wishlist/${id}`}>Wishlist</Link>
+                  <Link href={`/wishlist/${userId}`}>Wishlist</Link>
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
