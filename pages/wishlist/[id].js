@@ -71,7 +71,6 @@ export default function WishlistUser() {
     });
 
     const data = await response.json();
-    console.log("status ", data);
     if (data.status === "OK") {
       setDeleteLoading(false);
       setOpenModal(false);
@@ -80,15 +79,6 @@ export default function WishlistUser() {
       setDeleteLoading(false);
     }
   };
-
-  // const handelBook = () => {
-  //   router.push({
-  //     pathname: "/search/book",
-  //     query: {
-  //       ticket1: currentIndex,
-  //     },
-  //   });
-  // };
 
   if (!token) {
     return (
