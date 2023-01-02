@@ -33,8 +33,6 @@ export default function History() {
 
   const [data, setData] = useState([]);
 
-  const [loading, setLoading] = useState(true);
-
   const getTransaction = () => {
     const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/transaction/history/${id}`, {
@@ -99,6 +97,7 @@ export default function History() {
           {/* ticket */}
 
           {data.length > 0 ? (
+            (data.sort((a, b) => b.id - a.id),
             data.map((item) => (
               <div key={item.id}>
                 <div className="flex justify-center ">
@@ -123,6 +122,12 @@ export default function History() {
                         <p>{item.Ticket.price}</p>
                         <p>/Pax</p>
                       </div>
+                      <Link
+                        href={`invoice/${item.id}`}
+                        className="focus:outline-none my-1 lg:my-0 text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 "
+                      >
+                        <button>Invoice</button>
+                      </Link>
                       <div className="flex lg:gap-10 md:gap-3 md:justify-between justify-end">
                         <button
                           type="button"
@@ -225,72 +230,10 @@ export default function History() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex-row md:flex justify-between gap-5 mt-6">
-                      <div className="gap-7 w-full text-gray-600 tracking-wide antialiased text-sm mb-2 md:mb-0 ">
-                        <div className="flex gap-2">
-                          <BsPerson className="text-2xl font-bold  text-gray-700 " />
-                          <h1 className="text-md font-bold antialiased tracking-wider text-gray-700">
-                            Traveler Information
-                          </h1>
-                        </div>
-                        <hr></hr>
-                        <div className="flex gap-3 items-center my-1 lg:my-3">
-                          <p>Name :</p>
-                          <p>
-                            {item.User.firstName} {item.User.lastName}
-                          </p>
-                        </div>
-                        <div className="flex gap-3 items-center my-1 lg:my-3">
-                          <p>Phone :</p>
-                          <p>{item.User.phone}</p>
-                        </div>
-                        <div className="flex items-start gap-3  my-1 lg:my-3">
-                          <p>address:</p>
-                          <textarea
-                            id="message"
-                            rows="4"
-                            className="block p-2.5 w-full text-sm text-gray-600  border-none  rounded-sm  border-gray-300 "
-                            defaultValue={item.User.address}
-                            disabled
-                          ></textarea>
-                        </div>
-                      </div>
-                      <div className="flex border-b-2 mb-2 md:hidden"></div>
-                      <div className="border-l-2 border-gray-300"></div>
-                      <div className="w-full items-center justify-between flex-row   bg-white  text-gray-600 tracking-wide antialiased mb-2">
-                        <div className="w-full   flex-row md:flex justify-between ">
-                          <h1 className="text-md font-bold antialiased tracking-wider text-gray-700">
-                            Price Detail
-                          </h1>
-                        </div>
-                        <hr></hr>
-                        <div className="">
-                          <div className="font-thin gap-5 my-2 text-sm flex justify-between">
-                            <div className="flex items-center gap-2 ">
-                              <p>Depart</p>
-                              <p>{item.Ticket.Flight.from.city_code}</p>
-                              <p>{item.Ticket.Flight.to.city_code}</p>
-                            </div>
-                            <p>RP {item.Ticket.price} </p>
-                          </div>
-
-                          <div className="flex justify-between text-sm font-thin my-1">
-                            <p>promo </p>
-                            <p>RP </p>
-                          </div>
-                          <div className="flex justify-between text-sm font-thin my-1"></div>
-                          <hr />
-                          <div className="flex justify-between text-sm font-bold tracking-wider my-2">
-                            <p>Total Price</p>
-                            <p>RP {item.Ticket.price}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
-            ))
+            )))
           ) : (
             <div className="flex justify-center items-center my-5">
               <p className="text-xl font-normal text-gray-900">
