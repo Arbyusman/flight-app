@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   Dropdown,
@@ -7,15 +8,13 @@ import {
   Label,
   TextInput,
 } from "flowbite-react";
+import { useForm } from "react-hook-form";
 import { BsArrowLeftSquare } from "react-icons/bs";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import LogoImage from "../public/images/TakeOff.png";
 import Link from "next/link";
 import { Transition, Popover } from "@headlessui/react";
-import { BiBell } from "react-icons/bi";
-import { data } from "autoprefixer";
 
 export default function NavbarComponent() {
   const router = useRouter();
@@ -25,18 +24,26 @@ export default function NavbarComponent() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [username, setUsername] = useState("");
-  const [id, setId] = useState("");
+  const [userId, setUserId] = useState("");
   const [err, setErr] = useState("");
   const [imageProfile, setImageProfile] = useState("");
 
   const [notification, setNotification] = useState([]);
+  const [notificationRead, setNotificationRead] = useState([]);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [isRead] = useState(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const [loginLoading, setLoginLoading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    whoami();
+    setIsLoggedIn(!!token);
+  }, []);
 
   const whoami = () => {
     const token = localStorage.getItem("token");
@@ -50,10 +57,9 @@ export default function NavbarComponent() {
       .then((res) => res.json())
 
       .then((data) => {
-        setId(data.data.id);
+        setUserId(data.data.id);
         setUsername(data.data.username);
         setImageProfile(data.data.photo);
-
         if (data.data.id) {
           fetch(
             `${process.env.API_ENDPOINT}api/v1/notification/user/${data.data.id}`,
@@ -68,55 +74,107 @@ export default function NavbarComponent() {
 
             .then((data) => {
               setNotification(data.data);
+              const notification = data.data.filter(
+                (item) => item.isRead == false
+              );
+
+              setNotificationRead(notification);
             });
         }
       });
   };
 
-  useEffect(() => {
+  // const handleGetNotif = () => {
+  //   whoami();
+  //   const token = localStorage.getItem("token");
+
+  //   fetch(`${process.env.API_ENDPOINT}api/v1/notification/user/${userId}`, {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((res) => res.json())
+
+  //     .then((data) => {
+  //       setNotification(data.data);
+  //       const notification = data.data.filter((item) => item.isRead == false);
+
+  //       setNotificationRead(notification);
+  //     });
+  // };
+
+  const handelReadNotif = (id) => {
     const token = localStorage.getItem("token");
-    whoami();
-    setIsLoggedIn(!!token);
-  }, []);
+    fetch(`${process.env.API_ENDPOINT}api/v1/notification/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
 
-  async function handelLogin() {
+      .then((data) => {
+        console.log("res read", data);
+        if (data.status === "OK") {
+          fetch(
+            `${process.env.API_ENDPOINT}api/v1/notification/user/${userId}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+            .then((res) => res.json())
+
+            .then((data) => {
+              setNotification(data.data);
+              const notification = data.data.filter(
+                (item) => item.isRead == false
+              );
+
+              setNotificationRead(notification);
+            });
+        }
+        // handleGetNotif();
+      });
+  };
+
+  const onSubmit = async (data) => {
     setLoginLoading(true);
-
     const response = await fetch(`${process.env.API_ENDPOINT}api/v1/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+      body: JSON.stringify(data),
     }).catch((err) => {
       throw err;
     });
 
-    const data = await response.json();
+    const res = await response.json();
+    console.log("res", res);
 
-    if (data.status === "OK" && data.data.role === "admin") {
-      localStorage.setItem("token", data.data.token);
+    if (res.status === "OK" && res.data.role === "admin") {
+      localStorage.setItem("token", res.data.token);
       whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
       router.push("/admin");
       setLoginLoading(false);
-    } else if (data.status === "OK" && data.data.role === "buyer") {
-      localStorage.setItem("token", data.data.token);
+    } else if (res.status === "OK" && res.data.role === "buyer") {
+      localStorage.setItem("token", res.data.token);
       whoami();
       setIsLoggedIn(true);
       setOpenModal(false);
       setLoginLoading(false);
     } else {
       setLoginLoading(false);
-      const errStatus = data.status;
-      const errMessage = data.message;
-      setErr(`${errStatus} ${errMessage}`);
+      const errMessage = res.message;
+      setErr(errMessage);
     }
-  }
+  };
 
   function handleLogout() {
     localStorage.removeItem("token");
@@ -137,9 +195,38 @@ export default function NavbarComponent() {
         {/* Notification */}
 
         {isLoggedIn && (
-          <Popover className="relative justify-center items-center">
-            <Popover.Button className="outline-none mr-2 md:mr-3 cursor-pointer  ">
-              <BiBell className="h-6 w-6 text-gray-500 hover:text-gray-700 active:text-gray-700 focus:text-gray-700" />
+          <Popover className="relative  justify-center items-center ">
+            <Popover.Button
+              onClick={() => {
+                {
+                  whoami();
+                  // handleGetNotif();
+                }
+              }}
+              className="outline-none mr-2 md:mr-6 cursor-pointer   "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                />
+              </svg>
+              <span className="sr-only">Notifications</span>
+              {notificationRead.length > 0 ? (
+                <div className="inline-flex absolute -top-2  justify-center items-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900">
+                  {notificationRead.length}
+                </div>
+              ) : (
+                <div></div>
+              )}
             </Popover.Button>
             <Transition
               enter="transition ease-out duration-100"
@@ -149,39 +236,48 @@ export default function NavbarComponent() {
               leaveFrom="transform scale-100"
               leaveTo="transform scale-95"
             >
-              <Popover.Panel className="absolute right-4 z-50 mt-2 -mr-7 bg-gray-100 shadow-sm rounded max-w-xs w-screen md:w-screen">
+              <Popover.Panel className="absolute  overflow-y-scroll h-80  right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
                 <div className="relative p-3">
-                  <div className="flex justify-between items-center w-full">
-                    <p className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
+                  <div className="md:flex justify-between shadow-md bg-gray-300 px-4 py-2   sticky top-0 z-10 items-center w-full">
+                    <p className="text-gray-700  font-medium text-lg  tracking-normal antialiased items-center justify-center text-center">
                       Notifications
                     </p>
-                    <button className="text-gray-700 font-medium text-base tracking-normal antialiased items-center justify-center text-center">
-                      Read All
-                    </button>
                   </div>
                   <hr></hr>
                   <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
-                    <div className="flex md:block">
+                    <div className="block ">
                       {notification.length > 0 ? (
+                        (notification.sort((a, b) => b.id - a.id),
                         notification.map((item) => (
                           <div
-                            className="flex items-center justify-start"
+                            className="flex items-center justify-start mb-1"
                             key={item.id}
                           >
-                            <div className="flex gap-2 text-xs text-gray-500 text-left w-full ">
-                              {item.transaction_id}
-                              <p
-                                className={`text-xs text-gray-500 text-left w-full ${
-                                  item.isRead === false
-                                    ? "bg-yellow-200"
-                                    : "bg-red-400"
-                                } `}
+                            <div
+                              className={`flex justify-between gap-2 text-sm shadow-md py-1 px-4 rounded-sm mb-1 items-center text-gray-500 text-left w-full  ${
+                                item.isRead === true
+                                  ? "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-700"
+                                  : "bg-gray-600 hover:bg-gray-700 text-gray-50 hover:text-white"
+                              }`}
+                            >
+                              <span>{item.message}</span>
+                              <button
+                                className={`bg-gray-200 px-4 py-0.5 rounded-sm hover:bg-gray-300 ${
+                                  item.isRead === true
+                                    ? " hidden"
+                                    : " text-gray-600 hover:text-gray-700"
+                                }`}
+                                onClick={() => {
+                                  {
+                                    handelReadNotif(item.id);
+                                  }
+                                }}
                               >
-                                <button>{item.message}</button>
-                              </p>
+                                <span>Read</span>
+                              </button>{" "}
                             </div>
                           </div>
-                        ))
+                        )))
                       ) : (
                         <div></div>
                       )}
@@ -209,7 +305,10 @@ export default function NavbarComponent() {
           >
             <Modal.Header />
             <Modal.Body>
-              <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8"
+              >
                 <h3 className="text-xl font-medium text-gray-900 dark:text-white">
                   Sign in to our platform
                 </h3>
@@ -219,12 +318,25 @@ export default function NavbarComponent() {
                   </div>
                   <TextInput
                     id="email"
-                    type="email"
+                    type="text"
                     placeholder="JohnDoe@company.com"
-                    required={true}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    {...register("email", {
+                      required: true,
+                      pattern: {
+                        value: /^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/,
+                      },
+                    })}
                   />
+                  {errors.email?.type === "required" && (
+                    <span className="text-xs text-red-600">
+                      Email is required.
+                    </span>
+                  )}
+                  {errors.email?.type === "pattern" && (
+                    <span className="text-xs text-yellow-600">
+                      Email is not valid.
+                    </span>
+                  )}
                 </div>
                 <div>
                   <div className="mb-2 block">
@@ -233,14 +345,34 @@ export default function NavbarComponent() {
                   <TextInput
                     id="password"
                     type="password"
-                    required={true}
-                    value={password}
-                    minLength="5"
                     placeholder="••••••••"
-                    pattern="[a-z0-9]{1,15}"
-                    title="Password should be digits (0 to 9) or alphabets (a to z)."
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register("password", {
+                      required: true,
+                      validate: {
+                        checkLength: (value) => value.length >= 6,
+                        matchPattern: (value) =>
+                          /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)(?=.*[!@#$*?=-_])/.test(
+                            value
+                          ),
+                      },
+                    })}
                   />
+                  {errors.password?.type === "required" && (
+                    <span className="text-xs text-red-600">
+                      Password is required.
+                    </span>
+                  )}
+                  {errors.password?.type === "checkLength" && (
+                    <span className="text-xs text-yellow-600">
+                      Password should be at-least 6 characters.
+                    </span>
+                  )}
+                  {errors.password?.type === "matchPattern" && (
+                    <span className="text-xs text-yellow-600">
+                      Password should contain at least one uppercase letter,
+                      lowercase letter, digit, and special symbol.
+                    </span>
+                  )}
                 </div>
                 <div className="w-full  items-center justify-center ">
                   <div
@@ -249,7 +381,7 @@ export default function NavbarComponent() {
                   >
                     <span className="font-medium">{err}</span>
                   </div>
-                  <Button className="w-full" onClick={handelLogin}>
+                  <Button className="w-full" type="submit">
                     {!loginLoading && <span>Log in to your account</span>}
                     {loginLoading && (
                       <svg
@@ -274,14 +406,14 @@ export default function NavbarComponent() {
 
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
                   Not registered?{" "}
-                  <a
-                    href="register"
+                  <Link
+                    href="/register"
                     className="text-blue-700 hover:underline dark:text-blue-500"
                   >
                     Create account
-                  </a>
+                  </Link>
                 </div>
-              </div>
+              </form>
             </Modal.Body>
           </Modal>
           <div id="already-login" className={isLoggedIn ? "" : "hidden"}>
@@ -304,13 +436,13 @@ export default function NavbarComponent() {
                 </Dropdown.Item>
 
                 <Dropdown.Item>
-                  <Link href={`/profile/${id}`}>Profile</Link>
+                  <Link href={`/profile/${userId}`}>Profile</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`/history/${id}`}>History</Link>
+                  <Link href={`/history/${userId}`}>History</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`/wishlist/${id}`}>Wishlist</Link>
+                  <Link href={`/wishlist/${userId}`}>Wishlist</Link>
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
@@ -342,13 +474,13 @@ export default function NavbarComponent() {
                 </Dropdown.Item>
 
                 <Dropdown.Item>
-                  <Link href={`/profile/${id}`}>Profile</Link>
+                  <Link href={`/profile/${userId}`}>Profile</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`/history/${id}`}>History</Link>
+                  <Link href={`/history/${userId}`}>History</Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link href={`/wishlist/${id}`}>Wishlist</Link>
+                  <Link href={`/wishlist/${userId}`}>Wishlist</Link>
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item

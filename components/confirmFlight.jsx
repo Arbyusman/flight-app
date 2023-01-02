@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Modal, Alert } from "flowbite-react";
+import { useForm } from "react-hook-form";
+import { Modal, Alert, Timeline } from "flowbite-react";
 import Image from "next/image";
+import Link from "next/link";
 import { IoAirplaneOutline } from "react-icons/io5";
 import { TbPlane } from "react-icons/tb";
 import { BsPerson } from "react-icons/bs";
@@ -16,19 +18,29 @@ export default function ConfirmFlight() {
   const [oneWayTicket, setOneWayTicket] = useState([]);
   const [roundTicket, setRoundTicket] = useState([]);
 
+  const [totalPrice, setTotalPrice] = useState("");
+
   const [openModal, setOpenModal] = useState(false);
-  const [openModalAlert, setOpenModalAlert] = useState(false);
+  const [openModalAlertNotLogin, setOpenModalAlertNotLogin] = useState(false);
+  const [openModalAlertProfile, setOpenModalAlertProfile] = useState(false);
+  const [openModalProfileUpdate, setOpenModalProfileUpdate] = useState(false);
+  const [openModalSuccesBooking, setOpenModalSuccesBooking] = useState(false);
 
   const [user, setUser] = useState([]);
 
   const [bookLoading, setBookLoading] = useState(false);
 
-  const [firstName, setfirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const [token, setToken] = useState("");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    setToken(token);
     if (router.isReady) {
       if (!ticket1 && !ticket2) router.push("/");
       handleGetTicket();
@@ -47,6 +59,16 @@ export default function ConfirmFlight() {
 
         setOneWayTicket(oneWayTicket);
         setRoundTicket(roundWayTicket);
+
+        if (ticket1 && ticket2) {
+          const price = oneWayTicket[0].price + roundWayTicket[0].price;
+          setTotalPrice(price);
+        } else if (ticket1) {
+          const price = oneWayTicket[0].price;
+          setTotalPrice(price);
+        } else {
+          setTotalPrice(" ");
+        }
       });
   };
 
@@ -69,61 +91,68 @@ export default function ConfirmFlight() {
   function openModalBooking() {
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("you are not logged in");
-      router.push("/login");
+      setOpenModalAlertNotLogin(true);
+      setTimeout(() => {
+        setOpenModalAlertNotLogin(false);
+      }, 2000);
     } else if (
       user.firstName == null ||
       user.lastName == null ||
       user.phone == null ||
-      user.address == null 
+      user.address == null
     ) {
-      alert("anda harus melengkapi data");
+      setOpenModalAlertProfile(true);
+      setTimeout(() => {
+        setOpenModalAlertProfile(false);
+      }, 2000);
     } else {
       setOpenModal(true);
     }
   }
 
-  async function handelUpdateUsers() {
+  const onSubmit = async (data) => {
     const token = localStorage.getItem("token");
-    const response = await fetch(
-      `${process.env.API_ENDPOINT}api/v1/users/${user.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          phone,
-          address,
-        }),
-      }
-    ).catch((err) => {
-      throw err;
-    });
-
-    const data = await response.json();
-    if ((data.status = "OK")) {
-      alert("data berhasil di ubah");
-    }
-    whoami();
-  }
-
-  async function handelBooking() {
-    if (ticket2 === null) {
-      handelBookingOneWay();
+    if (!token) {
+      alert("your are not login in");
     } else {
+      const response = await fetch(
+        `${process.env.API_ENDPOINT}api/v1/users/${user.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        }
+      ).catch((err) => {
+        throw err;
+      });
+
+      const res = await response.json();
+      if ((res.status = "OK")) {
+        setOpenModalProfileUpdate(true);
+        setTimeout(() => {
+          setOpenModalProfileUpdate(false);
+        }, 2000);
+      }
+      whoami();
+    }
+  };
+
+  function handelBooking() {
+    if (ticket1 && ticket2) {
       handelBookingOneWay();
       handelBookingRound();
+    } else {
+      handelBookingOneWay();
     }
   }
 
   const handelBookingOneWay = async () => {
     const ticket_id = ticket1;
     const user_id = user.id;
-    const total = oneWayTicket.price;
+    const total = oneWayTicket[0].price;
     const promo_id = 1;
     const body = { user_id, ticket_id, total, promo_id };
 
@@ -149,7 +178,10 @@ export default function ConfirmFlight() {
     const data = await response.json();
 
     if (data.status === "OK") {
-      alert("berhasil booking perjalanan pergi");
+      setOpenModalSuccesBooking(true);
+      setTimeout(() => {
+        setOpenModalSuccesBooking(false);
+      }, 2000);
       setBookLoading(false);
       setOpenModal(false);
     } else {
@@ -160,7 +192,7 @@ export default function ConfirmFlight() {
   const handelBookingRound = async () => {
     const ticket_id = ticket2;
     const user_id = user.id;
-    const total = oneWayTicket.price;
+    const total = roundTicket[0].price;
     const promo_id = 1;
     const body = { user_id, ticket_id, total, promo_id };
 
@@ -186,7 +218,6 @@ export default function ConfirmFlight() {
     const data = await response.json();
 
     if (data.status === "OK") {
-      alert("berhasil booking perjalanan pergi");
       setBookLoading(false);
       setOpenModal(false);
     } else {
@@ -198,135 +229,242 @@ export default function ConfirmFlight() {
     <div className="justify-center items-center flex">
       <div className="lg:flex mt-5 gap-3 w-full md:w-11/12 lg:w-9/12 flex-row ">
         <div className=" w-full lg:w-8/12 ">
+          {!token && (
+            <Alert color="info" className="shadow-lg mb-3">
+              <span>
+                <span className="font-medium">you are not logged in!</span>{" "}
+                please login to get more experience{" "}
+                <Link href="login" className="underline font-semibold">
+                  {" "}
+                  login
+                </Link>{" "}
+                or press the login button above
+              </span>
+            </Alert>
+          )}
           {/* Traveler Information */}
           <div className="flex justify-center  ">
             <div className="w-full gap-5  ">
-              <div className="w-full  bg-white rounded-md pt-2 ">
-                <div className="w-full ml-4 mb-2 md:ml-0 md:mb-0  rounded-t-md flex md:flex justify-start items-center gap-3  md:p-4">
-                  <BsPerson className="text-2xl font-bold  text-gray-700 " />
-                  <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700">
-                    Traveler
-                  </h1>
-                </div>
-                <hr></hr>
+              {token && (
+                <div className="w-full  bg-white rounded-md pt-2 ">
+                  <div className="w-full ml-4 mb-2 md:ml-0 md:mb-0  rounded-t-md flex md:flex justify-start items-center gap-3  md:p-4">
+                    <BsPerson className="text-2xl font-bold  text-gray-700 " />
+                    <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700">
+                      Traveler
+                    </h1>
+                  </div>
+                  <hr></hr>
 
-                {/* form contact information */}
-                <div className="flex justify-center bg-white shadow-md  ">
-                  <div className="w-full gap-5 flex justify-center   md:p-7">
-                    <form className="md:w-11/12 w-full mx-4 ">
-                      <div className="md:flex w-full  md:justify-start md:gap-10 md:mt-2 md:items-center">
-                        <div className="md:w-full w">
-                          <label
-                            htmlFor="first_name"
-                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                          >
-                            First Name
-                          </label>
-                          <input
-                            type="text"
-                            id="first_name"
-                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                            value={user.firstName}
-                            onChange={(e) => setfirstName(e.target.value)}
-                            placeholder="ex. john"
-                          />
+                  {/* form contact information */}
+                  <div className="flex justify-center bg-white shadow-md  ">
+                    <div className="w-full gap-5 flex justify-center   md:p-7">
+                      <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        method="PUT"
+                        className="md:w-11/12 w-full mx-4 "
+                      >
+                        <div className="md:flex w-full  md:justify-start md:gap-10 md:mt-2 md:items-center">
+                          <div className="md:w-full w">
+                            <label
+                              htmlFor="firstName"
+                              className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                            >
+                              First Name
+                            </label>
+                            <input
+                              type="text"
+                              id="firstName"
+                              className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                              value={user.firstName}
+                              placeholder="ex. john"
+                              // onChange={(e) => setfirstName(e.target.value)}
+                              {...register("firstName", {
+                                required: true,
+                              })}
+                            />
+                            {errors.firstName?.type === "required" && (
+                              <span className="text-xs text-red-600">
+                                FirstName is required.
+                              </span>
+                            )}
+                          </div>
+                          <div className="md:w-full">
+                            <label
+                              htmlFor="lastName"
+                              className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                            >
+                              Last Name
+                            </label>
+                            <input
+                              type="text"
+                              id="lastName"
+                              className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                              required
+                              placeholder="ex. Doe"
+                              value={user.lastName}
+                              // onChange={(e) => setLastName(e.target.value)}
+                              {...register("lastName", {
+                                required: true,
+                              })}
+                            />
+                            {errors.lastName?.type === "required" && (
+                              <span className="text-xs text-red-600">
+                                LastName is required.
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        <div className="md:w-full">
-                          <label
-                            htmlFor="last_name"
-                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                          >
-                            Last Name
-                          </label>
-                          <input
-                            type="text"
-                            id="last_name"
-                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                            required
-                            placeholder="ex. Doe"
-                            value={user.lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                          />
+                        <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                          <div className="md:w-full">
+                            <label
+                              htmlFor="email"
+                              className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                            >
+                              Email
+                            </label>
+                            <input
+                              type="email"
+                              id="email"
+                              className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
+                              placeholder="ex. johndoe@gmail.com"
+                              required
+                              value={user.email}
+                              disabled
+                            />
+                          </div>
+                          <div className="md:w-full">
+                            <label
+                              htmlFor="phone"
+                              className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                            >
+                              Phone
+                            </label>
+                            <input
+                              type="phone"
+                              id="phone"
+                              placeholder="ex. +62-8888-2222"
+                              className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
+                              value={user.phone}
+                              // onChange={(e) => setPhone(e.target.value)}
+                              {...register("phone", {
+                                required: true,
+                              })}
+                            />
+                            {errors.phone?.type === "required" && (
+                              <span className="text-xs text-red-600">
+                                Phone is required.
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
-                        <div className="md:w-full">
-                          <label
-                            htmlFor="email"
-                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
-                          >
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            id="email"
-                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none "
-                            placeholder="ex. johndoe@gmail.com"
-                            required
-                            value={user.email}
-                            disabled
-                          />
+                        <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
+                          <div className="my-1 w-full">
+                            <label
+                              htmlFor="address"
+                              className="block mb-2 text-sm font-medium text-gray-900 "
+                            >
+                              Address
+                            </label>
+                            <textarea
+                              id="address"
+                              rows="4"
+                              placeholder="Kendari sulawesi tenggara"
+                              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-0 focus:border-black "
+                              value={user.address}
+                              // onChange={(e) => setAddress(e.target.value)}
+                              {...register("address", {
+                                required: true,
+                              })}
+                            ></textarea>
+                            {errors.phone?.type === "required" && (
+                              <span className="text-xs text-red-600">
+                                address is required.
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        <div className="md:w-full">
-                          <label
-                            htmlFor="phone"
-                            className="block mb-2 text-sm font-medium text-gray-800 dark:text-white"
+                        <div className="justify-center flex mt-2">
+                          <button
+                            type="submit"
+                            // onClick={handelUpdateUsers}
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
                           >
-                            Phone
-                          </label>
-                          <input
-                            type="phone"
-                            id="phone"
-                            placeholder="ex. +62-8888-2222"
-                            className="block w-full p-2 text-gray-800   border-0 border-gray-300 border-b-2  text-base  focus:bg-gray-50 focus:border-b-2 focus:border-0 focus:border-gray-600 focus:ring-0 focus:shadow-none focus:outline-none"
-                            value={user.phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                          />
+                            save
+                          </button>
                         </div>
-                      </div>
-                      <div className="md:flex w-full md:justify-start md:gap-10 md:mt-2 md:items-center">
-                        <div className="my-1 w-full">
-                          <label
-                            htmlFor="address"
-                            className="block mb-2 text-sm font-medium text-gray-900 "
-                          >
-                            Address
-                          </label>
-                          <textarea
-                            id="address"
-                            rows="4"
-                            placeholder="Kendari sulawesi tenggara"
-                            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-md border border-gray-300 focus:ring-0 focus:border-black "
-                            value={user.address}
-                            onChange={(e) => setAddress(e.target.value)}
-                          ></textarea>
-                        </div>
-                      </div>
-                      <div className="justify-center flex mt-2">
-                        <button
-                          type="submit"
-                          onClick={handelUpdateUsers}
-                          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
-                        >
-                          save
-                        </button>
-                      </div>
-                    </form>
+                      </form>
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
+
           <Modal
-            show={openModalAlert}
+            show={openModalSuccesBooking}
             size="sm"
             popup={true}
             position={"top-center"}
           >
-            <Alert color="failure" className="justify-center items-center">
-              <span className="font-medium">you are not logged in</span>
+            <Alert
+              color="success"
+              className="justify-center items-center text-center"
+            >
+              <span>You have successfully booked your ticket</span>
             </Alert>
           </Modal>
+          <Modal
+            show={openModalProfileUpdate}
+            size="sm"
+            popup={true}
+            position={"top-center"}
+          >
+            <Alert
+              color="success"
+              className="justify-center items-center text-center"
+            >
+              <span>You have successfully updated your data</span>
+            </Alert>
+          </Modal>
+          <Modal
+            show={openModalAlertProfile}
+            size="sm"
+            popup={true}
+            position={"top-center"}
+          >
+            <Alert
+              color="warning"
+              className="justify-center items-center text-center"
+            >
+              <span>
+                <span className="font-medium">
+                  {" "}
+                  you have not updated the user data!
+                </span>
+                You have not completed the profile data
+              </span>
+            </Alert>
+          </Modal>
+          <Modal
+            show={openModalAlertNotLogin}
+            size="sm"
+            popup={true}
+            position={"top-center"}
+          >
+            <Alert
+              color="failure"
+              className="justify-center items-center text-center"
+            >
+              <span>
+                <span className="font-medium">
+                  {" "}
+                  you are not logged in! {""}
+                </span>
+                Log in first to continue booking !
+              </span>
+            </Alert>
+          </Modal>
+
           <Modal
             show={openModal}
             size="xl"
@@ -374,12 +512,12 @@ export default function ConfirmFlight() {
                         </div>
 
                         <div className=" flex w-full justify-between  gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                          <p className="text-sm md:text-md lg:w-4/6  font-semibold">
+                          <p className="text-sm md:text-md md:w-56  font-semibold">
                             {item.Flight.from.city} ({" "}
                             {item.Flight.from.city_code} ){" "}
                           </p>
                           <TbPlane className="text-2xl  text-green-700" />
-                          <p className="text-sm md:text-md lg:w-4/6  font-semibold">
+                          <p className="text-sm md:text-md md:w-56  text-end font-semibold">
                             {item.Flight.to.city} ( {item.Flight.to.city_code} ){" "}
                           </p>
                         </div>
@@ -443,12 +581,12 @@ export default function ConfirmFlight() {
                         </div>
 
                         <div className=" flex col-span-3 w-full justify-between  gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                          <p className="text-sm md:text-md  lg:w-4/6 font-semibold ">
+                          <p className="text-sm md:text-md  w-56 font-semibold ">
                             {item.Flight.from.city} ({" "}
                             {item.Flight.from.city_code} ){" "}
                           </p>
                           <TbPlane className="text-2xl  text-green-700" />
-                          <p className="text-sm md:text-md  lg:w-4/6 font-semibold ">
+                          <p className="text-sm md:text-md text-end  w-56 font-semibold ">
                             {item.Flight.to.city} ( {item.Flight.to.city_code} ){" "}
                           </p>
                         </div>
@@ -528,8 +666,9 @@ export default function ConfirmFlight() {
                       <div className="p-7 ">
                         <div className="flex justify-between md:flex-row text-sm font-thin my-1">
                           <p>Depart Flight</p>
-                          {item.Flight.departure_date}{" "}
-                          {item.Flight.departure_time}{" "}
+                          {new Date(
+                            item.Flight.departure_date
+                          ).toDateString()}{" "}
                         </div>
                         <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
                           <p>Plane</p>
@@ -548,17 +687,14 @@ export default function ConfirmFlight() {
                         </div>
                         <hr />
 
-                        <div className="md:flex w-full justify-between    gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                          <div className="flex  gap-4 items-center">
-                            <div>
+                        <div className="md:flex w-full justify-between  text-gray-600 tracking-wide my-3 antialiased">
+                          <div className="flex md:w-56 gap-4 items-center">
+                            <div className="">
                               <p className="font-bold text-xl">
                                 {item.Flight.departure_time}
                               </p>
-                              <p className="text-sm">
-                                {item.Flight.departure_time}
-                              </p>
                             </div>
-                            <div className=" w-36 lg:w-56">
+                            <div className="">
                               <p className="text-md font-semibold">
                                 {item.Flight.from.city} ({" "}
                                 {item.Flight.from.city_code} ){" "}
@@ -567,16 +703,17 @@ export default function ConfirmFlight() {
                             </div>
                           </div>
 
-                          <div className="flex gap-4 items-center">
+                          <div className="justify-center  items-center flex rotate-90 md:rotate-0">
+                            <TbPlane className="text-3xl   text-green-700" />
+                          </div>
+
+                          <div className="flex gap-4 md:w-56 items-center">
                             <div>
                               <p className="font-bold text-xl">
                                 {item.Flight.arrival_time}
                               </p>
-                              <p className="text-sm">
-                                {item.Flight.arrival_date}
-                              </p>
                             </div>
-                            <div className=" w-36 lg:w-56">
+                            <div className=" ">
                               <p className="text-md font-semibold">
                                 {item.Flight.to.city} ({" "}
                                 {item.Flight.to.city_code} ){" "}
@@ -622,9 +759,10 @@ export default function ConfirmFlight() {
                       roundTicket.map((item) => (
                         <div className="p-7 ">
                           <div className="flex justify-between md:flex-row text-sm font-thin my-1">
-                            <p>Depart Flight</p>
-                            {item.Flight.departure_date}{" "}
-                            {item.Flight.departure_time}{" "}
+                            <p>Return Flight</p>
+                            {new Date(
+                              item.Flight.departure_date
+                            ).toDateString()}{" "}
                           </div>
                           <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
                             <p>Plane</p>
@@ -644,16 +782,13 @@ export default function ConfirmFlight() {
                           <hr />
 
                           <div className="md:flex w-full justify-between    gap-2 text-gray-600 tracking-wide my-3 antialiased">
-                            <div className="flex  gap-4 items-center">
+                            <div className="flex md:w-56 gap-4 items-center">
                               <div>
                                 <p className="font-bold text-xl">
                                   {item.Flight.departure_time}
                                 </p>
-                                <p className="text-sm">
-                                  {item.Flight.departure_time}
-                                </p>
                               </div>
-                              <div className=" w-36 lg:w-56">
+                              <div className=" ">
                                 <p className="text-md font-semibold">
                                   {item.Flight.from.city} ({" "}
                                   {item.Flight.from.city_code} ){" "}
@@ -663,17 +798,17 @@ export default function ConfirmFlight() {
                                 </p>
                               </div>
                             </div>
+                            <div className="justify-center items-center flex rotate-90 md:rotate-0">
+                              <TbPlane className="text-3xl  text-green-700" />
+                            </div>
 
-                            <div className="flex gap-4 items-center">
+                            <div className="flex md:w-56 gap-4 items-center">
                               <div>
                                 <p className="font-bold text-xl">
                                   {item.Flight.arrival_time}
                                 </p>
-                                <p className="text-sm">
-                                  {item.Flight.arrival_date}
-                                </p>
                               </div>
-                              <div className=" w-36 lg:w-56">
+                              <div className=" ">
                                 <p className="text-md font-semibold">
                                   {item.Flight.to.city} ({" "}
                                   {item.Flight.to.city_code} ){" "}
@@ -710,13 +845,13 @@ export default function ConfirmFlight() {
           <div className="w-full md:justify-between ">
             {/* Price Detail */}
             <div className=" items-center justify-between flex-row shadow-md  bg-white rounded-md text-gray-600 tracking-wide antialiased mb-2">
-              <div className="w-full   flex-row md:flex justify-between  px-7 py-5">
+              <div className="w-full   flex-row md:flex justify-between  px-5 py-5">
                 <h1 className="text-lg font-bold antialiased tracking-wider text-gray-700 ">
                   Price Detail
                 </h1>
               </div>
               <hr />
-              <div className="p-7">
+              <div className="px-5 py-2">
                 {!oneWayTicket && <span></span>}
                 {oneWayTicket.length > 0 ? (
                   oneWayTicket.map((item) => (
@@ -752,8 +887,14 @@ export default function ConfirmFlight() {
 
                 <hr />
                 <div className="flex justify-between text-lg font-bold tracking-wider my-2">
-                  <p>total Price</p>
-                  <p>total Price</p>
+                  <p>Total Price</p>
+                  {!totalPrice && <p> RP </p>}
+                  {totalPrice && (
+                    <div className="flex">
+                      <p> RP </p>
+                      <p> {totalPrice}</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

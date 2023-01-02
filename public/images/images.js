@@ -1,16 +1,7 @@
-import maybankPromo from "./promo-maybank.jpg";
-import maybankPromo2 from "./promo-maybank-2.jpg";
-import ocbcPromo from "./promo-ocbc.jpg";
-import ocbcPromo2 from "./promo-ocbc-2.jpg";
-import ocbcPromo3 from "./promo-ocbc-3.jpg";
-import downloadApss from "./download-apps.jpg";
+import image from "./1.jpg";
+import image2 from "./2.jpg";
+import image3 from "./3.jpg";
+import image4 from "./4.jpg";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default [
-  maybankPromo,
-  maybankPromo2,
-  ocbcPromo,
-  ocbcPromo2,
-  ocbcPromo3,
-  downloadApss,
-];
+export default [image, image2, image3, image4];

@@ -32,7 +32,6 @@ export default function WishlistUser() {
     if (!id) {
       return;
     }
-
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
     setToken(token);
@@ -78,9 +77,11 @@ export default function WishlistUser() {
       setDeleteLoading(false);
       setOpenModal(false);
       handelGetwishlist();
+    } else {
+      setDeleteLoading(false);
     }
   };
-  
+
   const handelBook = () => {
     router.push({
       pathname: "/search/book",
