@@ -56,11 +56,10 @@ export default function WishlistUser() {
   };
 
   const handleDeleteWishlist = async () => {
-    const ticketId = currentIndex;
     setDeleteLoading(true);
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `${process.env.API_ENDPOINT}api/v1/wishlist/${ticketId}`,
+      `${process.env.API_ENDPOINT}api/v1/wishlist/${currentIndex}`,
       {
         method: "DELETE",
         headers: {
@@ -72,7 +71,6 @@ export default function WishlistUser() {
     });
 
     const data = await response.json();
-    console.log("status ", data);
     if (data.status === "OK") {
       setDeleteLoading(false);
       setOpenModal(false);
@@ -80,15 +78,6 @@ export default function WishlistUser() {
     } else {
       setDeleteLoading(false);
     }
-  };
-
-  const handelBook = () => {
-    router.push({
-      pathname: "/search/book",
-      query: {
-        ticket1: currentIndex,
-      },
-    });
   };
 
   if (!token) {
@@ -225,13 +214,13 @@ export default function WishlistUser() {
                         <p>/Pax</p>
                       </div>
                       <div className="flex lg:gap-10 md:gap-3 justify-between">
-                        <button
-                          onClick={handelBook}
+                        <Link
+                          href={`/search/book?ticket1=${item.id}`}
                           type="button"
                           className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 "
                         >
                           Choose Flight
-                        </button>
+                        </Link>
 
                         <button
                           type="button"
