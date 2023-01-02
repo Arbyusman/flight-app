@@ -52,6 +52,7 @@ export default function WishlistUser() {
 
       .then((data) => {
         setData(data.data);
+        console.log("wishlist", data.data);
       });
   };
 
@@ -215,7 +216,7 @@ export default function WishlistUser() {
                       </div>
                       <div className="flex lg:gap-10 md:gap-3 justify-between">
                         <Link
-                          href={`/search/book?ticket1=${item.id}`}
+                          href={`/search/book?ticket1=${item.ticket_id}`}
                           type="button"
                           className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 "
                         >
