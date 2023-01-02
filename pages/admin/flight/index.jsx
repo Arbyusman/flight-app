@@ -92,31 +92,24 @@ export default function Flight() {
               <Table.HeadCell>Plane</Table.HeadCell>
               <Table.HeadCell>From Airport</Table.HeadCell>
               <Table.HeadCell>To Airport</Table.HeadCell>
-              <Table.HeadCell>Arrival Time</Table.HeadCell>
-              <Table.HeadCell>Arrival Date</Table.HeadCell>
               <Table.HeadCell>Departure Time</Table.HeadCell>
               <Table.HeadCell>Departure Date</Table.HeadCell>
+              <Table.HeadCell>Arrival Time</Table.HeadCell>
+              <Table.HeadCell>Arrival Date</Table.HeadCell>
+
               <Table.HeadCell className="w-20">Action</Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
               {flight.map((flight) => (
-                <Table.Row
-                  key={flight.id}
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                >
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {flight.Plane.name}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {flight.from.name} | {flight.from.city}
-                  </Table.Cell>
-                  <Table.Cell>
-                    {flight.to.name} | {flight.to.city}
-                  </Table.Cell>
-                  <Table.Cell>{flight.arrival_time}</Table.Cell>
-                  <Table.Cell>{flight.arrival_date}</Table.Cell>
+                <Table.Row key={flight.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{flight.Plane.name}</Table.Cell>
+                  <Table.Cell>{flight.from.name}</Table.Cell>
+                  <Table.Cell>{flight.to.name}</Table.Cell>
                   <Table.Cell>{flight.departure_time}</Table.Cell>
                   <Table.Cell>{flight.departure_date}</Table.Cell>
+                  <Table.Cell>{flight.arrival_time}</Table.Cell>
+                  <Table.Cell>{flight.arrival_date}</Table.Cell>
+
                   <Table.Cell>
                     <div className="flex justify-between">
                       <a
