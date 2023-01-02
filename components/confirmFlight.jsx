@@ -156,8 +156,8 @@ export default function ConfirmFlight() {
     const ticket_id = ticket1;
     const user_id = user.id;
     const total = oneWayTicket[0].price;
-    const promo_id = 1;
-    const body = { user_id, ticket_id, total, promo_id };
+    // const promo_id = 1;
+    const body = { user_id, ticket_id, total };
 
     setBookLoading(true);
     const token = localStorage.getItem("token");
@@ -196,8 +196,8 @@ export default function ConfirmFlight() {
     const ticket_id = ticket2;
     const user_id = user.id;
     const total = roundTicket[0].price;
-    const promo_id = 1;
-    const body = { user_id, ticket_id, total, promo_id };
+    // const promo_id = 1;
+    const body = { user_id, ticket_id, total };
 
     setBookLoading(true);
     const token = localStorage.getItem("token");
