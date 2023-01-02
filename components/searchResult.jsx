@@ -159,7 +159,7 @@ export default function ResultFlight() {
   }
 
   return (
-    <div className="justify-center items-center flex-row">
+    <div className="justify-center items-center flex-row ">
       {/* title */}
       {!token && (
         <div className="justify-center items-center flex ">
