@@ -502,12 +502,13 @@ export default function ConfirmFlight() {
                           <p>Plane</p>
                           <figure className="max-w-md ">
                             <Image
+                              priority
                               className="w-7 flex "
                               src={item.photo}
                               alt="logo penerbangan"
                               width={50}
                               height={50}
-                            ></Image>
+                            />
                             <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                               {item.Flight.Plane.name}
                             </figcaption>
@@ -571,12 +572,13 @@ export default function ConfirmFlight() {
                           <p>Plane</p>
                           <figure className="max-w-md ">
                             <Image
+                              priority
                               className="w-7 flex "
                               src={item.photo}
                               alt="logo penerbangan"
                               width={50}
                               height={50}
-                            ></Image>
+                            />
                             <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                               {item.Flight.Plane.name}
                             </figcaption>
@@ -687,12 +689,13 @@ export default function ConfirmFlight() {
                           <p>Plane</p>
                           <figure className="max-w-md">
                             <Image
+                              priority
                               className="w-10 lg:w-12 flex "
                               src={item.photo}
                               alt="logo penerbangan"
                               width={50}
                               height={50}
-                            ></Image>
+                            />
                             <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                               {item.Flight.Plane.name}
                             </figcaption>
@@ -781,12 +784,13 @@ export default function ConfirmFlight() {
                             <p>Plane</p>
                             <figure className="max-w-md">
                               <Image
+                                priority
                                 className="w-10 lg:w-12 flex "
                                 src={item.photo}
                                 alt="logo penerbangan"
                                 width={50}
                                 height={50}
-                              ></Image>
+                              />
                               <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                                 {item.Flight.Plane.name}
                               </figcaption>

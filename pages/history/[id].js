@@ -162,12 +162,13 @@ export default function History() {
                     <div className=" md:flex items-start  justify-between  ">
                       <figure className="max-w-md">
                         <Image
+                          priority
                           className="w-10 lg:w-16 flex "
                           src={item.Ticket.photo}
                           alt="logo penerbangan"
                           width={50}
                           height={50}
-                        ></Image>
+                        />
                         <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                           {item.Ticket.Flight.Plane.name}
                         </figcaption>

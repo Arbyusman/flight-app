@@ -106,6 +106,7 @@ export default function Invoice() {
               </div>
               <div class="text-right">
                 <Image
+                  priority
                   src={logoImage}
                   width={100}
                   height={100}
@@ -156,12 +157,13 @@ export default function Invoice() {
                 <p>Plane</p>
                 <figure className="max-w-md ">
                   <Image
+                    priority
                     className="w-7 flex "
                     src={data.Ticket.photo}
                     alt="logo penerbangan"
                     width={50}
                     height={50}
-                  ></Image>
+                  />
                   <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                     {data.Ticket.Flight.Plane.name}
                   </figcaption>
