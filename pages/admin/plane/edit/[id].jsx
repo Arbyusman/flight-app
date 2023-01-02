@@ -102,7 +102,7 @@ export default function EditPlane() {
             </div>
 
             <div className="relative mt-3">
-              <label for="plane_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label for="plane_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Status
               </label>
               <select
@@ -110,7 +110,7 @@ export default function EditPlane() {
                 name="status"
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                class="bg-gray-50 border border-gray-300 text-gray-500 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                className="bg-gray-50 border border-gray-300 text-gray-500 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                 <option selected>Choose a Status</option>
                 <option value="Available">Available</option>
                 <option value="Unavailable">Unavailable</option>

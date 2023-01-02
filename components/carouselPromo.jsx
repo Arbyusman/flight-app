@@ -9,8 +9,6 @@ import { EffectCoverflow, Pagination, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 
-
-
 // import images
 import promoImages from "../public/images/images";
 
