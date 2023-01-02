@@ -144,8 +144,11 @@ export default function ConfirmFlight() {
     if (ticket1 && ticket2) {
       handelBookingOneWay();
       handelBookingRound();
+
+      router.push(`/history/${user.id}`);
     } else {
       handelBookingOneWay();
+      router.push(`/history/${user.id}`);
     }
   }
 
@@ -615,6 +618,16 @@ export default function ConfirmFlight() {
                     ))
                   ) : (
                     <div></div>
+                  )}
+                </div>
+                <div className="flex justify-between text-lg font-bold tracking-wider my-2">
+                  <p>Total Price</p>
+                  {!totalPrice && <p> RP </p>}
+                  {totalPrice && (
+                    <div className="flex">
+                      <p> RP </p>
+                      <p> {totalPrice}</p>
+                    </div>
                   )}
                 </div>
                 <div className="justify-center items-center flex">

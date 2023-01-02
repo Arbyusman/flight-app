@@ -84,26 +84,6 @@ export default function NavbarComponent() {
       });
   };
 
-  // const handleGetNotif = () => {
-  //   whoami();
-  //   const token = localStorage.getItem("token");
-
-  //   fetch(`${process.env.API_ENDPOINT}api/v1/notification/user/${userId}`, {
-  //     method: "GET",
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((res) => res.json())
-
-  //     .then((data) => {
-  //       setNotification(data.data);
-  //       const notification = data.data.filter((item) => item.isRead == false);
-
-  //       setNotificationRead(notification);
-  //     });
-  // };
-
   const handelReadNotif = (id) => {
     const token = localStorage.getItem("token");
     fetch(`${process.env.API_ENDPOINT}api/v1/notification/${id}`, {
@@ -247,13 +227,20 @@ export default function NavbarComponent() {
                   <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
                     <div className="block ">
                       {notification.length > 0 ? (
-                        (notification.sort((a, b) => b.id - a.id),
+                        (notification.sort(
+                          (a, b) => a.isRead - b.isRead && b.id - a.id
+                        ),
                         notification.map((item) => (
                           <div
                             className="flex items-center justify-start mb-1"
                             key={item.id}
                           >
-                            <div
+                            <button
+                              onClick={() => {
+                                {
+                                  handelReadNotif(item.id);
+                                }
+                              }}
                               className={`flex justify-between gap-2 text-sm shadow-md py-1 px-4 rounded-sm mb-1 items-center text-gray-500 text-left w-full  ${
                                 item.isRead === true
                                   ? "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-700"
@@ -261,21 +248,7 @@ export default function NavbarComponent() {
                               }`}
                             >
                               <span>{item.message}</span>
-                              <button
-                                className={`bg-gray-200 px-4 py-0.5 rounded-sm hover:bg-gray-300 ${
-                                  item.isRead === true
-                                    ? " hidden"
-                                    : " text-gray-600 hover:text-gray-700"
-                                }`}
-                                onClick={() => {
-                                  {
-                                    handelReadNotif(item.id);
-                                  }
-                                }}
-                              >
-                                <span>Read</span>
-                              </button>{" "}
-                            </div>
+                            </button>
                           </div>
                         )))
                       ) : (
