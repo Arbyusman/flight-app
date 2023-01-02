@@ -28,7 +28,7 @@ export default function Wishlist() {
 
       .then((data) => {
         setWishlist(data.data);
-        console.log("datahere", data);
+        console.log("wishlist", data);
       });
   };
 

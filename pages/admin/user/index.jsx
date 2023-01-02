@@ -75,9 +75,14 @@ export default function Promo() {
             <Table.Body className="divide-y">
               {users.map((users) => (
                 <Table.Row key={users.id} className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>
-                    <img src={users.photo} alt="img-photo" />
-                  </Table.Cell>
+                  {users.photo === null ? (
+                    <Table.Cell>Tidak ada photo</Table.Cell>
+                  ) : (
+                    <Table.Cell>
+                      <img src={users.photo} alt="img-photo" />
+                    </Table.Cell>
+                  )}
+
                   <Table.Cell>{users.firstName}</Table.Cell>
                   <Table.Cell>{users.lastName}</Table.Cell>
                   <Table.Cell>{users.role}</Table.Cell>
