@@ -94,7 +94,7 @@ export default function ConfirmFlight() {
       setOpenModalAlertNotLogin(true);
       setTimeout(() => {
         setOpenModalAlertNotLogin(false);
-      }, 1000);
+      }, 2000);
     } else if (
       user.firstName == null ||
       user.lastName == null ||
@@ -104,7 +104,7 @@ export default function ConfirmFlight() {
       setOpenModalAlertProfile(true);
       setTimeout(() => {
         setOpenModalAlertProfile(false);
-      }, 1000);
+      }, 2000);
     } else {
       setOpenModal(true);
     }
@@ -130,12 +130,11 @@ export default function ConfirmFlight() {
       });
 
       const res = await response.json();
-      console.log("res update", res);
       if ((res.status = "OK")) {
         setOpenModalProfileUpdate(true);
         setTimeout(() => {
           setOpenModalProfileUpdate(false);
-        }, 1000);
+        }, 2000);
       }
       whoami();
     }
@@ -407,7 +406,10 @@ export default function ConfirmFlight() {
             popup={true}
             position={"top-center"}
           >
-            <Alert color="success" className="justify-center items-center">
+            <Alert
+              color="success"
+              className="justify-center items-center text-center"
+            >
               <span>You have successfully booked your ticket</span>
             </Alert>
           </Modal>
@@ -417,7 +419,10 @@ export default function ConfirmFlight() {
             popup={true}
             position={"top-center"}
           >
-            <Alert color="success" className="justify-center items-center">
+            <Alert
+              color="success"
+              className="justify-center items-center text-center"
+            >
               <span>You have successfully updated your data</span>
             </Alert>
           </Modal>
@@ -427,7 +432,10 @@ export default function ConfirmFlight() {
             popup={true}
             position={"top-center"}
           >
-            <Alert color="warning" className="justify-center items-center">
+            <Alert
+              color="warning"
+              className="justify-center items-center text-center"
+            >
               <span>
                 <span className="font-medium">
                   {" "}
@@ -443,13 +451,20 @@ export default function ConfirmFlight() {
             popup={true}
             position={"top-center"}
           >
-            <Alert color="failure" className="justify-center items-center">
+            <Alert
+              color="failure"
+              className="justify-center items-center text-center"
+            >
               <span>
-                <span className="font-medium"> you are not logged in!</span>
-                please login to get more experience
+                <span className="font-medium">
+                  {" "}
+                  you are not logged in! {""}
+                </span>
+                Log in first to continue booking !
               </span>
             </Alert>
           </Modal>
+
           <Modal
             show={openModal}
             size="xl"

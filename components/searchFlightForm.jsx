@@ -15,7 +15,17 @@ const SearchFlightForm = () => {
 
   const [openModalErrorDestination, setOpenModalErrorDestination] =
     useState(false);
-  const [openModalErrorSelectDate, setOpenModalErrorSelectDate] =
+  const [openModalErrorSelectDateReturn, setOpenModalErrorSelectDateReturn] =
+    useState(false);
+  const [
+    openModalErrorSelectDateDeparture,
+    setOpenModalErrorSelectDateDeparture,
+  ] = useState(false);
+  const [openModalErrorSelectDeparture, setOpenModalErrorSelectDeparture] =
+    useState(false);
+  const [openModalErrorSelectDestination, setOpenModalErrorSelectDestination] =
+    useState(false);
+  const [openModalErrorSelectCategory, setOpenModalErrorSelectCategory] =
     useState(false);
 
   const [departureNative, setDepartureNative] = useState("");
@@ -48,54 +58,88 @@ const SearchFlightForm = () => {
   }, []);
 
   const handleSearchOneWayFlight = () => {
-    if (fromSelectedCity === toSelectedCity) {
-      setOpenModalErrorDestination(true);
+    if (!fromSelectedCity) {
+      setOpenModalErrorSelectDeparture(true);
       setTimeout(() => {
-        setOpenModalErrorDestination(false);
+        setOpenModalErrorSelectDeparture(false);
       }, 1500);
       return;
-    }
-
-    Router.push({
-      pathname: "/search",
-      query: {
-        from: fromSelectedCity,
-        to: toSelectedCity,
-        depart: departureNative,
-        category: selectedCategories.category,
-      },
-    });
-  };
-
-  const handleSearchRoundtripFlight = () => {
-    if (fromSelectedCity === toSelectedCity) {
-      setOpenModalErrorDestination(true);
+    } else if (!toSelectedCity) {
+      setOpenModalErrorSelectDestination(true);
       setTimeout(() => {
-        setOpenModalErrorDestination(false);
+        setOpenModalErrorSelectDestination(false);
       }, 1500);
       return;
     } else if (!departureNative) {
-      alert("Please select date");
+      setOpenModalErrorSelectDateDeparture(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDateDeparture(false);
+      }, 1500);
+      return;
+    } else if (!selectedCategories) {
+      setOpenModalErrorSelectCategory(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectCategory(false);
+      }, 1500);
+      return;
+    } else if (fromSelectedCity === toSelectedCity) {
+      setOpenModalErrorDestination(true);
+      setTimeout(() => {
+        setOpenModalErrorDestination(false);
+      }, 1500);
+      return;
+    } else {
+      Router.push({
+        pathname: "/search",
+        query: {
+          from: fromSelectedCity,
+          to: toSelectedCity,
+          depart: departureNative,
+          category: selectedCategories.category,
+        },
+      });
+    }
+  };
+
+  const handleSearchRoundtripFlight = () => {
+    if (!fromSelectedCity) {
+      setOpenModalErrorSelectDeparture(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDeparture(false);
+      }, 1500);
+      return;
+    } else if (!toSelectedCity) {
+      setOpenModalErrorSelectDestination(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDestination(false);
+      }, 1500);
+      return;
+    } else if (!departureNative) {
+      setOpenModalErrorSelectDateDeparture(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDateDeparture(false);
+      }, 1500);
+      return;
+    } else if (!selectedCategories) {
+      setOpenModalErrorSelectCategory(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectCategory(false);
+      }, 1500);
+      return;
+    } else if (!arrivalNative) {
+      setOpenModalErrorSelectDateReturn(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDateReturn(false);
+      }, 1500);
+      return;
+    } else if (fromSelectedCity === toSelectedCity) {
+      setOpenModalErrorDestination(true);
+      setTimeout(() => {
+        setOpenModalErrorDestination(false);
+      }, 1500);
       return;
     }
 
-    // const roundtripTicket1 = ticket.filter(
-    //   (item) =>
-    //     item.Flight.from.city == fromSelectedCity &&
-    //     item.Flight.to.city == toSelectedCity &&
-    //     item.Flight.departure_date == departureNative &&
-    //     item.type == selectedCategories.category
-    // );
-
-    // const roundtripTicket2 = ticket.filter(
-    //   (item) =>
-    //     item.Flight.from.city == toSelectedCity &&
-    //     item.Flight.to.city == fromSelectedCity &&
-    //     item.Flight.departure_date == arrivalNative &&
-    //     item.type == selectedCategories.category
-    // );
-
-    // console.log(roundtripTicket1, roundtripTicket2);
     Router.push({
       pathname: "/search",
       query: {
@@ -116,16 +160,58 @@ const SearchFlightForm = () => {
         });
   return (
     <div>
-      {/* <Modal
-        show={openModalErrorSelectDate}
+      <Modal
+        show={openModalErrorSelectCategory}
         size="sm"
         popup={true}
         position={"top-center"}
       >
         <Alert color="warning" className="justify-center items-center">
-          <span>Please select date</span>
+          <span>Please select Category</span>
         </Alert>
-      </Modal> */}
+      </Modal>
+
+      <Modal
+        show={openModalErrorSelectDeparture}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please select departure airport</span>
+        </Alert>
+      </Modal>
+
+      <Modal
+        show={openModalErrorSelectDestination}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please select Destination airport</span>
+        </Alert>
+      </Modal>
+      <Modal
+        show={openModalErrorSelectDateDeparture}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please Choose a departure date</span>
+        </Alert>
+      </Modal>
+      <Modal
+        show={openModalErrorSelectDateReturn}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please Choose a return date</span>
+        </Alert>
+      </Modal>
       <Modal
         show={openModalErrorDestination}
         size="sm"

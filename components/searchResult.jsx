@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Router, { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import { Dropdown, Modal, Alert, Toast } from "flowbite-react";
+import { Modal, Alert } from "flowbite-react";
 import { IoMdArrowRoundForward, IoIosArrowDropdown } from "react-icons/io";
 import {
   MdOutlineLuggage,
@@ -30,6 +30,8 @@ export default function ResultFlight() {
   const [openModalError, setOpenModalError] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openModalSelectTicketError, setOpenModalSelectTicketError] =
+    useState(false);
+  const [openModalSelectTicketRound, setOpenModalSelectTicketRound] =
     useState(false);
   const [token, setToken] = useState("");
 
@@ -85,11 +87,17 @@ export default function ResultFlight() {
   };
 
   const handelNext = () => {
+
     if (!selectedTicket1) {
       setOpenModalSelectTicketError(true);
       setTimeout(() => {
         setOpenModalSelectTicketError(false);
-      }, 1000);
+      }, 2000);
+    } else if (!selectedTicket2) {
+      setOpenModalSelectTicketRound(true);
+      setTimeout(() => {
+        setOpenModalSelectTicketRound(false);
+      }, 2000);
     } else {
       if (!selectedTicket2) {
         Router.push({
@@ -155,10 +163,10 @@ export default function ResultFlight() {
     <div className="justify-center items-center flex-row">
       {/* title */}
       {!token && (
-        <div className="justify-center items-center flex">
+        <div className="justify-center items-center flex ">
           <Alert
             color="info"
-            className="shadow-lg my-2 lg:w-9/12 w-full md:w-11/12 "
+            className="shadow-lg my-2 lg:w-5/12 w-full md:w-7/12 text-center "
           >
             <span>
               <span className="font-semibold">you are not logged in!</span>{" "}
@@ -286,18 +294,6 @@ export default function ResultFlight() {
                 <p>{category}</p>
               </div>
             </div>
-
-            <div className="gap-2 flex justify-end lg:items-center lg:justify-center ">
-              <Dropdown
-                id="filter_tiket"
-                label="Filter"
-                color="gray"
-                className="md:py-2.5 md:px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 "
-              >
-                <Dropdown.Item>Harga Terendah</Dropdown.Item>
-                <Dropdown.Item>Harga Tertinggi</Dropdown.Item>
-              </Dropdown>
-            </div>
           </div>
         </div>
       ) : (
@@ -315,6 +311,21 @@ export default function ResultFlight() {
         >
           <span className="font-medium">
             The destination flight has not been selected
+          </span>
+        </Alert>
+      </Modal>
+      <Modal
+        size="sm"
+        popup={true}
+        position={"top-center"}
+        show={openModalSelectTicketRound}
+      >
+        <Alert
+          color="warning"
+          className="justify-center items-center text-center"
+        >
+          <span className="font-medium">
+            The Return flight has not been selected
           </span>
         </Alert>
       </Modal>
@@ -502,37 +513,29 @@ export default function ResultFlight() {
         </div>
       )}
 
-      {roundWay.length > 0 ? (
+      {arrival && (
         <div className="flex justify-center items-center ">
-          <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
-            <div className="text-gray-700">
-              <h1 className="font-semibold tracking-wide antialiased text-lg">
-                Return flight from {to} To {from}
-              </h1>
-              <div className="flex gap-2 text-sm">
-                <p>{arrival}</p>
-                <p>|</p>
-                <p>{category}</p>
+          {roundWay.length > 0 ? (
+            <div className="lg:w-9/12 w-full md:w-11/12 flex-row lg:flex bg-white rounded-md mt-5 justify-between shadow-md p-7">
+              <div className="text-gray-700">
+                <h1 className="font-semibold tracking-wide antialiased text-lg">
+                  Return flight from {to} To {from}
+                </h1>
+                <div className="flex gap-2 text-sm">
+                  <p>{arrival}</p>
+                  <p>|</p>
+                  <p>{category}</p>
+                </div>
               </div>
+              <div className="gap-2 flex justify-end lg:items-center lg:justify-center "></div>
             </div>
-            <div className="gap-2 flex justify-end lg:items-center lg:justify-center ">
-              <Dropdown
-                id="filter_tiket"
-                label="Filter"
-                color="gray"
-                className="md:py-2.5 md:px-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 "
-              >
-                <Dropdown.Item>Harga Terendah</Dropdown.Item>
-                <Dropdown.Item>Harga Tertinggi</Dropdown.Item>
-              </Dropdown>
+          ) : (
+            <div className="flex justify-center items-center my-5">
+              <p className="text-xl font-normal text-gray-900">
+                Return flight not found
+              </p>
             </div>
-          </div>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center my-5">
-          <p className="text-xl font-normal text-gray-900">
-            Return flight not found
-          </p>
+          )}
         </div>
       )}
 

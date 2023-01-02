@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Button } from "flowbite-react";
+import { Button, Modal, Alert } from "flowbite-react";
 import { useForm } from "react-hook-form";
 
 export default function Register() {
@@ -11,6 +11,8 @@ export default function Register() {
 
   const [err, setErr] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
+
+  const [openModalSuccesRegister, setOpenModalSuccesRegister] = useState(false);
 
   const {
     register,
@@ -41,8 +43,11 @@ export default function Register() {
 
     if (res.status === "OK") {
       setRegisterLoading(false);
-      alert("Congratulation!! , Your accounnt has been Regitered");
-      router.push("login");
+      setOpenModalSuccesRegister(true);
+      setTimeout(() => {
+        setOpenModalSuccesRegister(false);
+        router.push("login");
+      }, 2000);
     } else {
       setErr(res.message);
       setRegisterLoading(false);
@@ -77,6 +82,16 @@ export default function Register() {
   } else {
     return (
       <div>
+        <Modal
+          show={openModalSuccesRegister}
+          size="sm"
+          popup={true}
+          position={"top-center"}
+        >
+          <Alert color="success" className="justify-center items-center">
+            <span>You have successfully booked your ticket</span>
+          </Alert>
+        </Modal>
         <section className="h-screen">
           <div className="px-6 h-full text-gray-800">
             <div className="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
