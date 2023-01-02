@@ -87,13 +87,12 @@ export default function ResultFlight() {
   };
 
   const handelNext = () => {
-
     if (!selectedTicket1) {
       setOpenModalSelectTicketError(true);
       setTimeout(() => {
         setOpenModalSelectTicketError(false);
       }, 2000);
-    } else if (!selectedTicket2) {
+    } else if (arrival && !selectedTicket2) {
       setOpenModalSelectTicketRound(true);
       setTimeout(() => {
         setOpenModalSelectTicketRound(false);
@@ -194,12 +193,13 @@ export default function ResultFlight() {
                   <div className="flex gap-5 items-center">
                     <div className="text-sm text-gray-600">
                       <Image
+                        priority
                         className="w-7 lg:w-10 flex  "
                         src={item.photo}
                         alt="logo penerbangan"
                         width={100}
                         height={100}
-                      ></Image>
+                      />
                       <p className="">
                         {new Date(item.Flight.departure_date).toDateString()}
                       </p>
@@ -238,12 +238,13 @@ export default function ResultFlight() {
                       <div className="flex gap-5 items-center">
                         <div className="text-sm text-gray-600">
                           <Image
+                            priority
                             className="w-7 lg:w-10 flex  "
                             src={item.photo}
                             alt="logo penerbangan"
                             width={100}
                             height={100}
-                          ></Image>
+                          />
                           <p className="">
                             {new Date(
                               item.Flight.departure_date
@@ -364,12 +365,13 @@ export default function ResultFlight() {
                 <div className="flex-row mx-4 md:mx-2 md:flex items-center md:h-10 justify-between ">
                   <figure className="max-w-xs  flex md:block md:mb-0 gap-2 mb-1">
                     <Image
+                      priority
                       className="w-7 lg:w-10 flex  "
                       src={item.photo}
                       alt="logo penerbangan"
                       width={100}
                       height={100}
-                    ></Image>
+                    />
                     <figcaption className="text-xs  text-gray-500 dark:text-gray-400">
                       {item.Flight.Plane.name}
                     </figcaption>
@@ -434,12 +436,13 @@ export default function ResultFlight() {
                 <div className=" md:flex items-start  justify-between  ">
                   <figure className="max-w-md">
                     <Image
+                      priority
                       className="w-10 lg:w-16 flex "
                       src={item.photo}
                       alt="logo penerbangan"
                       width={50}
                       height={50}
-                    ></Image>
+                    />
                     <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                       {item.Flight.Plane.name}
                     </figcaption>
@@ -547,12 +550,13 @@ export default function ResultFlight() {
                 <div className="flex-row mx-4 md:mx-2 md:flex items-center md:h-10 justify-between ">
                   <figure className="max-w-md flex md:block md:mb-0 gap-2 mb-1">
                     <Image
+                      priority
                       className="w-7 lg:w-10 flex  "
                       src={item.photo}
                       alt="logo penerbangan"
                       width={100}
                       height={100}
-                    ></Image>
+                    />
                     <figcaption className="mt-2 text-xs  text-gray-500 dark:text-gray-400">
                       {item.Flight.Plane.name}
                     </figcaption>
@@ -617,12 +621,13 @@ export default function ResultFlight() {
                 <div className=" md:flex items-start  justify-between  ">
                   <figure className="max-w-md">
                     <Image
+                      priority
                       className="w-10 lg:w-12 flex "
                       src={item.photo}
                       alt="logo penerbangan"
                       width={50}
                       height={50}
-                    ></Image>
+                    />
                     <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                       {item.Flight.Plane.name}
                     </figcaption>

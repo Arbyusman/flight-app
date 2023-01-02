@@ -20,6 +20,7 @@ export default function Airline() {
         <div className="md:flex-row grid-cols-4 gap-5 grid md:flex items-center justify-center text-center md:gap-7">
           <figure className="max-w-md">
             <Image
+              priority
               width={100}
               height={100}
               src={batik}
@@ -31,6 +32,7 @@ export default function Airline() {
           </figure>
           <figure className="max-w-md">
             <Image
+              priority
               width={100}
               height={100}
               src={airasia}
@@ -42,6 +44,7 @@ export default function Airline() {
           </figure>
           <figure className="max-w-md">
             <Image
+              priority
               width={100}
               height={100}
               src={garuda}
@@ -53,6 +56,7 @@ export default function Airline() {
           </figure>
           <figure className="max-w-md">
             <Image
+              priority
               width={100}
               height={100}
               src={lion}
@@ -64,6 +68,7 @@ export default function Airline() {
           </figure>
           <figure className="max-w-md">
             <Image
+              priority
               width={100}
               height={100}
               src={qatar}
@@ -75,6 +80,7 @@ export default function Airline() {
           </figure>
           <figure className="max-w-md">
             <Image
+              priority
               width={100}
               height={100}
               src={wings}
@@ -86,6 +92,7 @@ export default function Airline() {
           </figure>
           <figure className="max-w-md">
             <Image
+              priority
               width={100}
               height={100}
               src={sriwijaya}
@@ -97,6 +104,7 @@ export default function Airline() {
           </figure>
           <figure className="max-w-md">
             <Image
+              priority
               width={100}
               height={100}
               src={singapore}

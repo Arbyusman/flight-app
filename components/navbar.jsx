@@ -169,7 +169,14 @@ export default function NavbarComponent() {
       <Navbar.Toggle className="" />
 
       <Navbar.Brand href="/">
-        <Image src={LogoImage} className="mr-3 h-12 w-16" alt="TakeOff Logo" />
+        <Image
+          src={LogoImage}
+          priority
+          className="mr-3 h-12 w-16"
+          alt="TakeOff Logo"
+          width={100}
+          height={100}
+        />
       </Navbar.Brand>
       <div className="flex md:order-2 justify-center items-center ">
         {/* Notification */}
