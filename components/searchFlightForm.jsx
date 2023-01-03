@@ -30,13 +30,11 @@ const SearchFlightForm = () => {
 
   const [departureNative, setDepartureNative] = useState("");
   const onDepartureNativeChange = (e) => {
-    console.log("onDepartureNativeChange: ", e.target.value);
     setDepartureNative(e.target.value);
   };
 
   const [arrivalNative, setArrivalNative] = useState("");
   const onArrivalNativeChange = (e) => {
-    console.log("onArrivalNativeChange: ", e.target.value);
     setArrivalNative(e.target.value);
   };
 
@@ -49,12 +47,12 @@ const SearchFlightForm = () => {
       .then((data) => {
         setAirport(data.data);
       });
-
-    console.log(airport);
   };
 
   useEffect(() => {
     handelGetAirport();
+
+    console.log(new Date());
   }, []);
 
   const handleSearchOneWayFlight = () => {

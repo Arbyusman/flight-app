@@ -153,7 +153,7 @@ export default function Footer() {
       <hr className="my-6 sm:mx-auto border-gray-600 lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-center">
         <span className=" text-gray-600 flex justify-center font-medium rounded text-sm">
-          Copyright 2022 All rights reserved.
+          Copyright © {new Date().getFullYear()} TakeOff . All rights reserved
         </span>
       </div>
     </footer>
