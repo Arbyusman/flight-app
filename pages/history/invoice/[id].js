@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { IoMdArrowRoundForward, IoIosTimer } from "react-icons/io";
+import { MdOutlineAirlineSeatReclineNormal } from "react-icons/md";
 import { IoAirplaneOutline } from "react-icons/io5";
 
 import { MdOutlineLuggage } from "react-icons/md";
@@ -167,6 +167,13 @@ export default function Invoice() {
                     {data.Ticket.Flight.Plane.name}
                   </figcaption>
                 </figure>
+              </div>
+              <div className="flex justify-between md:flex-row  text-sm font-thin my-1">
+                <p>Category</p>
+                <div className="flex">
+                  <MdOutlineAirlineSeatReclineNormal className="text-green-700 text-lg" />
+                  <p>{data.Ticket.type}</p>
+                </div>
               </div>
 
               <div className=" flex col-span-3 w-full justify-between  gap-2 text-gray-600 tracking-wide my-3 antialiased">

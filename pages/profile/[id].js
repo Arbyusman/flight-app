@@ -144,7 +144,7 @@ export default function Profile() {
                         <div className="flex justify-center w-full">
                           <img
                             fetchpriority="high"
-                            className="max-w-full lg:w-60 h-auto rounded-lg "
+                            className="max-w-md w-40 lg:w-60 h-auto rounded-lg "
                             src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                             alt="image profil"
                           />
@@ -153,7 +153,7 @@ export default function Profile() {
                         <div className="flex justify-center w-full">
                           <img
                             fetchpriority="high"
-                            className="max-w-full lg:w-60 h-auto rounded-lg "
+                            className="max-w-md w-40 lg:w-60 h-auto rounded-lg "
                             src={photo}
                             alt="image profil"
                           />
