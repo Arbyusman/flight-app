@@ -79,7 +79,6 @@ export default function TopBar({ showNav, setShowNav }) {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("res read", data);
         if (data.status === "OK") {
           fetch(
             `${process.env.API_ENDPOINT}api/v1/notification/user/${userId}`,

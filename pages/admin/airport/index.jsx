@@ -27,7 +27,6 @@ export default function Airport() {
 
       .then((data) => {
         setAirport(data.data);
-        console.log("data airport", data.data);
       });
   };
 

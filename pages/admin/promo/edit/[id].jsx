@@ -32,7 +32,6 @@ const editPromo = () => {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("promo", data.data);
         setName(data.data.name);
         setCode(data.data.code);
         setDescription(data.data.description);

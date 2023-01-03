@@ -52,7 +52,6 @@ export default function WishlistUser() {
 
       .then((data) => {
         setData(data.data);
-        console.log("wishlist", data.data);
       });
   };
 

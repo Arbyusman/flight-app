@@ -27,7 +27,6 @@ export default function Promo() {
 
       .then((data) => {
         setUsers(data.data.users);
-        console.log("datahere", data);
       });
   };
 

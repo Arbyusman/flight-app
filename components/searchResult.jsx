@@ -58,8 +58,6 @@ export default function ResultFlight() {
 
         setOneWay(oneWayTicket);
         setRoundWay(roundWayTicket);
-        console.log("one way ticket", oneWayTicket);
-        console.log("round way ticket", roundWayTicket);
       });
   };
 

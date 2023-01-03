@@ -30,7 +30,6 @@ export default function EditAirport() {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("airport", data.data);
         setName(data.data.name);
         setCityCode(data.data.city_code);
         setCity(data.data.city);
@@ -58,7 +57,6 @@ export default function EditAirport() {
 
     const data = await response.json();
 
-    console.log("data update", data.status);
 
     if (data.status === "OK") {
       alert("Data berhasil  di ubah");

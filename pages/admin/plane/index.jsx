@@ -27,7 +27,6 @@ export default function Plane() {
 
       .then((data) => {
         setPlane(data.data);
-        console.log("data plane", data.data);
       });
   };
 
