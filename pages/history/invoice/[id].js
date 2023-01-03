@@ -46,7 +46,6 @@ export default function Invoice() {
 
       .then((data) => {
         setData(data.data);
-        console.log(data.data);
       });
   };
 

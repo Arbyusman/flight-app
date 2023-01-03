@@ -237,7 +237,7 @@ export default function ConfirmFlight() {
               <span>
                 <span className="font-medium">you are not logged in!</span>{" "}
                 please login to get more experience{" "}
-                <Link href="login" className="underline font-semibold">
+                <Link href="/login" className="underline font-semibold">
                   {" "}
                   login
                 </Link>{" "}

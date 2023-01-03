@@ -26,7 +26,6 @@ export default function Promo() {
 
       .then((data) => {
         setPromo(data.data);
-        console.log("dataPromo", data);
       });
   };
 

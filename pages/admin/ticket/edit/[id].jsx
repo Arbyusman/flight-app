@@ -38,7 +38,6 @@ export default function CreateTicket() {
 
       .then((data) => {
         setFlight(data.data.data);
-        console.log("dataFlight", data.data.data);
       });
   };
 
@@ -54,7 +53,6 @@ export default function CreateTicket() {
 
       .then((data) => {
         setPlane(data.data);
-        console.log("datahere", data);
       });
   };
 
@@ -69,7 +67,6 @@ export default function CreateTicket() {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("datahere", data);
         setFlightId(data.data.flight_id);
         setType(data.data.type);
         setPrice(data.data.price);

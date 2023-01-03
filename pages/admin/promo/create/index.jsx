@@ -37,7 +37,6 @@ export default function CreatePromo() {
 
     const data = await req.json();
     if (data.status === "Ok") {
-      console.log(data.status, "ini diaaaaa");
       alert("Data berhasil ditambahkan");
       router.push("/admin/promo");
     } else {
@@ -45,12 +44,10 @@ export default function CreatePromo() {
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
     }
-    console.log(data.data, "data here");
 
     setField({});
     e.target.reset();
 
-    console.log(data);
   }
   return (
     <Layout>

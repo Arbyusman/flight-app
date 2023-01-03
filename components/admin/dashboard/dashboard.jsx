@@ -25,7 +25,6 @@ const Dashboard = () => {
 
       .then((data) => {
         setTransaction(data.data);
-        console.log("data transaction", data.data);
       });
   };
 
@@ -41,7 +40,6 @@ const Dashboard = () => {
 
       .then((data) => {
         setUsers(data.data);
-        console.log("data users", data.data);
       });
   };
 
@@ -57,7 +55,6 @@ const Dashboard = () => {
 
       .then((data) => {
         setPromo(data.data);
-        console.log("data promo", data.data);
       });
   };
 

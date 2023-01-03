@@ -39,7 +39,6 @@ export default function Register() {
       throw err;
     });``
     const res = await response.json();
-    console.log("res", res);
 
     if (res.status === "OK") {
       setRegisterLoading(false);

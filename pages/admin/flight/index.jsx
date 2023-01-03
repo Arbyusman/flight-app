@@ -23,7 +23,6 @@ export default function Flight() {
 
       .then((data) => {
         setFlight(data.data.data);
-        console.log("data flight", data);
       });
   };
 

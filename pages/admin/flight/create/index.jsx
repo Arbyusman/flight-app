@@ -18,7 +18,6 @@ export default function CreatePromo() {
     const name = target.name;
     const value = target.value;
 
-    console.log({ name, value });
 
     setField({
       ...field,
@@ -43,7 +42,6 @@ export default function CreatePromo() {
 
       .then((data) => {
         setPlane(data.data);
-        console.log("data airport", data.data);
       });
   };
 
@@ -59,7 +57,6 @@ export default function CreatePromo() {
 
       .then((data) => {
         setAirport(data.data);
-        console.log("data plane", data.data);
       });
   };
 
@@ -81,19 +78,16 @@ export default function CreatePromo() {
     const data = await req.json();
     if (data.status === "OK") {
       alert("Data berhasil Ditambahkan");
-      console.log(data.status, "ini diaaaaa");
       router.push("/admin/flight");
     } else {
       const errStatus = data.status;
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
     }
-    console.log(data.data, "data here");
 
     setField({});
     e.target.reset();
 
-    console.log(data);
   }
 
   return (

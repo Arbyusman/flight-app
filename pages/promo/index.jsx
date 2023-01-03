@@ -14,7 +14,6 @@ const Promo = () => {
 
       .then((data) => {
         setPromos(data.data);
-        console.log("datahere", data);
       });
   }, []);
 

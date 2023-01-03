@@ -28,7 +28,6 @@ export default function Wishlist() {
 
       .then((data) => {
         setWishlist(data.data);
-        console.log("wishlist", data);
       });
   };
 
@@ -44,7 +43,6 @@ export default function Wishlist() {
 
       .then((data) => {
         setUsers(data.data.users);
-        console.log("datahere", data);
       });
   };
 

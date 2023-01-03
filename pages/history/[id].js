@@ -45,7 +45,6 @@ export default function History() {
 
       .then((data) => {
         setData(data.data);
-        console.log("data", data.data);
       });
   };
 

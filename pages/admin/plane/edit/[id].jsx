@@ -29,7 +29,6 @@ export default function EditPlane() {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("planes", data.data);
         setName(data.data.name);
         setCapacity(data.data.capacity);
         setStatus(data.data.status);
@@ -55,7 +54,6 @@ export default function EditPlane() {
 
     const data = await response.json();
 
-    console.log("data update", data.status);
 
     if (data.status === "OK") {
       alert("Data Berhasil di ubah");
