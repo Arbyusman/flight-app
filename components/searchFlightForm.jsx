@@ -239,16 +239,17 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Dari
+                    From
                   </label>
                   <Combobox
+                    className="z-20 w-full"
                     value={fromSelectedCity}
                     onChange={setFromSelectedCity}
                   >
                     <div className="relative mt-1 w-full">
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
-                          className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
+                          className="w-full  border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
                           onChange={(event) => setQuery(event.target.value)}
                         />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -328,9 +329,13 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Ke
+                    To
                   </label>
-                  <Combobox value={toSelectedCity} onChange={setToSelectedCity}>
+                  <Combobox
+                    className="z-10 w-full"
+                    value={toSelectedCity}
+                    onChange={setToSelectedCity}
+                  >
                     <div className="relative mt-1 w-full">
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
@@ -411,7 +416,7 @@ const SearchFlightForm = () => {
                 </div>
                 <div className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Tanggal Keberangkatan
+                    Departure Date
                   </label>
                   <div className="relative mt-1 w-full">
                     <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
@@ -430,14 +435,15 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Kategori
+                    Category
                   </label>
                   <Listbox
+                    className="w-full "
                     value={selectedCategories}
                     onChange={setSelectedCategories}
                   >
                     <div className="relative mt-1 w-full">
-                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                      <Listbox.Button className="relative w-full h-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">
                           {selectedCategories.category}
                         </span>
@@ -513,9 +519,10 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Dari
+                    From
                   </label>
                   <Combobox
+                    className="z-20 w-full"
                     value={fromSelectedCity}
                     onChange={setFromSelectedCity}
                   >
@@ -603,9 +610,13 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Ke
+                    To
                   </label>
-                  <Combobox value={toSelectedCity} onChange={setToSelectedCity}>
+                  <Combobox
+                    className="z-10 w-full"
+                    value={toSelectedCity}
+                    onChange={setToSelectedCity}
+                  >
                     <div className="relative mt-1 w-full">
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
@@ -686,7 +697,7 @@ const SearchFlightForm = () => {
                 </div>
                 <div className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Tanggal Keberangkatan
+                    Departure Date
                   </label>
                   <div className="relative mt-1 w-full">
                     <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
@@ -702,7 +713,7 @@ const SearchFlightForm = () => {
                 </div>
                 <div className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Tanggal Kembali
+                    Return date
                   </label>
                   <div className="relative mt-1 w-full">
                     <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
@@ -721,14 +732,15 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Kategori
+                    Category
                   </label>
                   <Listbox
+                    className="w-full"
                     value={selectedCategories}
                     onChange={setSelectedCategories}
                   >
                     <div className="relative mt-1 w-full">
-                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                      <Listbox.Button className="relative w-full h-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">
                           {selectedCategories.category}
                         </span>

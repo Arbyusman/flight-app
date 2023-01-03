@@ -221,23 +221,21 @@ export default function NavbarComponent() {
               leaveFrom="transform scale-100"
               leaveTo="transform scale-95"
             >
-              <Popover.Panel className="absolute  overflow-y-scroll h-80  right-4 z-50 mt-2 -mr-7 bg-white shadow-sm rounded max-w-xs w-screen md:w-screen">
+              <Popover.Panel className="absolute rounded-md  overflow-y-scroll h-80  right-4 z-50 mt-2 -mr-7 bg-white shadow-sm  max-w-xs w-screen md:w-screen">
                 <div className="relative p-3">
-                  <div className="md:flex justify-between shadow-md bg-gray-300 px-4 py-2   sticky top-0 z-10 items-center w-full">
+                  <div className="md:flex justify-between  bg-gray-100 px-4 py-2   sticky top-0 z-10 items-center w-full">
                     <p className="text-gray-700  font-medium text-lg  tracking-normal antialiased items-center justify-center text-center">
                       Notifications
                     </p>
                   </div>
                   <hr></hr>
-                  <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
+                  <div className="mt-7 grid gap-4 grid-cols-1 overflow-hidden">
                     <div className="block ">
                       {notification.length > 0 ? (
-                        (notification.sort(
-                          (a, b) => a.isRead - b.isRead && b.id - a.id
-                        ),
+                        (notification.sort((a, b) => a.isRead - b.isRead),
                         notification.map((item) => (
                           <div
-                            className="flex items-center justify-start mb-1"
+                            className="flex items-center justify-start mb-2"
                             key={item.id}
                           >
                             <button
@@ -249,7 +247,7 @@ export default function NavbarComponent() {
                               className={`flex justify-between gap-2 text-sm shadow-md py-1 px-4 rounded-sm mb-1 items-center text-gray-500 text-left w-full  ${
                                 item.isRead === true
                                   ? "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-700"
-                                  : "bg-gray-600 hover:bg-gray-700 text-gray-50 hover:text-white"
+                                  : "bg-gray-500 hover:bg-gray-600 text-gray-50 hover:text-white"
                               }`}
                             >
                               <span>{item.message}</span>
