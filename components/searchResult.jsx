@@ -127,7 +127,7 @@ export default function ResultFlight() {
       setOpenModalError(true);
       setTimeout(() => {
         setOpenModalError(false);
-      }, 1000);
+      }, 1500);
     } else {
       setOpenModal(true);
       const response = await fetch(
@@ -151,7 +151,7 @@ export default function ResultFlight() {
       if (data.status === "OK") {
         setTimeout(() => {
           setOpenModal(false);
-        }, 1000);
+        }, 1500);
       }
     }
   }
