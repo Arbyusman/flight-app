@@ -49,8 +49,7 @@ export default function login() {
       localStorage.setItem("token", res.data.token);
       router.push("/");
     } else {
-      const errMessage = res.message;
-      setErr(errMessage);
+      setErr(res.message);
       setLoginLoading(false);
     }
   };
