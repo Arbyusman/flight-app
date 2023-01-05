@@ -100,7 +100,10 @@ export default function Invoice() {
               <div>
                 <span class="text-2xl">Invoice #</span>: {id}
                 <br />
-                <span>Date</span>: {new Date(data.createdAt).toDateString()}
+                <div className="text-xs flex text-gray-700">
+                  <span>Date</span>: {new Date(data.createdAt).toDateString()}{" "}
+                  {new Date(data.createdAt).toLocaleTimeString()}
+                </div>
                 <br />
               </div>
               <div class="text-right">
