@@ -58,31 +58,31 @@ const SearchFlightForm = () => {
       setOpenModalErrorSelectDeparture(true);
       setTimeout(() => {
         setOpenModalErrorSelectDeparture(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (!toSelectedCity) {
       setOpenModalErrorSelectDestination(true);
       setTimeout(() => {
         setOpenModalErrorSelectDestination(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (!departureNative) {
       setOpenModalErrorSelectDateDeparture(true);
       setTimeout(() => {
         setOpenModalErrorSelectDateDeparture(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (!selectedCategories) {
       setOpenModalErrorSelectCategory(true);
       setTimeout(() => {
         setOpenModalErrorSelectCategory(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (fromSelectedCity === toSelectedCity) {
       setOpenModalErrorDestination(true);
       setTimeout(() => {
         setOpenModalErrorDestination(false);
-      }, 1500);
+      }, 2500);
       return;
     } else {
       Router.push({
@@ -101,37 +101,37 @@ const SearchFlightForm = () => {
       setOpenModalErrorSelectDeparture(true);
       setTimeout(() => {
         setOpenModalErrorSelectDeparture(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (!toSelectedCity) {
       setOpenModalErrorSelectDestination(true);
       setTimeout(() => {
         setOpenModalErrorSelectDestination(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (!departureNative) {
       setOpenModalErrorSelectDateDeparture(true);
       setTimeout(() => {
         setOpenModalErrorSelectDateDeparture(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (!arrivalNative) {
       setOpenModalErrorSelectDateReturn(true);
       setTimeout(() => {
         setOpenModalErrorSelectDateReturn(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (!selectedCategories) {
       setOpenModalErrorSelectCategory(true);
       setTimeout(() => {
         setOpenModalErrorSelectCategory(false);
-      }, 1500);
+      }, 2000);
       return;
     } else if (fromSelectedCity === toSelectedCity) {
       setOpenModalErrorDestination(true);
       setTimeout(() => {
         setOpenModalErrorDestination(false);
-      }, 1500);
+      }, 2500);
       return;
     }
 

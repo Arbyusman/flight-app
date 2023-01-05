@@ -118,7 +118,7 @@ export default function WishlistUser() {
                 </div>
                 <Link
                   href="/"
-                  className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1"
+                  className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1 transition"
                 >
                   <HiArrowSmLeft className="text-xl" />
                   <span>Back</span>
@@ -217,7 +217,7 @@ export default function WishlistUser() {
                         <Link
                           href={`/search/book?ticket1=${item.ticket_id}`}
                           type="button"
-                          className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 "
+                          className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 transition"
                         >
                           Choose Flight
                         </Link>
@@ -314,16 +314,16 @@ export default function WishlistUser() {
                       <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm ">
                         <div className="flex gap-3 items-center my-1 lg:my-3 ">
                           <GiBackpack className="text-xl text-green-500" />
-                          <p>Cabin Baggage {item.Ticket.cabin_baggage}</p>
+                          <p>Cabin Baggage {item.Ticket.cabin_baggage} KG</p>
                         </div>
                         <div className="flex gap-3 items-center my-1 lg:my-3">
                           <MdOutlineLuggage className="text-xl text-blue-500" />
-                          <p>Baggage {item.Ticket.baggage}</p>
+                          <p>Baggage {item.Ticket.baggage} KG</p>
                         </div>
                         <div className="lg:mt-2 justify-start flex ">
                           <button
                             onClick={() => setOpenModal(true)}
-                            className="focus:outline-none flex  items-center gap-2 1 my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-4 py-2 "
+                            className="focus:outline-none flex  items-center gap-2 1 my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-4 py-2 transition"
                           >
                             <FaHeartBroken className="" />
                             <span> Remove </span>

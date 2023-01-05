@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { FaUserEdit } from "react-icons/fa";
-import { BsTrash } from "react-icons/bs";
+import { BsArrowLeftShort } from "react-icons/bs";
 
 import { BiSave } from "react-icons/bi";
 import { HiArrowSmLeft } from "react-icons/hi";
@@ -127,7 +127,7 @@ export default function Profile() {
                   </div>
                   <Link
                     href="/"
-                    className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1"
+                    className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1 transition"
                   >
                     <HiArrowSmLeft className="text-xl" />
                     <span>Back</span>
@@ -262,14 +262,14 @@ export default function Profile() {
                     </div>
                     <div className=" justify-center items-center flex">
                       <button
-                        className=" rounded-md my-3 bg-green-500 "
+                        className=" rounded-md my-3 bg-green-500 text-white hover:text-gray-600 hover:bg-white hover:ring-2 hover:ring-gray-600  transition"
                         onClick={() => setEditProfile(true)}
                       >
-                        <p className="text-lg font-bold text-white  px-3 py-3 flex items-center justify-center gap-2">
+                        <span className="text-lg font-bold   px-3 py-3 flex items-center justify-center gap-2">
                           {" "}
-                          <FaUserEdit className="text-white" />
+                          <FaUserEdit className="" />
                           Edit Profile
-                        </p>
+                        </span>
                       </button>
                     </div>
                   </div>
@@ -418,20 +418,20 @@ export default function Profile() {
                     </div>
                     <div className=" justify-center items-center flex gap-10">
                       <button
-                        className=" rounded-md my-3 bg-red-500 "
+                        className=" rounded-md my-3 bg-blue-500 hover:bg-blue-700 transition "
                         onClick={(e) => setEditProfile(false)}
                       >
-                        <p className="text-lg font-bold text-white  px-3 py-3 flex items-center justify-center gap-2">
+                        <span className="text-lg font-bold text-white  px-3 py-3 flex items-center justify-center  ">
                           {" "}
-                          <BsTrash className="text-white" />
+                          <HiArrowSmLeft className="text-xl" />
                           Back
-                        </p>
+                        </span>
                       </button>
                       <button
-                        className=" rounded-md my-3 bg-green-500 "
+                        className=" rounded-md my-3 bg-green-500 hover:bg-green-700 transition "
                         onClick={handelUpdate}
                       >
-                        <p className="text-lg font-bold text-white  px-3 py-3 flex items-center justify-center gap-2">
+                        <span className="text-lg font-bold text-white  px-3 py-3 flex items-center justify-center gap-1">
                           {" "}
                           {!saveLoading && <BiSave className="text-white" />}
                           {saveLoading && (
@@ -453,7 +453,7 @@ export default function Profile() {
                             </svg>
                           )}
                           Save
-                        </p>
+                        </span>
                       </button>
                     </div>
                   </div>

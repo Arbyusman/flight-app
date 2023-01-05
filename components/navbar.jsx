@@ -244,10 +244,10 @@ export default function NavbarComponent() {
                                   handelReadNotif(item.id);
                                 }
                               }}
-                              className={`flex justify-between gap-2 text-sm shadow-md py-1 px-4 rounded-sm mb-1 items-center text-gray-500 text-left w-full  ${
+                              className={`flex justify-between gap-2 text-sm shadow-md py-1 px-4 rounded-sm mb-1 items-center text-gray-500 text-left w-full  transition ${
                                 item.isRead === true
                                   ? "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-700"
-                                  : "bg-gray-500 hover:bg-gray-600 text-gray-50 hover:text-white"
+                                  : "bg-gray-500 hover:bg-gray-600 text-gray-50 hover:text-white "
                               }`}
                             >
                               <span>{item.message}</span>
@@ -475,20 +475,20 @@ export default function NavbarComponent() {
         <Navbar.Link href="/" active={currentRoute === "/" ? true : false}>
           Home
         </Navbar.Link>
-        <Navbar.Link
+        {/* <Navbar.Link
           href="/"
           active={currentRoute === "/about-us" ? true : false}
         >
           About Us
-        </Navbar.Link>
+        </Navbar.Link> */}
         {/* <Navbar.Link href="/">Airline</Navbar.Link> */}
         {/* <Navbar.Link href="/" active={}>Flight</Navbar.Link> */}
-        <Navbar.Link
+        {/* <Navbar.Link
           href="/promo"
           active={currentRoute === "/promo" ? true : false}
         >
           Promo
-        </Navbar.Link>
+        </Navbar.Link> */}
         {/* <Navbar.Link href="/" active={}>Contact Us</Navbar.Link> */}
       </Navbar.Collapse>
     </Navbar>

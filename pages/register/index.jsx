@@ -133,7 +133,7 @@ export default function Register() {
                       {errors.username &&
                         errors.username.type === "required" && (
                           <span className="text-xs text-red-600">
-                            Username should be at-least 10 characters.
+                            Username Required.
                           </span>
                         )}
                     </div>
@@ -222,7 +222,7 @@ export default function Register() {
                       </div>
 
                       <Button className="w-full" type="submit">
-                        {!registerLoading && <span>Create and account</span>}
+                        {!registerLoading && <span>Create an account</span>}
                         {registerLoading && (
                           <svg
                             role="status"

@@ -94,7 +94,7 @@ export default function ConfirmFlight() {
       setOpenModalAlertNotLogin(true);
       setTimeout(() => {
         setOpenModalAlertNotLogin(false);
-      }, 2000);
+      }, 2500);
     } else if (
       user.firstName == null ||
       user.lastName == null ||
@@ -104,7 +104,7 @@ export default function ConfirmFlight() {
       setOpenModalAlertProfile(true);
       setTimeout(() => {
         setOpenModalAlertProfile(false);
-      }, 2000);
+      }, 2500);
     } else {
       setOpenModal(true);
     }
@@ -390,9 +390,9 @@ export default function ConfirmFlight() {
                           <button
                             type="submit"
                             // onClick={handelUpdateUsers}
-                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 transition"
                           >
-                            save
+                            Save
                           </button>
                         </div>
                       </form>
@@ -439,13 +439,7 @@ export default function ConfirmFlight() {
               color="warning"
               className="justify-center items-center text-center"
             >
-              <span>
-                <span className="font-medium">
-                  {" "}
-                  you have not updated the user data!
-                </span>
-                You have not completed the profile data
-              </span>
+              <span>You have not completed the profile data</span>
             </Alert>
           </Modal>
           <Modal
@@ -529,11 +523,11 @@ export default function ConfirmFlight() {
                         <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
                           <div className="flex gap-3 items-center my-1 lg:my-3 ">
                             <GiBackpack className="text-xl text-green-500" />
-                            <p>Cabin Baggage {item.cabin_baggage}</p>
+                            <p>Cabin Baggage {item.cabin_baggage} KG</p>
                           </div>
                           <div className="flex gap-3 items-center my-1 lg:my-3">
                             <MdOutlineLuggage className="text-xl text-blue-500" />
-                            <p>Baggage {item.baggage}</p>
+                            <p>Baggage {item.baggage} KG</p>
                           </div>
                         </div>
                         <div className="font-normal gap-5 my-2 text-sm md:text-base flex justify-between">
@@ -599,11 +593,11 @@ export default function ConfirmFlight() {
                         <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
                           <div className="flex gap-3 items-center my-1 lg:my-3 ">
                             <GiBackpack className="text-xl text-green-500" />
-                            <p>Cabin Baggage {item.cabin_baggage}</p>
+                            <p>Cabin Baggage {item.cabin_baggage} KG</p>
                           </div>
                           <div className="flex gap-3 items-center my-1 lg:my-3">
                             <MdOutlineLuggage className="text-xl text-blue-500" />
-                            <p>Baggage {item.baggage}</p>
+                            <p>Baggage {item.baggage} KG</p>
                           </div>
                         </div>
                         <div className="font-normal gap-5 my-2 text-sm md:text-base flex justify-between">
@@ -635,7 +629,7 @@ export default function ConfirmFlight() {
                 <div className="justify-center items-center flex">
                   <button
                     onClick={handelBooking}
-                    className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 px-2 py-2 rounded-md font-medium antialiased tracking-wide mt-3"
+                    className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 px-2 py-2 rounded-md font-medium antialiased tracking-wide mt-3 transition"
                   >
                     {!bookLoading && <span>Confirm booking</span>}
                     {bookLoading && (
@@ -742,11 +736,11 @@ export default function ConfirmFlight() {
                           <hr></hr>
                           <div className="flex gap-3 items-center my-1 lg:my-3 ">
                             <GiBackpack className="text-xl text-green-500" />
-                            <p>Cabin Baggage {item.cabin_baggage}</p>
+                            <p>Cabin Baggage {item.cabin_baggage} KG</p>
                           </div>
                           <div className="flex gap-3 items-center my-1 lg:my-3">
                             <MdOutlineLuggage className="text-xl text-blue-500" />
-                            <p>Baggage {item.baggage}</p>
+                            <p>Baggage {item.baggage} KG</p>
                           </div>
                         </div>
                       </div>
@@ -838,11 +832,11 @@ export default function ConfirmFlight() {
                             <hr></hr>
                             <div className="flex gap-3 items-center my-1 lg:my-3 ">
                               <GiBackpack className="text-xl text-green-500" />
-                              <p>Cabin Baggage {item.cabin_baggage}</p>
+                              <p>Cabin Baggage {item.cabin_baggage} KG</p>
                             </div>
                             <div className="flex gap-3 items-center my-1 lg:my-3">
                               <MdOutlineLuggage className="text-xl text-blue-500" />
-                              <p>Baggage {item.baggage}</p>
+                              <p>Baggage {item.baggage} KG</p>
                             </div>
                           </div>
                         </div>

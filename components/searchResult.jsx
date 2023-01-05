@@ -127,7 +127,7 @@ export default function ResultFlight() {
       setOpenModalError(true);
       setTimeout(() => {
         setOpenModalError(false);
-      }, 1000);
+      }, 1500);
     } else {
       setOpenModal(true);
       const response = await fetch(
@@ -151,7 +151,7 @@ export default function ResultFlight() {
       if (data.status === "OK") {
         setTimeout(() => {
           setOpenModal(false);
-        }, 1000);
+        }, 1500);
       }
     }
   }
@@ -396,7 +396,7 @@ export default function ResultFlight() {
                           setSelectedTicket1([item]);
                         }}
                         type="button"
-                        className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
+                        className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 transition"
                       >
                         Choose Flight
                       </button>
@@ -484,11 +484,11 @@ export default function ResultFlight() {
                     <div>
                       <div className="flex gap-3 items-center my-1 lg:my-3 ">
                         <GiBackpack className="text-xl text-green-500" />
-                        <p>Cabin Baggage {item.cabin_baggage}</p>
+                        <p>Cabin Baggage {item.cabin_baggage} KG</p>
                       </div>
                       <div className="flex gap-3 items-center my-1 lg:my-3">
                         <MdOutlineLuggage className="text-xl text-blue-500" />
-                        <p>Baggage {item.baggage}</p>
+                        <p>Baggage {item.baggage} KG</p>
                       </div>
                     </div>
                     <div className="lg:mt-2 justify-start flex ">
@@ -581,7 +581,7 @@ export default function ResultFlight() {
                           setSelectedTicket2([item]);
                         }}
                         type="button"
-                        className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
+                        className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 transition"
                       >
                         Choose Flight
                       </button>
@@ -669,11 +669,11 @@ export default function ResultFlight() {
                     <div>
                       <div className="flex gap-3 items-center my-1 lg:my-3 ">
                         <GiBackpack className="text-xl text-green-500" />
-                        <p>Cabin Baggage {item.cabin_baggage}</p>
+                        <p>Cabin Baggage {item.cabin_baggage} KG</p>
                       </div>
                       <div className="flex gap-3 items-center my-1 lg:my-3">
                         <MdOutlineLuggage className="text-xl text-blue-500" />
-                        <p>Baggage {item.baggage}</p>
+                        <p>Baggage {item.baggage} KG</p>
                       </div>
                     </div>
                     <div className="lg:mt-2 justify-start flex ">
