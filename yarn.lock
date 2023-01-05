@@ -970,15 +970,43 @@
   dependencies:
     "glob" "7.1.7"
 
+<<<<<<< HEAD
+"@next/swc-win32-x64-msvc@13.0.4":
+  "integrity" "sha512-vXtbo9N1FdtZZRcv4BliU28tTYrkb1EnVpUiiFFe88I6kS9aZVTMY9Z/OtDR52rl1JF1hgs9sL/59D/TQqSATQ=="
+  "resolved" "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.0.4.tgz"
+  "version" "13.0.4"
+=======
 "@next/swc-linux-x64-gnu@13.0.4":
   "integrity" "sha512-QB8qoZrvHhZsz62nUrTKlp5IiZ8I7KZsaa6437H/W/NOZHLGJjCxROnhUjLvKVe/T5P86pjya2SUOUqWAjz4Pg=="
   "resolved" "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-13.0.4.tgz"
   "version" "13.0.4"
 
 "@next/swc-linux-x64-musl@13.0.4":
+<<<<<<< HEAD
+  version "13.0.4"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.0.4.tgz#060797dc921c4af73521fde2a4198855f9e3bb34"
+  integrity sha512-WaahF6DYUQRg1QqIMcuOu2ZsFhS3aC5iWeQyeptMHklP9wb4FfTNmBArKHknX/GXD8P9gI38WTAHJ25cc0zVwg==
+
+"@next/swc-win32-arm64-msvc@13.0.4":
+  version "13.0.4"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-13.0.4.tgz#27629e72200cd479ad5231ae79e95291c476771d"
+  integrity sha512-FD+k1j2jeY0aKcqcpzFKfTsv55PPmIZ5GKDyPjjV5AO6XvQ4nALwWl4JwizjH2426TfLXObb+C3MH0bl9Ok1Kw==
+
+"@next/swc-win32-ia32-msvc@13.0.4":
+  version "13.0.4"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-13.0.4.tgz#d7c89406b2a484f448c7b5af667b5eb537483695"
+  integrity sha512-+Q/Q8Ydvz3X3U84CyZdNv1HC7fE43k+xB8C6b3IFmWGa5Tu2tfskQ2FsUNBrYreZjhFC/894J3rVQ6Vj6Auugg==
+
+"@next/swc-win32-x64-msvc@13.0.4":
+  version "13.0.4"
+  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.0.4.tgz"
+  integrity sha512-vXtbo9N1FdtZZRcv4BliU28tTYrkb1EnVpUiiFFe88I6kS9aZVTMY9Z/OtDR52rl1JF1hgs9sL/59D/TQqSATQ==
+>>>>>>> main
+=======
   "integrity" "sha512-WaahF6DYUQRg1QqIMcuOu2ZsFhS3aC5iWeQyeptMHklP9wb4FfTNmBArKHknX/GXD8P9gI38WTAHJ25cc0zVwg=="
   "resolved" "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.0.4.tgz"
   "version" "13.0.4"
+>>>>>>> FE-Arby
 
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
