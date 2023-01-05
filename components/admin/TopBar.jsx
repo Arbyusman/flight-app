@@ -100,7 +100,6 @@ export default function TopBar({ showNav, setShowNav }) {
               setNotificationRead(notification);
             });
         }
-        // handleGetNotif();
       });
   };
 
@@ -178,35 +177,26 @@ export default function TopBar({ showNav, setShowNav }) {
                   <div className="mt-4 grid gap-4 grid-cols-1 overflow-hidden">
                     <div className="block ">
                       {notification.length > 0 ? (
-                        (notification.sort((a, b) => b.id - a.id),
+                        (notification.sort((a, b) => a.isRead - b.isRead),
                         notification.map((item) => (
                           <div
                             className="flex items-center justify-start mb-1"
                             key={item.id}
                           >
-                            <div
+                            <button
+                              onClick={() => {
+                                {
+                                  handelReadNotif(item.id);
+                                }
+                              }}
                               className={`flex justify-between gap-2 text-sm shadow-md py-1 px-4 rounded-sm mb-1 items-center text-gray-500 text-left w-full  ${
                                 item.isRead === true
                                   ? "bg-gray-200 hover:bg-gray-300 text-gray-600 hover:text-gray-700"
-                                  : "bg-gray-600 hover:bg-gray-700 text-gray-50 hover:text-white"
+                                  : "bg-gray-500 hover:bg-gray-600 text-gray-50 hover:text-white"
                               }`}
                             >
                               <span>{item.message}</span>
-                              <button
-                                className={`bg-gray-200 px-4 py-0.5 rounded-sm hover:bg-gray-300 ${
-                                  item.isRead === true
-                                    ? " hidden"
-                                    : " text-gray-600 hover:text-gray-700"
-                                }`}
-                                onClick={() => {
-                                  {
-                                    handelReadNotif(item.id);
-                                  }
-                                }}
-                              >
-                                <span>Read</span>
-                              </button>{" "}
-                            </div>
+                            </button>
                           </div>
                         )))
                       ) : (

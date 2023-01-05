@@ -106,7 +106,7 @@ export default function WishlistUser() {
     return (
       <div>
         <NavbarComponent />
-        <div className="justify-center items-center flex-row">
+        <div className="justify-center items-center flex-row ">
           {/* title */}
           <div className="flex justify-center items-center">
             <div className="lg:w-9/12 md:w-11/12 w-full flex-row  bg-white rounded-md mt-5 justify-between shadow-md p-7">

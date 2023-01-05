@@ -7,6 +7,7 @@ export default function Footer() {
   return (
     <footer
       className="bg-white px-2 sm:px-4 py-2.5 
+      
      rounded sm:justify-center mt-12 "
     >
       <div className="container lg:flex lg:flex-wrap justify-between mx-auto md:grid md:grid-cols-5 md:grid-rows-1">
