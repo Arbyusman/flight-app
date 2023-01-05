@@ -148,18 +148,19 @@ export default function Ticket() {
                     className="bg-white dark:border-gray-700 dark:bg-gray-800"
                   >
                     <Table.Cell>
-                      {/* <figure className="max-w-md ">
-                      <Image className="w-12 flex " src={ticket.photo} alt="logo penerbangan" width={50} height={50}></Image>
-                      <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">{ticket.Flight.Plane.name}</figcaption>
-                    </figure> */}
                       {ticket.photo && (
-                        <Image
-                          src={ticket.photo}
-                          alt=""
-                          height={900}
-                          width={900}
-                          layout="responsive"
-                        />
+                        <figure className="max-w-md ">
+                          <Image
+                            className="w-32 flex "
+                            src={ticket.photo}
+                            alt="logo penerbangan"
+                            width={100}
+                            height={100}
+                          ></Image>
+                          <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
+                            {ticket.Flight.Plane.name}
+                          </figcaption>
+                        </figure>
                       )}
                     </Table.Cell>
                     <Table.Cell>{ticket.Flight.from.name}</Table.Cell>
