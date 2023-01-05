@@ -181,12 +181,12 @@ export default function ConfirmFlight() {
     const data = await response.json();
 
     if (data.status === "OK") {
+      setBookLoading(false);
+      setOpenModal(false);
       setOpenModalSuccesBooking(true);
       setTimeout(() => {
         setOpenModalSuccesBooking(false);
-      }, 2000);
-      setBookLoading(false);
-      setOpenModal(false);
+      }, 2500);
     } else {
       setBookLoading(false);
     }

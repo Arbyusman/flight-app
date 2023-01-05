@@ -125,7 +125,7 @@ export default function Promo() {
                       <Table.Cell>Tidak ada photo</Table.Cell>
                     ) : (
                       <Table.Cell>
-                        <img src={users.photo} alt="img-photo" className="w-20 h-24" />
+                        <img src={users.photo} alt="img-photo" className="w-28 h-36" />
                       </Table.Cell>
                     )}
 
