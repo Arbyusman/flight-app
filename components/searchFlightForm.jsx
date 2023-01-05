@@ -116,16 +116,16 @@ const SearchFlightForm = () => {
         setOpenModalErrorSelectDateDeparture(false);
       }, 1500);
       return;
-    } else if (!selectedCategories) {
-      setOpenModalErrorSelectCategory(true);
-      setTimeout(() => {
-        setOpenModalErrorSelectCategory(false);
-      }, 1500);
-      return;
     } else if (!arrivalNative) {
       setOpenModalErrorSelectDateReturn(true);
       setTimeout(() => {
         setOpenModalErrorSelectDateReturn(false);
+      }, 1500);
+      return;
+    } else if (!selectedCategories) {
+      setOpenModalErrorSelectCategory(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectCategory(false);
       }, 1500);
       return;
     } else if (fromSelectedCity === toSelectedCity) {
