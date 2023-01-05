@@ -94,7 +94,7 @@ export default function ConfirmFlight() {
       setOpenModalAlertNotLogin(true);
       setTimeout(() => {
         setOpenModalAlertNotLogin(false);
-      }, 2000);
+      }, 2500);
     } else if (
       user.firstName == null ||
       user.lastName == null ||
@@ -104,7 +104,7 @@ export default function ConfirmFlight() {
       setOpenModalAlertProfile(true);
       setTimeout(() => {
         setOpenModalAlertProfile(false);
-      }, 2000);
+      }, 2500);
     } else {
       setOpenModal(true);
     }
@@ -392,7 +392,7 @@ export default function ConfirmFlight() {
                             // onClick={handelUpdateUsers}
                             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4  font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
                           >
-                            save
+                            Save
                           </button>
                         </div>
                       </form>
@@ -439,13 +439,7 @@ export default function ConfirmFlight() {
               color="warning"
               className="justify-center items-center text-center"
             >
-              <span>
-                <span className="font-medium">
-                  {" "}
-                  you have not updated the user data!
-                </span>
-                You have not completed the profile data
-              </span>
+              <span>You have not completed the profile data</span>
             </Alert>
           </Modal>
           <Modal

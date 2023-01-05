@@ -475,20 +475,20 @@ export default function NavbarComponent() {
         <Navbar.Link href="/" active={currentRoute === "/" ? true : false}>
           Home
         </Navbar.Link>
-        <Navbar.Link
+        {/* <Navbar.Link
           href="/"
           active={currentRoute === "/about-us" ? true : false}
         >
           About Us
-        </Navbar.Link>
+        </Navbar.Link> */}
         {/* <Navbar.Link href="/">Airline</Navbar.Link> */}
         {/* <Navbar.Link href="/" active={}>Flight</Navbar.Link> */}
-        <Navbar.Link
+        {/* <Navbar.Link
           href="/promo"
           active={currentRoute === "/promo" ? true : false}
         >
           Promo
-        </Navbar.Link>
+        </Navbar.Link> */}
         {/* <Navbar.Link href="/" active={}>Contact Us</Navbar.Link> */}
       </Navbar.Collapse>
     </Navbar>

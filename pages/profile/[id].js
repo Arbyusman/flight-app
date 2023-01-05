@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { FaUserEdit } from "react-icons/fa";
-import { BsTrash } from "react-icons/bs";
+import { BsArrowLeftShort } from "react-icons/bs";
 
 import { BiSave } from "react-icons/bi";
 import { HiArrowSmLeft } from "react-icons/hi";
@@ -423,7 +423,7 @@ export default function Profile() {
                       >
                         <p className="text-lg font-bold text-white  px-3 py-3 flex items-center justify-center gap-2">
                           {" "}
-                          <BsTrash className="text-white" />
+                          <BsArrowLeftShort className="text-white text-lg" />
                           Back
                         </p>
                       </button>
