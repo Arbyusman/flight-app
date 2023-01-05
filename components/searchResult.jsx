@@ -484,11 +484,11 @@ export default function ResultFlight() {
                     <div>
                       <div className="flex gap-3 items-center my-1 lg:my-3 ">
                         <GiBackpack className="text-xl text-green-500" />
-                        <p>Cabin Baggage {item.cabin_baggage}</p>
+                        <p>Cabin Baggage {item.cabin_baggage} KG</p>
                       </div>
                       <div className="flex gap-3 items-center my-1 lg:my-3">
                         <MdOutlineLuggage className="text-xl text-blue-500" />
-                        <p>Baggage {item.baggage}</p>
+                        <p>Baggage {item.baggage} KG</p>
                       </div>
                     </div>
                     <div className="lg:mt-2 justify-start flex ">
@@ -669,11 +669,11 @@ export default function ResultFlight() {
                     <div>
                       <div className="flex gap-3 items-center my-1 lg:my-3 ">
                         <GiBackpack className="text-xl text-green-500" />
-                        <p>Cabin Baggage {item.cabin_baggage}</p>
+                        <p>Cabin Baggage {item.cabin_baggage} KG</p>
                       </div>
                       <div className="flex gap-3 items-center my-1 lg:my-3">
                         <MdOutlineLuggage className="text-xl text-blue-500" />
-                        <p>Baggage {item.baggage}</p>
+                        <p>Baggage {item.baggage} KG</p>
                       </div>
                     </div>
                     <div className="lg:mt-2 justify-start flex ">

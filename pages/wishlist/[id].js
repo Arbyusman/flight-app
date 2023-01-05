@@ -314,11 +314,11 @@ export default function WishlistUser() {
                       <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm ">
                         <div className="flex gap-3 items-center my-1 lg:my-3 ">
                           <GiBackpack className="text-xl text-green-500" />
-                          <p>Cabin Baggage {item.Ticket.cabin_baggage}</p>
+                          <p>Cabin Baggage {item.Ticket.cabin_baggage} KG</p>
                         </div>
                         <div className="flex gap-3 items-center my-1 lg:my-3">
                           <MdOutlineLuggage className="text-xl text-blue-500" />
-                          <p>Baggage {item.Ticket.baggage}</p>
+                          <p>Baggage {item.Ticket.baggage} KG</p>
                         </div>
                         <div className="lg:mt-2 justify-start flex ">
                           <button

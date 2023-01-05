@@ -202,11 +202,11 @@ export default function Invoice() {
               <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
                 <div className="flex gap-3 items-center my-1 lg:my-3 ">
                   <GiBackpack className="text-xl text-green-500" />
-                  <p>Cabin Baggage {data.Ticket.cabin_baggage}</p>
+                  <p>Cabin Baggage {data.Ticket.cabin_baggage} KG</p>
                 </div>
                 <div className="flex gap-3 items-center my-1 lg:my-3">
                   <MdOutlineLuggage className="text-xl text-blue-500" />
-                  <p>Baggage {data.Ticket.baggage}</p>
+                  <p>Baggage {data.Ticket.baggage} KG</p>
                 </div>
               </div>
             </div>

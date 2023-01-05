@@ -523,11 +523,11 @@ export default function ConfirmFlight() {
                         <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
                           <div className="flex gap-3 items-center my-1 lg:my-3 ">
                             <GiBackpack className="text-xl text-green-500" />
-                            <p>Cabin Baggage {item.cabin_baggage}</p>
+                            <p>Cabin Baggage {item.cabin_baggage} KG</p>
                           </div>
                           <div className="flex gap-3 items-center my-1 lg:my-3">
                             <MdOutlineLuggage className="text-xl text-blue-500" />
-                            <p>Baggage {item.baggage}</p>
+                            <p>Baggage {item.baggage} KG</p>
                           </div>
                         </div>
                         <div className="font-normal gap-5 my-2 text-sm md:text-base flex justify-between">
@@ -593,11 +593,11 @@ export default function ConfirmFlight() {
                         <div className="gap-4  text-gray-600 tracking-wide antialiased text-sm my-3">
                           <div className="flex gap-3 items-center my-1 lg:my-3 ">
                             <GiBackpack className="text-xl text-green-500" />
-                            <p>Cabin Baggage {item.cabin_baggage}</p>
+                            <p>Cabin Baggage {item.cabin_baggage} KG</p>
                           </div>
                           <div className="flex gap-3 items-center my-1 lg:my-3">
                             <MdOutlineLuggage className="text-xl text-blue-500" />
-                            <p>Baggage {item.baggage}</p>
+                            <p>Baggage {item.baggage} KG</p>
                           </div>
                         </div>
                         <div className="font-normal gap-5 my-2 text-sm md:text-base flex justify-between">
@@ -736,11 +736,11 @@ export default function ConfirmFlight() {
                           <hr></hr>
                           <div className="flex gap-3 items-center my-1 lg:my-3 ">
                             <GiBackpack className="text-xl text-green-500" />
-                            <p>Cabin Baggage {item.cabin_baggage}</p>
+                            <p>Cabin Baggage {item.cabin_baggage} KG</p>
                           </div>
                           <div className="flex gap-3 items-center my-1 lg:my-3">
                             <MdOutlineLuggage className="text-xl text-blue-500" />
-                            <p>Baggage {item.baggage}</p>
+                            <p>Baggage {item.baggage} KG</p>
                           </div>
                         </div>
                       </div>
@@ -832,11 +832,11 @@ export default function ConfirmFlight() {
                             <hr></hr>
                             <div className="flex gap-3 items-center my-1 lg:my-3 ">
                               <GiBackpack className="text-xl text-green-500" />
-                              <p>Cabin Baggage {item.cabin_baggage}</p>
+                              <p>Cabin Baggage {item.cabin_baggage} KG</p>
                             </div>
                             <div className="flex gap-3 items-center my-1 lg:my-3">
                               <MdOutlineLuggage className="text-xl text-blue-500" />
-                              <p>Baggage {item.baggage}</p>
+                              <p>Baggage {item.baggage} KG</p>
                             </div>
                           </div>
                         </div>
