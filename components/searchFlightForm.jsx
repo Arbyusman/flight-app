@@ -7,7 +7,7 @@ import Router from "next/router";
 const categories = [{ category: "Economi" }, { category: "Business" }];
 
 const SearchFlightForm = () => {
-  const [selectedCategories, setSelectedCategories] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState(categories[0]);
   const [fromSelectedCity, setFromSelectedCity] = useState("");
   const [toSelectedCity, setToSelectedCity] = useState("");
   const [query, setQuery] = useState("");
@@ -96,7 +96,6 @@ const SearchFlightForm = () => {
       });
     }
   };
-
   const handleSearchRoundtripFlight = () => {
     if (!fromSelectedCity) {
       setOpenModalErrorSelectDeparture(true);
@@ -116,16 +115,16 @@ const SearchFlightForm = () => {
         setOpenModalErrorSelectDateDeparture(false);
       }, 1500);
       return;
-    } else if (!selectedCategories) {
-      setOpenModalErrorSelectCategory(true);
-      setTimeout(() => {
-        setOpenModalErrorSelectCategory(false);
-      }, 1500);
-      return;
     } else if (!arrivalNative) {
       setOpenModalErrorSelectDateReturn(true);
       setTimeout(() => {
         setOpenModalErrorSelectDateReturn(false);
+      }, 1500);
+      return;
+    } else if (!selectedCategories) {
+      setOpenModalErrorSelectCategory(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectCategory(false);
       }, 1500);
       return;
     } else if (fromSelectedCity === toSelectedCity) {
@@ -139,11 +138,8 @@ const SearchFlightForm = () => {
     Router.push({
       pathname: "/search",
       query: {
-        from: fromSelectedCity,
-        to: toSelectedCity,
-        depart: departureNative,
-        arrival: arrivalNative,
-        category: selectedCategories.category,
+        tickets1: JSON.stringify(roundtripTicket1),
+        tickets2: JSON.stringify(roundtripTicket2),
       },
     });
   };
@@ -429,7 +425,7 @@ const SearchFlightForm = () => {
                 </div>
                 <div
                   id="category"
-                  className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
+                  className="relative w-full md:w-1/3 flex flex-col   pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
                     Category
