@@ -396,7 +396,7 @@ export default function ResultFlight() {
                           setSelectedTicket1([item]);
                         }}
                         type="button"
-                        className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
+                        className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 transition"
                       >
                         Choose Flight
                       </button>
@@ -581,7 +581,7 @@ export default function ResultFlight() {
                           setSelectedTicket2([item]);
                         }}
                         type="button"
-                        className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 "
+                        className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-1 transition"
                       >
                         Choose Flight
                       </button>

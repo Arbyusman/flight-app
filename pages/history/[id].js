@@ -85,7 +85,7 @@ export default function History() {
               </div>
               <Link
                 href="/"
-                className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1"
+                className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1 transition"
               >
                 <HiArrowSmLeft className="text-xl" />
                 <span>Back</span>
@@ -125,9 +125,9 @@ export default function History() {
                       </div>
                       <Link
                         href={`invoice/${item.id}`}
-                        className="focus:outline-none my-1 lg:my-0 text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 "
+                        className="focus:outline-none my-1 lg:my-0 text-white bg-gray-600 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 transition"
                       >
-                        <button>Invoice</button>
+                        <span>Invoice</span>
                       </Link>
                       <div className="flex lg:gap-10 md:gap-3 md:justify-between justify-end">
                         <button
