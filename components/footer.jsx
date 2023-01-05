@@ -30,7 +30,7 @@ export default function Footer() {
                 Home
               </Link>
             </li>
-            <li>
+            {/* <li>
               <a href="" className=" text-gray-600 md:p-0 ">
                 About Us
               </a>
@@ -39,7 +39,7 @@ export default function Footer() {
               <a href="" className=" text-gray-600 md:p-0">
                 Promo
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="mt-2 ">
@@ -154,7 +154,7 @@ export default function Footer() {
       <hr className="my-6 sm:mx-auto border-gray-600 lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-center">
         <span className=" text-gray-600 flex justify-center font-medium rounded text-sm">
-          Copyright © {new Date().getFullYear()} TakeOff . All rights reserved
+          Copyright © {new Date().getFullYear()}  TakeOff . All rights reserved
         </span>
       </div>
     </footer>
