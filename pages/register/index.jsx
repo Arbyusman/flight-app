@@ -37,7 +37,8 @@ export default function Register() {
       body: JSON.stringify(data),
     }).catch((err) => {
       throw err;
-    });``
+    });
+    ``;
     const res = await response.json();
 
     if (res.status === "OK") {
@@ -88,7 +89,7 @@ export default function Register() {
           position={"top-center"}
         >
           <Alert color="success" className="justify-center items-center">
-            <span>You have successfully booked your ticket</span>
+            <span>You have successfully Register</span>
           </Alert>
         </Modal>
         <section className="h-screen">
@@ -124,7 +125,7 @@ export default function Register() {
                         name="username"
                         id="username"
                         className="bg-gray-50 border sm:text-sm rounded-lg  block w-full p-2.5  "
-                        placeholder="Mega Watt"
+                        placeholder="John Doe"
                         {...register("username", {
                           required: true,
                         })}
