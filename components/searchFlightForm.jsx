@@ -7,7 +7,7 @@ import Router from "next/router";
 const categories = [{ category: "Economi" }, { category: "Business" }];
 
 const SearchFlightForm = () => {
-  const [selectedCategories, setSelectedCategories] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState(categories[0]);
   const [fromSelectedCity, setFromSelectedCity] = useState("");
   const [toSelectedCity, setToSelectedCity] = useState("");
   const [query, setQuery] = useState("");
@@ -68,17 +68,20 @@ const SearchFlightForm = () => {
       selectedCategories.category
     );
 
+    const oneWayTicket = ticket.filter(
+      (item) =>
+        item.Flight.from.city == fromSelectedCity &&
+        item.Flight.to.city == toSelectedCity &&
+        item.Flight.departure_date == departureNative &&
+        item.type == selectedCategories.category
+    );
+
+    console.log(oneWayTicket);
     Router.push({
       pathname: "/search",
-      query: {
-        from: fromSelectedCity,
-        to: toSelectedCity,
-        depart: departureNative,
-        category: selectedCategories.category,
-      },
+      query: { tickets1: JSON.stringify(oneWayTicket) },
     });
   };
-
   const handleSearchRoundtripFlight = () => {
     console.log(
       fromSelectedCity,
@@ -108,11 +111,8 @@ const SearchFlightForm = () => {
     Router.push({
       pathname: "/search",
       query: {
-        from: fromSelectedCity,
-        to: toSelectedCity,
-        depart: departureNative,
-        arrival: arrivalNative,
-        category: selectedCategories.category,
+        tickets1: JSON.stringify(roundtripTicket1),
+        tickets2: JSON.stringify(roundtripTicket2),
       },
     });
   };
@@ -326,7 +326,7 @@ const SearchFlightForm = () => {
                 </div>
                 <div
                   id="category"
-                  className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
+                  className="relative w-full md:w-1/3 flex flex-col   pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
                     Kategori
@@ -335,8 +335,8 @@ const SearchFlightForm = () => {
                     value={selectedCategories}
                     onChange={setSelectedCategories}
                   >
-                    <div className="relative mt-1 w-full">
-                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                    <div className="relative mt-1 w-full h-full">
+                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white h-full py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">
                           {selectedCategories.category}
                         </span>
@@ -623,8 +623,8 @@ const SearchFlightForm = () => {
                     value={selectedCategories}
                     onChange={setSelectedCategories}
                   >
-                    <div className="relative mt-1 w-full">
-                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                    <div className="relative mt-1 w-full h-full">
+                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white h-full py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">
                           {selectedCategories.category}
                         </span>
