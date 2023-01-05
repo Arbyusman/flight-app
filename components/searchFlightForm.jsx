@@ -82,7 +82,7 @@ const SearchFlightForm = () => {
       setOpenModalErrorDestination(true);
       setTimeout(() => {
         setOpenModalErrorDestination(false);
-      }, 2000);
+      }, 2500);
       return;
     } else {
       Router.push({
@@ -131,7 +131,7 @@ const SearchFlightForm = () => {
       setOpenModalErrorDestination(true);
       setTimeout(() => {
         setOpenModalErrorDestination(false);
-      }, 2000);
+      }, 2500);
       return;
     }
 
