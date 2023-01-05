@@ -44,7 +44,6 @@ export default function Airport() {
     });
 
     const data = await response.json();
-    console.log("res delete", data);
     if (data.status === "OK") {
       handelGetAirport();
       setOpenDialog(false);
