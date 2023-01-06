@@ -34,7 +34,6 @@ export default function CreateTicket() {
 
       .then((data) => {
         setFlight(data.data.data);
-        console.log("dataFlight", data.data.data);
       });
   };
 
@@ -48,7 +47,6 @@ export default function CreateTicket() {
 
       .then((data) => {
         setPlanes(data.data);
-        console.log("dataPlane", data.data);
       });
   };
 
@@ -77,7 +75,6 @@ export default function CreateTicket() {
 
     const data = await req.json();
     if (data.status === "OK") {
-      console.log(data.status, "data ticket");
       alert("Data Berhasil Ditambahkan");
       router.push("/admin/ticket");
     } else {
@@ -85,12 +82,10 @@ export default function CreateTicket() {
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
     }
-    console.log(data.data, "data here");
 
     setField({});
     e.target.reset();
 
-    console.log(data);
   }
 
   return (

@@ -14,7 +14,6 @@ export default function CreatePlane() {
     const name = target.name;
     const value = target.value;
 
-    console.log({ name, value });
 
     setField({
       ...field,
@@ -46,12 +45,10 @@ export default function CreatePlane() {
       const errMessage = data.message;
       setErr(`${errStatus} ${errMessage}`);
     }
-    console.log(data.data, "data here");
 
     setField({});
     e.target.reset();
 
-    console.log(data);
   }
 
   return (

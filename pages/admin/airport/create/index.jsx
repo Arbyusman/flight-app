@@ -14,7 +14,6 @@ export default function CreateAirport() {
     const name = target.name;
     const value = target.value;
 
-    console.log({ name, value });
 
     setField({
       ...field,
@@ -45,12 +44,10 @@ export default function CreateAirport() {
       setErr(`${errStatus} ${errMessage}`);
     }
     alert("Data Berhasil ditambahkan");
-    console.log(data.data, "data here");
 
     setField({});
     e.target.reset();
 
-    console.log(data);
   }
 
   return (

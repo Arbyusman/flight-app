@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
-import { Tabs, Button } from "flowbite-react";
+import { Tabs, Button, Modal, Alert } from "flowbite-react";
 import { Combobox, Transition, Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import Router from "next/router";
@@ -7,23 +7,34 @@ import Router from "next/router";
 const categories = [{ category: "Economi" }, { category: "Business" }];
 
 const SearchFlightForm = () => {
-  const [selectedCategories, setSelectedCategories] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState(categories[0]);
   const [fromSelectedCity, setFromSelectedCity] = useState("");
   const [toSelectedCity, setToSelectedCity] = useState("");
   const [query, setQuery] = useState("");
-  const [query2, setQuery2] = useState("");
   const [airport, setAirport] = useState([]);
-  const [ticket, setTicket] = useState([]);
+
+  const [openModalErrorDestination, setOpenModalErrorDestination] =
+    useState(false);
+  const [openModalErrorSelectDateReturn, setOpenModalErrorSelectDateReturn] =
+    useState(false);
+  const [
+    openModalErrorSelectDateDeparture,
+    setOpenModalErrorSelectDateDeparture,
+  ] = useState(false);
+  const [openModalErrorSelectDeparture, setOpenModalErrorSelectDeparture] =
+    useState(false);
+  const [openModalErrorSelectDestination, setOpenModalErrorSelectDestination] =
+    useState(false);
+  const [openModalErrorSelectCategory, setOpenModalErrorSelectCategory] =
+    useState(false);
 
   const [departureNative, setDepartureNative] = useState("");
   const onDepartureNativeChange = (e) => {
-    console.log("onDepartureNativeChange: ", e.target.value);
     setDepartureNative(e.target.value);
   };
 
   const [arrivalNative, setArrivalNative] = useState("");
   const onArrivalNativeChange = (e) => {
-    console.log("onArrivalNativeChange: ", e.target.value);
     setArrivalNative(e.target.value);
   };
 
@@ -36,83 +47,99 @@ const SearchFlightForm = () => {
       .then((data) => {
         setAirport(data.data);
       });
-
-    console.log(airport);
-  };
-
-  const handleGetTicket = async () => {
-    await fetch(`${process.env.API_ENDPOINT}api/v1/ticket`, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setTicket(data.data);
-      });
-
-    console.log(ticket);
   };
 
   useEffect(() => {
-    handleGetTicket();
     handelGetAirport();
-
-    if (fromSelectedCity !== toSelectedCity) {
-    }
   }, []);
 
   const handleSearchOneWayFlight = () => {
-    console.log(
-      fromSelectedCity,
-      toSelectedCity,
-      departureNative,
-      selectedCategories.category
-    );
-
-    Router.push({
-      pathname: "/search",
-      query: {
-        from: fromSelectedCity,
-        to: toSelectedCity,
-        depart: departureNative,
-        category: selectedCategories.category,
-      },
-    });
+    if (!fromSelectedCity) {
+      setOpenModalErrorSelectDeparture(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDeparture(false);
+      }, 2000);
+      return;
+    } else if (!toSelectedCity) {
+      setOpenModalErrorSelectDestination(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDestination(false);
+      }, 2000);
+      return;
+    } else if (!departureNative) {
+      setOpenModalErrorSelectDateDeparture(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDateDeparture(false);
+      }, 2000);
+      return;
+    } else if (!selectedCategories) {
+      setOpenModalErrorSelectCategory(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectCategory(false);
+      }, 2000);
+      return;
+    } else if (fromSelectedCity === toSelectedCity) {
+      setOpenModalErrorDestination(true);
+      setTimeout(() => {
+        setOpenModalErrorDestination(false);
+      }, 2500);
+      return;
+    } else {
+      Router.push({
+        pathname: "/search",
+        query: {
+          from: fromSelectedCity,
+          to: toSelectedCity,
+          depart: departureNative,
+          category: selectedCategories.category,
+        },
+      });
+    }
   };
-
   const handleSearchRoundtripFlight = () => {
-    console.log(
-      fromSelectedCity,
-      toSelectedCity,
-      departureNative,
-      arrivalNative,
-      selectedCategories.category
-    );
+    if (!fromSelectedCity) {
+      setOpenModalErrorSelectDeparture(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDeparture(false);
+      }, 2000);
+      return;
+    } else if (!toSelectedCity) {
+      setOpenModalErrorSelectDestination(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDestination(false);
+      }, 2000);
+      return;
+    } else if (!departureNative) {
+      setOpenModalErrorSelectDateDeparture(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDateDeparture(false);
+      }, 2000);
+      return;
+    } else if (!arrivalNative) {
+      setOpenModalErrorSelectDateReturn(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectDateReturn(false);
+      }, 2000);
+      return;
+    } else if (!selectedCategories) {
+      setOpenModalErrorSelectCategory(true);
+      setTimeout(() => {
+        setOpenModalErrorSelectCategory(false);
+      }, 2000);
+      return;
+    } else if (fromSelectedCity === toSelectedCity) {
+      setOpenModalErrorDestination(true);
+      setTimeout(() => {
+        setOpenModalErrorDestination(false);
+      }, 2500);
+      return;
+    }
 
-    const roundtripTicket1 = ticket.filter(
-      (item) =>
-        item.Flight.from.city == fromSelectedCity &&
-        item.Flight.to.city == toSelectedCity &&
-        item.Flight.departure_date == departureNative &&
-        item.type == selectedCategories.category
-    );
-
-    const roundtripTicket2 = ticket.filter(
-      (item) =>
-        item.Flight.from.city == toSelectedCity &&
-        item.Flight.to.city == fromSelectedCity &&
-        item.Flight.departure_date == arrivalNative &&
-        item.type == selectedCategories.category
-    );
-
-    console.log(roundtripTicket1, roundtripTicket2);
     Router.push({
       pathname: "/search",
       query: {
-        from: fromSelectedCity,
-        to: toSelectedCity,
-        depart: departureNative,
-        arrival: arrivalNative,
-        category: selectedCategories.category,
+        tickets1: JSON.stringify(roundtripTicket1),
+        tickets2: JSON.stringify(roundtripTicket2),
       },
     });
   };
@@ -125,6 +152,72 @@ const SearchFlightForm = () => {
         });
   return (
     <div>
+      <Modal
+        show={openModalErrorSelectCategory}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please select Category</span>
+        </Alert>
+      </Modal>
+
+      <Modal
+        show={openModalErrorSelectDeparture}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please select departure airport</span>
+        </Alert>
+      </Modal>
+
+      <Modal
+        show={openModalErrorSelectDestination}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please select Destination airport</span>
+        </Alert>
+      </Modal>
+      <Modal
+        show={openModalErrorSelectDateDeparture}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please Choose a departure date</span>
+        </Alert>
+      </Modal>
+      <Modal
+        show={openModalErrorSelectDateReturn}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert color="warning" className="justify-center items-center">
+          <span>Please Choose a return date</span>
+        </Alert>
+      </Modal>
+      <Modal
+        show={openModalErrorDestination}
+        size="sm"
+        popup={true}
+        position={"top-center"}
+      >
+        <Alert
+          color="warning"
+          className="justify-center items-center text-center"
+        >
+          <span>the place of departure and return cannot be the same</span>
+        </Alert>
+      </Modal>
+
       <div className="mx-8 my-6 md:rounded-2xl rounded-xl bg-white p-6 shadow-xl border border-gray-300">
         <Tabs.Group
           aria-label="Tabs with underline"
@@ -139,16 +232,17 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Dari
+                    From
                   </label>
                   <Combobox
+                    className="z-20 w-full"
                     value={fromSelectedCity}
                     onChange={setFromSelectedCity}
                   >
                     <div className="relative mt-1 w-full">
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
-                          className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
+                          className="w-full  border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
                           onChange={(event) => setQuery(event.target.value)}
                         />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -228,14 +322,18 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Ke
+                    To
                   </label>
-                  <Combobox value={toSelectedCity} onChange={setToSelectedCity}>
+                  <Combobox
+                    className="z-10 w-full"
+                    value={toSelectedCity}
+                    onChange={setToSelectedCity}
+                  >
                     <div className="relative mt-1 w-full">
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
                           className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
-                          onChange={(event) => setQuery2(event.target.value)}
+                          onChange={(event) => setQuery(event.target.value)}
                         />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                           <ChevronUpDownIcon
@@ -249,7 +347,7 @@ const SearchFlightForm = () => {
                         leave="transition ease-in duration-100"
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
-                        afterLeave={() => setQuery2("")}
+                        afterLeave={() => setQuery("")}
                       >
                         <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                           {filteredCity.length === 0 && query !== "" ? (
@@ -311,12 +409,13 @@ const SearchFlightForm = () => {
                 </div>
                 <div className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Tanggal Keberangkatan
+                    Departure Date
                   </label>
                   <div className="relative mt-1 w-full">
                     <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                       <input
                         type="date"
+                        min={new Date().toISOString().split("T")[0]}
                         value={departureNative}
                         onChange={onDepartureNativeChange}
                         className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
@@ -326,17 +425,18 @@ const SearchFlightForm = () => {
                 </div>
                 <div
                   id="category"
-                  className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
+                  className="relative w-full md:w-1/3 flex flex-col   pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Kategori
+                    Category
                   </label>
                   <Listbox
+                    className="w-full "
                     value={selectedCategories}
                     onChange={setSelectedCategories}
                   >
                     <div className="relative mt-1 w-full">
-                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                      <Listbox.Button className="relative w-full h-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">
                           {selectedCategories.category}
                         </span>
@@ -412,9 +512,10 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Dari
+                    From
                   </label>
                   <Combobox
+                    className="z-20 w-full"
                     value={fromSelectedCity}
                     onChange={setFromSelectedCity}
                   >
@@ -423,6 +524,7 @@ const SearchFlightForm = () => {
                         <Combobox.Input
                           className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
                           onChange={(event) => setQuery(event.target.value)}
+                          required={true}
                         />
                         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                           <ChevronUpDownIcon
@@ -501,9 +603,13 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Ke
+                    To
                   </label>
-                  <Combobox value={toSelectedCity} onChange={setToSelectedCity}>
+                  <Combobox
+                    className="z-10 w-full"
+                    value={toSelectedCity}
+                    onChange={setToSelectedCity}
+                  >
                     <div className="relative mt-1 w-full">
                       <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                         <Combobox.Input
@@ -584,12 +690,13 @@ const SearchFlightForm = () => {
                 </div>
                 <div className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Tanggal Keberangkatan
+                    Departure Date
                   </label>
                   <div className="relative mt-1 w-full">
                     <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                       <input
                         type="date"
+                        min={new Date().toISOString().split("T")[0]}
                         value={departureNative}
                         onChange={onDepartureNativeChange}
                         className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
@@ -599,12 +706,13 @@ const SearchFlightForm = () => {
                 </div>
                 <div className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2">
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Tanggal Kembali
+                    Return date
                   </label>
                   <div className="relative mt-1 w-full">
                     <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                       <input
                         type="date"
+                        min={new Date().toISOString().split("T")[0]}
                         value={arrivalNative}
                         onChange={onArrivalNativeChange}
                         className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-black focus:ring-0"
@@ -617,14 +725,15 @@ const SearchFlightForm = () => {
                   className="relative w-full md:w-1/3 flex flex-col justify-center items-center pl-2"
                 >
                   <label className="text-sm w-full font-bold mb-1 text-gray-500">
-                    Kategori
+                    Category
                   </label>
                   <Listbox
+                    className="w-full"
                     value={selectedCategories}
                     onChange={setSelectedCategories}
                   >
                     <div className="relative mt-1 w-full">
-                      <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                      <Listbox.Button className="relative w-full h-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
                         <span className="block truncate">
                           {selectedCategories.category}
                         </span>

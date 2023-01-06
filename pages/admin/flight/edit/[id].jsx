@@ -42,7 +42,6 @@ export default function CreatePromo() {
 
       .then((data) => {
         setPlane(data.data);
-        console.log("data plane", data.data);
       });
   };
 
@@ -57,7 +56,6 @@ export default function CreatePromo() {
       .then((res) => res.json())
 
       .then((data) => {
-        console.log("data airport", data.data);
         setAirport(data.data);
       });
   };
@@ -112,9 +110,7 @@ export default function CreatePromo() {
       alert("Data Berhasil di Ubah");
       router.push("/admin/flight");
     }
-    console.log(data.status, "data here");
 
-    console.log(data);
   }
 
   return (

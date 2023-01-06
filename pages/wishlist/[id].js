@@ -32,7 +32,6 @@ export default function WishlistUser() {
     if (!id) {
       return;
     }
-
     const token = localStorage.getItem("token");
     if (!token) router.push("/login");
     setToken(token);
@@ -57,11 +56,10 @@ export default function WishlistUser() {
   };
 
   const handleDeleteWishlist = async () => {
-    const ticketId = currentIndex;
     setDeleteLoading(true);
     const token = localStorage.getItem("token");
     const response = await fetch(
-      `${process.env.API_ENDPOINT}api/v1/wishlist/${ticketId}`,
+      `${process.env.API_ENDPOINT}api/v1/wishlist/${currentIndex}`,
       {
         method: "DELETE",
         headers: {
@@ -73,21 +71,13 @@ export default function WishlistUser() {
     });
 
     const data = await response.json();
-    console.log("status ", data);
     if (data.status === "OK") {
       setDeleteLoading(false);
       setOpenModal(false);
       handelGetwishlist();
+    } else {
+      setDeleteLoading(false);
     }
-  };
-  
-  const handelBook = () => {
-    router.push({
-      pathname: "/search/book",
-      query: {
-        ticket1: currentIndex,
-      },
-    });
   };
 
   if (!token) {
@@ -116,7 +106,7 @@ export default function WishlistUser() {
     return (
       <div>
         <NavbarComponent />
-        <div className="justify-center items-center flex-row">
+        <div className="justify-center items-center flex-row ">
           {/* title */}
           <div className="flex justify-center items-center">
             <div className="lg:w-9/12 md:w-11/12 w-full flex-row  bg-white rounded-md mt-5 justify-between shadow-md p-7">
@@ -128,7 +118,7 @@ export default function WishlistUser() {
                 </div>
                 <Link
                   href="/"
-                  className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1"
+                  className="flex text-gray-600 hover:text-white border border-gray-600 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-md text-sm px-3 py-2 text-center gap-1 transition"
                 >
                   <HiArrowSmLeft className="text-xl" />
                   <span>Back</span>
@@ -194,12 +184,13 @@ export default function WishlistUser() {
                     <div className="flex-row mx-4 md:mx-2 md:flex items-center md:h-12 justify-between  ">
                       <figure className="max-w-xs  flex md:block md:mb-0 gap-2 mb-1">
                         <Image
+                          priority
                           className="w-7 lg:w-10 flex  "
                           src={item.Ticket.photo}
                           alt="logo penerbangan"
                           width={100}
                           height={100}
-                        ></Image>
+                        />
                         <figcaption className="text-xs  text-gray-500 dark:text-gray-400">
                           {item.Ticket.Flight.Plane.name}
                         </figcaption>
@@ -223,13 +214,13 @@ export default function WishlistUser() {
                         <p>/Pax</p>
                       </div>
                       <div className="flex lg:gap-10 md:gap-3 justify-between">
-                        <button
-                          onClick={handelBook}
+                        <Link
+                          href={`/search/book?ticket1=${item.ticket_id}`}
                           type="button"
-                          className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 "
+                          className="focus:outline-none my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-3 py-2 transition"
                         >
                           Choose Flight
-                        </button>
+                        </Link>
 
                         <button
                           type="button"
@@ -264,12 +255,13 @@ export default function WishlistUser() {
                     <div className=" md:flex items-start  justify-between  ">
                       <figure className="max-w-md">
                         <Image
+                          priority
                           className="w-10 lg:w-16 flex "
                           src={item.Ticket.photo}
                           alt="logo penerbangan"
                           width={50}
                           height={50}
-                        ></Image>
+                        />
                         <figcaption className="mt-2 text-xs md:text-center text-gray-500 dark:text-gray-400">
                           {item.Ticket.Flight.Plane.name}
                         </figcaption>
@@ -322,16 +314,16 @@ export default function WishlistUser() {
                       <div className="gap-7 text-gray-600 tracking-wide antialiased text-sm ">
                         <div className="flex gap-3 items-center my-1 lg:my-3 ">
                           <GiBackpack className="text-xl text-green-500" />
-                          <p>Cabin Baggage {item.Ticket.cabin_baggage}</p>
+                          <p>Cabin Baggage {item.Ticket.cabin_baggage} KG</p>
                         </div>
                         <div className="flex gap-3 items-center my-1 lg:my-3">
                           <MdOutlineLuggage className="text-xl text-blue-500" />
-                          <p>Baggage {item.Ticket.baggage}</p>
+                          <p>Baggage {item.Ticket.baggage} KG</p>
                         </div>
                         <div className="lg:mt-2 justify-start flex ">
                           <button
                             onClick={() => setOpenModal(true)}
-                            className="focus:outline-none flex  items-center gap-2 1 my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-4 py-2 "
+                            className="focus:outline-none flex  items-center gap-2 1 my-1 lg:my-0 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-md text-sm px-4 py-2 transition"
                           >
                             <FaHeartBroken className="" />
                             <span> Remove </span>

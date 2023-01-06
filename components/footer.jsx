@@ -5,8 +5,11 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-white px-2 sm:px-4 py-2.5 rounded sm:justify-center mt-12 mb-7">
-      <div className="container lg:flex lg:flex-wrap  justify-between mx-auto md:grid md:grid-cols-5 md:grid-rows-1">
+    <footer
+      className="bg-white px-2 sm:px-4 py-2.5 
+      
+     rounded sm:justify-center mt-12 ">
+      <div className="container lg:flex lg:flex-wrap justify-between mx-auto md:grid md:grid-cols-5 md:grid-rows-1">
         <div className="mb-6 md:mb-0 sm:mb-2">
           <Link href="#" className="flex items-center">
             <Image src={LogoImage} className="mr-3 h-16 w-20" alt="TakeOff Logo" />
@@ -20,7 +23,7 @@ export default function Footer() {
                 Home
               </Link>
             </li>
-            <li>
+            {/* <li>
               <a href="" className=" text-gray-600 md:p-0 ">
                 About Us
               </a>
@@ -29,7 +32,7 @@ export default function Footer() {
               <a href="" className=" text-gray-600 md:p-0">
                 Promo
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="mt-2 ">
@@ -112,7 +115,7 @@ export default function Footer() {
       </div>
       <hr className="my-6 sm:mx-auto border-gray-600 lg:my-8" />
       <div className="sm:flex sm:items-center sm:justify-center">
-        <span className=" text-gray-600 flex justify-center font-medium rounded text-sm">Copyright 2022 All rights reserved.</span>
+        <span className=" text-gray-600 flex justify-center font-medium rounded text-sm">Copyright © {new Date().getFullYear()} TakeOff . All rights reserved</span>
       </div>
     </footer>
   );
