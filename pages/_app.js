@@ -6,6 +6,12 @@ function MyApp({ Component, pageProps }) {
     <>
       <Head>
         <title> TakeOff - Book Flight</title>
+        <link
+          rel="shortcut icon"
+          type="image/png"
+          sizes="128x128"
+          href="images/logo.png"
+        />
       </Head>
       <Component {...pageProps} />
     </>
