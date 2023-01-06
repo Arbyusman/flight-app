@@ -145,10 +145,14 @@ export default function ConfirmFlight() {
       handelBookingOneWay();
       handelBookingRound();
 
-      router.push(`/history/${user.id}`);
+      setTimeout(() => {
+        router.push(`/history/${user.id}`);
+      }, 2000);
     } else {
       handelBookingOneWay();
-      router.push(`/history/${user.id}`);
+      setTimeout(() => {
+        router.push(`/history/${user.id}`);
+      }, 2000);
     }
   }
 
