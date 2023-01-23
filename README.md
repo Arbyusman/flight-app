@@ -19,7 +19,7 @@ Running the app:
 
 ## Live Application
 This application is currently deployed using [railway.app](railway.app).  
-You can access this application on [https://takeoff-flight.up.railway.app/](https://takeoff-flight.up.railway.app/) 
+You can access this application on [https://takeoff-flight.up.railway.app/](https://takeoff-flight.up.railway.app/) or  [https://flight-app-umber.vercel.app/](https://flight-app-umber.vercel.app/)
 
 
 ## Access Admin
